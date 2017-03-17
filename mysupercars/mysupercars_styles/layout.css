@@ -1,0 +1,85 @@
+
+p {
+    margin: 5px;
+}
+
+.head_bar_cont {
+    position: fixed;
+    height: 100px;
+    top: 0px;
+    min-width: 100%;
+    z-index: 100;
+    background: crimson;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bar_contents {
+    position: absolute;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    min-height: 100%;
+}
+
+.main_content {
+    margin-top: 100px;
+    padding-top: 0px;
+    position: relative;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.parent_container {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    min-height: 100%;
+    min-width: 100%;
+    background-color: rgba(0, 0, 0, 0.86);
+}
+
+.menu_bar {
+    position: absolute;
+    bottom: 0px;
+    min-width: 70%;
+    padding-left: 30%;
+}
+
+.acoutLogin {
+    float: right;
+    padding: 10px 20px;
+}
+
+.acoutLogin a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.acoutLogin a:hover {
+    color: #ffffff;
+}
+
+.pic_cont {
+    position: relative;
+    top: 15px;
+}
+
+.pic_cont img {
+    width: 70%;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+@media screen and (min-width: 1650px) {
+    .pic_cont img {
+        width: 60%;
+        padding-left: 20%;
+        padding-right: 20%;
+    }
+}
+
+
+
+
