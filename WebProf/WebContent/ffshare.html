@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html>
+<head>
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Chuck Taylor All Star Fresh Colours" />
+<meta property="og:description" content="This is a test for FB Share" />
+<meta property="og:image:width" content="250" />
+<meta property="og:image:height" content="250" />
+<meta property="og:image" content="http://sits-pod51.demandware.net/dw/image/v2/aalw_s10/on/demandware.static/-/Sites-ConverseMaster/default/dw16a0760a/images/hi-res/153873C_standard.jpg?sw=250&sh=250&sm=fit" />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<!--   <link rel="stylesheet" href="style.css" /> -->
+  <title>jQuery Example</title>
+  <script>
+  $(document).ready(function() {
+	  $.ajaxSetup({ cache: true });
+	  $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+	    FB.init({
+	      appId: '1812415742342004',
+	      version: 'v2.8' // or v2.1, v2.2, v2.3, ...
+	    });     
+	    $('#loginbutton,#feedbutton').removeAttr('disabled');
+	    FB.getLoginStatus(updateStatusCallback);
+	  });
+	  
+	  var updateStatusCallback= function (response){
+		  if (response.status === 'connected') {
+			    var uid = response.authResponse.userID;
+			    var accessToken = response.authResponse.accessToken;
+			    console.log("+uid: "+uid);
+			    console.log("+accessToken: "+accessToken);
+			  } else if (response.status === 'not_authorized') {
+			    
+			    console.log("- The user is logged in to Facebook,but has not authenticated your app");
+			  } else {
+			    console.log("- The user isn't logged in to Facebook");
+			  }
+	  };
+	  
+	  $("#btnShare").click(function(){
+		  FB.ui({
+			  method: 'share',
+			  href: 'https://developers.facebook.com/docs/',
+			  quote:'Gavriella la tester'
+			}, function(response){
+				console.log("=post_id: "+response.post_id);
+				console.log("=error_message: "+response.error_message);
+			});
+	  });
+	  
+	});
+  </script>
+</head>
+<body>
+<p> FB - JQ </p>
+<br>
+<button id="btnShare" >Share</button>
+<br>
+<img src="../project/images/image001.png">
+</body>
+</html>
