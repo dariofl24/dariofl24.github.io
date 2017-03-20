@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $.post("SessionTrack",
+        {
+          name: "Donald Duck"
+        },
+        function(data,status){
+            $(".result_p").text("Data: " + data.sessionid + " - Status: " + status);
+        });
+    });
+});
+</script>
+</head>
+<body>
+
+<p>Static page 111</p>
+
+<br><br>
+
+<button>Send an HTTP POST request to a page and get the result back</button><br><br><br>
+<p>Session_ID:</p><br>
+<p class="result_p" ></p>
+
+</body>
+</html>
