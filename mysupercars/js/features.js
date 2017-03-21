@@ -2,7 +2,7 @@
 var faceBookIntegrator = {
 
     init: function() {
-        loadSDK();
+        this.loadSDK();
     },
 
     loadSDK: function() {
