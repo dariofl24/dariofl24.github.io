@@ -1,4 +1,49 @@
 
+var faceBookIntegrator = {
+
+    init: function() {
+        loadSDK();
+    },
+
+    loadSDK: function() {
+
+        var that = this;
+
+        $.ajaxSetup({ cache: true });
+        
+        $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+            FB.init({
+                appId: '1812415742342004',
+                version: 'v2.7'
+            });
+
+            $('#loginbutton,#feedbutton').removeAttr('disabled');
+
+            FB.getLoginStatus(that.updateStatusCallback);
+        });
+
+    },
+
+    updateStatusCallback: function (response){
+
+        console.log("FB SDK LOADED AND INITIATED !!");
+
+        if (response.status === 'connected') {
+            var uid = response.authResponse.userID;
+            var accessToken = response.authResponse.accessToken;
+            console.log(response.status);
+            console.log("+uid: "+uid);
+            console.log("+accessToken: "+accessToken);
+        } else if (response.status === 'not_authorized') {
+            console.log(response.status+" - The user is logged in to Facebook,but has not authenticated your app");
+        } else {
+            console.log(response.status+" - The user isn't logged in to Facebook");
+        }
+    }
+
+}//
+
+
 var mySlickInit = {
 
     init: function() {
@@ -27,12 +72,17 @@ var mySlickInit = {
         cssEase: 'linear'
       });
 
-    },
+    }
 
-    bindEvents: function(){
+};
 
+var featuresObj = {
+
+    init: function(){
+        mySlickInit.init();
+        faceBookIntegrator.init();
     }
 
 };
  
-$(document).on('ready',mySlickInit.init);
+$(document).on('ready',featuresObj.init);
