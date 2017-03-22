@@ -39,7 +39,6 @@ var faceBookIntegrator = {
             console.log(response.status+" - The user is logged in to Facebook,but has not authenticated your app");
         } else {
             console.log(response.status+" - The user isn't logged in to Facebook (CODE 3!)");
-            window.open(this.facebook_url);
         }
     }
 
