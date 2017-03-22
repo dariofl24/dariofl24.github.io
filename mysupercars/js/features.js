@@ -2,6 +2,7 @@
 var faceBookIntegrator = {
 
     init: function() {
+        this.facebook_url="https://www.facebook.com/";
         this.loadSDK();
     },
 
@@ -27,7 +28,7 @@ var faceBookIntegrator = {
     updateStatusCallback: function (response){
 
         console.log("FB SDK LOADED AND INITIATED !!");
-
+        
         if (response.status === 'connected') {
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
@@ -37,7 +38,8 @@ var faceBookIntegrator = {
         } else if (response.status === 'not_authorized') {
             console.log(response.status+" - The user is logged in to Facebook,but has not authenticated your app");
         } else {
-            console.log(response.status+" - The user isn't logged in to Facebook");
+            console.log(response.status+" - The user isn't logged in to Facebook (CODE 3!)");
+            window.open(this.facebook_url);
         }
     }
 

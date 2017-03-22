@@ -47,19 +47,7 @@ p {
     padding-left: 30%;
 }
 
-.acoutLogin {
-    float: right;
-    padding: 10px 20px;
-}
 
-.acoutLogin a {
-    text-decoration: none;
-    color: #000000;
-}
-
-.acoutLogin a:hover {
-    color: #ffffff;
-}
 
 .pic_cont {
     position: relative;
