@@ -4,6 +4,8 @@ var faceBookIntegrator = {
     init: function() {
         this.facebook_url="https://www.facebook.com/";
         this.loadSDK();
+        this.loginButton = $('#loginbuton');
+        this.userCont = $('#userCont');
     },
 
     loadSDK: function() {
