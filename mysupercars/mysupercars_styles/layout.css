@@ -47,7 +47,15 @@ p {
     padding-left: 30%;
 }
 
-
+.blocker{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 200;
+    background-color: rgba(242, 242, 242, 0.81);
+}
 
 .pic_cont {
     position: relative;
