@@ -128,9 +128,6 @@ var faceBookIntegrator = {
 
 }//
 
-
-
-
 var mySlickInit = {
 
     init: function() {
@@ -163,9 +160,13 @@ var mySlickInit = {
 
 };
 
+var feature= {AAA:'Feature cont !!!'};
+
 var featuresObj = {
 
-    init: function(){ console.log(window);
+    init: function(){ 
+        console.log(window);
+        console.log("FEATURE :: "+feature.AAA);
         mySlickInit.init();
         //faceBookIntegrator.init();
     }
