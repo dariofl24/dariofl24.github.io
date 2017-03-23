@@ -104,7 +104,7 @@ var FaceBook_feature= (function() {
                 $cache.user.id = resp.id;
                 $cache.user.email = resp.email; 
                 console.log($cache.user.email);
-                console.log(resp.picture);
+                console.log(resp.picture.data.url);
                 $cache.user.connectionStat= 'connected';
                 showUserSection($cache.user.name);
             });
