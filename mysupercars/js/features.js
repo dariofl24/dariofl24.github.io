@@ -165,7 +165,7 @@ var FaceBook_feature= (function() {
     var thisvar ='Feature cont !!!';
 
     return {
-        AAA:thisvar;
+        AAA: thisvar
     };
 
 })();
