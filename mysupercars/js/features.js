@@ -58,7 +58,7 @@ var faceBookIntegrator = {
             });
 
             $('#loginbutton,#feedbutton').removeAttr('disabled');
-
+            console.log("FFF "+this.updateStatusCallback);
             FB.getLoginStatus(this.updateStatusCallback);
         });
 
@@ -68,7 +68,7 @@ var faceBookIntegrator = {
 
         console.log("FB SDK LOADED AND INITIATED !!");
         var that = this;
-        
+
         if (response.status === 'connected') {
 
             var uid = response.authResponse.userID;
