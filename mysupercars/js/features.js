@@ -134,7 +134,7 @@ var FaceBook_feature= (function() {
 
     return {
         init: init,
-        fbuser: user,
+        fbuser: $cache.user,
         AAA: thisvar
     };
 
