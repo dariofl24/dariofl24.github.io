@@ -111,8 +111,8 @@ var FaceBook_feature= (function() {
     };
 
     var showUserSection = function(username){
-        this.loginButton.hide();
-        this.userSection.show();
+        $cache.loginButton.hide();
+        $cache.userSection.show();
 
         if(username){
             $cache.userNameSpan.text(username);
