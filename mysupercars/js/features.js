@@ -50,6 +50,9 @@ var FaceBook_feature= (function() {
         $cache.logoutButton = $('#userCont #logout');
         $cache.profileButton = $('#userCont #profile');
         $cache.garageButton = $('#userCont #garage');
+        $cache.usericonhover =$('.usericon.hover');
+        $cache.usericonsnohover =$('.usericon.nohover');
+        $cache.userpic =$('.userpic');
         $cache.user= {id:'',name:'',email:''};
 
     };
@@ -79,11 +82,23 @@ var FaceBook_feature= (function() {
     };
 
     var performFBLogin = function(){
+        console.log("Login !!!");
+
+        FB.login(function(response) {
+           // Person is now logged
+          updateStatusCallback(response);
+        }, {scope: 'public_profile,email'});
 
     };
 
     var performFBLogout = function(){
-        
+        console.log("Logout ...");
+
+        FB.logout(function(response) {
+           // Person is now logged out
+          updateStatusCallback(response);
+        });
+
     };
 
     var updateStatusCallback = function (response){
@@ -106,7 +121,7 @@ var FaceBook_feature= (function() {
                 console.log($cache.user.email);
                 console.log(resp.picture.data.url);
                 $cache.user.connectionStat= 'connected';
-                showUserSection($cache.user.name);
+                showUserSection($cache.user.name,resp.picture.data.url);
             });
 
         } else if (response.status === 'not_authorized') {
@@ -120,12 +135,28 @@ var FaceBook_feature= (function() {
         }
     };
 
-    var showUserSection = function(username){
+    var showUserSection = function(username,picture){
         $cache.loginButton.hide();
         $cache.userSection.show();
 
         if(username){
             $cache.userNameSpan.text(username);
+        }
+
+        if(picture){
+
+            $cache.usericonhover.removeClass('hover');
+            $cache.usericonnohover.removeClass('nohover');
+            $cache.usericonhover.hide();
+            $cache.usericonnohover.hide();
+            $cache.userpic.attr('src',picture);
+            $cache.userpic.show();
+
+        }else{
+            $cache.usericonhover.addClass('hover');
+            $cache.usericonnohover.addClass('nohover');
+            $cache.usericonhover.show();
+            $cache.usericonnohover.hide();
         }
     };
 
