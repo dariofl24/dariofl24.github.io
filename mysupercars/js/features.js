@@ -1,11 +1,47 @@
 
 var faceBookIntegrator = {
 
-    init: function() {
+
+    init :function(){
+        this.initElements();
+        this.bindEvents();
+    },
+
+    initelEments: function() {
         this.facebook_url="https://www.facebook.com/";
         this.loadSDK();
         this.loginButton = $('#loginbuton');
-        this.userCont = $('#userCont');
+        this.userSection = $('#userCont');
+        this.userNameSpan = $('#userCont #userName');
+        this.logoutButton = $('#userCont #logout');
+        this.user= {
+            id:'',
+            name:'',
+            email:''
+        };
+    },
+
+    bindEvents: function() {
+        this.loginButton.click(this.performFBLogin);
+        this.logoutButton.click(this.performFBLogout);
+    },
+
+    performFBLogin: function() {
+        var that = this;
+        FB.login(function(response) {
+           // Person is now logged
+          that.updateStatusCallback(response);
+        }, {scope: 'public_profile,email'});
+
+    },
+
+    performFBLogout: function() {
+        var that = this;
+        FB.logout(function(response) {
+           // Person is now logged out
+          that.updateStatusCallback(response);
+        });
+
     },
 
     loadSDK: function() {
@@ -30,21 +66,61 @@ var faceBookIntegrator = {
     updateStatusCallback: function (response){
 
         console.log("FB SDK LOADED AND INITIATED !!");
+        var that = this;
         
         if (response.status === 'connected') {
+
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
             console.log(response.status);
             console.log("+uid: "+uid);
             console.log("+accessToken: "+accessToken);
+            
+            FB.api('/me',{fields: 'name,email'}, function(resp) {
+                that.showUserSection(resp.name);
+                that.user.name = resp.name;
+                that.user.id = resp.id;
+                that.user.email = resp.email;
+                that.user.connectionStat= 'connected';
+            });
+            
+
         } else if (response.status === 'not_authorized') {
             console.log(response.status+" - The user is logged in to Facebook,but has not authenticated your app");
+            this.showLoginButton();
+            this.clearUserObj();
+
         } else {
             console.log(response.status+" - The user isn't logged in to Facebook (CODE 3!)");
+            this.showLoginButton();
+            this.clearUserObj();
+        }
+    },
+
+    clearUserObj: function(){
+        this.user.name = '';
+        this.user.id = '';
+        this.user.email = '';
+        this.user.connectionStat= '';
+    },
+
+    showLoginButton: function(){
+        this.loginButton.show();
+        this.userSection.hide();
+    },
+
+    showUserSection: function(userNamet){
+        this.loginButton.hide();
+        this.userSection.show();
+
+        if(userNamet){
+            this.userNameSpan.text(userNamet);
         }
     }
 
 }//
+
+
 
 
 var mySlickInit = {
