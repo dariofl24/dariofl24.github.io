@@ -160,13 +160,21 @@ var mySlickInit = {
 
 };
 
-var feature= {AAA:'Feature cont !!!'};
+var FaceBook_feature= (function() {
+
+    var thisvar ='Feature cont !!!';
+
+    return {
+        AAA:thisvar;
+    };
+
+})();
 
 var featuresObj = {
 
     init: function(){ 
         console.log(window);
-        console.log("FEATURE :: "+feature.AAA);
+        console.log("FEATURE :: "+FaceBook_feature.AAA);
         mySlickInit.init();
         //faceBookIntegrator.init();
     }
