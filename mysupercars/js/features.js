@@ -65,15 +65,16 @@ var faceBookIntegrator = {
 
             $('#loginbutton,#feedbutton').removeAttr('disabled');
 
-            FB.getLoginStatus(that.updateStatusCallback);
+            FB.getLoginStatus(function(response) {
+                that.updateStatusCallback(response,that);
+            });
         });
 
     },
 
-    updateStatusCallback: function (response){
+    updateStatusCallback: function (response,that){
 
         console.log("FB SDK LOADED AND INITIATED !!");
-        var that = this;
         
         if (response.status === 'connected') {
 
@@ -94,13 +95,13 @@ var faceBookIntegrator = {
 
         } else if (response.status === 'not_authorized') {
             console.log(response.status+" - The user is logged in to Facebook,but has not authenticated your app");
-            this.showLoginButton();
-            this.clearUserObj();
+            that.showLoginButton();
+            that.clearUserObj();
 
         } else {
             console.log(response.status+" - The user isn't logged in to Facebook (CODE 3!)");
-            this.showLoginButton();
-            this.clearUserObj();
+            that.showLoginButton();
+            that.clearUserObj();
         }
     },
 
@@ -164,9 +165,9 @@ var mySlickInit = {
 
 var featuresObj = {
 
-    init: function(){
+    init: function(){ console.log(window);
         mySlickInit.init();
-        faceBookIntegrator.init();
+        //faceBookIntegrator.init();
     }
 
 };
