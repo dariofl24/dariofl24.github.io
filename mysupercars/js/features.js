@@ -51,7 +51,7 @@ var FaceBook_feature= (function() {
         $cache.profileButton = $('#userCont #profile');
         $cache.garageButton = $('#userCont #garage');
         $cache.usericonhover =$('.usericon.hover');
-        $cache.usericonsnohover =$('.usericon.nohover');
+        $cache.usericonnohover =$('.usericon.nohover');
         $cache.userpic =$('.userpic');
         $cache.user= {id:'',name:'',email:''};
 
