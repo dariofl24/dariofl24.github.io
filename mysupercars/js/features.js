@@ -74,7 +74,16 @@ var FaceBook_feature= (function() {
     };
 
     var bindEvents = function(){
+        $cache.loginButton.click(performFBLogin);
+        $cache.logoutButton.click(performFBLogout);
+    };
 
+    var performFBLogin = function(){
+
+    };
+
+    var performFBLogout = function(){
+        
     };
 
     var updateStatusCallback = function (response){
@@ -89,12 +98,13 @@ var FaceBook_feature= (function() {
             console.log("+uid: "+uid);
             console.log("+accessToken: "+accessToken);
             
-            FB.api('/me',{fields: 'name,email'}, function(resp) {
+            FB.api('/me',{fields: 'name,email,picture'}, function(resp) {
                 $cache.user.name = resp.name; 
                 console.log($cache.user.name);
                 $cache.user.id = resp.id;
                 $cache.user.email = resp.email; 
                 console.log($cache.user.email);
+                console.log(resp.picture);
                 $cache.user.connectionStat= 'connected';
                 showUserSection($cache.user.name);
             });
