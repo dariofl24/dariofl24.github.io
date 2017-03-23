@@ -6,6 +6,7 @@ var faceBookIntegrator = {
         this.initElements();
         this.loadSDK();
         this.bindEvents();
+        
     },
 
     initElements: function() {
@@ -17,11 +18,12 @@ var faceBookIntegrator = {
         this.profileButton = $('#userCont #profile');
         this.garageButton = $('#userCont #garage');
 
-        this.user= {
-            id:'',
-            name:'',
-            email:''
-        };
+    },
+
+    user: {
+        id:'',
+        name:'',
+        email:''
     },
 
     bindEvents: function() {
@@ -30,24 +32,28 @@ var faceBookIntegrator = {
     },
 
     performFBLogin: function() {
-        
+        var that = this;
+
         FB.login(function(response) {
            // Person is now logged
-          this.updateStatusCallback(response);
+          that.updateStatusCallback(response);
         }, {scope: 'public_profile,email'});
 
     },
 
     performFBLogout: function() {
-        
+        var that = this;
+
         FB.logout(function(response) {
            // Person is now logged out
-          this.updateStatusCallback(response);
+          that.updateStatusCallback(response);
         });
 
     },
 
     loadSDK: function() {
+
+        var that = this;
 
         $.ajaxSetup({ cache: true });
         
@@ -58,8 +64,8 @@ var faceBookIntegrator = {
             });
 
             $('#loginbutton,#feedbutton').removeAttr('disabled');
-            console.log("FFF "+this.updateStatusCallback);
-            FB.getLoginStatus(this.updateStatusCallback);
+
+            FB.getLoginStatus(that.updateStatusCallback);
         });
 
     },
@@ -68,7 +74,7 @@ var faceBookIntegrator = {
 
         console.log("FB SDK LOADED AND INITIATED !!");
         var that = this;
-
+        
         if (response.status === 'connected') {
 
             var uid = response.authResponse.userID;
@@ -78,12 +84,11 @@ var faceBookIntegrator = {
             console.log("+accessToken: "+accessToken);
             
             FB.api('/me',{fields: 'name,email'}, function(resp) {
-                console.log("THIS :: "+that);
-                this.user.name = resp.name;
-                this.user.id = resp.id;
-                this.user.email = resp.email;
-                this.user.connectionStat= 'connected';
-                this.showUserSection(this.user.name);
+                that.user.name = resp.name;
+                that.user.id = resp.id;
+                that.user.email = resp.email;
+                that.user.connectionStat= 'connected';
+                that.showUserSection(that.user.name);
             });
             
 
