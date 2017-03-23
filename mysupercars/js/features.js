@@ -30,28 +30,24 @@ var faceBookIntegrator = {
     },
 
     performFBLogin: function() {
-        var that = this;
-
+        
         FB.login(function(response) {
            // Person is now logged
-          that.updateStatusCallback(response);
+          this.updateStatusCallback(response);
         }, {scope: 'public_profile,email'});
 
     },
 
     performFBLogout: function() {
-        var that = this;
-
+        
         FB.logout(function(response) {
            // Person is now logged out
-          that.updateStatusCallback(response);
+          this.updateStatusCallback(response);
         });
 
     },
 
     loadSDK: function() {
-
-        var that = this;
 
         $.ajaxSetup({ cache: true });
         
@@ -63,7 +59,7 @@ var faceBookIntegrator = {
 
             $('#loginbutton,#feedbutton').removeAttr('disabled');
 
-            FB.getLoginStatus(that.updateStatusCallback);
+            FB.getLoginStatus(this.updateStatusCallback);
         });
 
     },
@@ -82,11 +78,12 @@ var faceBookIntegrator = {
             console.log("+accessToken: "+accessToken);
             
             FB.api('/me',{fields: 'name,email'}, function(resp) {
-                that.user.name = resp.name;
-                that.user.id = resp.id;
-                that.user.email = resp.email;
-                that.user.connectionStat= 'connected';
-                that.showUserSection(that.user.name);
+                console.log("THIS :: "+that);
+                this.user.name = resp.name;
+                this.user.id = resp.id;
+                this.user.email = resp.email;
+                this.user.connectionStat= 'connected';
+                this.showUserSection(this.user.name);
             });
             
 
