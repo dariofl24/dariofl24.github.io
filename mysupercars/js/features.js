@@ -111,11 +111,17 @@ var FaceBook_feature= (function() {
     };
 
     var showUserSection = function(username){
+        this.loginButton.hide();
+        this.userSection.show();
 
+        if(username){
+            $cache.userNameSpan.text(username);
+        }
     };
 
     var showLoginButton = function(){
-
+        $cache.loginButton.show();
+        $cache.userSection.hide();
     };
 
     var clearUserObj = function(){
@@ -123,6 +129,7 @@ var FaceBook_feature= (function() {
         $cache.user.id = '';
         $cache.user.email = '';
         $cache.user.connectionStat= '';
+        $cache.userNameSpan.text('');
     };
 
     return {
