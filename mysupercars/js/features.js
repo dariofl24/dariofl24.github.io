@@ -142,8 +142,8 @@ var FaceBook_feature= (function() {
 var featuresObj = {
 
     init: function(){ 
-        mySlickInit.init();
         FaceBook_feature.init();
+        mySlickInit.init();
     }
 
 };
