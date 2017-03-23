@@ -49,7 +49,7 @@ var FaceBook_feature= (function() {
         $cache.userNameSpan = $('#userCont #userName');
         $cache.logoutButton = $('#userCont #logout');
         $cache.profileButton = $('#userCont #profile');
-        $cache.garageButton = $('#userCont #garage');
+        //$cache.garageButton = $('#userCont #garage');
         $cache.usericonhover =$('.usericon.hover');
         $cache.usericonnohover =$('.usericon.nohover');
         $cache.userpic =$('.userpic');
@@ -173,9 +173,13 @@ var FaceBook_feature= (function() {
         $cache.userNameSpan.text('');
     };
 
+    var getUser = function(){
+        return $cache.user;
+    }
+
     return {
         init: init,
-        fbuser: $cache.user,
+        getuser: getUser,
         AAA: thisvar
     };
 
@@ -186,6 +190,8 @@ var featuresObj = {
     init: function(){ 
         FaceBook_feature.init();
         mySlickInit.init();
+
+        console.log("**** FB User::: "+(FaceBook_feature.getuser()).name );
     }
 
 };
