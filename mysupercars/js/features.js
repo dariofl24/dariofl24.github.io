@@ -7,13 +7,16 @@ var faceBookIntegrator = {
         this.bindEvents();
     },
 
-    initelEments: function() {
+    initElements: function() {
         this.facebook_url="https://www.facebook.com/";
         this.loadSDK();
         this.loginButton = $('#loginbuton');
         this.userSection = $('#userCont');
         this.userNameSpan = $('#userCont #userName');
         this.logoutButton = $('#userCont #logout');
+        this.profileButton = $('#userCont #profile');
+        this.garageButton = $('#userCont #garage');
+
         this.user= {
             id:'',
             name:'',
@@ -28,6 +31,7 @@ var faceBookIntegrator = {
 
     performFBLogin: function() {
         var that = this;
+
         FB.login(function(response) {
            // Person is now logged
           that.updateStatusCallback(response);
@@ -37,6 +41,7 @@ var faceBookIntegrator = {
 
     performFBLogout: function() {
         var that = this;
+
         FB.logout(function(response) {
            // Person is now logged out
           that.updateStatusCallback(response);
@@ -77,11 +82,11 @@ var faceBookIntegrator = {
             console.log("+accessToken: "+accessToken);
             
             FB.api('/me',{fields: 'name,email'}, function(resp) {
-                that.showUserSection(resp.name);
                 that.user.name = resp.name;
                 that.user.id = resp.id;
                 that.user.email = resp.email;
                 that.user.connectionStat= 'connected';
+                that.showUserSection(that.user.name);
             });
             
 
