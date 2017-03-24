@@ -31,6 +31,8 @@ var mySlickInit = {
 
 };
 
+var FB_USER = {};
+
 var FaceBook_feature= (function() {
 
     var thisvar ='Feature cont !!!';
@@ -121,6 +123,7 @@ var FaceBook_feature= (function() {
                 console.log($cache.user.email);
                 console.log(resp.picture.data.url);
                 $cache.user.connectionStat= 'connected';
+                FB_USER = $cache.user;
                 showUserSection($cache.user.name,resp.picture.data.url);
             });
 
@@ -171,6 +174,7 @@ var FaceBook_feature= (function() {
         $cache.user.email = '';
         $cache.user.connectionStat= '';
         $cache.userNameSpan.text('');
+        FB_USER = $cache.user;
     };
 
     var getUser = function(){
@@ -191,7 +195,7 @@ var featuresObj = {
         FaceBook_feature.init();
         mySlickInit.init();
 
-        console.log("**** FB User::: "+(FaceBook_feature.getuser()).name );
+        console.log("**** FB User::: "+FaceBook_feature.getuser().name + " - "+ FB_USER.name);
     }
 
 };
