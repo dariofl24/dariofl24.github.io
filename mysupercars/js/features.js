@@ -193,7 +193,7 @@ var featuresObj = {
         FaceBook_feature.init();
         mySlickInit.init();
 
-        console.log("**** FB User::: "+FaceBook_feature.getuser().name + " - "+ FaceBook_feature.cache.user + " + " + FaceBook_feature.FB_USER.name + " + "+ FaceBook_feature.myuser.name);
+        console.log("**** FB User::: "+FaceBook_feature.getuser().name + " - "+ FaceBook_feature.cache.user.name + " + " + FaceBook_feature.FB_USER.name + " + "+ FaceBook_feature.myuser.name);
     }
 
 };
