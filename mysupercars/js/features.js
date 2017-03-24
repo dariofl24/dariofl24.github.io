@@ -37,7 +37,7 @@ var FaceBook_feature= (function(FB_USER) {
 
     var thisvar ='Feature cont !!!';
     var $cache = {};
-    var myuser;
+    var myuser = {};
 
     var init = function(){
         initElements();
