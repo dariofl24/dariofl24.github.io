@@ -178,8 +178,9 @@ var FaceBook_feature= (function($FB_USER) {
     };
 
     var getUser = function(){
+        console.log("IN function::: "+$cache.user.name);
         return $cache.user;
-    }
+    };
 
     return {
         init: init,
