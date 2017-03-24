@@ -37,7 +37,7 @@ var FaceBook_feature= (function(FB_USER) {
 
     var thisvar ='Feature cont !!!';
     var $cache = {};
-    var myuser = {};
+    var myuser;
 
     var init = function(){
         initElements();
@@ -53,11 +53,11 @@ var FaceBook_feature= (function(FB_USER) {
         $cache.logoutButton = $('#userCont #logout');
         $cache.profileButton = $('#userCont #profile');
         //$cache.garageButton = $('#userCont #garage');
-        $cache.usericonhover =$('.usericon.hover');
-        $cache.usericonnohover =$('.usericon.nohover');
-        $cache.userpic =$('.userpic');
-        $cache.user= {id:'',name:'',email:''};
-
+        $cache.usericonhover = $('.usericon.hover');
+        $cache.usericonnohover = $('.usericon.nohover');
+        $cache.userpic = $('.userpic');
+        $cache.user = {id:'',name:'',email:''};
+        myuser = {};
     };
 
     var loadSDK = function(){
@@ -193,7 +193,7 @@ var featuresObj = {
         FaceBook_feature.init();
         mySlickInit.init();
 
-        console.log("**** FB User::: "+FaceBook_feature.getuser().name + " - "+ FaceBook_feature.cache.user.name + " + " + FaceBook_feature.FB_USER.name + " + "+ FaceBook_feature.myuser.name);
+        console.log("**** FB User::: "+ FaceBook_feature.getuser().name + " - "+ FaceBook_feature.cache.user.name + " + " + FaceBook_feature.FB_USER.name + " + "+ FaceBook_feature.myuser.name);
     }
 
 };
