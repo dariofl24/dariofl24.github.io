@@ -67,7 +67,7 @@ var FaceBook_feature= (function(FB_USER) {
         $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
             FB.init({
                 appId: '1812415742342004',
-                version: 'v2.7'
+                version: 'v2.8'
             });
 
             $('#loginbutton,#feedbutton').removeAttr('disabled');
@@ -187,13 +187,50 @@ var FaceBook_feature= (function(FB_USER) {
 
 })(FB_USER || {});
 
+
+var MyGarage_feature= (function($FB_USER) {
+
+    var garageURL = "https://dariofl24.github.io/mysupercars/user/garage.html";
+    var $cache = {};
+
+    var init = function(){
+        initElements();
+        bindEvents();
+    };
+
+    var initElements = function(){
+        $cache.garageButton = $('#userCont #garage');
+    };
+
+    var bindEvents = function(){
+
+      $cache.garageButton.click( function(){
+        $(location).attr('href',garageURL);
+      });
+
+    };
+
+    var loadGarage = function (){
+
+    };
+
+    return {
+        init: init
+    };
+
+})(FB_USER || {});
+
+
+
 var featuresObj = {
 
     init: function(){ 
         FaceBook_feature.init();
         mySlickInit.init();
+        MyGarage_feature.init();
 
-        console.log("**** FB User::: "+ FaceBook_feature.getuser().name + " - "+ FaceBook_feature.cache.user.name + " + " + FaceBook_feature.FB_USER.name + " + "+ FaceBook_feature.myuser.name);
+        console.log("**** FB User::: "+ FaceBook_feature.getuser().name + " - "+ FaceBook_feature.cache.user.name 
+            + " + " + FaceBook_feature.FB_USER.name + " + "+ FaceBook_feature.myuser.name);
     }
 
 };
