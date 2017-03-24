@@ -31,9 +31,9 @@ var mySlickInit = {
 
 };
 
-var FB_USER = {};
+var FB_USER;
 
-var FaceBook_feature= (function($FB_USER) {
+var FaceBook_feature= (function(FB_USER) {
 
     var thisvar ='Feature cont !!!';
     var $cache = {};
@@ -71,9 +71,7 @@ var FaceBook_feature= (function($FB_USER) {
 
             $('#loginbutton,#feedbutton').removeAttr('disabled');
 
-            FB.getLoginStatus(function(response) {
-                updateStatusCallback(response);
-            });
+            FB.getLoginStatus(updateStatusCallback);
         });
 
     };
@@ -86,20 +84,14 @@ var FaceBook_feature= (function($FB_USER) {
     var performFBLogin = function(){
         console.log("Login !!!");
 
-        FB.login(function(response) {
-           // Person is now logged
-          updateStatusCallback(response);
-        }, {scope: 'public_profile,email'});
+        FB.login(updateStatusCallback, {scope: 'public_profile,email'});
 
     };
 
     var performFBLogout = function(){
         console.log("Logout ...");
 
-        FB.logout(function(response) {
-           // Person is now logged out
-          updateStatusCallback(response);
-        });
+        FB.logout(updateStatusCallback);
 
     };
 
@@ -123,7 +115,7 @@ var FaceBook_feature= (function($FB_USER) {
                 console.log($cache.user.email);
                 console.log(resp.picture.data.url);
                 $cache.user.connectionStat= 'connected';
-                $FB_USER = $cache.user;
+                FB_USER = $cache.user;
                 showUserSection($cache.user.name,resp.picture.data.url);
             });
 
@@ -174,7 +166,7 @@ var FaceBook_feature= (function($FB_USER) {
         $cache.user.email = '';
         $cache.user.connectionStat= '';
         $cache.userNameSpan.text('');
-        $FB_USER = $cache.user;
+        FB_USER = $cache.user;
     };
 
     var getUser = function(){
@@ -185,10 +177,11 @@ var FaceBook_feature= (function($FB_USER) {
     return {
         init: init,
         getuser: getUser,
-        AAA: thisvar
+        AAA: thisvar,
+        FB_USER:FB_USER
     };
 
-})(FB_USER);
+})(FB_USER || {});
 
 var featuresObj = {
 
@@ -196,7 +189,7 @@ var featuresObj = {
         FaceBook_feature.init();
         mySlickInit.init();
 
-        console.log("**** FB User::: "+FaceBook_feature.getuser().name + " - "+ FB_USER.name);
+        console.log("**** FB User::: "+FaceBook_feature.getuser().name + " - "+ FB_USER.name + " + " + FaceBook_feature.FB_USER.name );
     }
 
 };
