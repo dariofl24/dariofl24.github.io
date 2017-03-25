@@ -247,13 +247,9 @@ var MyGarage_feature= (function() {
 
 })();
 
+var allFeatures = (function() { 
 
-
-var featuresObj = {
-
-    init: function(){ 
-
-        var that = this;
+    var init = function(){
 
         mySlickInit.init();
 
@@ -263,17 +259,23 @@ var featuresObj = {
             console.log("**** FB User::: "+ FaceBook_feature.getuser().name + " - "+ FaceBook_feature.cache.user.name 
             + " + " + FaceBook_feature.FBUSER.name + " + "+ FaceBook_feature.myuser.name);
 
-            that.initSync();
+            initSync();
         });
 
-        //MyGarage_feature.init();
-    },
+    };
 
-    initSync: function(){
-        //mySlickInit.init();
+    var initSync = function(){
         MyGarage_feature.init();
-    }
+    };
 
-};
+    return {
+
+        allinit: init
+
+    };
+
+})();
+
+
  
-$(document).on('ready',featuresObj.init);
+$(document).on('ready',allFeatures.allinit);
