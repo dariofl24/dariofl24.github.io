@@ -40,9 +40,13 @@ var FaceBook_feature= (function(FB_USER) {
     var myuser = {};
 
     var init = function(){
+        var deferredObject = $.Deferred();
+
         initElements();
-        loadSDK();
+        loadSDK(deferredObject);
         bindEvents();
+
+        return deferredObject.promise();
     };
 
     var initElements = function(){
@@ -60,7 +64,7 @@ var FaceBook_feature= (function(FB_USER) {
         myuser = {};
     };
 
-    var loadSDK = function(){
+    var loadSDK = function(deferredObject){
 
         $.ajaxSetup({ cache: true });
         
@@ -72,7 +76,10 @@ var FaceBook_feature= (function(FB_USER) {
 
             $('#loginbutton,#feedbutton').removeAttr('disabled');
 
-            FB.getLoginStatus(updateStatusCallback);
+            FB.getLoginStatus(function(response) {
+                updateStatusCallback(response,deferredObject);
+            });
+
         });
 
     };
@@ -85,18 +92,29 @@ var FaceBook_feature= (function(FB_USER) {
     var performFBLogin = function(){
         console.log("Login !!!");
 
-        FB.login(updateStatusCallback, {scope: 'public_profile,email'});
+        FB.login(updateStatusCallback1, {scope: 'public_profile,email'});
 
     };
 
     var performFBLogout = function(){
         console.log("Logout ...");
 
-        FB.logout(updateStatusCallback);
+        FB.logout(updateStatusCallback1);
 
     };
 
-    var updateStatusCallback = function (response){
+    var updateStatusCallback1 = function (response){
+        var mock = {
+            resolve: function(){
+                console.log("Done !!!");
+            }
+        };
+
+        updateStatusCallback(response,mock);
+
+    };
+
+    var updateStatusCallback = function (response,deferredObject){
 
         console.log("FB SDK LOADED AND INITIATED !!");
         
@@ -119,17 +137,25 @@ var FaceBook_feature= (function(FB_USER) {
                 FB_USER = $cache.user;
                 myuser= $cache.user;
                 showUserSection($cache.user.name,resp.picture.data.url);
+
+                deferredObject.resolve();
             });
 
         } else if (response.status === 'not_authorized') {
+
             console.log(response.status+" - The user is logged in to Facebook,but has not authenticated your app");
             showLoginButton();
             clearUserObj();
+            deferredObject.resolve();
+
         } else {
+
             console.log(response.status+" - The user isn't logged in to Facebook (CODE 3!)");
             showLoginButton();
             clearUserObj();
-        }
+            deferredObject.resolve();
+
+        }//if - else 
     };
 
     var showUserSection = function(username,picture){
@@ -225,12 +251,24 @@ var MyGarage_feature= (function($FB_USER) {
 var featuresObj = {
 
     init: function(){ 
-        FaceBook_feature.init();
-        mySlickInit.init();
-        MyGarage_feature.init();
 
-        console.log("**** FB User::: "+ FaceBook_feature.getuser().name + " - "+ FaceBook_feature.cache.user.name 
+        mySlickInit.init();
+        
+        FaceBook_feature.init().done(function () {
+
+            console.log("Executed after a delay");
+            console.log("**** FB User::: "+ FaceBook_feature.getuser().name + " - "+ FaceBook_feature.cache.user.name 
             + " + " + FaceBook_feature.FB_USER.name + " + "+ FaceBook_feature.myuser.name);
+
+            this.initSync();
+        });
+
+        //MyGarage_feature.init();
+    },
+
+    initSync: function(){
+        //mySlickInit.init();
+        MyGarage_feature.init();
     }
 
 };
