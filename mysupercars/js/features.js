@@ -33,7 +33,7 @@ var mySlickInit = {
 
 var FB_USER;
 
-var FaceBook_feature= (function(FB_USER) {
+var FaceBook_feature= (function($FB_USER) {
 
     var thisvar ='Feature cont !!!';
     var $cache = {};
@@ -134,7 +134,7 @@ var FaceBook_feature= (function(FB_USER) {
                 console.log($cache.user.email);
                 console.log(resp.picture.data.url);
                 $cache.user.connectionStat= 'connected';
-                FB_USER = $cache.user;
+                $FB_USER = $cache.user;
                 myuser= $cache.user;
                 showUserSection($cache.user.name,resp.picture.data.url);
 
@@ -194,7 +194,7 @@ var FaceBook_feature= (function(FB_USER) {
         $cache.user.email = '';
         $cache.user.connectionStat= '';
         $cache.userNameSpan.text('');
-        FB_USER = $cache.user;
+        $FB_USER = $cache.user;
     };
 
     var getUser = function(){
@@ -206,7 +206,7 @@ var FaceBook_feature= (function(FB_USER) {
         init: init,
         getuser: getUser,
         AAA: thisvar,
-        FB_USER: FB_USER,
+        FBUSER: $FB_USER,
         cache: $cache,
         myuser: myuser
     };
@@ -214,7 +214,7 @@ var FaceBook_feature= (function(FB_USER) {
 })(FB_USER || {});
 
 
-var MyGarage_feature= (function($FB_USER) {
+var MyGarage_feature= (function() {
 
     var garageURL = "https://dariofl24.github.io/mysupercars/user/garage.html";
     var $cache = {};
@@ -231,6 +231,7 @@ var MyGarage_feature= (function($FB_USER) {
     var bindEvents = function(){
 
       $cache.garageButton.click( function(){
+        console.log("==== garage :: "+FaceBook_feature.getuser().name);
         $(location).attr('href',garageURL);
       });
 
@@ -244,7 +245,7 @@ var MyGarage_feature= (function($FB_USER) {
         init: init
     };
 
-})(FB_USER || {});
+})();
 
 
 
@@ -252,15 +253,17 @@ var featuresObj = {
 
     init: function(){ 
 
+        var that = this;
+
         mySlickInit.init();
-        
+
         FaceBook_feature.init().done(function () {
 
             console.log("Executed after a delay");
             console.log("**** FB User::: "+ FaceBook_feature.getuser().name + " - "+ FaceBook_feature.cache.user.name 
-            + " + " + FaceBook_feature.FB_USER.name + " + "+ FaceBook_feature.myuser.name);
+            + " + " + FaceBook_feature.FBUSER.name + " + "+ FaceBook_feature.myuser.name);
 
-            this.initSync();
+            that.initSync();
         });
 
         //MyGarage_feature.init();
