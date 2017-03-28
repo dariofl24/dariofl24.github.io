@@ -256,7 +256,7 @@ var MyGarage_feature= (function() {
             function(data, status){
                 console.log("Data: " + data + "\nStatus: " + status);
 
-                if(status == 200){
+                if(status == 'success'){
 
                     $cache.blocker.hide();
                     $cache.listContainer.html(data);
