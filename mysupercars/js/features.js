@@ -228,7 +228,9 @@ var MyGarage_feature= (function() {
 
     var initElements = function(){
         $cache.garageButton = $('#userCont #garage');
-        $cache.garageserviceURL = '';
+        $cache.garageserviceURL = 'http://localhost:8080/MyWebApp/GarageService';
+        $cache.listContainer = $('#garageList');
+        $cache.blocker = $('div.blocker');
     };
 
     var bindEvents = function(){
@@ -244,17 +246,31 @@ var MyGarage_feature= (function() {
 
         if( $('#mygarage').length > 0 ){
 
-            $.post($cache.garageserviceURL,
-            {
+            console.log("+++ IN GARAGE");
+
+            $.post($cache.garageserviceURL,{
                 id: FaceBook_feature.getuser().id,
                 name: FaceBook_feature.getuser().name,
                 email: FaceBook_feature.getuser().email
             },
             function(data, status){
-                alert("Data: " + data + "\nStatus: " + status);
+                console.log("Data: " + data + "\nStatus: " + status);
+
+                if(status == 200){
+
+                    $cache.blocker.hide();
+                    $cache.listContainer.html(data);
+
+                }else{
+                    console.log("THERE IS NO GARAGE");
+                    $cache.listContainer.html("<li> <p>There is no garage for the current user</p> </li>");
+                }
+
             });
 
-        }//if
+        }else{
+            console.log("--- NOT IN GARAGE")
+        }//if - else
 
     };
 
@@ -283,6 +299,8 @@ var allFeatures = (function() {
 
     var initSync = function(){
         MyGarage_feature.init();
+
+        initLast();
     };
 
     var initLast = function(){
