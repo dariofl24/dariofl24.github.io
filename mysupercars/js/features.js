@@ -275,7 +275,8 @@ var MyGarage_feature= (function() {
     };
 
     return {
-        init: init
+        init: init,
+        loadgarage: loadGarage
     };
 
 })();
@@ -304,7 +305,7 @@ var allFeatures = (function() {
     };
 
     var initLast = function(){
-        MyGarage_feature.loadGarage();
+        MyGarage_feature.loadgarage();
     };
 
     return {
