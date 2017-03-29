@@ -62,6 +62,7 @@ var FaceBook_feature= (function($FB_USER) {
         $cache.userpic = $('.userpic');
         $cache.user = {id:'',name:'',email:''};
         myuser = {};
+        $cache.FBshareBnt = $('#FB_share');
     };
 
     var loadSDK = function(deferredObject){
@@ -87,6 +88,21 @@ var FaceBook_feature= (function($FB_USER) {
     var bindEvents = function(){
         $cache.loginButton.click(performFBLogin);
         $cache.logoutButton.click(performFBLogout);
+        $cache.FBshareBnt.click(performFBShare);
+    };
+
+    var performFBShare = function(){
+
+        console.log("SHARING URL: "+ $(location).attr('href'));
+
+        FB.ui({
+              method: 'share',
+              href: $(location).attr('href'),
+              quote:'Gavriella la tester'
+            }, function(response){
+                console.log("=post_id: "+response.post_id);
+                console.log("=error_message: "+response.error_message);
+            });
     };
 
     var performFBLogin = function(){
