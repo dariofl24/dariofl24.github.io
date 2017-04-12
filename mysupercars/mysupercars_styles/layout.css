@@ -122,6 +122,10 @@ p {
     }
 }
 
+.userOnlyhide {
+    display: none;
+}
 
-
-
+.userOnlyshow {
+    display: block;
+}

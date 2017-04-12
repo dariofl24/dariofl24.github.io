@@ -151,8 +151,10 @@ var FaceBook_feature= (function($FB_USER) {
                 console.log(resp.picture.data.url);
                 $cache.user.connectionStat= 'connected';
                 $FB_USER = $cache.user;
-                myuser.name= resp.name; 
+                myuser.name= resp.name;
+
                 showUserSection($cache.user.name,resp.picture.data.url);
+                showUserOnlyFeatures();
 
                 deferredObject.resolve();
             });
@@ -197,6 +199,10 @@ var FaceBook_feature= (function($FB_USER) {
             $cache.usericonhover.show();
             $cache.usericonnohover.hide();
         }
+    };
+
+    var showUserOnlyFeatures = function(){
+        $('.userOnlyhide').show();
     };
 
     var showLoginButton = function(){
@@ -247,6 +253,7 @@ var MyGarage_feature= (function() {
         $cache.garageserviceURL = 'http://localhost:8080/MyWebApp/GarageService';
         $cache.listContainer = $('#garageList');
         $cache.blocker = $('div.blocker');
+        $cache.add2garage = $('#add2garage');
     };
 
     var bindEvents = function(){
@@ -254,6 +261,10 @@ var MyGarage_feature= (function() {
       $cache.garageButton.click( function(){
         console.log("==== garage :: "+FaceBook_feature.getuser().name);
         $(location).attr('href',garageURL);
+      });
+
+      $cache.add2garage.click( function(){
+        
       });
 
     };
