@@ -318,6 +318,8 @@ var allFeatures = (function() {
 
     var init = function(){
 
+        $('.userOnlyhide').hide();
+
         mySlickInit.init();
 
         FaceBook_feature.init().done(function () {
