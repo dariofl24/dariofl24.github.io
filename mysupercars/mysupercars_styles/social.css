@@ -28,6 +28,11 @@
   color: white;
 }
 
+.fa-car {
+  background: #607D8B;
+  color: white;
+}
+
 .fa-linkedin {
   background: #007bb5;
   color: white;
@@ -122,7 +127,7 @@
 div.socialIconsCont {
   position: fixed;
   top: 40%;
-  padding-left: 18px;
+  padding-left: 25px;
 }
 
 
