@@ -163,6 +163,7 @@ var FaceBook_feature= (function($FB_USER) {
 
             console.log(response.status+" - The user is logged in to Facebook,but has not authenticated your app");
             showLoginButton();
+            hideUserOnlyFeatures();
             clearUserObj();
             deferredObject.resolve();
 
@@ -170,6 +171,7 @@ var FaceBook_feature= (function($FB_USER) {
 
             console.log(response.status+" - The user isn't logged in to Facebook (CODE 3!)");
             showLoginButton();
+            hideUserOnlyFeatures();
             clearUserObj();
             deferredObject.resolve();
 
@@ -203,6 +205,10 @@ var FaceBook_feature= (function($FB_USER) {
 
     var showUserOnlyFeatures = function(){
         $('.userOnlyhide').show();
+    };
+
+    var hideUserOnlyFeatures = function(){
+        $('.userOnlyhide').hide();
     };
 
     var showLoginButton = function(){
@@ -270,7 +276,7 @@ var MyGarage_feature= (function() {
 
     var performAdd2Garage = function(){
 
-        var pid = this.data('pageid');
+        var pid = $cache.add2garage.data('pageid');
         console.log("PAGE-ID:: "+pid);
 
     };
