@@ -258,14 +258,20 @@ var MyGarage_feature= (function() {
 
     var bindEvents = function(){
 
-      $cache.garageButton.click( function(){
+      $cache.garageButton.click(performGo2Garage);
+      $cache.add2garage.click(performAdd2Garage);
+
+    };
+
+    var performGo2Garage = function(){
         console.log("==== garage :: "+FaceBook_feature.getuser().name);
         $(location).attr('href',garageURL);
-      });
+    };
 
-      $cache.add2garage.click( function(){
-        
-      });
+    var performAdd2Garage = function(){
+
+        var pid = this.data('pageid');
+        console.log("PAGE-ID:: "+pid);
 
     };
 
