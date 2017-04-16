@@ -260,6 +260,7 @@ var MyGarage_feature= (function() {
         $cache.listContainer = $('#garageList');
         $cache.blocker = $('div.blocker');
         $cache.add2garage = $('#add2garage');
+        $cache.snackbar = $('#snackbar');
     };
 
     var bindEvents = function(){
@@ -278,6 +279,12 @@ var MyGarage_feature= (function() {
 
         var pid = $cache.add2garage.data('pageid');
         console.log("PAGE-ID:: "+pid);
+
+        $cache.snackbar.addClass("show");
+        
+        setTimeout(function(){ 
+            $cache.snackbar.removeClass("show");
+        }, 3000);
 
     };
 
