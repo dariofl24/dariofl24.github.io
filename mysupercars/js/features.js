@@ -98,7 +98,7 @@ var FaceBook_feature= (function($FB_USER) {
         FB.ui({
               method: 'share',
               href: $(location).attr('href'),
-              quote:'Gavriella la tester'
+              quote:'Look what I found at Super Cars DB !'
             }, function(response){
                 console.log("=post_id: "+response.post_id);
                 console.log("=error_message: "+response.error_message);
