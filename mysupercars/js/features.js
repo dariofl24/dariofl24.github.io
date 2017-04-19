@@ -98,7 +98,7 @@ var FaceBook_feature= (function($FB_USER) {
         FB.ui({
               method: 'share',
               href: $(location).attr('href'),
-              picture:'https://dariofl24.github.io/mysupercars/cars_images/Pagani-Huayra%20Roadster-2017/details/social.jpg',
+              display:'popup',
               quote:'Look what I found at Super Cars DB !'
             }, function(response){
                 console.log("=post_id: "+response.post_id);
