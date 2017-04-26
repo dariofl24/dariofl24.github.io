@@ -9,7 +9,10 @@
   <script src="https://code.jquery.com/ui/1.7.1/jquery-ui.js"></script>
   <script>
   $( function() {
-    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true
+    });
   } );
   </script>
 </head>
