@@ -1,0 +1,100 @@
+<iscache type="relative" hour="24"/>
+
+<isinclude template="util/modules"/>
+<isinclude template="util/mobileModules.isml">
+
+<isscript>
+    importScript("constants.ds");
+    importScript("util/ViewHelpers.ds");
+    importScript("util/SessionUtils.ds");
+    converse.utils.session.setCurrentPageTitleInSession(pdict.CurrentSession, pdict.CurrentHttpParameterMap );
+</isscript>
+
+<isset name="isCheckout" value="${pdict.CurrentHttpParameterMap.isCheckout.booleanValue}" scope="page"/>
+
+<div id="header" role="banner" data-overlay-visible="true" data-overlay-order="1">
+    <header>
+        <div id="black-bar">
+            <div class="header-country-selector">
+                <isif condition="${!isCheckout}">
+                    <isinclude template="components/countryselector"/>
+                </isif>
+            </div>
+            <div class="promo-message">
+                <isinclude url="${URLUtils.url('PromotionsBanner-GlobalPromo', 'callout_message_type', 'Global')}"/>
+            </div>
+            <isif condition="${!isCheckout}">
+                <div id="search-bar" class="header-search clearfix" data-slider-area="search-panel" data-overlay-visible="true" data-overlay-order="4">
+                    <isinclude template="search/simplesearch"/>
+                </div>
+            </isif>
+        </div>
+
+        <a href="#main" class="visually-hidden">Skip to content</a>
+
+        <div class="header-logo desktop <isif condition="${isCheckout}">cart-link</isif>" data-overlay-visible="true" data-overlay-order="3">
+            <isif condition="${isCheckout}">
+                <a href="${URLUtils.https('Cart-Show')}" title="${Resource.msg('minicart.viewcart','checkout',null)}" class="back-cart-link">
+                    ${Resource.msg('checkout.backtocart', 'checkout', null)}
+                </a>
+            </isif>
+            <isinclude template="components/header/headerlogo"/>
+        </div>
+
+        <div class="icon-tray desktop">
+            <isinclude url="${URLUtils.url('Cart-MiniCart')}"/>
+
+            <isinclude url="${URLUtils.url('Home-IncludeHeaderCustomerInfo')}"/>
+             
+            <isif condition="${isSite('US')}">
+                <isset name="helpPageURL" value="${URLUtils.url('Page-Show','cid', 'online-shopping-page')}" scope="page" />
+            <iselse>
+                <isset name="helpPageURL" value="${URLUtils.url('Page-Show','cid', 'Your Order Status-FAQ')}" scope="page" />
+            </isif>
+            <div class="faq-div" icon-text-attr="">
+	            <a class="faq-header-link" title="${Resource.msg('global.helplink','locale',null)}" href="${helpPageURL}">
+	            	<span class="faq-link">${Resource.msg('global.helplink','locale',null)}</span>
+	            </a>
+            </div>
+            <isif condition="${isSite('US')}">
+                <isgenericcontent template="livechat/components/livechatheaderbutton.isml"/>
+            </isif>
+        </div>
+
+        <isif condition="${!isCheckout}">
+            <div id="navigation" role="navigation" data-overlay-visible="true" data-overlay-order="2">
+                <nav>
+                    <div class="visually-hidden navigation-header">Catalog Navigation</div>
+                    <isinclude url="${URLUtils.url('Home-IncludeHeaderMenu')}"/>
+                </nav>
+            </div>
+        </isif>
+
+        <div id="mobile-header">
+            <isif condition="${isCheckout}">
+                <a href="${URLUtils.https('Cart-Show')}" title="${Resource.msg('minicart.viewcart','checkout',null)}" class="back-cart-icon"></a>
+            <iselse>
+                <div class="hamburg"></div>
+            </isif>
+            <div class="icon-tray">
+                <span id="mobileMiniCart"><isinclude url="${URLUtils.url('Cart-MiniCart')}"/></span>
+
+                <isif condition="${!isCheckout}">
+                    <div id="search-button"></div>
+                </isif>
+            </div>
+            <div class="header-logo" data-overlay-visible="true" data-overlay-order="3">
+                <isinclude template="components/header/headerlogo"/>
+            </div>
+        </div>
+    </header>
+</div>
+
+<div id="slider" data-overlay-visible="true">
+    <div id="minicart-panel-container"
+         data-slider-area="minicart-panel"></div>
+    <div data-slider-area="login-panel">
+        <isinclude url="${URLUtils.url('Account-LoginOrRegister', 'doNotShowSubscribeMsgFlag', pdict.CurrentHttpParameterMap.doNotShowSubscribeMsgFlag.booleanValue)}"/>
+    </div>
+</div>
+

@@ -1,0 +1,74 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+    
+    var xmlToString = function(el : XML) : String {
+        return empty(el) ? "" : el.toString();
+    };
+    
+    var AbstractUPSResponse = Class.extend({
+        
+        init: function(responseText : String) {
+            this.responseXML = new XML(responseText);
+            
+            this.initResponseStatus();
+            this.initError();
+        },
+        
+        initResponseStatus: function() {
+            this.responseStatusCode = Number(this.responseXML['Response']['ResponseStatusCode'].toString());
+            this.responseStatusDescription = this.responseXML['Response']['ResponseStatusDescription'].toString();
+        },
+        
+        initError: function() {
+            var errorXML : XML = this.responseXML['Response']['Error'];
+            
+            this.errorDescription = xmlToString(errorXML['ErrorDescription']);
+            this.errorCode = xmlToString(errorXML['ErrorCode']);
+            this.errorSeverity = xmlToString(errorXML['ErrorSeverity']);
+        },
+        
+        getResponseStatusCode: function() : Number {
+            return this.responseStatusCode; 
+        },
+        
+        getResponseStatusDescription: function() : String {
+            return this.responseStatusDescription; 
+        },
+        
+        isOK: function() : Boolean {
+            return this.getResponseStatusCode() === 1;
+        },
+        
+        getErrorDescription: function() : String {
+            return this.errorDescription;
+        },
+        
+        getErrorCode: function() : String {
+            return this.errorCode;
+        },
+        
+        getErrorSeverity: function() : String {
+            return this.errorSeverity;
+        },
+        
+        createResult: function() : Object {
+            return {
+                statusCode: this.getResponseStatusCode(),
+                statusDescription: this.getResponseStatusDescription(),
+                errorDescription: this.getErrorDescription(),
+                errorCode: this.getErrorCode(),
+                errorSeverity: this.getErrorSeverity()
+            };
+        }
+        
+    }); 
+    
+    var ns = Namespace.extendFromString(integration, "ups.objects");
+    Namespace.extend(ns, { AbstractUPSResponse: AbstractUPSResponse });
+        
+})();

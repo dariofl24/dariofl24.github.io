@@ -1,0 +1,13 @@
+<isdecorate template="content/home/pt_storefront">
+    <isinclude template="util/modules"/>
+
+    <div id="mr-taylor-header" class="page-header">
+        <h1>${Resource.msg('mrtaylorstore.signup','mrtaylorstore',null)}</h1>
+    </div>
+    
+    <div id="mr-taylor-container" class="clearfix">
+        <isif condition="${!empty(pdict.ErrorKey)}">
+            <span class="error">${Resource.msg(pdict.ErrorKey,'mrtaylorstore',null)}</span>
+        </isif>
+    </div>
+</isdecorate>

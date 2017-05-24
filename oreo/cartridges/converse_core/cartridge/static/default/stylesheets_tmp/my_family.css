@@ -1,0 +1,228 @@
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* my family */
+/* ------------------------------------- */
+/* line 26, ../css/package/sass/my_family.scss */
+.pt_family .hc {
+  margin: 0px auto;
+  max-width: 83.41667em;
+}
+/* line 30, ../css/package/sass/my_family.scss */
+.pt_family .hc .hc-content {
+  width: 64.16667em;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 30, ../css/package/sass/my_family.scss */
+  .pt_family .hc .hc-content {
+    width: auto;
+    padding-left: 1.66667em;
+    padding-right: 1.66667em;
+  }
+}
+/* line 40, ../css/package/sass/my_family.scss */
+.pt_family .family-content .header {
+  padding: 2em 0;
+  border-bottom: 1px solid #E6E5DD;
+}
+/* line 44, ../css/package/sass/my_family.scss */
+.pt_family .family-content .header h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 44, ../css/package/sass/my_family.scss */
+  .pt_family .family-content .header h1 {
+    text-align: center;
+  }
+}
+/* line 53, ../css/package/sass/my_family.scss */
+.pt_family .family-content .description {
+  padding-top: 3.33333em;
+  padding-bottom: 3.33333em;
+  border-bottom: 1px solid #E6E5DD;
+}
+/* line 56, ../css/package/sass/my_family.scss */
+.pt_family .family-content .description p {
+  width: 70%;
+  font-size: 1em;
+  line-height: 1.5em;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 56, ../css/package/sass/my_family.scss */
+  .pt_family .family-content .description p {
+    width: auto;
+  }
+}
+/* line 71, ../css/package/sass/my_family.scss */
+.pt_family .family-content .family-member-list li {
+  padding-top: 3.33333em;
+  padding-bottom: 3.33333em;
+  border-bottom: 1px solid #E6E5DD;
+  position: relative;
+  overflow: hidden;
+}
+/* line 76, ../css/package/sass/my_family.scss */
+.pt_family .family-content .family-member-list li h2.member-name {
+  width: 30%;
+  font-size: 1.5em;
+  font-weight: bold;
+  float: left;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 76, ../css/package/sass/my_family.scss */
+  .pt_family .family-content .family-member-list li h2.member-name {
+    width: auto;
+    float: none;
+    margin-bottom: 0.83333em;
+  }
+}
+/* line 89, ../css/package/sass/my_family.scss */
+.pt_family .family-content .family-member-list li .member-details {
+  width: 38%;
+  float: left;
+  word-break: break-all;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 89, ../css/package/sass/my_family.scss */
+  .pt_family .family-content .family-member-list li .member-details {
+    width: auto;
+    float: none;
+    margin-bottom: 1.25em;
+  }
+  /* line 99, ../css/package/sass/my_family.scss */
+  .pt_family .family-content .family-member-list li .member-details:last-child {
+    margin-bottom: 0;
+  }
+}
+/* line 104, ../css/package/sass/my_family.scss */
+.pt_family .family-content .family-member-list li .member-details p {
+  font-size: 1.08333em;
+  line-height: 1.38462em;
+}
+/* line 109, ../css/package/sass/my_family.scss */
+.pt_family .family-content .family-member-list li .member-details strong {
+  font-weight: bold;
+}
+/* line 114, ../css/package/sass/my_family.scss */
+.pt_family .family-content .family-member-list li .re-invite-member-button {
+  display: inline-block;
+}
+/* line 118, ../css/package/sass/my_family.scss */
+.pt_family .family-content .family-member-list li .delete-member-button {
+  float: right;
+  margin-top: -2.25em;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 118, ../css/package/sass/my_family.scss */
+  .pt_family .family-content .family-member-list li .delete-member-button {
+    margin-top: -1em;
+  }
+}
+/* line 127, ../css/package/sass/my_family.scss */
+.pt_family .family-content .family-member-list li .message {
+  clear: both;
+  padding-top: 1.33333em;
+  color: #940000;
+  visibility: hidden;
+}
+/* line 134, ../css/package/sass/my_family.scss */
+.pt_family .family-content .family-member-list li .visible {
+  visibility: visible;
+}
+/* line 140, ../css/package/sass/my_family.scss */
+.pt_family .family-content .new-member {
+  padding-top: 3.33333em;
+  padding-bottom: 3.33333em;
+  border-bottom: 1px solid #E6E5DD;
+  border-bottom: 0;
+}
+/* line 144, ../css/package/sass/my_family.scss */
+.pt_family .family-content .new-member .button {
+  display: inline-block;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 140, ../css/package/sass/my_family.scss */
+  .pt_family .family-content .new-member {
+    text-align: center;
+  }
+}
+/* line 153, ../css/package/sass/my_family.scss */
+.pt_family .family-content .new-member .add-new-member-button {
+  font-size: 1.33333em;
+  font-weight: bold;
+}
+/* line 162, ../css/package/sass/my_family.scss */
+.pt_family .family-content .new-member .add-new-member-form {
+  overflow: hidden;
+  display: none;
+}
+/* line 166, ../css/package/sass/my_family.scss */
+.pt_family .family-content .new-member .add-new-member-form h2 {
+  width: 30%;
+  font-size: 1.5em;
+  font-weight: bold;
+  float: left;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 166, ../css/package/sass/my_family.scss */
+  .pt_family .family-content .new-member .add-new-member-form h2 {
+    display: none;
+  }
+}
+/* line 177, ../css/package/sass/my_family.scss */
+.pt_family .family-content .new-member .add-new-member-form .form-fields {
+  float: left;
+  width: 38%;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 177, ../css/package/sass/my_family.scss */
+  .pt_family .family-content .new-member .add-new-member-form .form-fields {
+    float: none;
+    width: auto;
+  }
+  /* line 185, ../css/package/sass/my_family.scss */
+  .pt_family .family-content .new-member .add-new-member-form .form-fields .first-name-row {
+    clear: none;
+    float: left;
+    width: 46%;
+  }
+  /* line 191, ../css/package/sass/my_family.scss */
+  .pt_family .family-content .new-member .add-new-member-form .form-fields .last-name-row {
+    clear: none;
+    float: right;
+    width: 46%;
+  }
+}
+/* line 199, ../css/package/sass/my_family.scss */
+.pt_family .family-content .new-member .add-new-member-form .button-row {
+  margin-left: 30%;
+  width: 50%;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 199, ../css/package/sass/my_family.scss */
+  .pt_family .family-content .new-member .add-new-member-form .button-row {
+    margin-left: 0;
+    width: auto;
+  }
+}
+/* line 208, ../css/package/sass/my_family.scss */
+.pt_family .family-content .new-member .add-new-member-form .button-row .apply-button {
+  float: left;
+}
+/* line 212, ../css/package/sass/my_family.scss */
+.pt_family .family-content .new-member .add-new-member-form .button-row .cancel-button {
+  float: right;
+}
+/* line 216, ../css/package/sass/my_family.scss */
+.pt_family .family-content .new-member .add-new-member-form .button-row .apply-button, .pt_family .family-content .new-member .add-new-member-form .button-row .cancel-button {
+  width: 48%;
+  font-size: 1.33333em;
+  line-height: 1.125em;
+}

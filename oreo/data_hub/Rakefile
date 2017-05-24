@@ -1,0 +1,82 @@
+require 'bundler/setup'
+require 'rake'
+require 'rspec/core/rake_task'
+
+RSpec::Core::RakeTask.new(:spec) do |t|
+    t.pattern = "spec/*_spec.rb"
+    t.rspec_opts = %w(-fs --color)
+end
+
+desc "Copies env(dev|development|test|production) configuration files. Default env=dev"
+task :setup, [:env] do |t, args|
+    args.with_defaults(:env => 'dev')
+    setup_env = args[:env]
+    if setup_env == 'development'
+      setup_env = 'dev'
+    end
+
+    "Copying default env configuration files"
+    `mkdir -p log`
+    `mkdir -p config`
+    `find config -name "*.yaml" -type f | xargs --no-run-if-empty rm`
+    `cp ./config_templates/#{setup_env}/*.yaml ./config/`
+end
+
+desc "Rolls back the db to the last migration"
+task :rollback, [:env] => [:setup, :db_connect] do |t, args|
+    args.with_defaults(:env => 'dev')
+    ActiveRecord::Migrator.rollback('./migrations')
+end
+
+desc "Runs all the migrations pending. Default env=dev"
+task :migrate, [:env] => [:setup, :db_connect] do |t, args|
+    args.with_defaults(:env => 'dev')
+    ActiveRecord::Migrator.migrate('./migrations', nil)
+end
+
+desc "Backup Database"
+task :backup_database, [:file_name, :env] => [:setup] do |t, args|
+    require 'open4'
+    require 'psych'
+    
+    args.with_defaults(:env => 'dev')
+    db_config = Psych.load_file './config/database.yaml'
+    command="pg_dump #{db_config['database']} > #{args[:file_name]}.sql"
+    pid, stdin, stdout, stderr = Open4::popen4(command)
+    ignored, status = Process::waitpid2 pid
+    error_result = stderr.read.strip
+    fail error_result if status.exitstatus != 0
+end
+
+desc "Backup Logs"
+task :backup_logs, [:file_name] do |t, args|
+    require 'open4'
+
+    if Dir["log/*.log"].empty?
+        puts "There are no log files found in log directoy"
+        next
+    end
+    command="cd log && tar -zcvf #{args[:file_name]}.tar.gz *.log"
+    pid, stdin, stdout, stderr = Open4::popen4(command)
+    ignored, status = Process::waitpid2 pid
+    error_result = stderr.read.strip
+    fail error_result if status.exitstatus != 0
+end
+
+desc "Connects to the database server"
+task :db_connect do
+    $:.unshift File.join(File.dirname(__FILE__), 'lib')
+     
+    require 'psych'
+    require 'data_hub/context'
+    require 'foreigner'
+    context = DataHub::Context.new(__FILE__)
+    context.connect_db
+    
+    Foreigner.load
+end
+
+namespace :tests do
+    desc "Run All Tests"
+    task :run => :spec
+end

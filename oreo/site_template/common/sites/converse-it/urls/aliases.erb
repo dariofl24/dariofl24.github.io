@@ -1,0 +1,31 @@
+
+{
+    "__version": "1",
+    "settings": {
+        "http-host" : "<%=host%>",
+        "https-host" : "<%=host%>",
+        "site-path" : "it",
+        "default" : "false"
+    },
+    "www.converse.it" : [
+        {
+            "host" : "www.converse.com",
+            "path" : "it"
+        }
+    ],
+    "converse.it" : [
+        {
+            "host" : "www.converse.com",
+            "path" : "it"
+        }
+    ],
+    "converse.com" : [
+        {
+            "host" : "www.converse.com"
+        },
+        {
+            "if-site-path" : "it",
+            "pipeline" : "Default-Start"
+        }
+    ]
+}

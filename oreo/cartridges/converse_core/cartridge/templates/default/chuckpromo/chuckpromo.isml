@@ -1,0 +1,55 @@
+<isdecorate template="content/home/pt_storefront">
+
+    <isinclude template="util/modules"/>
+    <isinclude template="product/pdp/modules"/>
+
+    <isscript>
+        importScript("converse_core:constants.ds");
+        importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+        importScript("converse_core:product/ProductImageResolver.ds");
+        importScript("converse_core:product/ProductUtils.ds");
+
+        var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+        var EnableSharing = FeatureToggleService.getFeature("gigya-integration").isEnabled();
+
+        var ProductImageResolver = converse.product.ProductImageResolver;
+        var productImage = ProductImageResolver.getProductImage(pdict.VariantToDisplay, 'social', 0);
+        var productImageURL = productImage ? productImage.getURL() : "";
+        var productURL = pdict.ProductToDisplayInfo.productURL;
+
+        var isGigyaEnabled = EnableSharing ? '' : 'no-gigya-integration';
+    </isscript>
+
+    <link href="//fonts.googleapis.com/css?family=Arvo:400,700" rel="stylesheet" type="text/css">
+    <link href="${URLUtils.staticURL('chuckII/css/landing.css')}" rel="stylesheet"/>
+    <link href="${URLUtils.staticURL('css/lib/select2.min.css')}" rel="stylesheet"/>
+
+    <isset name="productInfo" value="${pdict.ProductToDisplayInfo}" scope="page" />
+
+    <div id="chuckTwo" class="presale">
+        <isinclude template="chuckpromo/components/sections/title_bar" />
+        <isinclude template="chuckpromo/components/sections/animation_wrapper" />
+
+        <div class="page-contents">
+            <isinclude template="chuckpromo/components/sections/summary" />
+            <isinclude template="chuckpromo/components/sections/details_slider" />
+
+            <div id="chuckTwoShop" class="product">
+                <isinclude template="chuckpromo/components/presale" />
+            </div>
+        </div>
+
+        <div id="orientationMsg"></div>
+    </div>
+
+    <script src="${URLUtils.staticURL('/chuckII/js/detailSliderPlugin.min.js')}"></script>
+    <script src="${URLUtils.staticURL('/chuckII/js/landing.min.js')}"></script>
+    <script src="${URLUtils.staticURL('/js/onload_chuckpromo.js')}"></script>
+    <script src="${URLUtils.staticURL('/js/lib/select2.js')}"></script>
+    <script src="${URLUtils.staticURL('/js/onload_tooltips.js')}"></script>
+    <isif condition="${pdict.CurrentSession.custom.device == 'desktop'}">
+	    <script>
+	      $('.swatch').tooltip();
+	    </script>
+    </isif>
+</isdecorate>

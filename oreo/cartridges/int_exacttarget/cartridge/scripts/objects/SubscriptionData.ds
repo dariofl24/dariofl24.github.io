@@ -1,0 +1,189 @@
+importPackage(dw.system);
+importPackage(dw.value);
+importPackage(dw.util);
+
+importPackage(dw.order);
+importPackage(dw.customer);
+importPackage(dw.object);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:util/TimeUtils.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_exacttarget:ExactTargetConstants.ds");
+importScript("int_exacttarget:objects/SubscriptionInterest.ds");
+
+(function() {
+
+    var ET_NS = integration.exacttarget;
+    var OBJ_NS = ET_NS.objects;
+    
+    var ExactTargetConstants = ET_NS.ExactTargetConstants;
+    var PropertyNames = ExactTargetConstants.PropertyNames;
+    var Gender = ExactTargetConstants.Gender;
+    var MaxNameLength = ExactTargetConstants.MaxNameLength;
+    var DateFormat = ExactTargetConstants.DateFormat;
+    
+    var EMPTY_STRING = "";
+    var TRUE = "True";
+    
+    var _deps = {
+        SubscriptionInterest: OBJ_NS.SubscriptionInterest
+    };
+    
+    var SubscriptionData = Class.extend({
+        hasInterests: function() : Boolean {
+            for each(let interest in this.interests) {
+               if(interest.selected) {
+                   return true;
+               }
+            }
+            
+            return false;
+        },
+
+        toMap: function() : Map {
+            var propertyMap : Map = new HashMap();
+            
+            propertyMap.put(PropertyNames.EmailAddress, this.email);
+            propertyMap.put(PropertyNames.FirstName, truncate(this.firstName));
+            propertyMap.put(PropertyNames.LastName, truncate(this.lastName));
+            propertyMap.put(PropertyNames.Country, this.country);
+            propertyMap.put(PropertyNames.ZipCode, this.zip);
+            propertyMap.put(PropertyNames.OrderExists, this.orderExists);
+            propertyMap.put(PropertyNames.SegmentID, this.segmentId);
+            propertyMap.put(PropertyNames.SignupSource, this.signupSource);
+            propertyMap.put(PropertyNames.SiteCode, converse.constants.SiteCode[Site.getCurrent().getID()]);
+            propertyMap.put(PropertyNames.UpdateDate, TimeUtils.formatDateUS(System.calendar.time));
+            
+            if (this.dateOfBirth) {
+                propertyMap.put(PropertyNames.DateOfBirth, TimeUtils.formatDate(this.dateOfBirth, DateFormat));
+            }
+            
+            if (this.gender) {
+                propertyMap.put(PropertyNames.Gender, this.gender);
+            }
+            
+            for each(let interest in this.interests) {
+                propertyMap.put(interest.type, interest.selected);
+            }
+            
+            return propertyMap;
+        }
+    });
+
+    SubscriptionData._deps = _deps;
+
+    SubscriptionData.createFromProfile = function(customer: Customer, interests: Array) : Object {
+        var subscriptionData = new SubscriptionData();
+        var profile = customer.profile;
+
+        subscriptionData.firstName = getOrDefault(profile.firstName, EMPTY_STRING);
+        subscriptionData.lastName = getOrDefault(profile.lastName, EMPTY_STRING);
+        subscriptionData.email = profile.email;
+        subscriptionData.zip = getOrDefault(profile.custom.postalCode, EMPTY_STRING);
+        subscriptionData.gender = mapProfileToExactTargetGender(profile.gender);
+        subscriptionData.dateOfBirth = profile.birthday;
+        subscriptionData.country = getCountryCode(customer);
+        subscriptionData.orderExists = hasOrders(customer);
+        subscriptionData.interests = interests || [];
+        subscriptionData.segmentId = ExactTargetConstants.DefaultSegmentId;
+        subscriptionData.signupSource = ExactTargetConstants.DefaultSignupSource;
+        
+        return subscriptionData;
+    }
+
+    SubscriptionData.createFromMap = function(properties: Map) : Object {
+        var subscriptionData = new SubscriptionData();
+        subscriptionData.firstName = getOrDefault(properties[PropertyNames.FirstName]);
+        subscriptionData.lastName = getOrDefault(properties[PropertyNames.LastName]);
+        subscriptionData.email = getOrDefault(properties[PropertyNames.EmailAddress]);
+        subscriptionData.zip = getOrDefault(properties[PropertyNames.ZipCode]);
+        subscriptionData.gender = getOrDefault(properties[PropertyNames.Gender]);
+        subscriptionData.dateOfBirth = parseDate(properties[PropertyNames.DateOfBirth]);
+        subscriptionData.segmentId = getOrDefault(properties[PropertyNames.SegmentID]);
+        subscriptionData.signupSource = getOrDefault(properties[PropertyNames.SignupSource]);
+        subscriptionData.country = getOrDefault(properties[PropertyNames.Country]);
+        subscriptionData.orderExists = getOrDefault(properties[PropertyNames.OrderExists], false);
+        subscriptionData.interests = getInterestsFromDictionary(properties);
+        
+        return subscriptionData;
+    }
+
+    SubscriptionData.getAllPropertyNames = function() : Array {
+        var propertyNames = [];
+        
+        for(let name in PropertyNames) {
+            propertyNames.push(name);
+        }
+        
+        var interestPropertyNames = getInterestPropertyNames();
+        
+        return propertyNames.concat(interestPropertyNames);
+    }
+
+    Namespace.extend(OBJ_NS, { SubscriptionData: SubscriptionData });
+    
+    function getInterestPropertyNames() : Array {
+        var allInterests: Array = _deps.SubscriptionInterest.fetchAllInterests();
+        
+        return allInterests.map(function(interest) {
+            return interest.type;
+        });
+    }
+    
+    function getInterestsFromDictionary(properties: Map) : Array {
+        var interests: Array = [];
+        var interestPropertyNames: Array = getInterestPropertyNames();
+        
+        interestPropertyNames.forEach(function(name) {
+            var isSelected = properties[name] === TRUE;
+            var subscriptionInterest: Object = _deps.SubscriptionInterest.createByInterestType(name, isSelected);
+            interests.push(subscriptionInterest);
+        });
+        
+        return interests;
+    }
+
+    function getCountryCode(customer: Customer) : String {
+        if (customer.profile.custom.isDomestic) {
+             return "US";
+        }
+
+        var addressBook = customer.addressBook;
+        var countryCode = addressBook && addressBook.preferredAddress && addressBook.preferredAddress.countryCode;
+        
+        return (countryCode && countryCode.displayValue) || EMPTY_STRING;
+    }
+
+    function hasOrders(customer: Customer) : Boolean {
+        return customer.orderHistory.getOrderCount() > 0;
+    }
+
+    function mapProfileToExactTargetGender(gender: EnumValue) : String {
+        switch(gender.value) {
+            case 1: return Gender.Male;
+            case 2: return Gender.Female;
+        }
+    }
+    
+    function parseDate(dateStr: String) : Date {
+        if(dateStr) {
+            let calendar: Calendar = new Calendar();
+            calendar.parseByFormat(dateStr, DateFormat);
+            return calendar.getTime();
+        }
+        
+        return null;
+    }
+    
+    function getOrDefault(value: Object, defaultValue: Object) {
+        return value || defaultValue;
+    }
+
+    function truncate(str: String) {
+        return str.length <= MaxNameLength ? str : str.substring(0, MaxNameLength);
+    }
+
+})();

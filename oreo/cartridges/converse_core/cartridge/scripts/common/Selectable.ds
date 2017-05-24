@@ -1,0 +1,68 @@
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("constants.ds");
+importScript("common/libInheritance.ds");
+importScript("common/libNamespace.ds");
+
+(function() {
+    
+    let Selectable = Class.extend({
+        
+        init: function(original : Object) {
+            this.original = original;
+            this.selected = false;
+            this.children = new ArrayList(); 
+        },
+        
+        getOriginal: function() : Object {
+            return this.original;
+        },
+        
+        isLeafNode: function() : Boolean {
+            return empty(this.getChildren());
+        },
+        
+        hasSelectedItems: function() : Boolean {
+            return !this.getSelectedItems().isEmpty();
+        },
+        
+        getSelectedItems: function() : List {
+            let selectedItems : List = new ArrayList();
+            if (this.isLeafNode() && this.isSelected()) {
+                selectedItems.push(this.getOriginal());
+            } else {
+                for each (let child in this.getChildren()) {
+                    selectedItems.addAll(child.getSelectedItems());
+                }
+            }
+            return selectedItems;
+        }, 
+        
+        isSelected: function(): Boolean {
+            return this.selected;
+        },
+        
+        setSelected: function(selected: Boolean) {
+            this.selected = selected;
+            if (!empty(this.getChildren())) {
+                for each (let child in this.getChildren()) {
+                    child.setSelected(selected);
+                }
+            }
+        },
+        
+        getChildren: function() : List {
+            return this.children;
+        },
+        
+        hasChildren: function() : Boolean {
+            return 0 < this.getChildren().size(); 
+        }
+        
+    });
+    
+    var ns = Namespace.extendFromString(converse, "common");
+    Namespace.extend(ns, { Selectable: Selectable });
+    
+})();

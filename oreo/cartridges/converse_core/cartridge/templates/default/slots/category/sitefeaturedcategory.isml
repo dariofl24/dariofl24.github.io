@@ -1,0 +1,24 @@
+<isscript>
+    importScript("converse_core:util/ViewHelpers.ds");
+</isscript>
+<isif condition="${slotcontent != null}">
+    <div class="site-featured-category">
+        <div class="primary-focus">
+            <div class="category-caption">
+                <h1 class="caption">
+                    <span><isprint value="${slotcontent.calloutMsg}"/></span>
+                </h1>
+            </div>
+            <isloop items="${slotcontent.content}" var="featuredCategory" status="fcatstatus">
+                <h2 class="category-name">${featuredCategory.displayName}</h2>
+                <div class="site-featured-items" id="site-featured-items-${featuredCategory.ID}">
+                	<a class="search-content" href="<isprint value="${URLUtils.url('Search-Show','sz', 48,
+                            'format', 'ajax',
+                            'cgid', featuredCategory.ID,
+                            'showSearchOptions', '0')}" encoding="off"/>"></a>
+                </div>
+            </isloop>
+            <script src="${URLUtils.staticURL('/js/onload_site_featured_category.js')}"></script>
+        </div>
+    </div>
+</isif>

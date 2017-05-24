@@ -1,0 +1,58 @@
+<iscontent type="text/html" charset="UTF-8" compact="true">
+
+<iscache type="relative" minute="15" />
+
+<isscript>
+    importScript("converse_core:product/ProductUtils.ds");
+</isscript>
+
+<isset name="productInfo" value="${pdict.ProductToDisplayInfo}" scope="page" />
+<isset name="overrideDefaultSizeSelect" value="${pdict.CurrentHttpParameterMap.overrideDefaultSizeSelect.value}" scope="page" />
+
+<isif condition="${productInfo.notShowcase}">
+    <div class="attribute sizes-attr">
+        <div class="visually-hidden error-message"></div>
+        <select id="sizes" class="size">
+            <isset name="defaultIsSelected" value="selected='selected'" scope="page" />
+
+            <isif condition="${empty(overrideDefaultSizeSelect)}">
+                <isset name="defaultIsSelected" value="" scope="page" />
+            </isif>
+
+            <option value="" disabled="disabled" ${defaultIsSelected}>
+                ${Resource.msg('productdetail.size.select.top', 'product', null)}
+            </option>
+
+            <isset name="sizeChart" value="" scope="page"/>
+
+            <isif condition="${productInfo.sizeVariationInfos.size() > 1}">
+                <isloop items="${productInfo.sizeVariationInfos}" var="sizeVariationInfo">
+                    <isif condition="${sizeChart !== sizeVariationInfo.sizeChartValue}">
+                        <isif condition=${!empty(sizeChart)}>
+                            <option disabled>──────────</option>
+                        </isif>
+                        <isset name="sizeChart" value="${sizeVariationInfo.sizeChartValue}" scope="page"/>
+
+                    </isif>
+
+                    <isset name="selectedAttribute" value="" scope="page" />
+
+                    <isif condition="${sizeVariationInfo.orderable}">
+
+                        <isif condition="${sizeVariationInfo.selected && empty(overrideDefaultSizeSelect)}">
+                            <isset name="selectedAttribute" value="selected='selected'" scope="page"/>
+                        </isif>
+
+                        <option value="${sizeVariationInfo.linkToVariant}" ${selectedAttribute}><isprint value="${sizeVariationInfo.displayValue}"/></option>
+                    </isif>
+                </isloop>
+            <iselse/>
+                <isset name="sizeVariationInfo" value="${productInfo.sizeVariationInfos[0]}" scope="page" />
+
+                <option value="${sizeVariationInfo.linkToVariant}" selected="selected">
+                    <isprint value="${sizeVariationInfo.displayValue}"/>
+                </option>
+            </isif>
+        </select>
+    </div>
+</isif>

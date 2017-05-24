@@ -1,0 +1,19 @@
+/**
+* Gets DYO image shots (Outside body/Inside body) to show up in a "review and confirm" dialog when user add item to cart from HTML Builder
+*
+* @input MetricId : String DYO metric id
+* @output ImageShots : dw.util.Collection A list of image shots
+*
+*/
+importPackage( dw.system );
+
+importScript("converse_core:constants.ds");
+importScript("int_nike:customization/utils/NikeRendererUtils.ds");
+
+var NikeRendererUtils = integration.nike.customization.utils.NikeRendererUtils;
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+    pdict.ImageShots = NikeRendererUtils.getReviewImageShots(pdict.MetricId);
+    return PIPELET_NEXT;
+}

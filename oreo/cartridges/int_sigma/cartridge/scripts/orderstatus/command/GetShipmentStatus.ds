@@ -1,0 +1,62 @@
+importPackage(dw.order);
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/command/SoapCommand.ds");
+
+importScript("SigmaConstants.ds");
+importScript("SigmaUtils.ds");
+importScript("orderstatus/objects/ShipmentStatusResponse.ds");
+
+(function(){
+    
+    var SigmaConstants = integration.sigma.SigmaConstants,
+        SigmaUtils = integration.sigma.SigmaUtils, 
+        ShipmentStatusResponse = integration.sigma.orderstatus.objects.ShipmentStatusResponse;
+
+    var GetShipmentStatus = converse.webservices.command.SoapCommand.extend({
+
+        init: function (transactionID : String, orderType : Number, activityNumber : String) {
+            this.transactionID = transactionID;
+            this.orderType = orderType;
+            this.activityNumber = activityNumber;
+            
+            this.logger = Logger.getLogger(converse.constants.Logger.Sigma);
+        },
+
+        createRequest: function() {
+            return {
+                transactionID : this.transactionID,
+                companyNumber : SigmaUtils.getCompanyNumberByOrderType(this.orderType),
+                customerNumber : SigmaConstants.DefaultCustomerNumber,
+                activityType : SigmaConstants.ActivityTypeOrderNumber,
+                activityNumber : this.activityNumber
+            };
+        },
+
+        execute: function(request) {
+            this.logger.info("Calling Sigma Order Status service with transactionID: {0} and activityNumber: {1}", request.transactionID, request.activityNumber);
+            
+            var response = this.serviceClient.getDetail(request.transactionID,
+                                                        request.companyNumber,
+                                                        request.customerNumber,
+                                                        request.activityType,
+                                                        request.activityNumber);
+                                                        
+            this.logger.info("Sigma Order Status service response for transactionID - {0} : {1}", request.transactionID, SigmaUtils.formatOrderStatusResponse(response));
+            
+            return response;
+        },
+        
+        handleResponse: function(response) {
+            this._super(response);
+            this.responseObject = new ShipmentStatusResponse(response);
+        }
+        
+    });
+
+    var ns = Namespace.extendFromString(integration, "sigma.orderstatus.command");
+    Namespace.extend(ns, { GetShipmentStatus: GetShipmentStatus });
+    
+})();

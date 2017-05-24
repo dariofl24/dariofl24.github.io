@@ -1,0 +1,3 @@
+<isif condition="${productLineItem.custom.displayCustomSize != null}">
+   ${Resource.msg('order.orderitems.size','mail',null)}: <isprint value="${productLineItem.custom.displayCustomSize}"/> <br/>
+</isif>

@@ -1,0 +1,22 @@
+<isset name="productInfoLtdEdition" value="${pdict.DefaultVariantLimited}" scope="page" />
+<isset name="productAvailabilityModel" value="${pdict.ProductLimited.getAvailabilityModel()}" scope="page" />
+<isset name="productPriceModel" value="${productInfoLtdEdition.getPriceModel()}" scope="page" />
+
+<isif condition="${productAvailabilityModel.orderable}">
+    <div class="product-detail-limited-edition">
+        <div class="sneaker-info">
+            <p><span class="runs-large-text">Runs a half-size large</span> <span class="limited-edition-price"><isprint value="${productPriceModel.getPrice()}" formatter="*#,#00.##"/></span></p>
+        </div>
+        <form action="${URLUtils.continueURL()}" method="post" id="${pdict.CurrentForms.product.addtocart.dynamicHtmlName}" class="pdpForm">
+            <div class="product-attributes">
+                <isinclude url="${URLUtils.url('Product-IncludeSize', 'pid', productInfoLtdEdition.ID, 'overrideDefaultSizeSelect', pdict.overrideDefaultSizeSelect, 'chuckPromo', true)}"/>
+                <isquantity available_count="${productInfoLtdEdition.availability.ats}" chuck_promo="true" />
+            </div>
+            <isproductactions product_id_to_add="${productInfoLtdEdition.ID}" enable_add_to_cart="${productInfoLtdEdition.availability.availableForSale}" />
+        </form> 
+    </div>
+<iselse>
+    <div class="limited-edition-soldout">
+        <p>Sold Out</p>
+    </div>
+</isif>

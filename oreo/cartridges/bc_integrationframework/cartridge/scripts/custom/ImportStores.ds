@@ -1,0 +1,39 @@
+/**
+* Import order tracking data for external orders
+*
+* @input StoresFileList : Array Stores file list to validate
+* @input Type : String of the store type (US, CA, SKATE)
+*
+* @output HasType : Array Orders that are not present in our system
+*/
+importPackage(dw.io);
+importPackage(dw.order);
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("custom/StoreUtils.ds");
+
+let logger : Logger = Logger.getLogger('ImportStores');
+
+var StoreUtils = converse.utils.StoreUtils;
+
+function execute(args : PipelineDictionary) : Number
+{
+    let storesFileList : Array = args.StoresFileList;
+    let type : String = args.Type;
+    let iterator : Iterator = storesFileList.iterator();
+
+    let hasType = false;
+    while(iterator.hasNext()) {
+        let storeFile : String = iterator.next();
+        hasType = StoreUtils.hasType(type, storeFile);
+        if(hasType) {
+            break;
+        }
+    }
+
+    args.HasType = hasType;
+
+    return PIPELET_NEXT;
+}

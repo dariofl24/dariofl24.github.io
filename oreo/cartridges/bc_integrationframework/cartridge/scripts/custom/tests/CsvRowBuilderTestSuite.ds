@@ -1,0 +1,75 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.io);
+
+importScript("converse_core:constants.ds");
+importScript("custom/CsvRowBuilder.ds");
+importScript("module_test:Framework/Assert.ds"); 
+
+function execute(args : PipelineDictionary) : Number {
+
+    args.Unit.describe("CsvRowBuilder Test Suite")
+        .test("One Non-String Token", function () {
+            let result = process([5]);
+
+            Assert.areEqual("\"5\"", result);
+        })
+        .test("One String Token", function () {
+            let result = process(["abc"]);
+
+            Assert.areEqual("\"abc\"", result);
+        })
+        .test("Null Token", function () {
+            let result = process([null]);
+
+            Assert.areEqual("", result);
+        })
+        .test("Empty Token", function () {
+            let result = process([""]);
+
+            Assert.areEqual("", result);
+        })
+        .test("String Token With Quotes", function () {
+            let result = process(["a'b\"c"]);
+
+            Assert.areEqual("\"a'b\"\"c\"", result);
+        })
+        .test("String Token With New Line", function () {
+            let result = process(["abc\nde"]);
+
+            Assert.areEqual("\"abc\nde\"", result);
+        })
+        .test("Mix Of Tokens", function () {
+            let date = new Date();
+            let result = process([1, "\n", null, "d,e", "", 5, "\"m", date]);
+
+            Assert.areEqual("\"1\",\"\n\",,\"d,e\",,\"5\",\"\"\"m\",\"" + date + "\"", result);
+        })
+        .test("pipeline separator", function () {
+            let rowBuilder = new converse.utils.CsvRowBuilder("|");
+            let result = rowBuilder.getRow([1, 2, 3]);
+
+            Assert.areEqual("\"1\"|\"2\"|\"3\"\n", result);
+        })
+        .test("No adjust line", function () {
+            let rowBuilder = new converse.utils.CsvRowBuilder();
+
+            let result = rowBuilder.getRow([1, 2, 3], false);
+
+            Assert.areEqual("1,2,3\n", result);
+        });
+
+   return PIPELET_NEXT;
+};
+
+function process(line) : String {
+    let rowBuilder = new converse.utils.CsvRowBuilder();
+    
+    let wholeLine = rowBuilder.getRow(line);
+    let noNewLine = wholeLine.substr(0, wholeLine.length - 1);
+
+    return noNewLine;
+};

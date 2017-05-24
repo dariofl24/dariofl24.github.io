@@ -1,0 +1,140 @@
+@import "_constants";
+@import "_helper_functions";
+
+@mixin media-query($q:"") {
+    @media #{$q} {
+        @content;
+    }
+}
+
+@mixin media-query-range($minwidth:0em, $maxwidth:0em) {
+    $q: "screen and ( min-width:#{$minwidth}) and (max-width:#{$maxwidth})";
+    @include media-query($q) {
+        @content;
+    }
+}
+
+@mixin media-query-lt($threshold) {
+    $q: "screen and ( max-width:#{$threshold})";
+    @include media-query($q) {
+        @content;
+    }
+}
+
+@mixin media-query-gt($threshold) {
+    $q: "screen and ( min-width:#{$threshold})";
+    @include media-query($q) {
+        @content;
+    }
+}
+
+// 959px < Viewports
+@mixin mq-large($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-gt(pxtoembase($THRESHOLD_LARGE, $base-font)) {
+        @content;
+    }
+}
+
+// 533px < Viewports < 959px
+@mixin mq-medium($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-range(pxtoembase($THRESHOLD_MEDIUM, $base-font), pxtoembase($THRESHOLD_LARGE, $base-font)) {
+        @content;
+    }
+}
+
+// 533px < Viewports < 800px - Not used much should use mq-medium instead
+@mixin mq-medium-a($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-range(pxtoembase($THRESHOLD_MEDIUM, $base-font), pxtoembase($THRESHOLD_MEDIUM_A, $base-font)) {
+        @content;
+    }
+}
+
+// 533px < Viewports < 720px - Not used much should use mq-medium instead
+@mixin mq-medium-b($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-range(pxtoembase($THRESHOLD_MEDIUM, $base-font), pxtoembase($THRESHOLD_MEDIUM_B, $base-font)) {
+        @content;
+    }
+}
+
+// Viewports < 959px
+@mixin mq-medium-cascade($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-lt(pxtoembase($THRESHOLD_LARGE, $base-font)) {
+        @content;
+    }
+}
+
+// Viewports > 533px
+@mixin mq-medium-plus($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-gt(pxtoembase($THRESHOLD_MEDIUM, $base-font)) {
+        @content;
+    }
+}
+
+// Viewports < 800px
+@mixin mq-medium-a-cascade($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-lt(pxtoembase($THRESHOLD_MEDIUM_A, $base-font)) {
+        @content;
+    }
+}
+
+// Viewports < 720px
+@mixin mq-medium-b-cascade($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-lt(pxtoembase($THRESHOLD_MEDIUM_B, $base-font)) {
+        @content;
+    }
+}
+
+// Viewports < 533px
+@mixin mq-small($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-lt(pxtoembase($THRESHOLD_MEDIUM, $base-font)) {
+        @content;
+    }
+}
+
+// Viewports PDP > 1240px
+@mixin mq-large-pdp($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-gt(pxtoembase($WIDE_BREAK_PDP, $base-font)) {
+        @content;
+    }
+}
+
+// 959px < Viewports PDP < 1240px
+@mixin mq-medium-pdp($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-range(pxtoembase($TABLET_BREAK_PDP, $base-font), pxtoembase($WIDE_BREAK_PDP, $base-font)) {
+        @content;
+    }
+}
+
+// Viewports PDP < 1240px
+@mixin mq-medium-pdp-cascade($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-lt(pxtoembase($WIDE_BREAK_PDP, $base-font)) {
+        @content;
+    }
+}
+
+// 600px < Viewports PDP < 959px
+@mixin mq-small-pdp($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-range(pxtoembase($MOBILE_BREAK_PDP, $base-font), pxtoembase($TABLET_BREAK_PDP, $base-font)) {
+        @content;
+    }
+}
+
+// Viewports PDP < 600px
+@mixin mq-x-small-pdp($base-font:$THRESHOLD_BASE_PX) {
+    @include media-query-lt(pxtoembase($MOBILE_BREAK_PDP, $base-font)) {
+        @content;
+    }
+}
+
+
+@mixin mq-retina {
+    @media
+        only screen and (-webkit-min-device-pixel-ratio: 2),
+        only screen and (   min--moz-device-pixel-ratio: 2),
+        only screen and (     -o-min-device-pixel-ratio: 2/1),
+        only screen and (        min-device-pixel-ratio: 2),
+        only screen and (                min-resolution: 192dpi),
+        only screen and (                min-resolution: 2dppx) {
+            @content;
+    }
+}

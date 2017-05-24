@@ -1,0 +1,28 @@
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_genesco:GenescoConstants.ds");
+importScript("int_genesco:objects/AbstractShipmentRequest.ds");
+
+(function() {
+
+    var GO_NS = integration.genesco.objects,
+        GC = integration.genesco.constants;
+
+    var RegularShipmentRequest = GO_NS.AbstractShipmentRequest.extend({
+        
+        getPortalID: function() {
+            return GC.RegularPortalID; 
+        }, 
+        
+        getGiftCardDeliveryMethod : function() {
+            return GC.RegularGiftCardDeliveryMethod;    
+        },
+        
+        setC1Parameters: function(parameters) {
+        }
+    });
+    
+    Namespace.extend(GO_NS, { RegularShipmentRequest : RegularShipmentRequest });
+    
+})();

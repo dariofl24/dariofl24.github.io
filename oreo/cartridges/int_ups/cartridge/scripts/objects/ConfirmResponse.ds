@@ -1,0 +1,37 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_ups:objects/AbstractUPSResponse.ds");
+
+(function() {
+    
+    var UPS_OBJ_NS = integration.ups.objects;
+    
+    var ConfirmResponse = UPS_OBJ_NS.AbstractUPSResponse.extend({
+        
+        init: function(responseText : String) {
+            this._super(responseText);
+            this.initDigest();
+        },
+        
+        initDigest: function() {
+            this.digest = this.responseXML['ShipmentDigest'].toString();
+        },
+        
+        getDigest: function() : String {
+            return this.digest;
+        },
+        
+        createResult: function() : Object {
+            var result = this._super();
+            result.digest = this.getDigest();
+            
+            return result;
+        }
+    }); 
+    
+    Namespace.extend(UPS_OBJ_NS, { ConfirmResponse: ConfirmResponse });
+        
+})();

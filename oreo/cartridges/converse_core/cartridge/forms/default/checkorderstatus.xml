@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
+    <field formid="ordernumber"
+            label="checkorderstatus.ordernumber.label"
+            type="string"
+            mandatory="true"
+            binding="orderNumber"
+            regexp="^\w+$"
+            missing-error="checkorderstatus.ordernumber.missing-error"/>
+
+    <field formid="email"
+            label="checkorderstatus.email.label"
+            type="string"
+            mandatory="true"
+            missing-error="checkorderstatus.email.missing-error"
+            regexp="^[\w\.%-]+@[\w\.-]+\.[\w]{2,6}$"
+            parse-error="checkorderstatus.email.parseerror"
+            binding="email"
+            max-length="50"
+            value-error="checkorderstatus.email.usernametaken"/>
+
+    <field formid="zipcode"
+           label="checkorderstatus.zipcode.label"
+           type="string"
+           mandatory="true"
+           min-length="5" 
+           max-length="10" 
+           regexp="^XXXXX|(\d{5})(-\d{4})?$"
+           binding="zipcode"
+           parse-error="checkorderstatus.zipcode.parseerror"
+           missing-error="checkorderstatus.zipcode.missing-error"
+           value-error="checkorderstatus.zipcode.value-error"/>
+
+    <action formid="checkstatus" valid-form="true"/>
+</form>

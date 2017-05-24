@@ -1,0 +1,19 @@
+/**
+ * @input SelectableOrder : Object the user just filled out the form
+ *
+ * @output ErrorMsg: String The error message if any.
+ */
+importPackage(dw.system);
+importPackage(dw.web);
+
+function execute(args : PipelineDictionary) : Number 
+{
+    args.ErrorMsg = null;
+    
+    if (!args.SelectableOrder.hasSelectedItems()) {
+        args.ErrorMsg = Resource.msg('returns.error.oneormore','account',null);
+        return PIPELET_ERROR;
+    }
+    
+    return PIPELET_NEXT;
+}

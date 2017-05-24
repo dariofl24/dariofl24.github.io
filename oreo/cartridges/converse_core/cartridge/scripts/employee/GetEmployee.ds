@@ -1,0 +1,33 @@
+/**
+ * This script returns employee associated with this customer if any
+ *
+ * @input Customer : dw.customer.Customer The current customer.
+ *
+ * @output Employee : dw.customer.Profile The employee.
+ * @output ErrorMsg : String The error message if any.
+ */
+importPackage(dw.system);
+importPackage(dw.customer);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:employee/EmployeeUtils.ds");
+
+var logger : Logger = Logger.getLogger('GetEmployee');
+
+function execute(args : PipelineDictionary) : Number
+{
+    var employee : Profile = null;
+    var errorMsg : String = null;
+    try {
+        employee = converse.employee.EmployeeUtils.getEmployee(args.Customer.getProfile());
+    }
+    catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+    
+    args.Employee = employee;
+    args.ErrorMsg = errorMsg;
+    
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}

@@ -1,0 +1,21 @@
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* line 4, ../css/package/sass/slider.scss */
+#slider {
+  position: fixed;
+  width: 100%;
+  top: 8.33333em;
+  z-index: 10;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 4, ../css/package/sass/slider.scss */
+  #slider {
+    top: 0;
+    position: relative;
+  }
+}
+/* line 15, ../css/package/sass/slider.scss */
+#slider [data-slider-area] {
+  display: none;
+}

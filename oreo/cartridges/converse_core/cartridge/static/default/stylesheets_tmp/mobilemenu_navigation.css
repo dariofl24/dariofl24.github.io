@@ -1,0 +1,170 @@
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* mobile menu hamburger and lightweight navigation /* 
+/* ------------------------------------- */
+/* line 20, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav, #lightweightnav {
+  padding: 0;
+  list-style: none;
+  font-weight: normal;
+  text-decoration: none;
+  font-size: 1em;
+}
+/* line 27, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav ul, #lightweightnav ul, #hamburgernav li, #lightweightnav li, #hamburgernav a, #lightweightnav a {
+  position: relative;
+}
+/* line 31, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav a, #lightweightnav a {
+  line-height: 2;
+  border-width: 0.0625em;
+  border-style: solid;
+  border-bottom: none;
+  border-color: #C0C0C0;
+  display: block;
+  font-family: Helvetica;
+  font-size: 1.33333em;
+}
+/* line 42, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav .menu_header_category > a, #lightweightnav .menu_header_category > a {
+  font-weight: bold;
+}
+/* line 46, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav .menu_header_general > a, #lightweightnav .menu_header_general > a {
+  font-weight: normal;
+  font-style: italic;
+  font-family: Adobe Garamond Italic;
+}
+/* line 52, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav li.subcategory_name a, #lightweightnav li.subcategory_name a {
+  font-weight: normal;
+  display: block;
+  padding-top: 0.625em;
+  padding-right: 0.625em;
+  padding-bottom: 0.625em;
+  color: #000000;
+}
+/* line 61, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav > ul > li:last-child, #lightweightnav > ul > li:last-child {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-color: #C0C0C0;
+}
+/* line 67, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav a > span, #lightweightnav a > span {
+  display: block;
+}
+/* line 72, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav li.has-sub > a span:after, #lightweightnav li.has-sub > a span:after {
+  content: '+';
+  position: absolute;
+  color: black;
+  background: transparent;
+}
+/* line 80, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav li.has-sub.active > a span, #lightweightnav li.has-sub.active > a span {
+  color: #940000;
+}
+/* line 82, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav li.has-sub.active > a span:after, #lightweightnav li.has-sub.active > a span:after {
+  content: '-';
+}
+/* line 88, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav ul ul, #lightweightnav ul ul {
+  display: none;
+}
+
+/* line 93, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav {
+  margin: 0;
+}
+/* line 98, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav a > span {
+  padding: 0.75em 0.625em;
+}
+/* line 102, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav li.subcategory_name a {
+  padding-left: 1.5625em;
+}
+/* line 106, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav li.has-sub > a span:after {
+  right: 0.9375em;
+}
+/* line 110, ../css/package/sass/mobilemenu_navigation.scss */
+#hamburgernav li.has-sub.active > a span:after {
+  right: 0.9375em;
+}
+
+/* line 115, ../css/package/sass/mobilemenu_navigation.scss */
+#lightweightnav {
+  display: none;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 115, ../css/package/sass/mobilemenu_navigation.scss */
+  #lightweightnav {
+    display: block;
+    margin: 0 auto;
+    max-width: 83.33333em;
+    width: 90%;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 115, ../css/package/sass/mobilemenu_navigation.scss */
+  #lightweightnav {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
+}
+/* line 135, ../css/package/sass/mobilemenu_navigation.scss */
+#lightweightnav a > span {
+  padding: 0.75em 2.8125em;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 135, ../css/package/sass/mobilemenu_navigation.scss */
+  #lightweightnav a > span {
+    padding-left: 0.625em;
+  }
+}
+/* line 143, ../css/package/sass/mobilemenu_navigation.scss */
+#lightweightnav li.subcategory_name a {
+  padding-left: 3.75em;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 143, ../css/package/sass/mobilemenu_navigation.scss */
+  #lightweightnav li.subcategory_name a {
+    padding-left: 1.5625em;
+  }
+}
+/* line 151, ../css/package/sass/mobilemenu_navigation.scss */
+#lightweightnav li.has-sub > a span:after {
+  right: 3.125em;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 151, ../css/package/sass/mobilemenu_navigation.scss */
+  #lightweightnav li.has-sub > a span:after {
+    right: 0.9375em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 160, ../css/package/sass/mobilemenu_navigation.scss */
+  #lightweightnav li.has-sub.active > a span:after {
+    padding-left: 1.5625em;
+  }
+}
+/* line 166, ../css/package/sass/mobilemenu_navigation.scss */
+#lightweightnav li.has-sub.active > a span:after {
+  right: 3.125em;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 166, ../css/package/sass/mobilemenu_navigation.scss */
+  #lightweightnav li.has-sub.active > a span:after {
+    right: 0.9375em;
+  }
+}

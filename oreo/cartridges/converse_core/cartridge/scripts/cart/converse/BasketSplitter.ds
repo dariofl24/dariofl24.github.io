@@ -1,0 +1,165 @@
+importPackage(dw.order);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:product/ProductUtils.ds");
+importScript("converse_core:checkout/converse/shipping/classes/ShippingMethodsComparator.ds");
+
+function BasketSplitter(self) {
+	self = self || {};
+	var comparator = new ShippingMethodComparator();
+	
+	var pickDefaultShipmentIfNotAssigned = function(basket: Basket, productType: String) {
+		var defaultShipment = basket.getDefaultShipment();
+		if (defaultShipment.custom.productType == null) {
+			defaultShipment.custom.productType = productType;
+			return defaultShipment;
+		}
+		
+		return null;
+	}
+	
+	var getShipment = function(basket: Basket, productType: String) {
+		var defaultShipment = pickDefaultShipmentIfNotAssigned(basket, productType);
+		if (defaultShipment != null) {
+			return defaultShipment;
+		}
+		
+		var shipments = basket.getShipments();
+		for each(var shipment : Shipment in shipments) {
+			if (shipment.custom.productType != null && shipment.custom.productType === productType) {
+				return shipment;
+			}
+		}
+		
+		return null;
+	}
+	
+	var createShipment = function(basket: Basket, productType: String) {
+		var id = UUIDUtils.createUUID();
+		var shipment = basket.createShipment(id);
+		shipment.custom.productType = productType;
+		
+		return shipment;
+	}
+	
+	var getOrCreateShipment = function(basket: Basket, productType: String) {
+		var shipment : Shipment = getShipment(basket, productType);
+		if (shipment != null) {
+			return shipment;
+		}
+		
+		return createShipment(basket, productType);
+	}
+	
+	var addProductsToShipment = function(shipment : Shipment, items : ArrayList) {
+		for each(var item : ProductLineItem in items) {
+			item.setShipment(shipment);
+		}
+	}
+	
+	var getDefaultShippingMethod = function(productType: String) {
+		var shippingMethods = ShippingMgr.getAllShippingMethods();
+		var methods : ArrayList = new ArrayList();
+		
+		for each(var shippingMethod : ShippingMethod in shippingMethods) {
+			if (shippingMethod.custom.productType.value === productType) {
+				methods.add(shippingMethod);
+			}
+		}
+		
+		if (methods.length !== 0) {
+			methods.sort(comparator.compareShippingMethods);
+			return methods.get(0);
+		}
+		
+		return null;
+	}
+	
+	var adjustShipmentAddress = function(shipment : Shipment, basket: Basket) {
+		var defaultShipment : Shipment = basket.getDefaultShipment();
+		var sourceAddress = defaultShipment.getShippingAddress();
+		
+		if (sourceAddress != null) {
+			var destinationAddress = shipment.createShippingAddress();
+			destinationAddress.address1 = sourceAddress.address1;
+			destinationAddress.address2 = sourceAddress.address2;
+			destinationAddress.city = sourceAddress.city;
+			destinationAddress.companyName = sourceAddress.companyName;
+			destinationAddress.countryCode = sourceAddress.countryCode;
+			destinationAddress.firstName = sourceAddress.firstName;				
+			destinationAddress.jobTitle = sourceAddress.jobTitle;
+			destinationAddress.lastName = sourceAddress.lastName;
+			destinationAddress.phone = sourceAddress.phone;
+			destinationAddress.postalCode = sourceAddress.postalCode;
+			destinationAddress.postBox = sourceAddress.postBox;
+			destinationAddress.salutation = sourceAddress.salutation;
+			destinationAddress.secondName = sourceAddress.secondName;
+			destinationAddress.stateCode = sourceAddress.stateCode;
+			destinationAddress.suffix = sourceAddress.suffix;
+			destinationAddress.suite = sourceAddress.suite;
+			destinationAddress.title = sourceAddress.title;
+		}
+	}
+
+    var addGiftMessage = function(shipment : Shipment, basket: Basket) {
+        var defaultShipment : Shipment = basket.getDefaultShipment();
+        if(shipment.ID !== defaultShipment.ID) {
+            shipment.gift = defaultShipment.gift;
+            shipment.giftMessage = defaultShipment.giftMessage;
+        }
+    };
+
+	var adjustShipment = function (items: ArrayList, productType: String, basket: Basket) {
+		if (items.length === 0) {
+			return;
+		}
+		
+		var shipment : Shipment = getOrCreateShipment(basket, productType);
+		addProductsToShipment(shipment, items);
+		addGiftMessage(shipment, basket);
+		
+		if (shipment.getShippingMethod() == null) {
+			shipment.setShippingMethod(getDefaultShippingMethod(productType));
+		}
+		
+		if (shipment.getShippingAddress() == null) {
+			adjustShipmentAddress(shipment, basket);
+		}
+	}
+		
+	self.splitBasket = function(basket: Basket) {
+		var productLineItems = basket.getProductLineItems();
+		
+		var regularItems : ArrayList = new ArrayList();
+		var dyoItems : ArrayList = new ArrayList();
+		var gcItems : ArrayList = new ArrayList();
+		var egcItems : ArrayList = new ArrayList();
+		
+		for each(var productLineItem in productLineItems) {
+			var product : Product = productLineItem.product;
+			
+			if (ProductUtils.isRegular(product)) {
+				regularItems.add(productLineItem);
+			}
+			else if (ProductUtils.isConverseOne(product)) {
+				dyoItems.add(productLineItem);
+			}
+			else if (ProductUtils.isPhysicalGiftCard(product)) {
+				gcItems.add(productLineItem);
+			}
+			else if (ProductUtils.isElectronicGiftCard(product)) {
+				egcItems.add(productLineItem);
+			}
+		}
+		
+		adjustShipment(regularItems, converse.constants.ProductType.Regular, basket);
+		adjustShipment(dyoItems, converse.constants.ProductType.C1, basket);
+		adjustShipment(gcItems, converse.constants.ProductType.PhysicalGiftCard, basket);
+		adjustShipment(egcItems, converse.constants.ProductType.ElectronicGiftCard, basket);
+		
+		basket.updateTotals();
+	};
+	
+	return self;
+}

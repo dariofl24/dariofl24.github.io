@@ -1,0 +1,11 @@
+<isscript>
+    importScript("constants.ds");
+    importScript("util/LocaleInfo.ds");
+    var request = pdict.CurrentRequest;
+    var country_lang = converse.utils.getCanonicalLink(request.getLocale());
+</isscript>
+
+<div class="primary-logo">
+    
+    <a href="${country_lang}">${Resource.msg('global.storename','locale',null)}</a>
+</div>

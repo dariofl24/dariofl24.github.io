@@ -1,0 +1,41 @@
+*** Settings ***
+Documentation   Verifies Checkout Process for positive and negative test cases
+Suite Teardown  Close All Browsers
+Test Setup      Start Checkout
+Test Teardown   Close All Browsers
+Force Tags      Checkout  Regression
+Resource        checkout_definitions.txt
+
+*** Test Cases ***
+Customer tries Visa Checkout AVS Not Matches verifies page retrieves an error message
+  [Tags]  US
+  Continue checkout with Credit Card  ${validSite_name}  ${validSite_lastName}  ${DEFAULTADDRESS}  San Francisco  Florida  03105
+  ...  ${DEFAULTPHONE}  ${validSite_user}  ${validSite_name} ${validSite_lastName}  ${DEFAULTTYPECC}  ${DEFAULTCC}  ${DEFAULTEXPMONTH}
+  ...  ${DEFAULTEXPYEAR}  999  The address provided does not match
+
+Customer tries American Express Checkout CVV not Matches, verifies page retrieves an error message
+  [Tags]  US
+  Continue checkout with Credit Card  ${validSite_name}  ${validSite_lastName}  ${DEFAULTADDRESS}  ${DEFAULTCITY}  ${DEFAULTSTATE}  ${DEFAULTZIPCODE}
+  ...  ${DEFAULTPHONE}  ${validSite_user}  ${validSite_name} ${validSite_lastName}  American Express  ${DEFAULTCC}  ${DEFAULTEXPMONTH}
+  ...  ${DEFAULTEXPYEAR}  1111  Invalid Credit Card information
+
+Customer starts checkout, Verify Shipping Method matches in checkout process
+  [Tags]  US
+  Continue checkout verifying Shipping method  ${validSite_name}  ${validSite_lastName}  ${DEFAULTADDRESS}  ${DEFAULTCITY}  ${DEFAULTSTATE}  ${DEFAULTZIPCODE}
+  ...  ${DEFAULTPHONE}  ${validSite_user}  ${validSite_name} ${validSite_lastName}  ${DEFAULTTYPECC}  ${DEFAULTCC}  ${DEFAULTEXPMONTH}
+  ...  ${DEFAULTEXPYEAR}  ${DEFAULTSECCODE}
+  Run Keyword If  '@{ENV_TYPE}[${env_id}]'!='production'  Click at Submit Order and Verifies Retrieves Message
+
+Customer starts checkout and uses same Shipping address, Verify Shipping and Billing addresses matches in checkout process
+  [Tags]  US
+  Continue checkout verifying Mirror Address Option  ${validSite_name}  ${validSite_lastName}  ${DEFAULTADDRESS}  ${DEFAULTCITY}  ${DEFAULTSTATE}  ${DEFAULTZIPCODE}
+  ...  ${DEFAULTPHONE}  ${validSite_user}  ${validSite_name} ${validSite_lastName}  ${DEFAULTTYPECC}  ${DEFAULTCC}  ${DEFAULTEXPMONTH}
+  ...  ${DEFAULTEXPYEAR}  ${DEFAULTSECCODE}
+  Run Keyword If  '@{ENV_TYPE}[${env_id}]'!='production'  Click at Submit Order and Verifies Retrieves Message
+
+Customer checkouts with Credit Card, Verify checkout process finishes successfully
+  [Tags]  US  ShortReg
+  Continue checkout with Credit Card  ${validSite_name}  ${validSite_lastName}  ${DEFAULTADDRESS}  ${DEFAULTCITY}  ${DEFAULTSTATE}  ${DEFAULTZIPCODE}
+  ...  ${DEFAULTPHONE}  ${validSite_user}  ${validSite_name} ${validSite_lastName}  ${DEFAULTTYPECC}  ${DEFAULTCC}  ${DEFAULTEXPMONTH}
+  ...  ${DEFAULTEXPYEAR}  ${DEFAULTSECCODE}
+  Run Keyword If  '@{ENV_TYPE}[${env_id}]'!='production'  Click at Submit Order and Verifies Retrieves Message

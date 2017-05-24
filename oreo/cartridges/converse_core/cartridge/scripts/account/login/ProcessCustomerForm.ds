@@ -1,0 +1,114 @@
+/**
+ * This script prepares customer forms's data.
+ *
+ * @input Request : dw.system.Request The current request. 
+ * @input Form : dw.web.Form The customer form.
+ * @input BirthdayFF : dw.web.FormField
+ * @input ValidateBirthday : Boolean The flag indicating if birthday should be validated.
+ * @input ValidateZip : Boolean The flag indicating if zip should be validated. 
+ */
+
+importPackage(dw.system);
+importPackage(dw.web);
+
+importScript("common/libLang.ds");
+importScript("constants.ds");
+importScript("util/ViewHelpers.ds");
+importScript("converse_core:util/LocaleInfo.ds");
+
+var MIN_AGE : Number = 13;
+
+var AGE_COOKIE_NAME : String = "convage";
+var AGE_COOKIE_VALUE : String = "0";
+var AGE_COOKIE_MAX_AGE : Number = 60 * 60 * 24; 
+
+function execute(args : PipelineDictionary) : Number
+{
+    var request : Request = args.Request;
+    var form : Form = args.Form;
+    var birthdayFormField : FormField = args.BirthdayFF;
+
+    if (validateForm(request, form, birthdayFormField, args.ValidateBirthday, args.ValidateZip)) {
+        
+        return PIPELET_NEXT;
+        
+    }else {
+        return PIPELET_ERROR;
+    }
+}
+
+function validateForm(request : Request, form : Form, birthdayFormField : FormField, validateBirthday : Boolean, validateZip : Boolean) : Boolean {
+    
+        var birthdayValid : Boolean = !validateBirthday || doValidateBirthday(birthdayFormField);
+    
+        var minAge = getMinAge(request);
+        
+        var ageValid : Boolean = true;
+        if (validateBirthday && birthdayValid) {
+            var ageCookie : Cookie = getAgeCookie(request);
+            if (empty(ageCookie)) {
+                ageValid = doValidateAge(birthdayFormField,request);
+                if (!ageValid) {
+                    setAgeCookie();
+                }
+            }else {
+                ageValid = false;
+                form.invalidateFormElement(Resource.msgf("profile.age.verification.error", "forms", null, minAge));
+            }
+        }
+    
+        return birthdayValid && ageValid;
+    
+} 
+
+function getMinAge(request : Request) : Number {
+	
+	var objstring : String = Site.getCurrent().getCustomPreferenceValue('user_min_age');
+	var obj : Object = JSON.parse( objstring );
+	
+	var countryCode = converse.utils.getCurrentCountryCode(request);
+	
+	var min_age = obj[countryCode];
+	
+	if(min_age == null){
+		return MIN_AGE;
+	}
+	
+	return min_age;
+}
+
+function doValidateBirthday(birthdayFormField : FormField) : Boolean {
+    
+    if (!Lang.isValidDate(birthdayFormField.htmlValue)) {
+        birthdayFormField.invalidateFormElement(Resource.msg("profile.birthday.invalid", "forms", null));
+        
+    }
+    
+    return birthdayFormField.isValid();
+}
+
+
+function doValidateAge(birthdayFormField : FormField,request : Request) : Boolean {
+    
+    var minAge = getMinAge(request);
+     
+    var age : Number = Lang.getAgeFromDOB(new Date(birthdayFormField.value));
+    if (age < minAge) {
+        birthdayFormField.invalidateFormElement(Resource.msgf("profile.birthday.minage.error", "forms", null, minAge));
+    }
+    
+    return birthdayFormField.isValid();
+}
+
+function getAgeCookie(request : Request) : Cookie {
+    return request.getHttpCookies()[AGE_COOKIE_NAME];
+}
+
+function setAgeCookie() {
+    var ageCookie : Cookie = new Cookie(AGE_COOKIE_NAME, AGE_COOKIE_VALUE);
+    ageCookie.setPath("/"); 
+    ageCookie.setMaxAge(AGE_COOKIE_MAX_AGE);
+    response.addHttpCookie(ageCookie);
+}
+
+

@@ -1,0 +1,72 @@
+importPackage(dw.io);
+importPackage(dw.system);
+importPackage(dw.order)
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("custom/CsvFileWriter.ds");
+
+var CsvFileWriter = converse.utils.CsvFileWriter;
+
+(function() {
+    let ProductsExporter = Class.extend({
+
+        init : function(fileName, headerFunc, buildRowFunc, shouldExportFunc) {
+            this.fileName = fileName;
+            this.headerFunc = headerFunc;
+            this.buildRowFunc = buildRowFunc;
+            this.shouldExportFunc = shouldExportFunc;
+        },
+        
+        export: function(products, separator, shouldAdjust, defaultRowOne, defaultRowTwo, defaultRowThree, appendFile : Boolean) {
+            let header = this.headerFunc();
+
+            try {
+                csvWriter = new CsvFileWriter(this.fileName, true, separator);
+                if(appendFile){
+                    csvWriter = new CsvFileWriter(this.fileName, appendFile, separator);
+                }else{
+                    csvWriter = new CsvFileWriter(this.fileName, false, separator);
+                }
+                
+                if (defaultRowOne) {
+                    csvWriter.writeNext(defaultRowOne, shouldAdjust);
+                }
+                if (defaultRowTwo) {
+                    csvWriter.writeNext(defaultRowTwo, shouldAdjust);
+                }
+                if (defaultRowThree) {
+                    csvWriter.writeNext(defaultRowThree, shouldAdjust);
+                }
+                if (header) {
+                    csvWriter.writeNext(header, shouldAdjust);
+                }
+
+                while (products.hasNext()) {
+                    let product = products.next();
+
+                    if (!this.shouldExportFunc(product)) {
+                        continue;
+                    }
+
+                    let row = this.buildRowFunc(product);
+                    if(!empty(row)){
+                    csvWriter.writeNext(row, shouldAdjust);
+                    }
+                }
+            } finally{
+                if (csvWriter) {
+                    csvWriter.close();
+                }
+                if (!products instanceof dw.util.Iterator) {
+                    products.close();
+                }
+            }
+        }
+    });
+
+    var ns = Namespace.extendFromString(converse, "utils");
+    Namespace.extend(ns, { ProductsExporter : ProductsExporter });
+})();

@@ -1,0 +1,41 @@
+/**
+ * This script deletes the specified employee's relative 
+ *
+ * @input EmployeeCustomerNo : String The employee customer number.
+ * @input RelativeEmail : String The employee's relative email.
+ *
+ * @output ErrorMsg : String The error message if any.
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:employee/EmployeeUtils.ds");
+
+var logger : Logger = Logger.getLogger('DeleteEmployeeRelative');
+
+function execute(args : PipelineDictionary) : Number
+{
+    var employeeCustomerNo : String = args.EmployeeCustomerNo, 
+        relativeEmail : String = args.RelativeEmail;
+        
+    if (empty(employeeCustomerNo) || empty(relativeEmail)) {
+        return PIPELET_ERROR;
+    }
+    
+    var errorMsg : String = null;
+    try {
+        let success : Boolean = converse.employee.EmployeeUtils.deleteEmployeeRelative(employeeCustomerNo, relativeEmail);
+        if (!success) {
+            errorMsg = StringUtils.format("No relative with email \"{0}\" found for employee with customer number \"{1}\"", relativeEmail, employeeCustomerNo);
+        }
+    }
+    catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+    
+    args.ErrorMsg = errorMsg;
+    
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}

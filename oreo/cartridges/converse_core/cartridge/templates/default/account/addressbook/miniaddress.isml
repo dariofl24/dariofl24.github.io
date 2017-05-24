@@ -1,0 +1,33 @@
+<isscript>
+importScript("converse_core:constants.ds");
+importScript("util/ViewHelpers.ds");
+</isscript>
+<isif condition="${'ID' in pdict.p_address && !empty(pdict.p_address.ID)}">
+	<div class="mini-address-title">
+		<isprint value="${pdict.p_address.ID}"/>
+	</div>
+</isif>
+<div class="mini-address-name">
+	<isprint value="${pdict.p_address.firstName}"/>
+	<isprint value="${pdict.p_address.lastName}"/>
+</div>
+<div class="mini-address-location">
+	<address>
+		<isprint value="${pdict.p_address.address1}"/>
+		<isif condition="${!empty(pdict.p_address.address2)}">
+			<br/><isprint value="${pdict.p_address.address2}"/>
+		</isif>
+		<isif condition="${pdict.p_address.city != null}">
+			<br/><isprint value="${pdict.p_address.city}"/>,
+		</isif>
+		<isif condition="${isSite('US')}" >
+			<isprint value="${pdict.p_address.stateCode}"/>
+		</isif>
+		<isprint value="${pdict.p_address.postalCode}"/><br/>
+		<isprint value="${pdict.p_address.countryCode}"/>
+		<isif condition="${!empty(pdict.p_address.phone)}">
+			<br/>${Resource.msg('miniaddress.phone','account',null)}
+			<isprint value="${pdict.p_address.phone}"/>
+		</isif>
+	</address>	
+</div>

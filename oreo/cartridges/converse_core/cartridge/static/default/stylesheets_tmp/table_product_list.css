@@ -1,0 +1,167 @@
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* tables used for product lists (wishlist, gift reg) */
+/* ------------------------------------- */
+/* line 13, ../css/package/sass/table_product_list.scss */
+.product-list-item {
+  padding: 0;
+}
+/* line 16, ../css/package/sass/table_product_list.scss */
+.product-list-item .attribute {
+  font-size: 1em;
+  line-height: 1.35417em;
+}
+/* line 21, ../css/package/sass/table_product_list.scss */
+.product-list-item .attribute .label {
+  font-weight: normal;
+  text-transform: uppercase;
+}
+/* line 26, ../css/package/sass/table_product_list.scss */
+.product-list-item .attribute .value {
+  font-weight: bold;
+}
+/* line 31, ../css/package/sass/table_product_list.scss */
+.product-list-item .name {
+  font-size: 1.33333em;
+  font-weight: bold;
+  line-height: 1.25em;
+}
+/* line 37, ../css/package/sass/table_product_list.scss */
+.product-list-item .name a {
+  color: #000000;
+}
+/* line 41, ../css/package/sass/table_product_list.scss */
+.product-list-item .name a:hover {
+  color: #B2B2B2;
+}
+/* line 46, ../css/package/sass/table_product_list.scss */
+.product-list-item .item-price {
+  font-size: 1.16667em;
+  font-weight: bold;
+  padding: 0 0 0.57143em 0;
+}
+
+/* line 55, ../css/package/sass/table_product_list.scss */
+td.item-availability ul {
+  list-style: none outside none;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 56, ../css/package/sass/table_product_list.scss */
+td.item-quantity-details ul {
+  list-style: none outside none;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 57, ../css/package/sass/table_product_list.scss */
+td.item-dashboard {
+  color: #AAAAAA;
+  width: 250px;
+}
+
+/* line 58, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .label {
+  display: inline;
+  float: none;
+  font-size: 1em;
+  font-weight: 400;
+  padding: 0;
+  width: auto !important;
+}
+
+/* line 59, ../css/package/sass/table_product_list.scss */
+td.item-dashboard label {
+  display: inline;
+  float: none;
+  font-size: 1em;
+  font-weight: 400;
+  padding: 0;
+  width: auto !important;
+}
+
+/* line 60, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .input-text {
+  margin: 0;
+  text-align: center;
+}
+
+/* line 61, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .input-select {
+  margin: 0;
+  padding: 8px;
+  width: auto !important;
+}
+
+/* line 62, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .input-checkbox {
+  margin: 0 5px;
+}
+
+/* line 63, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .item-option {
+  clear: both;
+  font-size: 1em;
+  margin: 0 0 0.5em;
+}
+
+/* line 64, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .item-option .form-row {
+  display: inline;
+}
+
+/* line 65, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .option-date-added .value {
+  color: #333333;
+  font-weight: 700;
+}
+
+/* line 66, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .option-quantity-desired input {
+  padding: 0;
+  width: 20px;
+}
+
+/* line 67, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .option-priority .label {
+  color: #333333;
+  font-weight: 700;
+}
+
+/* line 68, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .option-priority label {
+  color: #333333;
+  font-weight: 700;
+}
+
+/* line 69, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .option-add-to-cart .label {
+  color: #333333;
+  font-size: 1.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* line 70, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .option-add-to-cart label {
+  color: #333333;
+  font-size: 1.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* line 71, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .option-add-to-cart input {
+  padding: 0.8em 0.3em 0.7em;
+  width: 50px;
+}
+
+/* line 72, ../css/package/sass/table_product_list.scss */
+td.item-dashboard .option-quantity-purchased span.exceeded {
+  color: #ff0000;
+}

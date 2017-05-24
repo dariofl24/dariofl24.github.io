@@ -1,0 +1,83 @@
+*** Settings ***
+Documentation   Standard keywords
+Library         Selenium2Library
+Library         OperatingSystem
+
+*** Variables ***
+${CART_URL}     Cart-Show
+${STOCK_STATUS}  //table[@id='cart-table']/tbody/tr/td[2]/div/div[@class='product-list-item']/span/ul/li
+${PRICE_STATUS}  //div[@id='secondary']/div/div[@class='checkout-order-totals']/div/div[@class='order-row order-total']/span[@class='price']
+${REMOVE_PRODUCT}  //div[@id='primary']//form[@id='cart-items-form']//table[@id='cart-table']/tbody/tr[1]/td[3]/div/button
+
+*** Keywords ***
+Verify Field Preset Attribute
+  [Arguments]  ${attributeName}  ${field}  ${value}
+  #Keyword to verify any field element contains an specific value in a HTML attribute,
+  #receives 3 arguments: 1. attribute name 2. field (xpath or css locator) 3. value (expected value of the attribute)
+  Wait Until Page Contains Element  ${field}[@${attributeName}='${value}']
+
+Verify Cookie
+  [Arguments]  ${cookieName}  ${flag}=TRUE
+  #Keyword to verify the existence or not of certain cookie
+  #receives 2 argument: Name or part of the name of the cookie and TRUE for cookie should exists FALSE for should not exists
+  ${cookies} =  Get Cookies
+  Log  ${cookies}
+  Run Keyword If  "${flag}" == "TRUE"  Should Contain  ${cookies}  ${cookieName}  ELSE  Should Not Contain
+  ...  ${cookies}  ${cookieName}
+
+Get Text Value
+  [Arguments]  ${ELEMENT}
+  Sleep  2
+  ${value} =  Get Text  ${ELEMENT}
+  [Return]  ${value}
+
+Get Attribute Value
+  [Arguments]  ${ELEMENT}  ${ATTRIBUTE}
+  ${Value} =  Get Element Attribute  ${ELEMENT}@${ATTRIBUTE}
+  [Return]  ${Value}
+
+Verify Inventory and Price in Cart Page
+  ${stock} =  Get Text Value  ${STOCK_STATUS}
+  Run Keyword If  '${stock}'!='In Stock'  Fail Inventory  ${stock}
+  ${price} =  Get Text Value  ${PRICE_STATUS}
+  Run Keyword If  '${price}'=='N/A'  Fail Price
+
+Fail Price
+  Click Button  ${REMOVE_PRODUCT}
+  Log  'Your shopping cart can currently not be ordered since one or more of the products in your cart have an invalid price'  WARN
+  Fail  'Your shopping cart can currently not be ordered since one or more of the products in your cart have an invalid price'  beforeRGA
+
+Fail Inventory
+  [Arguments]  ${legend}
+  Click Button  ${REMOVE_PRODUCT}
+  Fail  ${legend}  beforeRGA
+
+No run in Production
+  Log  Following test is not attempted to be run in Production; skipping
+
+Proceed If Not Production
+  [Arguments]  ${continueKeyword}
+  Run Keyword If  ${env_id}==1  No run in Production  ELSE  ${continueKeyword}
+
+Verify Color and Size In Page
+  [Arguments]  ${color}  ${size}
+  Page Should Contain  ${color}
+  Page Should Contain  ${size}
+
+Select Random Option
+  [Arguments]  ${selectLocator}
+  Wait Until Page Contains Element  ${selectLocator}
+  ${sizeoptions} =  Get Matching Xpath Count  ${selectLocator}/option
+  Should Be True  ${sizeoptions}>=1
+  ${randomsize} =  Evaluate  random.randint(1, ${sizeoptions})  random
+  ${indexOption} =  Evaluate  ${randomsize} - 1
+  ${indexOption} =  Convert To String  ${indexOption}
+  ${size} =  Convert To String  ${randomsize}
+  Select From List By Index  ${selectLocator}  ${indexOption}
+  ${value} =  Get Text  ${selectLocator}/option[${size}]
+  [Return]  ${value}
+
+Get Text From File
+  [Arguments]  ${path}
+  ${text}=  Get File  ${path}  UTF8
+  [Return]  ${text}

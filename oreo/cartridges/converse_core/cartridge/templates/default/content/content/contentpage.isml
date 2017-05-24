@@ -1,0 +1,5 @@
+<isinclude template="content/pagecontext" />
+
+<isdecorate template="content/pt_navbarcontent">
+    <isinclude template="content/content/htmlcontentasset"/>
+</isdecorate>

@@ -1,0 +1,40 @@
+<isscript>
+    let customizeTitle = Resource.msg('productdetail.customize', 'product', null);
+    let buttonTitle = Resource.msg('global.addtocart', 'locale', 'Add to Cart');
+    let disabledAttr = pdict.enable_add_to_cart ? '' : ' disabled="disabled"';
+</isscript>
+
+<isset name="customizedVersionLink" value="${pdict.customizable_version_link}" scope="page" />
+<isset name="productIDToAdd" value="${pdict.product_id_to_add}" scope="page" />
+
+<input type="hidden" name="cartAction" id="cartAction" value="add" />
+<input type="hidden" name="pid" id="pid" value="${productIDToAdd}" />
+
+<div class="product-actions">
+    <div class="shipping tablet">
+        <isslot id="PDP-Shipping-Price" description="Shipping price on link to shipping info popup" context="global" />
+    </div>
+
+    <button id="add-to-cart" type="submit" title="${buttonTitle}" value="${buttonTitle}" class="add-to-cart <isif condition="${empty(customizedVersionLink)}">center-btn</isif>" <isprint value="${disabledAttr}" encoding="off"/> >${buttonTitle}</button>
+	<div class="shipping pdp">
+        <isslot id="PDP-Shipping-Price" description="Shipping price on link to shipping info popup" context="global" />
+    </div>
+    <isset name="promos" value="${dw.campaign.PromotionMgr.activeCustomerPromotions.getProductPromotions(pdict.VariantToDisplay)}" scope="page"/>
+
+	<isloop items="${promos}" var="promo" status="promoloopstate">
+	    <isif condition="${promo.promotionClass === dw.campaign.Promotion.PROMOTION_CLASS_PRODUCT && !empty(promo.custom.calloutMessagePDP)}">
+	        <div class="pdp-promo-message">
+	            <span><isprint value="${promo.custom.calloutMessagePDP}" encoding="off"/></span>
+	        </div>
+	    </isif>
+	</isloop>
+	<div class="social-container">
+        <div class="social-icon-twitter product-action-share" title="twitter" data-share="twitter">&nbsp;</div>
+        <div class="social-icon-facebook product-action-share" title="facebook" data-share="facebook">&nbsp;</div>
+        <div class="social-icon-pinterest product-action-share" title="pinterest" data-share="pinterest">&nbsp;</div>
+        <div class="social-icon-email product-action-share" title="email" data-share="email">&nbsp;</div>
+    </div>
+	<isif condition="${!empty(customizedVersionLink)}">
+        <a id="customize" href="${customizedVersionLink}" class="customize button">${customizeTitle}</a>
+    </isif>
+</div>

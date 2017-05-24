@@ -1,0 +1,48 @@
+importPackage( dw.web );
+importScript("converse_core:common/libStringUtilsExt.ds");
+
+function formatSubCategory(subCat) {
+    var delimiter = " ";
+    var catArr = subCat.split(delimiter);
+    var word;
+
+    for( var i=0; i != catArr.length; i++ ) {
+        word = catArr[i];
+        catArr[i] = StringUtilsExt.capitalize(word);
+    }
+    return catArr.join(delimiter);
+}
+
+function getHtmlHeaderString(productSearchResult,pdictParentCategory) {
+    var displayCategory;
+    var htmlString;
+    var displayCategoryPar;
+    var categorySeparator = " " + Resource.msg('search.category.separator', 'search', null) + " ";
+
+    if ( productSearchResult.getCategory() != null ) {
+
+        if ( productSearchResult.getCategory().getParent().isRoot() ) {
+            displayCategory = productSearchResult.getCategory().getDisplayName().toLowerCase();
+        
+        } else {
+        	
+        	if(productSearchResult.getCategory().getParent().getParent()!=null){
+        		displayCategoryPar=productSearchResult.getCategory().getParent().getParent().getDisplayName().toLowerCase();
+        		
+        		displayCategoryPar= (!displayCategoryPar.equalsIgnoreCase(pdictParentCategory))?(displayCategoryPar+ categorySeparator):null;
+        	}
+        	
+            displayCategory =( (displayCategoryPar!=null)?displayCategoryPar:'' )+
+            productSearchResult.getCategory().getParent().getDisplayName().toLowerCase() + categorySeparator + productSearchResult.getCategory().getDisplayName().toLowerCase();
+            
+        }
+    }
+
+    if ( displayCategory != null ) {
+        htmlString = displayCategory + " " + "(" + productSearchResult.count + ")";
+    } else if ( productSearchResult.searchPhrase != null ) {
+        htmlString = Resource.msgf('search.phrase.result', 'search', null, productSearchResult.count, productSearchResult.searchPhrase);
+    }
+
+    return htmlString;
+}

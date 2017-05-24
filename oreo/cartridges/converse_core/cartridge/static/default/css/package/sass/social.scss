@@ -1,0 +1,122 @@
+@import "_media_query";
+@import "_sprites";
+
+.social-container {
+	padding-left: 42px;
+            
+	@include mq-medium-pdp {
+		padding-top: 8px; 
+		margin-bottom: 60px;
+    }
+}
+
+.social-column {
+
+  h2 {
+      text-align: center;
+  }
+  
+  .social-container {
+      padding-left: 0px;
+      width: 157px;
+      margin: 0px auto;
+  }
+}
+.social-column-tablet{
+  .social-container {
+
+     margin: 0px auto;
+     display: table;
+     padding-right: 170px;
+     padding-top: 5px;
+
+     @include mq-small-pdp {
+		padding-left: 180px;
+		padding-top: 16px;
+    }
+
+    @include mq-x-small-pdp {
+		padding-left: 10px;
+		padding-right: 0px;
+		padding-top: 16px;
+    }
+
+  }
+}
+
+.social-icon-converse {
+    background: sprite($SPRITESOCIAL, icon-converse) no-repeat;
+    width: 25px;
+    height: 25px;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.social-icon-separator {
+    background: sprite($SPRITESOCIAL, icon-separator) no-repeat;
+    width: 1px;
+    height: 25px;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.social-icon-email {
+    background: sprite($SPRITESOCIAL, icon-email) no-repeat;
+    width: 25px;
+    height: 25px;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.social-icon-facebook {
+    background: sprite($SPRITESOCIAL, icon-facebook) no-repeat;
+    width: 25px;
+    height: 25px;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.social-icon-pinterest {
+    background: sprite($SPRITESOCIAL, icon-pinterest) no-repeat;
+    width: 25px;
+    height: 25px;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.social-icon-twitter {
+    background: sprite($SPRITESOCIAL, icon-twitter) no-repeat;
+    width: 25px;
+    height: 25px;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.social-icon-instagram {
+    background: sprite($SPRITESOCIAL, icon-instagram) no-repeat;
+    width: 25px;
+    height: 25px;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.product-actions {
+    .social-container {
+        display: table;
+        margin: 0 auto;
+        padding-left: 0px;
+        padding-top: 10px;
+    }
+}

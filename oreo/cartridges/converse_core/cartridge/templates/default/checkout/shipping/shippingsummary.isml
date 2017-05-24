@@ -1,0 +1,47 @@
+<isinclude template="util/modules"/>
+
+<isset name="shipmentSummary" value="${pdict.p_shipment_summary}" scope="page"/>
+<isif condition="${shipmentSummary != null}">
+    <ul class="shipping-method-type clearfix">
+        <li class="title">
+            <isloop items="${shipmentSummary.productLineItems}" var="productLineItem">
+                <span>${productLineItem.product.name}</span>
+            </isloop>
+        </li>
+        
+        
+        <li class="method-list label-inline">
+            <isif condition="${shipmentSummary.shippingMethodsSummaries.length > 1}">
+                <select class="select-shipping-method" name="${shipmentSummary.productType}-shipping-methods" data-product-type="${shipmentSummary.productType}">
+                    <isloop items="${shipmentSummary.shippingMethodsSummaries}" var="shippingMethodSummary">
+                        <isset name="method" value="${shippingMethodSummary.method}" scope="page"/>
+                        
+                        <isif condition="${method.shippingMethod.ID === shipmentSummary.shipment.shippingMethodID}">
+                            <isset name="option_selected_attributes" value="selected='selected'" scope="page"/>
+                        <iselse>
+                            <isset name="option_selected_attributes" value="" scope="page"/>
+                        </isif>
+
+                        <option ${option_selected_attributes} value="${method.shippingMethod.ID}">
+                            <isshippingmethodlabel 
+                                p_shipping_method="${method.shippingMethod}" 
+                                p_shipping_cost="${method.shippingCost}"/>
+
+                            <isif condition="${!empty(method.shippingMethod.description)}">
+                                <span>(<isprint value="${method.shippingMethod.description}"/>)</span>
+                            </isif>
+                        </option>
+                    </isloop>
+                </select>
+            <iselseif condition="${shipmentSummary.shippingMethodsSummaries.length == 1}">
+                <isset name="shippingMethodSummary" value="${shipmentSummary.shippingMethodsSummaries[0]}" scope="page"/>
+                <isshippingmethod 
+                    p_method="${shippingMethodSummary.method}"
+                    p_shipment="${shipmentSummary.shipment}"
+                    p_shipping_model="${shipmentSummary.shippingModel}" />
+            <iselse>
+                <div class="no-shipping-methods">${Resource.msg('singleshipping.noshippingmethods','checkout',null)}</div>
+            </isif>
+        </li>
+    </ul>
+</isif>

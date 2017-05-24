@@ -1,0 +1,18 @@
+<div>
+    <h2>${Resource.msg('htmlbuilder.reviewpanel.title','product',null)}</h2>
+    <h3>${Resource.msg('htmlbuilder.reviewpanel.description','product',null)}</h3>
+    <isif condition="${!empty(pdict.ImageShots)}">
+        <ul>
+            <isloop items="${pdict.ImageShots}" var="shot">
+                <li>
+                    <img src="${shot.url}" alt="${shot.title}" />
+                    <p>${shot.title}</p>
+                </li>
+            </isloop>
+        </ul>
+    </isif>
+    <div class="button-row">
+        <a class="button edit-design">${Resource.msg('htmlbuilder.reviewpanel.editdesign','product',null)}</a>
+        <a class="button confirm-design">${Resource.msg('htmlbuilder.reviewpanel.confirmdesign','product',null)}</a>
+    </div>
+</div>

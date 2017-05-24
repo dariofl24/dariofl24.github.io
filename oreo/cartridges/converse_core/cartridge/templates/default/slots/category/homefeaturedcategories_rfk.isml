@@ -1,0 +1,26 @@
+<isif condition="${slotcontent != null}">
+    <isdecorate template="content/pt_featured_tabs">
+        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+            <isloop items="${slotcontent.content}" var="featuredCategory" status="fcatstatus">
+                <isset name="itemClass" value="featured-category ui-state-default ui-corner-top" scope="page" />
+                <isset name="itemAttrs" value="" scope="page" />
+               
+                <li class="${itemClass}" ${itemAttrs}>
+                    <a href="${URLUtils.url('Search-Show', 
+                                            'sz', 20,
+                                            'format', 'ajax', 
+                                            'cgid', featuredCategory.ID,
+                                            'categoryRenderTemplate', 'rendering/category/homefeaturedcategory')}">
+                                            <strong>${featuredCategory.displayName}</strong>
+                    </a>
+                </li>
+            </isloop>
+        </ul>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                app.homepage.initFeaturedCategories();
+            });
+        </script>
+    </isdecorate>
+</isif>

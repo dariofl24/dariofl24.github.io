@@ -1,0 +1,134 @@
+importPackage(dw.system);
+importPackage(dw.customer);
+importPackage(dw.util);
+importPackage(dw.rpc);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_exacttarget:ExactTargetService.ds");
+
+importScript("int_exacttarget:objects/SubscriptionData.ds");
+importScript("int_exacttarget:objects/ExactTargetSubscriber.ds");
+
+importScript("int_exacttarget:command/SubscribeRequest.ds");
+importScript("int_exacttarget:command/AcquireNewEmailAddressRequest.ds");
+importScript("int_exacttarget:command/UnsubscribeRequest.ds");
+importScript("int_exacttarget:command/RetrievePropertiesRequest.ds");
+importScript("int_exacttarget:command/RetrieveSubscriptionsRequest.ds");
+
+(function(){
+    var ET_NS = integration.exacttarget;
+    var COMMAND_NS = ET_NS.command;
+    var OBJ_NS = ET_NS.objects;
+    
+    var ExactTargetService = ET_NS.ExactTargetService;
+    var SubscriptionData = OBJ_NS.SubscriptionData;
+    var ExactTargetSubscriber = OBJ_NS.ExactTargetSubscriber;
+    var SubscribeRequest = COMMAND_NS.SubscribeRequest;
+    var AcquireNewEmailAddressRequest = COMMAND_NS.AcquireNewEmailAddressRequest;
+    var UnsubscribeRequest = COMMAND_NS.UnsubscribeRequest;
+    var RetrievePropertiesRequest = COMMAND_NS.RetrievePropertiesRequest;
+    var RetrieveSubscriptionsRequest = COMMAND_NS.RetrieveSubscriptionsRequest;
+    var ServiceUtils = converse.webservices.ServiceUtils;
+
+    var SubscriptionService = Class.extend({
+        init: function() {
+            this.status = new Status(Status.OK);
+            this.exactTarget = new ExactTargetService();
+            this.log = Logger.getLogger('EXACT_TARGET');
+        },
+        
+        subscribe: function(subscriptionData) {
+            this.log.info('Subscribe {0} to {1}', subscriptionData.email, this.serializeInterests(subscriptionData.interests));
+
+            var subscribeCommand: Object = new SubscribeRequest(subscriptionData);
+            this.status = retrieveOverallStatus(subscribeCommand, this.exactTarget.call(subscribeCommand));
+        },
+
+        unsubscribe: function(email) {
+            var unsubscribeCommand: Object = new UnsubscribeRequest(email);
+            this.status = retrieveOverallStatus(unsubscribeCommand, this.exactTarget.call(unsubscribeCommand));
+        },
+
+        retrieve: function(email) : Object {
+            var properties: Map = retrieveProperties.call(this, email);
+            
+            if(!properties) {
+                return ExactTargetSubscriber.createNotFound();
+            }
+            
+            var subscribedLists: Array = retrieveSubscriptions.call(this, email);
+            
+            if(!subscribedLists) {
+                return ExactTargetSubscriber.createNotFound();
+            }
+
+            var subscriptionData = SubscriptionData.createFromMap(properties);
+            return new ExactTargetSubscriber(subscriptionData, subscribedLists);
+        },
+
+        acquireNewEmailAddress: function(subscriptionData) {
+            this.log.info('Acquire new email address for {0}', subscriptionData.email);
+
+            var acquireNewEmailAddressCommand: Object = new AcquireNewEmailAddressRequest(subscriptionData);
+            this.status = retrieveOverallStatus(acquireNewEmailAddressCommand, this.exactTarget.call(acquireNewEmailAddressCommand));
+        },
+
+        getStatus: function() {
+            return this.status;
+        },
+
+        serializeInterests: function(interests) {
+            let str = "";
+
+            for each(let interest in interests) {
+                str += interest.type;
+                str += ":"
+                str += interest.selected;
+                str += " "
+            }
+
+            return str;
+        }
+    });
+
+    Namespace.extend(ET_NS, {
+        SubscriptionService: SubscriptionService
+    });
+    
+    function retrieveProperties(email) {
+        var retrievePropertiesRequest = new RetrievePropertiesRequest(email, SubscriptionData.getAllPropertyNames());
+
+        this.status = this.exactTarget.call(retrievePropertiesRequest);
+        var retrieveResponse = retrievePropertiesRequest.response;
+        
+        if(empty(retrieveResponse) || !retrieveResponse.isValid()) {
+            return null;
+        }
+        
+        return retrieveResponse.getProperties();
+    }
+
+    function retrieveSubscriptions(email) {
+        var retrieveSubscriptionsRequest = new RetrieveSubscriptionsRequest(email);
+        this.status = this.exactTarget.call(retrieveSubscriptionsRequest);
+        var retrieveResponse = retrieveSubscriptionsRequest.response;
+        
+        if(empty(retrieveResponse) || !retrieveResponse.isValid()) {
+            return null;
+        }
+
+        var activeStatus = this.exactTarget.webReference.SubscriberStatus.Active;
+        return retrieveResponse.getSubscribedListsWithStatus(activeStatus);
+    }
+    
+    function retrieveOverallStatus(command, serviceStatus) : Status {
+        if (!command.response.isStatusSuccess()) {
+            return new Status(Status.ERROR);
+        }
+        
+        return serviceStatus;
+    }
+ })();

@@ -1,0 +1,76 @@
+importPackage(dw.system);
+importPackage(dw.catalog);
+importPackage(dw.util);
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("converse_core:product/ProductUtils.ds");
+
+
+function ProductSearchUtils() {};
+
+ProductSearchUtils.getProductVariationWithSalesPrice = function( productSearchHit: ProductSearchHit )
+{
+    var representedProducts = productSearchHit.getRepresentedProducts() || [];
+    
+    for( let pvIndex=0; pvIndex < representedProducts.length; pvIndex++ )
+    {
+    	let productVariation =  representedProducts[ pvIndex ];
+        let pricing = ProductUtils.getPricing( productVariation);
+        if( pricing.standard > pricing.sale )
+        {
+        	return productVariation;
+        }
+    }
+    
+    return null;
+}
+
+ProductSearchUtils.isSalesCategory = function( categoryID : String) : Boolean {
+
+    if( categoryID != null && categoryID.toLowerCase().indexOf("sale") > -1 )
+    {
+        return true;
+    }
+
+    return false;
+}
+
+ProductSearchUtils.isSearchForSalesCategory = function(productSearchModel:ProductSearchModel) : Boolean {
+    if( productSearchModel == null || !productSearchModel.isCategorySearch() )
+    {
+        return false;
+    }
+
+    return ProductSearchUtils.isSalesCategory( productSearchModel.getCategoryID() );
+
+}
+
+ProductSearchUtils.getProductVariantForProductTile = function(productSearchHit: ProductSearchHit, productSearchModel: ProductSearchModel) : ProductVariationModel {
+
+    let isSearchForSalesCategory = ProductSearchUtils.isSearchForSalesCategory( productSearchModel );
+
+    let variationProduct = productSearchHit.firstRepresentedProduct;
+    let isRefinedByColor = productSearchModel.isRefinedByAttribute('color');
+
+    if (!isRefinedByColor) {
+
+        let defaultVariation = null;
+
+        if( isSearchForSalesCategory )
+        {
+            defaultVariation = ProductSearchUtils.getProductVariationWithSalesPrice( productSearchHit );
+        }
+        else
+        {
+            defaultVariation = ProductUtils.getDefaultVariationProduct(productSearchHit.product);
+        }
+
+        if (defaultVariation != null) {
+            variationProduct = defaultVariation;
+        }
+    }
+
+    return variationProduct;
+
+}

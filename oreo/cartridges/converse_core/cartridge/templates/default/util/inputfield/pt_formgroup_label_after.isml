@@ -1,0 +1,13 @@
+<isif condition="${formfield.showValue}">
+    <isreplace/>
+</isif>
+<isif condition="${formfield.label.visible}">
+    <label for="${formfield.html.name}">
+        <span>
+            <isprint value="${Resource.msg(formfield.label.key,'forms',null)}"/>
+        </span>
+    </label>
+</isif>
+<isif condition="${formfield.showValue}">
+    <isinclude template="util/inputfield/message" />
+</isif>

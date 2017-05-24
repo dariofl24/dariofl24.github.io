@@ -1,0 +1,41 @@
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.rpc);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/AbstractSoapService.ds" );
+
+(function(){
+    
+    var SigmaTaxSoapService = converse.webservices.AbstractSoapService.extend({
+        
+        init : function() {
+            this._super('SigmaTax');
+        },  
+        
+        getWebReference : function() {
+            return webreferences.CustomerOrder;   
+        }
+    });
+    
+    var SigmaOrderStatusSoapService = converse.webservices.AbstractSoapService.extend({
+        
+        init : function() {
+            this._super('SigmaOrderStatus');
+        },  
+        
+        getWebReference : function() {
+            return webreferences.CustomerActivityDetail;
+        }
+    });
+    
+    Namespace.extend(integration, { 
+        sigma: {
+            SigmaTaxSoapService: SigmaTaxSoapService,
+            SigmaOrderStatusSoapService: SigmaOrderStatusSoapService
+        }
+    });
+    
+})();

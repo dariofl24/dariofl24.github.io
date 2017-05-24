@@ -1,0 +1,27 @@
+/**
+ *
+ * @input BasketQuantity : Number
+ * @output CartIsFull : Boolean
+ * @output CartFullError : Boolean
+ */
+
+importPackage( dw.system );
+
+importScript("int_arvato:constants.ds");
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+    var basketMax = arvato.constants.BasketMax;
+    var basketQuantity : Number = pdict.BasketQuantity;
+
+    if (basketMax < basketQuantity) {
+        pdict.CartIsFull = false;
+        pdict.CartFullError = true;
+        return PIPELET_ERROR;
+    } else if (basketMax === basketQuantity) {
+        pdict.CartIsFull = true;
+    }
+    return PIPELET_NEXT;
+}
+
+

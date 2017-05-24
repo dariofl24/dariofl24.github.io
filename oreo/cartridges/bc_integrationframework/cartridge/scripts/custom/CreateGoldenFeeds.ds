@@ -1,0 +1,82 @@
+/**
+* Export Products to CSV
+*
+* @input ExportFile : String The export file name
+* @input ProductPagingModel : dw.web.PagingModel
+*
+* @output ErrorMsg : String The error message if any
+*/
+
+importPackage(dw.io);
+importPackage(dw.order);
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.catalog);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:product/ProductUtils.ds");
+importScript("custom/ProductsExporter.ds");
+importScript("converse_core:product/ProductDataResolver.ds");
+
+var logger : Logger = Logger.getLogger('ExportGoldenfeedsToCsv');
+var ProductsExporter = converse.utils.ProductsExporter;
+let productIds;
+
+function execute(args : PipelineDictionary) : Number
+{
+    var ProductPagingModel : dw.web.PagingModel = args.ProductPagingModel;
+    let errorMsg : String = null;
+    productIds = new HashSet();
+    
+    try {
+        let products = ProductPagingModel.getPageElements();
+        let exporter = new ProductsExporter(args.ExportFile, getCsvHeader, getCsvRow, shouldExport);
+        
+        exporter.export(products, null, null, null, null, null, true);
+    } catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+    
+    args.ErrorMsg = errorMsg;
+
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function getCsvHeader() {
+    return ["Product_id","GTIN_code","Size"];
+}
+
+function getCsvRow(product) {
+    productIds.add(product.ID);
+    try{
+    var pvm = product.variationModel;
+    var size = addSizeVariationInfo(product, pvm);
+    
+    let row = [
+       product.ID, // SKU
+       !empty(product.UPC) ?  product.UPC : "",// UPC
+       !empty(size) ? size : "" // Size
+       ];
+	
+    return row;
+    }catch (errorMsg) {
+        logger.error("Product id failed :- "+ product.ID + " error message :- " +errorMsg);
+    }
+}
+
+function shouldExport(product) {
+    return !productIds.contains(product.ID) && product.online && !product.master;
+}
+
+function addSizeVariationInfo(product, productVariationModel) : ArrayList {
+    let sizeChart = ProductUtils.getSizeChart(product);
+    let sizeVarAttr = productVariationModel.getProductVariationAttribute("size");
+    let selectedSizeValue = ProductUtils.getVariationAttributeValue(product, 'size');
+    let variantSizeChartVal = ProductUtils.getVariationAttributeValue(product, 'sizeChart');
+    //let hideSize = ProductUtils.hideSize(selectedSizeValue, variantSizeChartVal);
+    var displayValue = (sizeChart && sizeChart.containsSize(selectedSizeValue))
+        ? sizeChart.getSizeDisplayValue(selectedSizeValue)
+        : selectedSizeValue;
+    return displayValue;
+}

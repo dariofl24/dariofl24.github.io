@@ -1,0 +1,193 @@
+/**
+* Import order tracking data for site orders
+*
+* @input OrderXMLRef : XML Order redord to import
+*
+* @output ErrorMsg : String The error message if any
+*/
+importPackage(dw.io);
+importPackage(dw.order);
+importPackage(dw.system);
+importPackage(dw.util);
+
+ var ns: Namespace = new Namespace("http://NETRADA.EAI.BizTalk.Common.TransferSchemas.Order_XML");
+
+let logger : Logger = Logger.getLogger('OrderTrackingImportArvato');
+function execute(args: PipelineDictionary): Number {
+    let orderXMLRef = args.OrderXMLRef;
+
+    let errorMsg: String = null;
+
+    try {
+        //get order
+        var orderId = orderXMLRef.@['order-no'];
+
+        logger.info("order Id ---> " + orderId);
+
+        var order: Order = OrderMgr.getOrder(orderId);
+
+        if (!empty(order)) {
+            //process the order
+            processOrder(order, orderXMLRef);
+        } else {
+            logger.info(StringUtils.format("No order found for  order ID: {0}", orderId));
+        }
+
+    } catch (e) {
+        errorMsg = e.toString();
+        logger.info(errorMsg);
+    }
+
+    args.ErrorMsg = errorMsg;
+
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function processOrder(order: Order, orderXMLRef: XML) {
+
+    var status;
+    //set status
+    status = getOrderStatus(orderXMLRef.ns::status.ns::['order-status']);
+    if(status) {
+    	order.status = status;
+    }
+    
+    status = getConfirmationStatus(orderXMLRef.ns::status.ns::['confirmation-status']);
+    if(status) {
+    	order.confirmationStatus = status;
+    }
+    
+    status = getShippingStatus(orderXMLRef.ns::status.ns::['shipping-status']);
+    
+     if(status) {
+    	order.shippingStatus = status;
+    }   
+
+
+    //set shipment information
+    for each(var shipmentRef: XML in orderXMLRef.ns::shipments.ns::shipment) {
+
+        var shipmentId = shipmentRef.@['shipment-id'];
+        logger.info("shipmentId ---> " + shipmentId);
+        var shipment: Shipment = findShipmentById(order, shipmentId);
+        if(shipment){
+	        logger.info("tracking number ---> " + shipmentRef.ns::['tracking-number']);
+	        shipment.trackingNumber = shipmentRef.ns::['tracking-number'];
+	        shipment.shippingStatus = Shipment.SHIPPING_STATUS_SHIPPED;
+	
+	        for each(var custAtrrRef: XML in shipmentRef.ns::['custom-attributes'].ns::['custom-attribute']) {
+	            if (custAtrrRef.@['attribute-id'] == "trackingLink") {
+	                logger.info("tracking url ---> " + custAtrrRef);
+	                shipment.custom.trackingLink = custAtrrRef;
+	            }
+	        }
+        }
+
+    }
+
+    //set product information
+    for each(var productRef: XML in orderXMLRef.ns::['product-lineitems'].ns::['product-lineitem']) {
+        var productId = productRef.ns::['product-id'];
+        logger.info("productId ---> " + productId);
+        var lineItem: ProductLineItem = findItemByProductId(order, productId);
+		if(lineItem){
+	        for each(var custAtrrRef: XML in productRef.ns::['custom-attributes'].ns::['custom-attribute']) {
+	            if (custAtrrRef.@['attribute-id'] == "product-status") {
+	                logger.info("product status ---> " + custAtrrRef);
+	                lineItem.custom.productStatus = getProductStatus(custAtrrRef);
+	            }
+	        }
+		}
+
+    }
+
+}
+
+
+function findItemByProductId(order, productId) {
+    let result: ProductLineItem = null;
+
+    var itemsItr = order.productLineItems.iterator();
+
+    while (itemsItr.hasNext()) {
+        var lineItem = itemsItr.next();
+        if (lineItem.productID == productId) {
+            result = lineItem;
+            break;
+        }
+    }
+
+    return result;
+}
+
+function findShipmentById(order, shipmentId) {
+    let result = null;
+
+    var shipmentsItr = order.shipments.iterator();
+
+    while (shipmentsItr.hasNext()) {
+        var shipment = shipmentsItr.next();
+        logger.info("shipment Id ---> " + shipment.shipmentNo);
+        //convert shipmentId to Number to exclude leading zeros
+        if (new Number(shipment.shipmentNo).toString() == new Number(shipmentId).toString()){
+        	logger.info("found match ");
+            result = shipment;
+            break;
+        }
+    }
+    logger.info("result ---> " + result);
+    return result;
+}
+
+function getOrderStatus(status) {
+
+    if (status == "NEW")
+        return 3;
+    else if (status == "OPEN")
+        return 4;
+    else if (status == "COMPLETE")
+        return 5;
+    else if (status == "CANCELLED")
+        return 6;
+    else if (status == "REPLACED")
+        return 7;
+
+
+}
+
+function getConfirmationStatus(status) {
+
+    if (status == "CONFIRMED")
+        return 2;
+    else if (status == "NOT_CONFIRMED")
+        return 0;
+
+}
+
+function getShippingStatus(status) {
+
+    if (status == "SHIPPED")
+        return 2;
+    else if (status == "PART_SHIPPED")
+        return 1;
+    else if (status == "NOT_SHIPPED")
+        return 0;
+
+}
+
+
+function getProductStatus(status) {
+
+    if (status == "sold")
+        return "sold";
+    else if (status == "cancelled")
+        return "cancelled";
+    else if (status == "returned")
+        return "returned";
+    else if (status == "out of stock")
+        return "outofstock";
+    else if (status == "open")
+        return "inprocess";    
+
+
+}

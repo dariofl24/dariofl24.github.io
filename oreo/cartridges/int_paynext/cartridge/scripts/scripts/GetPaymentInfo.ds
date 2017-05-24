@@ -1,0 +1,45 @@
+/**
+**
+*   @input PaymentVerificationStatus : Object
+*   @output PaymentMethod : String
+*   @output PaymentVerificationStatus : Object
+*
+*/
+importPackage(dw.system);
+importPackage(dw.svc);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("objects/PaynextVerificationStatus.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+    var service : SOAPService = ServiceRegistry.get("PayNext.GetPaymentInfo");
+    
+     // Token
+     var paymentToken = args.PaymentVerificationStatus.paymentToken;
+    
+    var result = service.call(paymentToken);
+    
+    if( result.getStatus() == 'OK' ) {
+        
+        args.PaymentVerificationStatus = result.getObject().PaynextVerificationStatus;
+        
+        if( args.PaymentVerificationStatus.passedPaymentInfo ) {
+            args.PaymentMethod = result.getObject().Method;
+        }
+        else {
+            return PIPELET_ERROR;
+        }
+    }
+    else {
+        args.PaymentVerificationStatus = new integration.paynext.PaynextVerificationStatus(); 
+        args.PaymentVerificationStatus.passedPaymentInfo = false;
+        args.PaymentVerificationStatus.errorMessage = result.getErrorMessage();
+
+        return PIPELET_ERROR;
+    }
+        
+
+    return PIPELET_NEXT;
+}

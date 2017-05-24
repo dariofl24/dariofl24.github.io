@@ -1,0 +1,105 @@
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_exacttarget:command/AbstractUpdateRequest.ds");
+importScript("int_exacttarget:objects/SubscriptionData.ds");
+importScript("int_exacttarget:objects/AddUpdateSubscriberBuilder.ds");
+importScript("int_exacttarget:objects/UpdateResponse.ds");
+
+(function(){
+    var ET_NS = integration.exacttarget;
+    var OBJ_NS = ET_NS.objects;
+    var COMMAND_NS = ET_NS.command;
+    
+    var AbstractUpdateRequest = COMMAND_NS.AbstractUpdateRequest;
+    var AddUpdateSubscriberBuilder = OBJ_NS.AddUpdateSubscriberBuilder;
+    var UpdateResponse = OBJ_NS.UpdateResponse;
+
+    var SubscribeRequest = AbstractUpdateRequest.extend({
+        init: function(subscriptionData : Object) {
+            this._super();
+            this.subscriptionData = subscriptionData;
+        },
+        
+        createUpdateOptions: function() : Object {
+            var updateOptions = new this.webReference.UpdateOptions();
+            updateOptions.setSaveOptions(createSaveOptions.call(this));
+            return updateOptions;
+        },
+
+        createApiObjects: function() : Array {
+            var subscriber = createSubscriber.call(this);
+            var deo = createDataExtensionObject.call(this);
+            return [ subscriber, deo ];
+        },
+        
+        handleResponse: function(response) {
+            this.logErrorIfAvailable(response);
+            this.response = new UpdateResponse(response);
+        }
+    });
+
+    Namespace.extend(COMMAND_NS, { SubscribeRequest: SubscribeRequest });
+
+    function createSubscriber() : Object {
+        var hasInterests = this.subscriptionData.hasInterests();
+        var status = hasInterests ? this.webReference.SubscriberStatus.Active : this.webReference.SubscriberStatus.Unsubscribed;
+        var listIds = getListIds.call(this, hasInterests);
+        var builder = new AddUpdateSubscriberBuilder(this.webReference);
+
+        return builder
+            .setEmail(this.subscriptionData.email)
+            .setEmailTypePreference(this.webReference.EmailType.HTML)
+            .setStatus(status)
+            .createSubscribeList(status, listIds)
+            .build();
+    }
+
+    function getListIds(listStatus: Boolean) : Array {
+        var listIds: ArrayList = new ArrayList();
+        var config = this.configuration;
+        
+        return listStatus ? [ config.listId, config.allSubscribersListId ] : [ config.listId ];
+    }
+
+    function createSaveOptions() : Array {
+        var saveAction = this.webReference.SaveAction.UpdateAdd;
+        var saveOption = new this.webReference.SaveOption();
+        
+        saveOption.setSaveAction(saveAction);
+        saveOption.setPropertyName("*");
+
+        return [ saveOption ];
+    }
+
+    function createDataExtensionObject() : Object {
+        var dataExtensionObject = new this.webReference.DataExtensionObject();
+        var dataExtensionObjectName = this.configuration.dataObjectName;
+        var properties = getSubscriptionDataProperties.call(this);
+
+        dataExtensionObject.setCustomerKey(dataExtensionObjectName);
+        dataExtensionObject.setProperties(properties);
+
+        return dataExtensionObject;
+    }
+
+    function getSubscriptionDataProperties() : Array {
+        var properties = [];
+        var propertyMap = this.subscriptionData.toMap();
+        
+        for each(let propertyName in propertyMap.keySet()) {
+            let apiProperty = new this.webReference.APIProperty();
+            
+            apiProperty.setName(propertyName);
+            apiProperty.setValue(propertyMap.get(propertyName));
+            properties.push(apiProperty);
+        }
+        
+        return properties;
+    }
+
+})();
+

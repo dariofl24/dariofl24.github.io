@@ -1,0 +1,20 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("module_test:Framework/Assert.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:product/ProductUtils.ds");
+
+function execute(args : PipelineDictionary) {
+
+    args.Unit.describe("ProductUtils Test Suite")
+        .test("Validate product is considered giftcard when it is either electronic or physical giftcard", function () {
+        });
+
+    return PIPELET_NEXT;
+}

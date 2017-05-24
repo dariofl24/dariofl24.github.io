@@ -1,0 +1,23 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+    
+    var AcceptRequest = Class.extend({
+        
+        init: function(digest : String) {
+            this.digest = digest;
+        },
+        
+        getDigest: function() : String {
+            return this.digest;
+        }
+    }); 
+    
+    var ns = Namespace.extendFromString(integration, "ups.objects");
+    Namespace.extend(ns, { AcceptRequest: AcceptRequest });
+        
+})();

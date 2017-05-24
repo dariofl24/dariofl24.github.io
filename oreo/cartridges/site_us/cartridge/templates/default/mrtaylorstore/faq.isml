@@ -1,0 +1,7 @@
+<isdecorate template="content/home/pt_storefront">
+    <isinclude template="util/modules"/>
+
+    <div id="mr-taylor-container" class="clearfix">
+        <iscontentasset aid="employee-faqs" />
+    </div>
+</isdecorate>

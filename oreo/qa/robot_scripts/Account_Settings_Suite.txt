@@ -1,0 +1,17 @@
+*** Settings ***
+Documentation   Verifies Account settings functionality
+Suite Setup     Start My Profile
+Suite Teardown  Close All Browsers
+Force Tags      AccountSettings  Regression  Production
+Test Template   Account Settings
+Resource        account_settings_definitions.txt
+
+*** Test Cases ***
+User logs in the site with valid user and password. Verifies he can edit his account
+  [Tags]  US
+  Positive  ${validSite_name}  ${validSite_lastName}  ${DEFAULTZIPCODE}  ${validSite_user}  FIRST NAME  LAST NAME
+  ...  ZIP CODE
+
+*** Keywords ***
+Verifies Account Settings
+  Account Settings

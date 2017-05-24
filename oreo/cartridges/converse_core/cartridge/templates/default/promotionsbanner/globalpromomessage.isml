@@ -1,0 +1,22 @@
+<iscache type="relative" hour="24" varyby="price_promotion"/>
+<isinclude template="util/modules"/>
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:promotion/GlobalPromotionManager.ds");
+    
+    var calloutMessageType = pdict.calloutMessageType;
+    var GlobalPromotionManager = converse.promotion.GlobalPromotionManager,
+        promos = GlobalPromotionManager.getActiveCustomerPromotions();
+</isscript>
+
+<div class="global-promo-banner">
+    <isif condition="${empty(promos)}">
+        <isslot id="default-global-promo" description="Default Global Promo Message" context="global" />
+    <iselse>
+        <ul id="global-promos">
+            <isloop items="${promos}" var="promo">
+                <ispromoelement p_promo="${promo}" p_callout_message_type="${'Global'}" p_class_name="global-promo"/>
+            </isloop>
+        </ul>
+    </isif>
+</div>

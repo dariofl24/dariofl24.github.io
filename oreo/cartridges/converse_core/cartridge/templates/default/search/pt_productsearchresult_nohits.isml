@@ -1,0 +1,28 @@
+<isscript>
+    importScript("converse_core:util/ViewHelpers.ds");
+    var pageContext={title:'Product Search Results No Hits', type:'search', ns:'search'};
+
+    var HtmlHeadTemplates = HtmlHeadTemplates || [];
+    HtmlHeadTemplates.push("search/pt_productsearchresult_head");
+</isscript>
+<isdecorate template="pt_commonlayout">
+    <isinclude template="util/modules" />
+    <div id="main-overlay">
+        <div class="pt_product-search-noresult">
+            <isbanners p_dyo=false />
+            <div id="main" role="main" class="page-content clearfix">
+
+                <div class="noresults-section noresults-section-1 primary-focus clearfix">
+                    <span class="noresults-heading">
+                        ${Resource.msgf('search.nohits.result', 'search', null, pdict.ProductSearchResult.searchPhrase)}
+                    </span>
+                </div>
+
+                <hr class="noresults-divider noresults-divider-2" />
+                <div class="noresults-section">
+                    <isslot id="search-featured-category" description="Search featured category" context="global" />
+                </div>
+            </div>
+        </div>
+    </div>
+</isdecorate>

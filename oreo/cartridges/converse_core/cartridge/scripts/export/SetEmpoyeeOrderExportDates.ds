@@ -1,0 +1,35 @@
+/**
+* Sets the dates for the daily export orders workflow service
+*
+*   @input  DaysToExport : Number
+*   @output DateFrom : dw.util.Calendar
+*   @output DateTo : dw.util.Calendar
+*
+*/
+importPackage(dw.system );
+importPackage(dw.util);
+
+importScript("converse_core:common/libLang.ds");
+
+var logger : Logger = Logger.getLogger('ExportOrders');
+
+function execute( args : PipelineDictionary ) : Number {
+
+    var todayCalendar = dw.system.System.getCalendar();
+    todayCalendar = Lang.trimTimeFromCalendar(todayCalendar);
+    var todayStartingTime = todayCalendar.getTime();
+
+    args.DateTo = todayCalendar;
+    var daysBack = args.DaysToExport;
+    var yesterdayCalendar = dw.system.System.getCalendar();
+    yesterdayCalendar.setTime(todayStartingTime);
+    yesterdayCalendar.add(Calendar.DAY_OF_MONTH, -daysBack);
+
+    args.DateFrom = yesterdayCalendar;
+
+    var yesterdayStartingTime = yesterdayCalendar.getTime();
+
+    logger.debug("Exporting orders from " + yesterdayStartingTime + " to " + todayStartingTime);
+
+    return PIPELET_NEXT;
+}

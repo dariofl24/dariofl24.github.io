@@ -1,0 +1,27 @@
+<isinclude template="util/modules"/>
+
+<isset name="method" value="${pdict.p_method}" scope="page"/>
+<isset name="shipment" value="${pdict.p_shipment}" scope="page"/>
+<isset name="shippingModel" value="${pdict.p_shipping_model}" scope="page"/>
+
+<isset name="shippingMethod" value="${method.shippingMethod}" scope="page"/>
+<isset name="shippingCost" value="${method.shippingCost}" scope="page"/>
+
+<div class='form-row'>
+    <label for="shipping-method-${shippingMethod.ID}">
+        <isshippingmethodlabel 
+            p_shipping_method="${shippingMethod}" 
+            p_shipping_cost="${shippingCost}"/>
+    </label>
+
+    <input 
+        type="hidden" 
+        name="${shipment.custom.productType}-shipping-methods" 
+        id="shipping-method-${shippingMethod.ID}"
+        value="${shippingMethod.ID}"
+    />
+
+    <isif condition="${!empty(shippingMethod.description)}">
+        <div class="form-caption">(<isprint value="${shippingMethod.description}"/>)</div>
+    </isif>
+</div>

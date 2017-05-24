@@ -1,0 +1,51 @@
+<iscache type="relative" hour="24"/>
+<isdecorate template="content/home/pt_storefront">
+
+<iscomment>this is the template rendering the clp12</iscomment>
+	<div id="oc"></div>
+	<div class="lc">
+	    <isinclude template="components/brandsegments/categorylandingpages/page13/singletout"/>
+	</div>
+	<div>
+        <isinclude template="components/heroslideshow/categorylandingpages/page13/heroslot.isml"/>
+	</div>
+	<br><br>
+	<div class="lc">
+	    <isinclude template="components/brandsegments/categorylandingpages/page13/singletout_row2"/>
+	    <isinclude template="components/brandsegments/categorylandingpages/page13/doubletout"/>
+        <isinclude template="components/brandsegments/categorylandingpages/page13/tripletout"/>
+	</div>
+	<div class="lc">
+		<div class="featured-categories">
+			<isslot id="clp-13-static-gridwall-1" description="clp 13 featured categories" context="global" />
+		</div>
+	</div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page13/singletout_row3"/>
+        <isinclude template="components/brandsegments/categorylandingpages/page13/doubletout_row2"/>
+        <isinclude template="components/brandsegments/categorylandingpages/page13/tripletout_row2"/>
+        <isinclude template="components/brandsegments/categorylandingpages/page13/singletout_row4"/>
+	    <div class="featured-categories">
+			<isslot id="clp-13-static-gridwall-2" description="clp 13 featured categories" context="global" />
+		</div>
+	</div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page13/singletout_row5"/>
+	    <div class="featured-categories">
+			<isslot id="clp-13-static-gridwall-3" description="clp 13 featured categories" context="global" />
+		</div>
+        <isinclude template="components/brandsegments/categorylandingpages/page13/singletout_row6"/>
+	    <div class="featured-categories">
+			<isslot id="clp-13-static-gridwall-4" description="clp 13 featured categories" context="global" />
+		</div>
+	</div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page13/singletout_row7"/>
+	</div>
+    <div class="lc">
+		<div class="featured-categories">
+			<isslot id="clp-13-featured-tabs" description="clp 13 featured category" context="global" />
+		</div>
+		<isslot id="clp-13-view-all-cta" description="cta for view all link" context="global" />
+    </div>
+</isdecorate>

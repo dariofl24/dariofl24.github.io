@@ -1,0 +1,12 @@
+<isinclude template="util/modules"/>
+
+${Resource.msg('mrtaylorstore.family.terms.dialog.success.title','mrtaylorstore',null)}
+<br/>
+<br/>
+
+<p>${Resource.msg('mrtaylorstore.family.terms.dialog.success.message','mrtaylorstore',null)}</p>
+<p>${Resource.msg('mrtaylorstore.family.terms.dialog.success.details','mrtaylorstore',null)}</p>
+
+<br/>
+
+<a id="shop-now" href="javascript:void(0)">${Resource.msg('mrtaylorstore.family.terms.dialog.success.shopnow','mrtaylorstore',null)}</a>

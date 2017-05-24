@@ -1,0 +1,41 @@
+<!--- TEMPLATENAME: countryselector.isml --->
+<isscript>
+    
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:util/LocaleInfo.ds");
+
+    var localization = converse.constants.localization;
+   
+    var currentSite : String = dw.system.Site.getCurrent().getID();
+    var currentLocale : String = pdict.CurrentRequest.getLocale();
+    
+    var flagUrl = converse.utils.getLocaleInfo(currentSite, currentLocale).flagUrl;
+    if( empty(flagUrl) ){
+        flagUrl = localization[currentSite].flagUrl;
+    }
+    var countryCode = converse.utils.getLocaleCountry( currentLocale ).toUpperCase();
+    var languageCode = converse.utils.getLocaleLanguage( currentLocale ).toUpperCase();
+    var pipeline = pdict.CurrentHttpParameterMap.pipeline.stringValue;
+    var queryString = pdict.CurrentHttpParameterMap.queryString.stringValue;
+
+    var urlParameters = [
+        'pipeline',  pipeline,
+        'queryString', queryString
+    ];
+
+    if (pipeline.match('Default-Start.*') || pipeline.match('Home-Show.*')) {
+        urlParameters = null;
+    }
+
+</isscript>
+<p class="country-selector-text">
+    <a class="country-selector-popup"
+       href ="${URLUtils.abs('CountryLanguageSelector-Start',urlParameters)}"
+       title="Localization"
+       style="pointer-events: none;">
+        <span>
+            <img alt="" src="${URLUtils.staticURL(Resource.msg(flagUrl,'localization',null))}" style="max-width: 15px;">&nbsp;&nbsp;${countryCode} | ${languageCode}
+        </span>
+        
+    </a>
+</p>

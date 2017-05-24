@@ -1,0 +1,28 @@
+<isscript>
+    importScript("constants.ds");
+</isscript>
+
+<isif condition="${!empty(pdict.Relatives)}">
+    <ul class="family-member-list hc-content">
+        <isloop items="${pdict.Relatives}" var="relative">
+            <isset name="accepted" value="${relative.custom.state.value === converse.constants.EmployeeRelative.State.ACCEPTED}" scope="page"/>
+            <li>
+                <button class="delete-member-button remove-button button-text" data-email="${relative.custom.email}">
+                    <span class="remove-button-icon"></span>
+                </button>
+                <h2 class="member-name">${relative.custom.firstName} ${relative.custom.lastName}</h2>
+                <div class="member-details">
+                    <p>${Resource.msg('family.member.email','family',null)} <strong>${relative.custom.email}</strong></p>
+                    <p>${Resource.msg('family.member.relationship','family',null)} <strong>${relative.custom.relationship.displayValue}</strong></p>
+                    <p>${Resource.msg('family.member.status','family',null)} <strong><span class="member-state">${Resource.msg('family.myfamily.status.' + relative.custom.state.value,'family',null)}</span></strong></p>
+                </div>
+                <isif condition="${!accepted}">
+                    <a class="re-invite-member-button button" href="javascript:void(0)" data-email="${relative.custom.email}">${Resource.msg('family.reinvite','family',null)}</a>
+                </isif>
+                <div class="message">
+                    <span>${Resource.msg('family.member.reinvite.success','family', null)}</span>
+                </div>
+            </li>
+        </isloop>
+    </ul>
+</isif>

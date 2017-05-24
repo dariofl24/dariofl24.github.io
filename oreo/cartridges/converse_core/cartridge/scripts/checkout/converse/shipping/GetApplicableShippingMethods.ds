@@ -1,0 +1,91 @@
+/**
+ * GetApplicableShippingMethods.ds
+ * @input CurrentRequest : dw.system.Request
+ * @input ShippingMethodsGroups : Object
+ * @input Basket : dw.order.Basket
+ * @input HttpParametersMap : dw.web.HttpParameterMap;
+ * @input AddressForm: dw.web.FormGroup
+ *
+ * @output ApplicableShippingMethodsGroups : Object
+ * @output AddressRestrictions : Object
+ */
+
+importPackage(dw.order);
+importPackage(dw.util);
+importPackage(dw.web);
+
+importScript("converse_core:checkout/converse/shipping/classes/ShippingMethodsFilter.ds");
+importScript("converse_core:constants.ds");
+importScript("converse_core:util/LocaleInfo.ds")
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+    let shippingMethodsGroups = pdict.ShippingMethodsGroups;
+    let basket: Basket = pdict.Basket;
+
+    let getFieldValue = function(field: FormField) {
+        return field && field.value;
+    }
+
+    let getParameterValue = function(field: HttpParameter) {
+        return field && field.value && StringUtils.trim(field.value);
+    } 
+
+    let isEmptyAddress = function(address) {
+        return address.countryCode == null && 
+            address.stateCode == null && 
+            address.postalCode == null && 
+            address.city == null && 
+            address.address1 == null;
+    }
+
+    let httpParameterMap = pdict.HttpParametersMap;
+    let shippingType = getParameterValue(httpParameterMap.shippingType);
+    let address = {   
+        countryCode: converse.utils.getCurrentCountryCode(pdict.CurrentRequest),
+        stateCode: getParameterValue(httpParameterMap.stateCode),
+        postalCode: getParameterValue(httpParameterMap.postalCode),
+        city: getParameterValue(httpParameterMap.city),
+        address1: getParameterValue(httpParameterMap.address1),
+        address2: getParameterValue(httpParameterMap.address2)
+    };
+
+    if (isEmptyAddress(address)) {
+        let addressForm: FormGroup = pdict.AddressForm.addressFields;
+        address = {
+            countryCode: converse.utils.getCurrentCountryCode(pdict.CurrentRequest),
+            stateCode: getFieldValue(addressForm.states.stateCode),
+            postalCode: getFieldValue(addressForm.regional.zip),
+            city: getFieldValue(addressForm.common.city),
+            address1: getFieldValue(addressForm.common.address1),
+            address2: getFieldValue(addressForm.common.address2)
+        };
+    }
+
+    if (isEmptyAddress(address)) {
+        let shipping: Shipment = basket.getDefaultShipment();
+        let shippingAddress: OrderAddress = shipping.getShippingAddress();
+        
+        if (shippingAddress != null) {
+            address = {
+                countryCode: shippingAddress.countryCode,
+                stateCode: shippingAddress.stateCode,
+                postalCode: shippingAddress.postalCode,
+                city: shippingAddress.city,
+                address1: shippingAddress.address1,
+                address2: shippingAddress.address2
+            }
+        }
+    }
+    
+    if (address.countryCode == null || address.countryCode === "") {
+        pdict.ApplicableShippingMethodsGroups = shippingMethodsGroups;
+        return PIPELET_NEXT;
+    }
+    
+    let filter = new ShippingMethodsFilter();
+    pdict.ApplicableShippingMethodsGroups = filter.filterByAddress(address, shippingMethodsGroups, basket, shippingType);
+    pdict.AddressRestrictions = filter.addressRestrictions(address);
+
+    return PIPELET_NEXT;
+}

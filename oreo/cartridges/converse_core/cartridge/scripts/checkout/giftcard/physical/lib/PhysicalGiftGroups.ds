@@ -1,0 +1,56 @@
+importPackage(dw.catalog);
+
+function PhysicalGiftGroups (self) {
+	self = self || {};
+	
+	var priceGroups = [];
+	var sleeveGroups = [];
+	var matches = {};
+	
+	var getKey = function(priceGroup: String, sleeveGroup: String) :String {
+		return priceGroup + "_" + sleeveGroup;
+	}
+	
+	self.addPriceGroup = function(name: String) {
+		if (priceGroups.indexOf(name) === -1) {
+			priceGroups.push(name);
+		}
+	}
+	
+	self.addSleeveGroup = function(name: String) {
+		if (sleeveGroups.indexOf(name) === -1) {
+			sleeveGroups.push(name);
+		}
+	}
+	
+	self.addMatch = function(priceGroup: String, sleeveGroup: String, product: Product) {
+		var key = getKey(priceGroup, sleeveGroup);
+		if (matches[key] == undefined) {
+			matches[key] = product;
+		}
+	}
+	
+	self.getPriceGroups = function() : Array {
+		return priceGroups;
+	}
+	
+	self.getSleeveGroups = function() : Array {
+		return sleeveGroups;
+	}
+	
+	self.getGifCard = function(priceGroup: String, sleeveGroup: String) : Object {
+		var key = getKey(priceGroup, sleeveGroup);
+		var product: Product = matches[key];
+		
+		if (product == undefined) {
+			return null;
+		}
+		
+		return {
+			'sku': product.getID(),
+			'name': product.getName()
+		};
+	}
+	
+	return self;
+}

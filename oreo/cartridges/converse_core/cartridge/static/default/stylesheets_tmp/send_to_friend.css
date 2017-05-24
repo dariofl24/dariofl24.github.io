@@ -1,0 +1,62 @@
+/* constants file for scss variable values */
+/* send to friend */
+/* ------------------------------------- */
+/* line 5, ../css/package/sass/send_to_friend.scss */
+.send-to-friend-product {
+  border-bottom: 1px solid #E6E5DD;
+  border-top: 1px solid true;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-right: 22%;
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+/* line 6, ../css/package/sass/send_to_friend.scss */
+.send-to-friend-product .product-image {
+  float: left;
+  width: 36%;
+}
+
+/* line 7, ../css/package/sass/send_to_friend.scss */
+.send-to-friend-product .product-image img {
+  max-width: 80%;
+}
+
+/* line 8, ../css/package/sass/send_to_friend.scss */
+.send-to-friend-product .product-description {
+  float: left;
+  width: 63%;
+}
+
+/* line 9, ../css/package/sass/send_to_friend.scss */
+.send-to-friend-product .product-description h2 {
+  margin-right: 0;
+}
+
+/* line 10, ../css/package/sass/send_to_friend.scss */
+.send-to-friend-product .product-description .value {
+  font-weight: bold;
+}
+
+/* line 11, ../css/package/sass/send_to_friend.scss */
+.send-to-friend-product .product-description h2 {
+  font-family: Georgia;
+  font-size: 1.2em;
+  font-style: italic;
+}
+
+/* line 12, ../css/package/sass/send_to_friend.scss */
+.send-to-friend-product .product-description dt {
+  clear: both;
+  float: left;
+  margin: 10px 0 0 0;
+  width: 100px;
+}
+
+/* line 13, ../css/package/sass/send_to_friend.scss */
+.send-to-friend-product .product-description dd {
+  float: left;
+  margin: 10px 0 0 0;
+  width: 200px;
+}

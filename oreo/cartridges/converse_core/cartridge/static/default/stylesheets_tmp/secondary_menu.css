@@ -1,0 +1,131 @@
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* line 4, ../css/package/sass/base/_selected_element_arrow.scss */
+.secondary-menu > ul > li a.active:after {
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  content: " ";
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0.08em solid transparent;
+  border-bottom: 0.08em solid transparent;
+  margin: 0.08em;
+  margin-left: -0.24em;
+  top: 83%;
+  left: 50%;
+  position: absolute;
+}
+
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* line 7, ../css/package/sass/base/_standard_tab_bar.scss */
+.secondary-menu {
+  position: relative;
+  border-top: 1px solid #CACACA;
+  border-bottom: 1px solid #CACACA;
+  margin-bottom: 3em;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 7, ../css/package/sass/base/_standard_tab_bar.scss */
+  .secondary-menu {
+    margin: 0 1.5em;
+    border: 0;
+  }
+}
+
+/* line 19, ../css/package/sass/base/_standard_tab_bar.scss */
+.secondary-menu > ul {
+  width: 100%;
+  max-width: 83.41667em;
+  margin: 0 auto;
+  text-align: center;
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 19, ../css/package/sass/base/_standard_tab_bar.scss */
+  .secondary-menu > ul {
+    max-width: 64.16667em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 19, ../css/package/sass/base/_standard_tab_bar.scss */
+  .secondary-menu > ul {
+    border: 0;
+  }
+}
+
+@media screen and (max-width: 33.3125em) {
+  /* line 34, ../css/package/sass/base/_standard_tab_bar.scss */
+  .secondary-menu > ul > li a.active {
+    color: #FFFFFF;
+    background: #000000;
+  }
+}
+/* line 40, ../css/package/sass/base/_standard_tab_bar.scss */
+.secondary-menu > ul > li a.active:after {
+  background: #FFFFFF;
+  border-right-color: #CACACA;
+  border-bottom-color: #CACACA;
+  width: 0.7em;
+  height: 0.7em;
+}
+@media screen and (max-width: 44.41667em) {
+  /* line 40, ../css/package/sass/base/_standard_tab_bar.scss */
+  .secondary-menu > ul > li a.active:after {
+    display: none;
+  }
+}
+
+/* line 45, ../css/package/sass/base/_standard_tab_bar.scss */
+.secondary-menu > ul > li {
+  display: inline-block;
+  width: 33%;
+  text-align: center;
+  position: relative;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 45, ../css/package/sass/base/_standard_tab_bar.scss */
+  .secondary-menu > ul > li {
+    width: 100%;
+    padding-bottom: 1.1em;
+  }
+}
+/* line 56, ../css/package/sass/base/_standard_tab_bar.scss */
+.secondary-menu > ul > li a {
+  display: block;
+  font-size: 1.41667em;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 0.74118em 0;
+  border-right: 1px solid #CACACA;
+  overflow: visible;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 56, ../css/package/sass/base/_standard_tab_bar.scss */
+  .secondary-menu > ul > li a {
+    font-size: 1.16667em;
+    padding: 0.9em 0;
+    border-right: 1px solid #CACACA;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 56, ../css/package/sass/base/_standard_tab_bar.scss */
+  .secondary-menu > ul > li a {
+    font-size: 1em;
+    padding: 1em;
+    border: 1px solid #CACACA;
+  }
+}
+/* line 88, ../css/package/sass/base/_standard_tab_bar.scss */
+.secondary-menu > ul > li:first-child a {
+  border-left: 1px solid #CACACA;
+}
+/* line 91, ../css/package/sass/base/_standard_tab_bar.scss */
+.secondary-menu > ul > li:first-child a:after {
+  border-left: 0;
+}

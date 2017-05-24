@@ -1,0 +1,4 @@
+remote_host: ec2-54-235-209-194.compute-1.amazonaws.com
+remote_user: ec2-user
+remote_identity: .ssh-keys/converse_dw.pem
+remote_folder: /home/jobs

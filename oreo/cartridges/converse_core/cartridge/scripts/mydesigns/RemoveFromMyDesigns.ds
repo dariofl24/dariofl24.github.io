@@ -1,0 +1,18 @@
+/**
+* @input LockerItemId : String Locker item ID of the saved design.
+*/
+importPackage( dw.system );
+
+importScript("converse_core:constants.ds");
+
+importScript("int_nike:customization/CustomizationService.ds");
+
+var CustomizationService = integration.nike.customization.CustomizationService;
+
+function execute( args : PipelineDictionary ) : Number
+{
+    let customizationService = new CustomizationService();
+    let response = customizationService.removeItemFromLocker(args.LockerItemId);
+
+    return response.success ? PIPELET_NEXT : PIPELET_ERROR;
+}

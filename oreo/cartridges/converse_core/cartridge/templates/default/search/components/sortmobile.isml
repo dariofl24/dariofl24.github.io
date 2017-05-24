@@ -1,0 +1,26 @@
+<div class="mobile-search-panel sort-panel">
+    <div class="panel-header">
+        <h3>Sort</h3>
+        <span class="close-panel">x</span>
+    </div>
+
+    <div class="panel-content">
+        <ul class="sorting-options panel-list">
+            <isloop items="${dw.catalog.CatalogMgr.getSortingOptions()}" var="sortingOption" status="status">
+                <isset name="url" value="${pdict.pagingmodel.appendPaging(pdict.productsearchmodel.urlSortingRule('Search-Show', sortingOption.getSortingRule()),0)}" scope="page"/>
+
+                <isif condition="${sortingRuleID === sortingOption.getSortingRule().getID()}">
+                    <isset name="selectedClass" value="radio-selected" scope="page"/>
+                <iselse>
+                    <isset name="selectedClass" value="" scope="page"/>
+                </isif>
+
+                <li>
+                    <div class="sort-option panel-list-item-content">
+                        <p data-url="${url}"><isprint value="${sortingOption.getDisplayName()}" encoding="off"/><span class="radio-button ${selectedClass}"></span></p>
+                    </div>
+                </li>
+            </isloop>
+        </ul>
+    </div>
+</div>

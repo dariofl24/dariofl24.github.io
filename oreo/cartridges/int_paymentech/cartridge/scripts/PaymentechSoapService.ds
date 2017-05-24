@@ -1,0 +1,26 @@
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.rpc);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/AbstractSoapService.ds" );
+
+(function() {
+	var PaymentechSoapService = converse.webservices.AbstractSoapService.extend({
+	    init : function() {
+	        this._super('paymentech');
+	    },
+	    
+	    getWebReference : function() {
+	        return webreferences.PaymentechGateway;
+	    }
+	});
+	
+	Namespace.extend(integration, { 
+       paymentech: {
+            PaymentechSoapService: PaymentechSoapService
+       }
+    });
+})();

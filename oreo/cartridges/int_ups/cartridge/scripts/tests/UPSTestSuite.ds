@@ -1,0 +1,219 @@
+/**
+* @input Unit: Object
+*/
+importPackage(dw.system);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+importScript("int_ups:tests/UPSTestConstants.ds");
+importScript("int_ups:UPSService.ds");
+importScript("int_ups:command/SendAcceptCommand.ds");
+importScript("int_ups:command/SendConfirmCommand.ds");
+importScript("int_ups:objects/Address.ds");
+importScript("int_ups:objects/Code.ds");
+importScript("int_ups:objects/Dimensions.ds");
+importScript("int_ups:objects/PackageInfo.ds");
+importScript("int_ups:objects/AcceptRequest.ds");
+importScript("int_ups:objects/AcceptResponse.ds");
+importScript("int_ups:objects/ConfirmRequest.ds");
+importScript("int_ups:objects/ConfirmResponse.ds");
+
+function execute(args : PipelineDictionary) : Number {
+
+    let UPS_NS = integration.ups,
+        UPS_CMD_NS = UPS_NS.command,
+        UPS_OBJ_NS = UPS_NS.objects,
+        UPSService = UPS_NS.UPSService,
+        SendConfirmCommand = UPS_CMD_NS.SendConfirmCommand,
+        SendAcceptCommand = UPS_CMD_NS.SendAcceptCommand,
+        Address = UPS_OBJ_NS.Address,
+        Code = UPS_OBJ_NS.Code,
+        Dimensions = UPS_OBJ_NS.Dimensions,
+        PackageInfo = UPS_OBJ_NS.PackageInfo,
+        AcceptRequest = UPS_OBJ_NS.AcceptRequest,
+        AcceptResponse = UPS_OBJ_NS.AcceptResponse,
+        ConfirmRequest = UPS_OBJ_NS.ConfirmRequest,
+        ConfirmResponse = UPS_OBJ_NS.ConfirmResponse;
+
+    let TestConstants = UPS_NS.tests.Constants;
+
+
+    let createFromAddress = function() {
+        return Address.create("Ivan Drago", "7 Svoboda uliza", "#666", "New York", "NY","10001");
+    };
+
+    let createToAddress = function() {
+        return Address.create("Bob Smith", "123 Main street Apt 1303", null, "Boston", "MA","02133", "US");
+    };
+
+    let createPackageInfo = function() {
+        let packageInfo = PackageInfo.create(UPSService.DEFAULT_PACKAGE_DESCRIPTION,
+                                  UPSService.DEFAULT_PACKAGING_CODE,
+                                  Dimensions.create(9, 10, 11),
+                                  3);
+        packageInfo.setOrderId(TestConstants.ORDER_ID);
+        return packageInfo;
+    };
+
+    let createConfirmRequest = function() {
+        return new ConfirmRequest(createFromAddress(),
+                                  createToAddress(),
+                                  createPackageInfo(),
+                                  UPSService.DEFAULT_DELIVERY_CODE,
+                                  UPSService.DEFAULT_RETURN_CODE);
+    };
+
+    let createAcceptRequest = function() {
+        return new AcceptRequest("digest");
+    };
+
+    let mockCommand = function(CommandType, requestObj) {
+        let CommandMock = CommandType.extend({
+            doPost: function(url, data) {
+                return null;
+            }
+        });
+
+        let command = new CommandMock(requestObj);
+        command.configuration = {
+            AccessLicenseNumber: "098765",
+            UserID: "converse",
+            Password: "test123",
+            AccountNumber: "12345"
+        };
+
+        return command;
+    };
+
+    args.Unit.describe("UPS Test Suite")
+      .test("Create Address with address2 and no country", function () {
+          let address = createFromAddress();
+
+          Assert.areEqual("Ivan Drago", address.getName());
+          Assert.areEqual("7 Svoboda uliza, #666", address.getAddress1());
+          Assert.areEqual("#666", address.getAddress2());
+          Assert.areEqual("New York", address.getCity());
+          Assert.areEqual("NY", address.getStateCode());
+          Assert.areEqual("10001", address.getPostalCode());
+          Assert.areEqual("US", address.getCountry());
+      })
+      .test("Create Address without address2 and country", function () {
+          let address = createToAddress();
+
+          Assert.areEqual("Bob Smith", address.getName());
+          Assert.areEqual("123 Main street Apt 1303", address.getAddress1());
+          Assert.areEqual("", address.getAddress2());
+          Assert.areEqual("Boston", address.getCity());
+          Assert.areEqual("MA", address.getStateCode());
+          Assert.areEqual("02133", address.getPostalCode());
+          Assert.areEqual("US", address.getCountry());
+      })
+      .test("Create Code with description", function () {
+          let code = Code.create("code", "description");
+
+          Assert.areEqual("code", code.getCode());
+          Assert.areEqual("description", code.getDescription());
+      })
+      .test("Create Code without description", function () {
+          let code = Code.create("code");
+
+          Assert.areEqual("code", code.getCode());
+          Assert.areEqual("", code.getDescription());
+      })
+      .test("Create Dimensions with units", function () {
+          let dims = Dimensions.create(9, 10, 11, "MM");
+
+          Assert.areEqual(9, dims.getWidth());
+          Assert.areEqual(10, dims.getHeight());
+          Assert.areEqual(11, dims.getLength());
+          Assert.areEqual("MM", dims.getUnits());
+      })
+      .test("Create Dimensions without units", function () {
+          let dims = Dimensions.create(3, 4, 5);
+
+          Assert.areEqual(3, dims.getWidth());
+          Assert.areEqual(4, dims.getHeight());
+          Assert.areEqual(5, dims.getLength());
+          Assert.areEqual(Dimensions.Units.Inches, dims.getUnits());
+      })
+      .test("Create PackageInfo", function () {
+          let packageInfo = createPackageInfo();
+
+          Assert.areEqual(UPSService.DEFAULT_PACKAGE_DESCRIPTION, packageInfo.getDescription());
+          Assert.isNotNull(packageInfo.getPackagingCode());
+          Assert.isNotNull(packageInfo.getDimensions());
+          Assert.areEqual(3, packageInfo.getWeight());
+          Assert.areEqual(TestConstants.ORDER_ID, packageInfo.getOrderId());
+      })
+      .test("Create ConfirmRequest", function () {
+          let confirmRequest = createConfirmRequest();
+
+          Assert.isNotNull(confirmRequest.getShipFromAddress());
+          Assert.isNotNull(confirmRequest.getShipToAddress());
+          Assert.isNotNull(confirmRequest.getPackageInfo());
+          Assert.isNotNull(confirmRequest.getDeliveryCode());
+          Assert.isNotNull(confirmRequest.getReturnCode());
+      })
+      .test("Create AcceptRequest", function () {
+          let acceptRequest = createAcceptRequest();
+
+          Assert.areEqual("digest", acceptRequest.getDigest());
+      })
+      .test("SendConfirmCommand create request", function () {
+          let requestObj = createConfirmRequest();
+          let command = mockCommand(SendConfirmCommand, requestObj);
+          let req = command.createRequest();
+
+          Assert.areEqual((TestConstants.ACCESS_REQUEST + TestConstants.SHIP_CONFIRM_REQUEST).toString(), req);
+      })
+      .test("SendAcceptCommand create request", function () {
+          let requestObj = createAcceptRequest();
+          let command = mockCommand(SendAcceptCommand, requestObj);
+          let req = command.createRequest();
+
+          Assert.areEqual((TestConstants.ACCESS_REQUEST + TestConstants.SHIP_ACCEPT_REQUEST).toString(), req);
+      })
+      .test("ConfirmResponse success", function () {
+          let responseObj = new ConfirmResponse(TestConstants.SHIP_CONFIRM_SUCCESS_RESPONSE.toString());
+
+          Assert.isTrue(responseObj.isOK());
+          Assert.areEqual(1, responseObj.getResponseStatusCode());
+          Assert.areEqual("Success", responseObj.getResponseStatusDescription());
+          Assert.areEqual("rO0ABXNyACpjb20udXBzLmVj", responseObj.getDigest());
+      })
+      .test("AcceptResponse success", function () {
+          let responseObj = new AcceptResponse(TestConstants.SHIP_ACCEPT_SUCCESS_RESPONSE.toString());
+
+          Assert.isTrue(responseObj.isOK());
+          Assert.areEqual(1, responseObj.getResponseStatusCode());
+          Assert.areEqual("Success", responseObj.getResponseStatusDescription());
+          Assert.areEqual("1ZA3455Y9095125914", responseObj.getTrackingNumber());
+          Assert.isNotNull(responseObj.getPrintLabel());
+      })
+      .test("ConfirmResponse error", function () {
+          let responseObj = new ConfirmResponse(TestConstants.SHIP_CONFIRM_ERROR_RESPONSE.toString());
+
+          Assert.isFalse(responseObj.isOK());
+          Assert.areEqual(0, responseObj.getResponseStatusCode());
+          Assert.areEqual("Failure", responseObj.getResponseStatusDescription());
+          Assert.areEqual("Address Validation Error on ShipFrom address", responseObj.getErrorDescription());
+          Assert.areEqual(120803, responseObj.getErrorCode());
+          Assert.areEqual("Hard", responseObj.getErrorSeverity());
+      })
+      .test("AcceptResponse error", function () {
+          let responseObj = new AcceptResponse(TestConstants.SHIP_ACCEPT_ERROR_RESPONSE.toString());
+
+          Assert.isFalse(responseObj.isOK());
+          Assert.areEqual(0, responseObj.getResponseStatusCode());
+          Assert.areEqual("Failure", responseObj.getResponseStatusDescription());
+          Assert.areEqual("Missing or invalid shipment digest.", responseObj.getErrorDescription());
+          Assert.areEqual(125000, responseObj.getErrorCode());
+          Assert.areEqual("Hard", responseObj.getErrorSeverity());
+      });
+
+    return PIPELET_NEXT;
+};

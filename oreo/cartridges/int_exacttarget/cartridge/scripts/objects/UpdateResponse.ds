@@ -1,0 +1,19 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_exacttarget:objects/AbstractResponse.ds");
+
+(function() {
+
+    var OBJ_NS = integration.exacttarget.objects;
+    var AbstractResponse = OBJ_NS.AbstractResponse;
+
+    var UpdateResponse = AbstractResponse.extend({
+    });
+
+    Namespace.extend(OBJ_NS, { UpdateResponse: UpdateResponse });
+
+})();

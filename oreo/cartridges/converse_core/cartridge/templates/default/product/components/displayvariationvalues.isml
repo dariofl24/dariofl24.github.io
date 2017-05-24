@@ -1,0 +1,21 @@
+<isset name="product" value="${pdict.p_product}" scope="page"/>
+
+<isif condition="${product != null && product.isVariant()}">
+    <isloop items="${product.variationModel.getProductVariationAttributes()}" var="VA">
+        <isset name="SelectedVariationValue" value="${product.variationModel.getSelectedValue(VA)}" scope="page"/>
+        <isif condition="${(ProductUtils.isGiftCard(product) && VA.ID === 'value') || VA.ID === 'size' || VA.ID === 'image-variation' || VA.ID === 'sizeChart'}">
+            <iscontinue/>
+        </isif>
+
+        <div class="attribute">
+            <span class="label">${Resource.msgf("orderdetails." + VA.ID, 'account', VA.displayName)}</span>
+            <span class="value">
+                <isif condition="${SelectedVariationValue != null}">
+                    <isprint value="${SelectedVariationValue.displayValue}"/>
+                <iselse>
+                    -
+                </isif>
+            </span>
+        </div>
+    </isloop>
+</isif>

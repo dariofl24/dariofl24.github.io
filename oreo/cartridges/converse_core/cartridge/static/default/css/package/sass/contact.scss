@@ -1,0 +1,102 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_conv_mixins";
+@import "_media_query";
+
+/* CONTACT BADGES
+--------------------------------------------------------------------------------------- */
+
+.contact-group {
+    overflow: hidden;
+
+    .contact-widget {
+        box-sizing: border-box;
+        float: left;
+        /*pxtoem(1) renders no border in Safari, therefore px is used directly */
+        border: 1px solid $CONVERSE_COLOR_5;
+        margin-top: pxtoem(20);
+        text-align: center;
+
+        width: 21%;
+        margin-right: 5%;
+
+        @include mq-medium() {
+            width: 30%;
+            margin-right: 10%;
+            margin-left: 10%;
+        }
+        
+        @include mq-small() {
+            width: 100%;
+        }
+
+
+        .contact-badge {
+            display: inline-block;
+            margin: pxtoem(8) auto;
+
+            @include mq-small() {
+                margin: pxtoem(5) auto;
+            }
+
+            .contact-icon {
+                float: left;
+                height: pxtoem(32);
+                width: pxtoem(32);
+            }
+
+            .contact-text {
+                float: left;
+                overflow: hidden;
+                margin-left: pxtoem(6);
+                font-family: $CONVERSE_FONT_FAMILY_1_REG;
+                font-size: pxtoem(12);
+                line-height: pxtoem(32);
+
+                @include mq-medium() {
+                    font-size: pxtoem(11);
+                    line-height: pxtoem(36);
+                }
+
+                a, span {
+                    color: $CONVERSE_COLOR_5;
+                }
+            }
+        }
+    }
+
+    .contact-widget:last-child {
+        margin-right: 0;
+    }
+}
+
+.contact-widget-call {
+    .contact-icon {
+        background: sprite($SPRITEICONS, icon_contact_call-grey) no-repeat;
+    }
+}
+
+.contact-widget-livechat {
+    .contact-icon {
+        background: sprite($SPRITEICONS, icon_contact_livechat-grey) no-repeat;
+    }
+}
+
+.contact-widget-email {
+    .contact-icon {
+        background: sprite($SPRITEICONS, icon_contact_email-grey) no-repeat;
+    }
+}
+
+.contact-widget-storelocator {
+    .contact-icon {
+        background: sprite($SPRITEICONS, icon_contact_storelocator-grey) no-repeat;
+    }
+}
+
+@include mq-retina {
+    @include retina-sprite($SPRITEICONS_2X, icon_contact_call-33);
+    @include retina-sprite($SPRITEICONS_2X, icon_contact_email-34);
+    @include retina-sprite($SPRITEICONS_2X, icon_contact_storelocator-35);
+    @include retina-sprite($SPRITEICONS_2X, icon_contact_livechat-27);
+}

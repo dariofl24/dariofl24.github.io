@@ -1,0 +1,15 @@
+<isset name="shippingMethod" value="${pdict.p_shipping_method}" scope="page"/>
+<isset name="shippingCost" value="${pdict.p_shipping_cost}" scope="page"/>
+
+<isprint value="${shippingMethod.displayName}"/>:
+        
+<isif condition="${shippingCost.shippingPriceAdjustmentsTotal !== 0}">
+    <span class="standard-shipping"><isprint value="${shippingCost.baseShipping}"/></span>
+    <span class="discount-shipping"><isprint value="${shippingCost.baseShippingAdjusted}"/></span>
+<iselse>
+    <span><isprint value="${shippingCost.baseShipping}"></span>
+</isif>
+
+<isif condition="${shippingCost.surchargeAdjusted > 0}">
+    <span class="shippingsurcharge"> + <isprint value="${shippingCost.surchargeAdjusted}"/> ${Resource.msg('singleshipping.surcharge','checkout',null)}</span>
+</isif>

@@ -1,0 +1,42 @@
+/**
+ * @input Redeem : Boolean
+ * @input Token : String
+ * @output Valid : Boolean
+ */
+importPackage( dw.system );
+importPackage( dw.net );
+importPackage( dw.io );
+importPackage( dw.util );
+
+importScript("converse_webservices:service/ServiceConfigurationFactory.ds");
+importScript("converse_core:constants.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+    var request : HTTPClient = new HTTPClient();
+    var requestString;
+    var token = args.Token;
+    var redeem = args.Redeem;
+
+    if(redeem) {
+        requestString = StringUtils.format(getConfiguration().redeemSheerID, token);
+    } else {
+        requestString = StringUtils.format(getConfiguration().checkSheerID, token);
+    }
+
+    request.open("GET", requestString);
+    request.send();
+
+    var response = JSON.parse(request.getText());
+    if(request.statusCode==200 && !redeem){
+        args.Valid = true;
+    } else {
+        args.Valid = false;
+    }
+
+    return PIPELET_NEXT;
+}
+
+var getConfiguration = function() {
+    return converse.webservices.ServiceConfigurationFactory.getServiceConfiguration('SheerID');
+}

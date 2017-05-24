@@ -1,0 +1,46 @@
+importPackage(dw.system);
+importPackage(dw.catalog);
+importPackage(dw.object);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+importScript("converse_core:product/PriceBuilder.ds");
+
+var CONVERSE_PRODUCT = converse.product;
+var PriceBuilder = CONVERSE_PRODUCT.PriceBuilder;
+var LineItemPriceBuilder = CONVERSE_PRODUCT.LineItemPriceBuilder;
+
+(function() {
+
+    function getProductPricing(product:Product) : Object {
+        var priceBuilder: Object = new PriceBuilder(product);
+        return priceBuilder.getPricing();
+    }
+
+    function getLineItemPricing(lineItem: ProductLineItem) : Object {
+        var priceBuilder: Object = new LineItemPriceBuilder(lineItem);
+        return priceBuilder.getPricing();
+    }
+
+    function isStandardPriceAvailable(pricing: Object) : Boolean {
+        var standardPriceValue: Number = pricing.standardPrice.valueOrNull;
+        return standardPriceValue !== null && standardPriceValue > 0;
+    }
+
+    function isSalesPriceAvailable(pricing: Object) : Boolean {
+        var salesPriceValue: Number = pricing.salesPrice.valueOrNull;
+        return (salesPriceValue !== null && salesPriceValue > 0) || pricing.isPromoPrice;
+    }
+
+    Namespace.extend(CONVERSE_PRODUCT, {
+        PriceResolver: {
+            getProductPricing: getProductPricing,
+            getLineItemPricing: getLineItemPricing,
+            isStandardPriceAvailable: isStandardPriceAvailable,
+            isSalesPriceAvailable: isSalesPriceAvailable
+        }
+    });
+
+})();

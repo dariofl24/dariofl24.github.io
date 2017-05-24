@@ -1,0 +1,30 @@
+/**
+ * @input BasketSummary: Object
+ * @input CentinelLookupResult : Object
+ * @output CentinelOrderResult: Object
+ */
+importPackage( dw.system );
+
+importScript("converse_core:constants.ds");
+importScript('int_cardinal:CardinalService.ds')
+importScript('int_cardinal:command/CentinelRequest.ds')
+importScript('converse_core:cart/objects/BasketSummaryHelper.ds')
+
+function execute( args : PipelineDictionary ) : Number
+{
+	var CARDINAL = integration.cardinal;
+	var cardinalService = new CARDINAL.CardinalService();
+	var lookupResult = args.CentinelLookupResult;
+	
+	var basketSummary = args.BasketSummary;
+	
+	var orderCommand = new CARDINAL.command.CentinelOrderRequest(basketSummary, lookupResult);
+
+	cardinalService.call(orderCommand);
+
+	var response = orderCommand.responseObject;
+
+	args.CentinelOrderResult = response;
+
+	return PIPELET_NEXT;
+}

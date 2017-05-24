@@ -1,0 +1,53 @@
+/**
+*   @input Product : dw.catalog.Product
+*	@input MetricId : String
+*   @output ImageUrl : String
+*   @output PdpUrl : String
+*   @output ShareUrl : String
+*
+*/
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.web);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:product/ProductImageResolver.ds");
+importScript("int_nike:NikeConstants.ds");
+importScript("int_nike:customization/utils/NikeRendererUtils.ds");
+
+var NIKE_UTILS = integration.nike.customization.utils;
+var NIKE_CONST = integration.nike.constants;
+
+var ProductImageResolver = converse.product.ProductImageResolver;
+
+function execute( args : PipelineDictionary ) : Number
+{	
+    var product : Product = args.Product;
+    var metricId : String = args.MetricId;
+    
+    var imageUrl : String;
+    var pdpUrl : String;
+    var shareUrl : String;
+    
+    if( !empty(metricId) ){
+        imageUrl = NIKE_UTILS.NikeRendererUtils.buildFullImageUrlForShareLink(metricId, NIKE_CONST.DYOImageShareLinkWidthInPx);
+        pdpUrl = URLUtils.http('Product-Show','pid',product.ID,'metricId',metricId).toString();
+        shareUrl = URLUtils.http('Product-ShareLink','pid',product.ID,'metricId',metricId).toString();
+    }
+    else
+    {
+        var imagePart = ProductImageResolver.getProductImage(product, 'small', 0);
+        imageUrl = URLUtils.absStatic(imagePart).toString();
+        pdpUrl = URLUtils.http('Product-Show','pid',product.ID).toString();
+        shareUrl = URLUtils.http('Product-ShareLink','pid',product.ID).toString();
+    }
+    
+    args.ImageUrl = imageUrl;
+    args.PdpUrl = pdpUrl;
+    args.ShareUrl = shareUrl;
+    
+	return PIPELET_NEXT;
+}
+

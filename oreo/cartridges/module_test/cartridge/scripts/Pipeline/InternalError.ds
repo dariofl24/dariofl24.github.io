@@ -1,0 +1,10 @@
+/**
+ * @output Result: Object 
+ */
+importPackage(dw.system);
+
+function execute(args:PipelineDictionary) : Number
+{
+    args.Result = {'error': 'Internal Error. Please check logs for more details.'}
+    return PIPELET_NEXT;
+}

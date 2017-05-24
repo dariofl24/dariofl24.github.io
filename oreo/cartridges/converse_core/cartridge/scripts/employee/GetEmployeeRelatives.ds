@@ -1,0 +1,33 @@
+/**
+ * This script returns employee relatives 
+ *
+ * @input EmployeeCustomerNo : String The employee customer number.
+ *
+ * @output Relatives : dw.util.List The list of employee relative custom objects.
+ * @output ErrorMsg : String The error message if any.
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:employee/EmployeeUtils.ds");
+
+var logger : Logger = Logger.getLogger('GetEmployeeRelatives');
+
+function execute(args : PipelineDictionary) : Number
+{
+    var relatives : List = null;
+    var errorMsg : String = null;
+    try {
+        relatives = converse.employee.EmployeeUtils.getEmployeeRelatives(args.EmployeeCustomerNo);
+    }
+    catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+    
+    args.Relatives = relatives;
+    args.ErrorMsg = errorMsg;
+    
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}

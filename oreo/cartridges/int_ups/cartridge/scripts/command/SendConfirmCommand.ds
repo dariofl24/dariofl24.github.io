@@ -1,0 +1,124 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_ups:command/AbstractUPSCommand.ds");
+
+(function() {
+    
+    var UPS_CMD_NS = integration.ups.command;
+    
+    var SendConfirmCommand = UPS_CMD_NS.AbstractUPSCommand.extend({
+        
+        createRequest: function () : String {
+            return String(this.createAccessRequestXML() + this.createShipmentConfirmRequestXML());
+        },
+        
+        createShipmentConfirmRequestXML: function() : XML {
+            var accountNumber : String = this.configuration.AccountNumber,
+                shipFromAddress = this.requestObj.getShipFromAddress(),
+                shipToAddress = this.requestObj.getShipToAddress(),
+                packageInfo = this.requestObj.getPackageInfo(),
+                deliveryCode = this.requestObj.getDeliveryCode(),
+                returnCode = this.requestObj.getReturnCode();
+                
+            var shipmentConfirmRequestXml : XML =
+                <ShipmentConfirmRequest>
+                    <Request>
+                        <RequestAction>ShipConfirm</RequestAction>
+                        <RequestOption>validate</RequestOption>
+                    </Request>
+                    <Shipment>
+                        <ReturnService>
+                            <Code>{returnCode.getCode()}</Code>
+                        </ReturnService>
+                        <Shipper>
+                            <Name>{shipToAddress.getName()}</Name>
+                            <ShipperNumber>{accountNumber}</ShipperNumber>
+                            <Address>
+                                <AddressLine1>{shipToAddress.getAddress1()}</AddressLine1>
+                                <AddressLine2>{shipToAddress.getAddress2()}</AddressLine2>
+                                <City>{shipToAddress.getCity()}</City>
+                                <StateProvinceCode>{shipToAddress.getStateCode()}</StateProvinceCode>
+                                <CountryCode>{shipToAddress.getCountry()}</CountryCode>
+                                <PostalCode>{shipToAddress.getPostalCode()}</PostalCode>
+                            </Address>
+                        </Shipper>
+                        <ShipTo>
+                            <CompanyName>{shipToAddress.getName()}</CompanyName>
+                            <Address>
+                                <AddressLine1>{shipToAddress.getAddress1()}</AddressLine1>
+                                <AddressLine2>{shipToAddress.getAddress2()}</AddressLine2>
+                                <City>{shipToAddress.getCity()}</City>
+                                <StateProvinceCode>{shipToAddress.getStateCode()}</StateProvinceCode>
+                                <CountryCode>{shipToAddress.getCountry()}</CountryCode>
+                                <PostalCode>{shipToAddress.getPostalCode()}</PostalCode>
+                            </Address>
+                        </ShipTo>
+                        <ShipFrom>
+                            <CompanyName>{shipFromAddress.getName()}</CompanyName>
+                            <Address>
+                                <AddressLine1>{shipFromAddress.getAddress1()}</AddressLine1>
+                                <AddressLine2>{shipFromAddress.getAddress2()}</AddressLine2>
+                                <City>{shipFromAddress.getCity()}</City>
+                                <StateProvinceCode>{shipFromAddress.getStateCode()}</StateProvinceCode>
+                                <CountryCode>{shipFromAddress.getCountry()}</CountryCode>
+                                <PostalCode>{shipFromAddress.getPostalCode()}</PostalCode>
+                            </Address>
+                        </ShipFrom>
+                        <Service>
+                            <Code>{deliveryCode.getCode()}</Code>
+                            <Description>{deliveryCode.getDescription()}</Description>
+                        </Service>
+                        <PaymentInformation>
+                            <Prepaid>
+                                <BillShipper>
+                                  <AccountNumber>{accountNumber}</AccountNumber>
+                                </BillShipper>
+                            </Prepaid>
+                        </PaymentInformation>
+                        <Package>
+                            <Description>{packageInfo.getDescription()}</Description>
+                            <PackagingType>
+                                <Code>{packageInfo.getPackagingCode().getCode()}</Code>
+                            </PackagingType>
+                            <Dimensions>
+                                <UnitOfMeasurement>
+                                    <Code>{packageInfo.getDimensions().getUnits()}</Code>
+                                </UnitOfMeasurement>
+                                <Length>{packageInfo.getDimensions().getLength()}</Length>
+                                <Width>{packageInfo.getDimensions().getWidth()}</Width>
+                                <Height>{packageInfo.getDimensions().getHeight()}</Height>
+                            </Dimensions>
+                            <PackageWeight>
+                                <Weight>{packageInfo.getWeight()}</Weight>
+                            </PackageWeight>
+                            <ReferenceNumber>
+                                <Code>O1</Code>
+                                <Value>{packageInfo.getOrderId()}</Value> 
+                            </ReferenceNumber>
+                        </Package>
+                    </Shipment>
+                    <LabelSpecification>
+                        <LabelPrintMethod>
+                            <Code>GIF</Code>
+                        </LabelPrintMethod>
+                        <HTTPUserAgent>Mozilla/4.5</HTTPUserAgent>
+                        <LabelImageFormat>
+                            <Code>GIF</Code>
+                        </LabelImageFormat>
+                    </LabelSpecification>
+                </ShipmentConfirmRequest>;
+            
+            return shipmentConfirmRequestXml;
+        },
+        
+        getServiceUrl: function() {
+            return this.configuration.ShipmentConfirmRequestURL;
+        }
+    });
+    
+    Namespace.extend(UPS_CMD_NS, { SendConfirmCommand: SendConfirmCommand });
+    
+})();

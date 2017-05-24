@@ -1,0 +1,34 @@
+/**
+*   This script will validate some custom rule against RubberTracks form, that can't be expressed in forms definition
+*   @input CurrentForm : dw.web.Form Current form.
+*/
+
+importPackage( dw.system );
+importPackage( dw.web );
+importPackage( dw.util );
+
+importScript("converse_core:rubbertracks/RubberTracksUtils.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+    let result = PIPELET_NEXT;
+    let formData = collectFormData(args.CurrentForm);
+
+    if(!RubberTracksUtils.hasValidState(formData))
+    {
+        args.CurrentForm.states.stateCode.invalidateFormElement();
+        result = PIPELET_ERROR;
+    }
+
+    return result;
+}
+
+function collectFormData(form : Form) : Object
+{
+    let result = {
+        countryCode: form.countries.countryCode.value,
+        stateUs: form.states.stateCode.value
+    }
+
+    return result;
+}

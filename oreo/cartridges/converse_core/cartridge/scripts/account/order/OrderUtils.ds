@@ -1,0 +1,107 @@
+importPackage(dw.system);
+importPackage(dw.order);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("product/ProductUtils.ds");
+
+(function(){
+
+    function canReturnOrder(order : Order) : Boolean {
+        if (empty(order)) {
+            return false;
+        }
+        
+        let shipments = order.getShipments();
+        
+        if (!empty(shipments)) {
+            for each (let shipment in shipments) {
+                if (canReturnShipment(shipment)) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    function canReturnShipment(shipment : Shipment) : Boolean {
+        if (empty(shipment)) {
+            return false;
+        }
+        
+        let items = shipment.getProductLineItems();
+        
+        if (!empty(items)) {
+            for each(let item in items) {
+                if (canReturnItem(item)) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    function canReturnItem(item : ProductLineItem) : Boolean {
+        if (empty(item)) {
+            return false;
+        }
+
+        if (empty(item.product)) {
+            return false;
+        }
+        
+        if (ProductUtils.isGiftCard(item.product)) {
+            return false;
+        }
+
+        if (empty(item.custom.itemTrackingNumber)) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    function isDYOShipment(shipment : Shipment) : Boolean {
+        if (empty(shipment)) {
+            return false;
+        }
+        
+        let items = shipment.getProductLineItems();
+        
+        if (!empty(items)) {
+            for each(let item in items) {
+                if (item.custom.productType == "DYO") {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+
+    function equalsIgnoreCase(item1 : String, item2 : String) : Boolean {
+        let equalsIgnoreCase = false;
+        if(item1.toUpperCase() === item2.toUpperCase()){
+            equalsIgnoreCase = true;
+        }
+        return equalsIgnoreCase;
+    }
+
+    var ns = Namespace.extendFromString(converse, "account.order");
+    Namespace.extend(ns, { 
+        OrderUtils : {
+            canReturnOrder: canReturnOrder,
+            canReturnShipment: canReturnShipment,
+            canReturnItem: canReturnItem,
+            isDYOShipment: isDYOShipment,
+            equalsIgnoreCase: equalsIgnoreCase
+        }
+    });
+
+})();
+
+
+

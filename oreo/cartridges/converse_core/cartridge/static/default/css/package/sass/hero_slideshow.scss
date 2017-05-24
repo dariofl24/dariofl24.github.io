@@ -1,0 +1,241 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_conv_mixins";
+@import "_media_query";
+@import "_sprites";
+@import "compass/css3/opacity";
+
+#hero-slot, .hero-slot {
+    $large-width: pxtoem(1000);
+    $large-height: pxtoem(563);
+    $large-control-width: 3em;
+    $small-width: $large-width / 3;
+    $small-height: $large-width / 3;
+    $small-control-width: 2em;
+    $slider-background: $CONVERSE_COLOR_12;
+    width: 100%;
+    max-height: 38em;
+    overflow: hidden;
+
+    .hero-slideshow {
+        background: $slider-background;
+    }
+
+    .control-container {
+        margin: 0px auto;
+        margin-top: -63px;
+        width: 1em;
+        height: 1em;
+        padding: 1em;
+    }
+
+    .rslides_tabs {
+        margin: 0 auto;
+        display: inline-block;
+        width: 7.5em;
+        margin-left: -1.5em;
+        position: absolute;
+        z-index: 2;
+
+        li {
+            $color: $CONVERSE_COLOR_6;
+            $color-selected: $CONVERSE_COLOR_1;
+            $size: pxtoem(10);
+            @include badge_background($color, $size);
+            display: inline-block;
+            margin-right: pxtoem(5);
+            
+            a {
+                color: transparent;
+            }
+
+            &.rslides_here {
+                @include badge_background($color-selected, $size);
+            }
+        }
+    }
+
+    .rslides_nav {
+        background: $slider-background;
+        text-align: center;
+
+        @include mq-medium-cascade() {
+            display: none;
+        }
+
+        &.prev {
+            $image: left_arrow;
+            width: image-width(sprite-file($SPRITEICONS, $image));
+            height: image-height(sprite-file($SPRITEICONS, $image));
+            background: sprite($SPRITEICONS, $image) no-repeat transparent;
+            position: absolute;
+            top: 40%;
+            left: -4.2%;
+
+            @include mq-small() {
+                width: $small-control-width;
+                margin-left: -$small-control-width;
+                height: $small-height;
+            }
+        }
+
+        &.next {
+            $image: right_arrow;
+            width: image-width(sprite-file($SPRITEICONS, $image));
+            height: image-height(sprite-file($SPRITEICONS, $image));
+            background: sprite($SPRITEICONS, $image) no-repeat transparent;
+            position: absolute;
+            top: 40%;
+            right: -4.2%;
+
+            @include mq-small() {
+                right: -$small-control-width;
+                width: $small-control-width;
+                height: $small-height;
+            }
+        }
+    }
+
+    .hero-slideshow-large-container {
+        max-width: $large-width;
+        max-height: $large-height;
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        position: relative;
+
+        ul.hero-slideshow.large {
+            max-width: $large-width;
+            max-height: 35em;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+
+            li.image-li {
+                @include opacity(0);
+                &:first-child {
+                    @include opacity(1);
+                }
+
+                max-width: $large-width;
+                max-height: $large-height;
+                width: 100%;
+
+                div {
+                    max-width: $large-width;
+                    max-height: $large-height;
+                    width: 100%;
+                    float: left;
+
+                    &.large-slide {
+                        &.hover {
+                            position: absolute;
+                            @include opacity(0);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.homepage, 
+    &.fullwidth {
+        max-height: none;
+
+        .control-container {
+            @include mq-large {
+                padding: 2em;
+            }
+        }
+
+        .rslides_nav {
+            &.prev {
+                $image: left_arrow_hp;
+                width: image-width(sprite-file($SPRITEICONS, $image));
+                height: image-height(sprite-file($SPRITEICONS, $image));
+                background: sprite($SPRITEICONS, $image) no-repeat transparent;
+                &:hover {
+                    $image: left_arrow_hp_hover;
+                    background: sprite($SPRITEICONS, $image) no-repeat transparent;
+                }
+
+                @include mq-large {
+                    z-index: 10;
+                    left: 1.5%;
+                }
+            }
+
+            &.next {
+                $image: right_arrow_hp;
+                width: image-width(sprite-file($SPRITEICONS, $image));
+                height: image-height(sprite-file($SPRITEICONS, $image));
+                background: sprite($SPRITEICONS, $image) no-repeat transparent;
+                &:hover {
+                    $image: right_arrow_hp_hover;
+                    background: sprite($SPRITEICONS, $image) no-repeat transparent;
+                }
+
+                @include mq-large {
+                    z-index: 10;
+                    right: 1.5%;
+                }
+            }
+        }
+
+        .hero-slideshow-large-container {
+            max-width: none;
+            max-height: none;
+
+            @include mq-large {
+                width: 100%;
+            }
+
+            ul.hero-slideshow {
+                background: $CONVERSE_COLOR_12;
+
+                &.large {
+                    max-width: none;
+                    max-height: none;
+
+                    li.image-li {
+                        max-width: none;
+                        max-height: none;
+                        
+                        div {
+                            max-width: none;
+                            max-height: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .hero-slideshow-small-container {
+        width: 100%;
+        min-width: $small-width;
+        min-height: $small-height;
+        margin: 0 auto;
+        position: relative;
+
+        .image-li {
+            width: 100%;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        ul.hero-slideshow.small {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    div.hero-slideshow-large-container {
+        @include mq-small() {
+            display: none;
+        }
+    }
+
+}

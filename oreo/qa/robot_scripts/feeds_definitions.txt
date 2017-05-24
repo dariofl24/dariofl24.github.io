@@ -1,0 +1,61 @@
+*** Settings ***
+Resource        site_declarations.txt
+Library         XML
+Library         HttpLibrary.HTTP
+Resource        demandware_configuration_definitions.txt
+Resource        site_requests_definitions.txt
+
+*** Variables ***
+${NODESSTYLES}  GetPricesService/response/prices/price/styleNumber
+${NODESPRICES}  GetPricesService/response/prices/price/amount
+${nodes}        .//prices[@country='US']/price
+
+*** Keywords ***
+Verify Feed
+  [Arguments]  ${feed}
+  ${xml}=  Get Feed XML  ${feed}
+  ${number}=  Get Element Count  ${xml}  ${nodes}
+  #${first}=  XML.Get Element Attribute  ${xml}  amount  .//price[1]
+  Verify PriceFeed  ${xml}  ${number}
+
+Get Feed XML
+  [Arguments]  ${feedURL}
+  ${siteURL} =  Set Feed Credentials  ${feedURL}
+  #GET  ${siteURL}
+  GET  http://www.converse.co.uk/handler/NikePriceFeed/NikePriceFeed.ashx
+  ${xmlFeed}=  Get Response Body
+  [Return]  ${xmlFeed}
+
+Verify PriceFeed
+  [Arguments]  ${xml}  ${number}
+  Open Demandware
+  Click at Product Catalog
+  ${randomproduct} =  Evaluate  random.randint(2, ${number})  random
+  ${price}=  XML.Get Element Attribute  ${xml}  amount  ${nodes}[${randomproduct}]
+  ${product}=  XML.Get Element Attribute  ${xml}  styleNumber  ${nodes}[${randomproduct}]
+  Verify Price In Demandware  ${product}  ${price}
+  #: FOR  ${index}  IN RANGE  1  ${number}
+  #\  ${price}=  XML.Get Element Attribute  ${xml}  amount  .//price[${index}]
+  #\  ${product}=  XML.Get Element Attribute  ${xml}  styleNumber  .//price[${index}]
+  #\  Verify Price In Demandware  ${product}  ${price}
+
+Verify Price in Demandware
+  [Arguments]  ${product}  ${price}
+  Edit a Product In Catalog  ${product}
+  Click Product Register Tab  Pricing
+  Page Should Contain Textfield  //input[@value='${price}']
+  Return by Breadcrumb  Products
+
+Verify Sampler Data Service
+  [Arguments]  ${servicepath}
+  ${siteURL} =  Set Feed Credentials  ${servicePath}
+  Verify Link Response  ${siteURL}
+
+Verify File Contains Text
+  [Arguments]  ${path}  ${filepath}
+  ${expectedtext}=  Get Text From File  ${filepath}
+  Log  ${expectedtext}
+  ${url}=  Set Feed Credentials  ${path}
+  GET  ${url}
+  ${text}=  Get Response Body
+  Should Contain  ${text}  ${expectedtext}

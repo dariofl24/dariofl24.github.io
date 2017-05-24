@@ -1,0 +1,47 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:product/ProductUtils.ds");
+importScript("converse_core:product/ProductWithSalesPriceFilter.ds");
+
+
+importScript("module_test:Framework/Assert.ds"); 
+
+function execute(args : PipelineDictionary) : Number {
+
+    args.Unit.describe("ProductWithSalesPriceFilter Suite")
+        .test("Should return the same Product as it has a Sales Price", function () {
+        	
+        	let originalProduct = {
+        		ID : "originalProduct"
+        	}
+        	
+        	var getPricingOriginal = ProductUtils.getPricing;
+        	
+        	ProductUtils.getPricing = function( productVariation ) : Object
+        	{
+        		return {
+        			standard : 10,
+        			sale : 5
+        		};
+        	}
+        	
+        	try{
+	        	let actualProduct = ProductWithSalesPriceFilter.filter( originalProduct );
+	        	
+	            Assert.areEqual("originalProduct", actualProduct.ID, "Resolved to wrong product variation");
+        	}finally
+        	{
+        		ProductUtils.getPricing = getPricingOriginal;
+        	}
+        		
+    	})
+        ;
+
+   return PIPELET_NEXT;
+}

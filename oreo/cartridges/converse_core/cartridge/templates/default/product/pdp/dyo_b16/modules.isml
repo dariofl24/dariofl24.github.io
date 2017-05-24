@@ -1,0 +1,6 @@
+<ismodule template="product/pdp/dyo_b16/productactions"
+    name="productactions_dyo_b16"
+    attribute="product_id_to_add"
+    attribute="enable_add_to_cart"
+    attribute="customizable_version_link"
+/>

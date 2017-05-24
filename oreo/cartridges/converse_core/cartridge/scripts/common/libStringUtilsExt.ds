@@ -1,0 +1,127 @@
+importPackage( dw.system );
+importPackage( dw.util );
+
+function StringUtilsExt(){}
+
+(function() {
+	
+	StringUtilsExt.STR_PAD_LEFT = 1;
+ 	StringUtilsExt.STR_PAD_RIGHT = 2;
+ 	StringUtilsExt.STR_PAD_BOTH = 3;
+ 
+	StringUtilsExt.lpad = function (str, len, pad) {
+		return StringUtilsExt.pad(str, len, pad, StringUtilsExt.STR_PAD_LEFT);
+	};
+	
+	StringUtilsExt.rpad = function(str, len, pad) {
+		return StringUtilsExt.pad(str, len, pad, StringUtilsExt.STR_PAD_RIGHT);
+	};
+	 
+	StringUtilsExt.pad = function(str, len, pad, dir) {
+		if (empty(str)) return '';
+		if (typeof(len) == "undefined") { var len = 0; }
+		if (typeof(pad) == "undefined") { var pad = ' '; }
+		if (typeof(dir) == "undefined") { var dir = StringUtilsExt.STR_PAD_RIGHT; }
+	 
+	 	str = str + "";
+	 
+		if (len + 1 >= str.length) { 
+			switch (dir) {
+	 			case StringUtilsExt.STR_PAD_LEFT:
+					str = Array(len + 1 - str.length).join(pad) + str;
+					break;
+	 
+	 			case StringUtilsExt.STR_PAD_BOTH:
+					var right = Math.ceil((padlen = len - str.length) / 2);
+					var left = padlen - right;
+					str = Array(left + 1).join(pad) + str + Array(right + 1).join(pad);
+					break;
+	 
+				default:
+					str = str + Array(len + 1 - str.length).join(pad);
+					break;
+	 		}
+		}
+	 
+		return str;
+	};
+	
+	StringUtilsExt.trim = function(str : String) : String {
+		return empty(str) ? '' : StringUtils.trim(str);
+	};
+	
+	StringUtilsExt.ltrim = function(str: String) : String {
+		return StringUtils.ltrim(str);
+	};
+
+	StringUtilsExt.rtrim = function(str : String) : String {
+		return StringUtils.rtrim(str);
+	};
+
+	StringUtilsExt.fulltrim = function(str : String) : String {
+		return empty(str) ? '' : str.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ');
+	};	
+	
+	StringUtilsExt.titleize = function(str : String)  : String {
+		if (empty(str)) return '';
+		return new String(str).toLowerCase().replace(/(?:^|\s)\S/g, function(c){ return c.toUpperCase(); });
+    };
+
+    StringUtilsExt.capitalize = function(str : String) : String {
+		if (empty(str)) return '';
+      	return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    };
+    
+    StringUtilsExt.camelize = function(str : String) : String {
+		return StringUtilsExt.trim(str).toLowerCase().replace(/[-_\s]+(.)?/g, function(match, c){ return c.toUpperCase(); });
+    };
+
+    StringUtilsExt.underscored = function(str : String) : String {
+		return StringUtilsExt.trim(str).replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
+    };
+
+    StringUtilsExt.dasherize = function(str : String) : String {
+		return StringUtilsExt.trim(str).replace(/([A-Z])/g, '-$1').replace(/[-_\s]+/g, '-').toLowerCase();
+    };
+
+    StringUtilsExt.classify = function(str : String) : String {
+		return StringUtilsExt.titleize(String(str).replace(/_/g, ' ')).replace(/\s/g, '');
+    };
+
+    StringUtilsExt.humanize = function(str : String) : String {
+		return StringUtilsExt.capitalize(StringUtilsExt.underscored(str).replace(/_id$/,'').replace(/_/g, ' '));
+    };
+    
+    StringUtilsExt.endsWith = function(str : String, suffix : String) : Boolean {
+		return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    };
+    
+    StringUtilsExt.decorate = function(string : String, prefix : String, suffix : String) : String {
+        return StringUtilsExt.prefix(StringUtilsExt.suffix(string, suffix), prefix);
+    }
+
+    StringUtilsExt.prefix = function(string : String, prefix : String) : String {
+        return prefix + string;
+    }
+
+    StringUtilsExt.suffix = function(string : String, suffix : String) : String {
+        return string + suffix;
+    }
+
+    StringUtilsExt.limit = function(value, lenghtLimit) {
+        if (value) {
+            return value.substring(0, Math.min(value.length, lenghtLimit));
+        }
+    
+        return "";
+    }
+
+    StringUtilsExt.tokenize = function(string : String) : Array {
+        if (string) {
+            return string.match(/\w+/gi);
+        } else {
+        	return [];
+        };
+    }
+
+})();

@@ -1,0 +1,4 @@
+<!--- TEMPLATENAME: tabletOnly.isml --->
+<isif condition="${pdict.CurrentSession.custom.device == 'tablet'}">
+<isreplace/>
+</isif>

@@ -1,0 +1,63 @@
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function(){
+
+    var SigmaConstants = {
+        ActivityTypeOrderNumber : "O",
+        SigmaDefaultOrderType : "I",
+        DefaultTransactionOrderType : "O",
+        ConverseCompanyNumber : 50,
+        ConverseOneCompanyNumber : 51,
+        DefaultCustomerNumber : 0,
+        DefaultOrderStatus : "In Process",
+
+        StandardShippingChargeType : "S",
+
+        DefaultConverseOrderCode : "CONVXXXX",
+        DefaultConverseOneOrderCode : "CNV1XXX8",
+        GBConverseOneOrderCode : "C1GBXXXX",
+        
+        OrderType: {
+            Default : 1,
+            DYO : 2,
+            Employee : 3,
+            Promotion : 4
+        },
+        
+        TaxStatus: {
+        	Success: "000"
+        },
+        
+        GiftCardItemAdditionalInfos : [ "Required by Genesco API", "", "", "", "", "", "" ],
+
+        OrderStatusErrorCodeKey : "errorCode",
+        OrderStatusErrorMessageKey : "errorMessage",
+        OrderStatusKey : "orderStatus",
+        OrderStatusTrackingInformation : "trackingInformation",
+
+        SkuLength : 8,
+        WidthLength : 5,
+        SizeLength : 5,
+        ShoeWidth : "M",
+        DefaultWidth : "",
+        DefaultSize : "",
+        Spacer : " ",
+        
+        DateFormat : "MMddyyyy",
+        
+        ShipmentType : {
+            Inline: "inline",
+            DYO: "dyo"
+        },
+        
+        ItemStatus: {
+	        Shipped: "SHIPPED",
+	        Processed: "PROCESSED"
+	    }
+    };
+    
+    var ns = Namespace.extendFromString(integration, "sigma");
+    Namespace.extend(ns, { SigmaConstants: SigmaConstants });
+
+})();

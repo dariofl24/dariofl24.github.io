@@ -1,0 +1,18 @@
+<isscript>
+    var contentID: String = pdict.content_id;
+    var contentName: String = pdict.content_name;
+    var target: String = pdict.target;
+    var contentAsset: dw.content.Content = null;
+
+    if(empty(contentName)) {
+        contentAsset = dw.content.ContentMgr.getContent(contentID);
+        contentName = contentAsset ? contentAsset.name : "";
+    }
+</isscript>
+
+<a id="${contentID}-link"
+    href="${URLUtils.url('Page-Show','cid', contentID)}"
+    <isif condition="${!empty(target)}">target="${target}"</isif>
+    title="${contentName}">
+    <isprint value="${contentName}"/>
+</a>

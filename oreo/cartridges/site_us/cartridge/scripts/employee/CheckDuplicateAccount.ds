@@ -1,0 +1,34 @@
+/**
+ * This script determines if there is already an employee profile in the system with the same employee id but different email address
+ *
+ * @input EmployeeEmail : String The employee email.
+ * @input EmployeeID : String The employee ID.
+ *
+ * @output IsDuplicate : Boolean The flag indicating if employee account is a duplicate 
+ * @output ErrorMsg : String The error message if any.
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:employee/EmployeeUtils.ds");
+
+var logger : Logger = Logger.getLogger('CheckDuplicateAccount');
+
+function execute(args : PipelineDictionary) : Number
+{
+    var duplicate : Boolean = false;
+    var errorMsg : String = null;
+    try {
+        duplicate = converse.employee.EmployeeUtils.isDuplicateEmployeeAccount(args.EmployeeEmail, args.EmployeeID);
+    }
+    catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+    
+    args.IsDuplicate = duplicate;
+    args.ErrorMsg = errorMsg;
+
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}

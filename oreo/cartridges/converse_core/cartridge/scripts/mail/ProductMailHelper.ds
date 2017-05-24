@@ -1,0 +1,136 @@
+(function(){
+    importPackage(dw.catalog);
+    importPackage(dw.content);
+
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:common/libInheritance.ds");
+    importScript("converse_core:common/libNamespace.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+    importScript("int_nike:customization/utils/NikeRendererUtils.ds");
+    importScript("int_nike:customization/CustomizationService.ds");
+
+    var ProductImageResolver = converse.product.ProductImageResolver;
+    var NikeRendererUtils = integration.nike.customization.utils.NikeRendererUtils;
+    var CustomizationService = integration.nike.customization.CustomizationService;
+
+    var genericInlineShopCTAId      = 'email-sharepdp-inline-generic-shopnow-cta';
+    var genericInlineCustomizeCTAId = 'email-sharepdp-inline-generic-customize-cta';
+    var shopDYOCTAId                = 'email-sharepdp-dyo-shopnow-cta';
+    var customizeDYOCTAId           = 'email-sharepdp-dyo-customize-cta';
+
+    var DYO_IMAGE_WIDTH    = "400";
+
+    var customizationService = new CustomizationService();
+
+    function fixImageAltAndTitle(productImage, product) {
+        if (!productImage.Title) {
+            productImage.Title = product.name;
+        }
+
+        if (!productImage.Alt) {
+            productImage.Alt = product.name;
+        }
+    }
+
+    function getContent(shopContent, customizeContent) {
+        var inlineCTA = '';
+        var dyoCTA = '';
+
+        if (shopContent) {
+            inlineCTA = shopContent.custom.body.markup;
+        }
+
+        if (customizeContent) {
+            dyoCTA = customizeContent.custom.body.markup;
+        }
+
+        return {
+            shopContent: inlineCTA,
+            customizeContent: dyoCTA,
+        };
+    }
+
+    var ProductMailHelper = Class.extend({
+        getDYOCTAContent: function(product: Product) {
+            var shopContent = ContentMgr.getContent(shopDYOCTAId);
+            var customizeContent = ContentMgr.getContent(customizeDYOCTAId);
+
+            return getContent(shopContent, customizeContent);
+        },
+
+        getInlineCTAContent: function(product: Product) {
+            var brand = product.custom.brandSegment;
+            var shopCTAId = genericInlineShopCTAId;
+            var customizeCTAId = genericInlineCustomizeCTAId;
+
+            if (brand) {
+                brand = brand.value.toLowerCase();
+
+                shopCTAId = 'email-sharepdp-' + brand + '-shopnow-cta';
+                customizeCTAId = 'email-sharepdp-' + brand + '-customize-cta';
+            }
+
+            var shopContent = ContentMgr.getContent(shopCTAId);
+            if (empty(shopContent)) {
+                shopContent = ContentMgr.getContent(genericInlineShopCTAId);
+            }
+
+            var customizeContent = ContentMgr.getContent(customizeCTAId);
+            if (empty(customizeContent)) {
+                customizeContent = ContentMgr.getContent(genericInlineCustomizeCTAId);
+            }
+
+            return getContent(shopContent, customizeContent);
+        },
+
+        getProductImage: function(product: Product) {
+            var productImage = ProductImageResolver.getProductImage(product, 'large', 0);
+            if (!productImage) {
+                return null;
+            }
+
+            var productImage = {
+                Url: productImage.getURL(),
+                Alt: productImage.alt,
+                Title: productImage.title
+            };
+
+            fixImageAltAndTitle(productImage, product);
+            return productImage;
+        },
+
+        getDYOProductImage: function(product: Product, productMetricId: String) {
+            var productImage = null;
+            var response = customizationService.getBuilds([productMetricId]);
+
+            if (response.success) {
+                var builds = response.builds;
+                if (builds.length > 0) {
+                    if ('dyoImageUrl' in builds[0]) {
+                        var originalUrl = builds[0].dyoImageUrl;
+                        var url = originalUrl.replace(/(&wid=\d+)/gi, "&wid=" + DYO_IMAGE_WIDTH);
+
+                        productImage = {
+                            Url: url,
+                            Alt: '',
+                            Title: '',
+                        };
+                    }
+                }
+            }
+
+            if (!productImage) {
+                productImage = this.getProductImage(product);
+            }
+
+            fixImageAltAndTitle(productImage, product);
+            return productImage;
+        }
+    });
+
+    Namespace.extend(converse, {
+        mail: {
+            ProductMailHelper: ProductMailHelper
+        }
+    });
+})();

@@ -1,0 +1,21 @@
+<isif condition="${pdict.CurrentHttpParameterMap.redirect.booleanValue}">
+    <isredirect location="${URLUtils.http('Home-Show')}"/>
+</isif>
+
+<iscache type="relative" hour="24"/>
+<isstatus value="404" />
+<html>
+<head>
+    <title><isprint value="${Resource.msg('pagenotfound.title','search',null)}" /></title>
+    <link rel="stylesheet" type="text/css" href="/waroot/style.css">
+</head>
+<body>
+    <div id="container">
+        <h1><isprint value="${Resource.msg('pagenotfound.message.main','search',null)}" encoding="off"/></h1>
+        <p class="dont-worry"><isprint value="${Resource.msg('pagenotfound.message.secondary','search',null)}" encoding="off"/></p>
+        <p class="head-back"><isprint value="${Resource.msgf('pagenotfound.message.headback','search',null,  dw.web.URLUtils.http('Home-Show'))}" encoding="off"/></p>
+    </div>
+    <!-- TEALIUM FOOTER CODE -->
+    <isinclude template="tealium/tealium_footer_code"/>
+</body>
+</html>

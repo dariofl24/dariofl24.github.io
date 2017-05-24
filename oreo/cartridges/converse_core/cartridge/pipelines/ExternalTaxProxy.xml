@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?demandware-pipeline version="2.0"?>
+
+<pipeline group="Integration" type="process">
+  <description>A proxy for external tax processor.</description>
+  <branch basename="_ANONYMOUS_BRANCH_1">
+    <segment>
+      <node>
+        <text-node>
+          <description>A proxy for external tax processor. This implementation is just a stub to be overriden in localized cartridges if they need to use external tax calculations.</description>
+        </text-node>
+        <node-display height="2" x="0" y="0"/>
+      </node>
+    </segment>
+  </branch>
+  <branch basename="CalculateTaxes">
+    <segment>
+      <node>
+        <start-node call-mode="private" name="CalculateTaxes" secure="false"/>
+        <node-display x="1" y="1"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <end-node name="ok"/>
+        <node-display x="0" y="1"/>
+      </node>
+    </segment>
+  </branch>
+</pipeline>

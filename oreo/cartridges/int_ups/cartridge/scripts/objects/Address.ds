@@ -1,0 +1,119 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+    var SEPARATOR = ", ";
+    var ADDRESS1_LABEL_LIMIT = 30;
+
+    var Address = Class.extend({
+        
+        setName: function(name : String) {
+            this.name = name;
+        },
+        
+        getName: function() : String {
+            return (this.name || this.firstName + " " + this.lastName);
+        },
+        
+        setAddress1: function(address1 : String) {
+            this.address1 = address1;
+        },
+        
+        getAddress1: function() : String {
+            if (empty(this.address2)) {
+                return this.address1;
+            }
+
+            let result = this.address1;
+            let address1Length = this.address1.length;
+            let address2Length = this.address2.length;
+            let separatorLength = SEPARATOR.length;
+
+            if (address1Length + address2Length + separatorLength <= ADDRESS1_LABEL_LIMIT) {
+                result = result + SEPARATOR + this.address2;
+            }
+
+            return result;
+        },
+        
+        setAddress2: function(address2 : String) {
+            this.address2 = address2;
+        },
+        
+        getAddress2: function() : String {
+            return this.address2;
+        },
+        
+        setCity: function(city : String) {
+            this.city = city;
+        },
+        
+        getCity: function() : String {
+            return this.city;
+        },
+        
+        setPostalCode: function(postalCode : String) {
+            this.postalCode = postalCode;
+        },
+        
+        getPostalCode: function() : String {
+            return this.postalCode;
+        },
+        
+        setCountry: function(country : String) {
+            this.country = country;
+        },
+        
+        getCountry: function() : String {
+            return (this.country );
+        },
+
+        getFirstName : function() : String {
+            return this.firstName;
+        },
+        setFirstname : function(firstName : String) {
+            this.firstName = firstName;
+        },
+ 
+        getLastName : function() : String {
+            return this.lastName;
+        },
+        setLastName : function(lastName : String) {
+            return this.lastName = lastName;
+        },
+
+        getStateCode : function() : String {
+            return this.stateCode;
+        },
+        setStateCode : function(stateCode : String) {
+            return this.stateCode = stateCode;
+        }
+
+    });
+    
+    Address.create = function(name : String, 
+                              address1 : String, 
+                              address2 : String, 
+                              city : String, 
+                              state : String, 
+                              zip : String, 
+                              country : String) : Object {
+        var address = new Address();
+        address.setName(name);
+        address.setAddress1(address1);
+        address.setAddress2(address2 || "");
+        address.setCity(city);
+        address.setStateCode(state);
+        address.setPostalCode(zip);
+        address.setCountry(country );
+        
+        return address;
+    };
+    
+    var ns = Namespace.extendFromString(integration, "ups.objects");
+    Namespace.extend(ns, { Address: Address });
+        
+})();

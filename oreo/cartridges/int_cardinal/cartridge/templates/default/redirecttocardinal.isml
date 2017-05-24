@@ -1,0 +1,20 @@
+<HTML>
+	<HEAD>
+	    <TITLE>Redirecting...</TITLE>
+	</HEAD>
+    <BODY>
+        <H1>Redirecting...</H1>
+        <FORM name="frmLaunch" id="frmLaunch" method="POST" action="${pdict.CentinelLookupResult.acsUrl}">
+            <INPUT type=hidden name="PaReq" value="${pdict.CentinelLookupResult.payload}">
+            <isif condition="${empty(pdict.PayPalFromCart)}">
+               <INPUT type=hidden name="TermUrl" value="${URLUtils.https('Cardinal-PerformAuthenticate')}">
+           <iselse>
+               <INPUT type=hidden name="TermUrl" value="${URLUtils.https('Cardinal-PerformAuthenticate', 'lookuporigin', 'cart')}">
+           </isif>
+            <INPUT type=hidden name="MD" value="${pdict.CentinelLookupResult.merchantData}">
+        </FORM>
+        <SCRIPT type="text/javascript">
+            document.getElementById("frmLaunch").submit();
+        </SCRIPT>
+    </BODY>
+</HTML>

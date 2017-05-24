@@ -1,0 +1,59 @@
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_genesco:GenescoConstants.ds");
+
+(function() {
+
+    var GC = integration.genesco.constants;
+
+    var AbstractShipmentResponse = Class.extend({
+        
+        init: function(command) {
+            this.command = command;
+            this.shipmentSummary = command.shipment;
+            
+            if (command.hasError()) {
+                this.handleError();
+            } 
+            else {
+                this.handleSuccess();
+            }
+        },
+        
+        handleSuccess: function() {
+            var xmlResponse : XML = new XML(this.command.response);
+                
+            this.status = xmlResponse.result;
+            this.webOrderNumber = xmlResponse.order_number; 
+            this.message = xmlResponse.message;
+            
+            this.shipmentSummary.setJourneysOrderID(this.webOrderNumber);
+        },
+        
+        handleError: function() {
+            this.status = GC.OrderPlaceStatus.Failure;
+        },
+        
+        getStatus: function() {
+            return this.status;
+        },
+        
+        getWebOrderNumber: function() {
+            return this.webOrderNumber;
+        },
+        
+        getMessage: function() {
+            return this.message;
+        },
+        
+        isSuccess: function() {
+            return this.getStatus() == GC.OrderPlaceStatus.Success;
+        }
+    });
+    
+    var ns = Namespace.extendFromString(integration, "genesco.objects");
+    Namespace.extend(ns, { AbstractShipmentResponse : AbstractShipmentResponse });
+    
+})();

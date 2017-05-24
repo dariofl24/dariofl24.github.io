@@ -1,0 +1,10 @@
+Should redirect:<br/>
+1. to Step1 of checkout and show error if there are any<br/>
+2. if pdict.CurrentSession.custom.CentinelAuthenticateResult.isCanceled() is true, should redirect to Step1 of checkout if PayPal from cart, OR<br/>
+redirect to Step2 if PayPal from Step2<br/>
+NOTE: this might change as currently it's not clear to where the customer will be redirect to choose shipping options once he is back from paypal.<br/>
+<br/>
+Authenticate Response:
+<pre>
+<isprint value="${JSON.stringify(pdict.CurrentSession.custom.CentinelAuthenticateResult)}"/>
+</pre>

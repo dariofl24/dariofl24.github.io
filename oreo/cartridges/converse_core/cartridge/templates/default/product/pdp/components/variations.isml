@@ -1,0 +1,62 @@
+<iscontent type="text/html" charset="UTF-8" compact="true">
+
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:product/ProductUtils.ds");
+    importScript("converse_core:product/ImageProductResolver.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+    importScript("converse_core:util/ViewHelpers.ds");
+    
+    var ImageProductResolver = converse.product.ImageProductResolver,
+        ProductImageResolver = converse.product.ProductImageResolver;
+
+    var category = pdict.VariantToDisplay.custom.pillar.toString().toLowerCase();
+    
+    var currentSite : String = dw.system.Site.getCurrent().getID();
+    var currentLocale : String = pdict.CurrentRequest.getLocale();
+    var localization = converse.constants.localization;
+    var countryCode = localization[currentSite][currentLocale].country.code;
+    var languageCode = localization[currentSite][currentLocale].language;
+
+    
+</isscript>
+
+<isset name="productInfo" value="${pdict.ProductToDisplayInfo}" scope="page" />
+<isset name="manufacturerSKU" value="${isSite('US') && !empty(pdict.VariantToDisplay.custom.GenescoSKU) ? pdict.VariantToDisplay.custom.GenescoSKU : productInfo.manufacturerSKU}" scope="page" />
+<isif condition="${productInfo.displayVariations}">
+    <div class="attribute color-attr">
+        <section class="color-swatch">
+            <p class="product-properties">
+                ${Resource.msg('productdetail.color','product',null)}: <span class="product-color"><isprint value="${productInfo.selectedColorAttribute.value}" /></span>
+                <span class="separator">/</span>
+                ${Resource.msg('productdetail.style','product',null)}: <span class="product-manufacturer"><isprint value="${manufacturerSKU}"/></span>
+            </p>
+            <div class="color-variations-wrapper" style="position: relative" >
+            	<div class="color-variation-prev" style="top:28%;position:absolute;left: 0px;border-color: transparent transparent transparent transparent;" ></div>
+            	
+            	<div class="swatch-list-wrapper" style="display:inline-block;border: 0px solid #73AD21;overflow:hidden" >
+	                <ul class="swatch-list ${category}" >
+	                    <isloop items="${productInfo.colorVariationInfos}" var="colorVariationInfo">
+	                        <isset name="activeClass" value="${colorVariationInfo.selected ? 'active' : ''}" scope="page" />
+	                        <isset name="selectableClass" value="${colorVariationInfo.selected ? '' : 'selectable'}" scope="page" />
+	                        <isset name="swatch_link" value="${colorVariationInfo.linkToVariant + '&overrideDefaultSizeSelect=true'}" scope="page" />
+	                        <isset name="imgSmall" value="${ProductImageResolver.getProductImage(colorVariationInfo.variant, 'small', 0 )}" scope="page"/>
+	                        <li class="swatch ${activeClass} ${selectableClass}" data-sku="${colorVariationInfo.variant.manufacturerSKU}" data-toggle="tooltip" data-placement="top" title="${colorVariationInfo.displayValue}">
+	                            <a href="${swatch_link}" data-swatch-hex="${colorVariationInfo.mainColorHex}">
+	                                <img src="${imgSmall.getURL()}"/>
+	                            </a>
+	                        </li>
+	                    </isloop>
+	                </ul>
+	            </div>
+            	<div class="color-variation-next" style="top:28%;position:absolute;right: 0px;border-color: transparent transparent transparent transparent;" ></div>
+	        </div>
+        </section>
+
+        <span class="visually-hidden" itemprop="url"><isprint value="${productInfo.productURL}"/></span>
+        <span class="visually-hidden" itemprop="brand"><isprint value="${productInfo.brand}"/></span>
+        <span class="visually-hidden" itemprop="manufacturer">${Resource.msg('global.storename','locale',null)}</span>
+        
+        <span id="socialshareLocale" class="visually-hidden">${languageCode.toLowerCase()}_${countryCode}</span>
+    </div>
+</isif>

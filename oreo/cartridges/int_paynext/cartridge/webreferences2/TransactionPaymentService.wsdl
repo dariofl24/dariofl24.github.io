@@ -1,0 +1,2710 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:cc1="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" xmlns:cc10="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Responses" xmlns:cc11="http://schemas.datacontract.org/2004/07/Pmg.Core" xmlns:cc12="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.TransactionV2.Model.Requests" xmlns:cc13="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.TransactionV2.Model.Responses" xmlns:cc14="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Requests" xmlns:cc15="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Responses" xmlns:cc16="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model" xmlns:cc17="http://schemas.datacontract.org/2004/07/Pmg.Plugin.Cybersource" xmlns:cc18="http://schemas.datacontract.org/2004/07/Pmg.Plugin.Common" xmlns:cc19="http://schemas.datacontract.org/2004/07/Pmg.Plugin.Common.PaymentTypes" xmlns:cc2="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Errors" xmlns:cc3="http://schemas.datacontract.org/2004/07/Pmg.Core.Plugin" xmlns:cc4="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:cc5="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Actions" xmlns:cc6="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Requests" xmlns:cc7="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" xmlns:cc8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:cc9="http://schemas.datacontract.org/2004/07/Pmg.Core.Model" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://services.arvato.com" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SoapTransactionService" targetNamespace="http://services.arvato.com">
+   <wsp:Policy wsu:Id="BasicHttpBinding_SoapTransactionService_policy">
+      <wsp:ExactlyOne>
+         <wsp:All>
+            <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+               <wsp:Policy>
+                  <sp:TransportToken>
+                     <wsp:Policy>
+                        <sp:HttpsToken RequireClientCertificate="false" />
+                     </wsp:Policy>
+                  </sp:TransportToken>
+                  <sp:AlgorithmSuite>
+                     <wsp:Policy>
+                        <sp:Basic256 />
+                     </wsp:Policy>
+                  </sp:AlgorithmSuite>
+                  <sp:Layout>
+                     <wsp:Policy>
+                        <sp:Lax />
+                     </wsp:Policy>
+                  </sp:Layout>
+                  <sp:IncludeTimestamp />
+               </wsp:Policy>
+            </sp:TransportBinding>
+            <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+               <wsp:Policy>
+                  <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                     <wsp:Policy>
+                        <sp:WssUsernameToken10 />
+                     </wsp:Policy>
+                  </sp:UsernameToken>
+               </wsp:Policy>
+            </sp:SignedSupportingTokens>
+            <sp:Wss10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+               <wsp:Policy />
+            </sp:Wss10>
+         </wsp:All>
+      </wsp:ExactlyOne>
+   </wsp:Policy>
+   <wsdl:types>
+      <xsd:schema elementFormDefault="qualified" targetNamespace="http://services.arvato.com">
+         <xsd:element name="Send">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q1="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" minOccurs="0" name="serviceRequest" nillable="true" type="q1:ServiceRequest" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="SendResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q2="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" minOccurs="0" name="SendResult" nillable="true" type="q2:ServiceResponse" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="SavePayment">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q3="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Requests" minOccurs="0" name="request" nillable="true" type="q3:RequestSavePayment" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="SavePaymentResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q4="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Responses" minOccurs="0" name="SavePaymentResult" nillable="true" type="q4:ResponseSavePayment" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetPaymentMethods">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q5="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Requests" minOccurs="0" name="request" nillable="true" type="q5:RequestGetPaymentMethods" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetPaymentMethodsResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q6="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Responses" minOccurs="0" name="GetPaymentMethodsResult" nillable="true" type="q6:ResponseGetPaymentMethods" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetTransactionInfo">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q7="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Requests" minOccurs="0" name="request" nillable="true" type="q7:RequestGetTransactionInfo" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetTransactionInfoResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q8="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Responses" minOccurs="0" name="GetTransactionInfoResult" nillable="true" type="q8:ResponseGetTransactionInfo" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetPaymentInfo">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q9="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Requests" minOccurs="0" name="request" nillable="true" type="q9:RequestGetPaymentInfo" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetPaymentInfoResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q10="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Responses" minOccurs="0" name="GetPaymentInfoResult" nillable="true" type="q10:ResponseGetPaymentInfo" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetSecurityToken">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q11="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Requests" minOccurs="0" name="request" nillable="true" type="q11:RequestGetSecurityToken" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetSecurityTokenResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q12="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Responses" minOccurs="0" name="GetSecurityTokenResult" nillable="true" type="q12:ResponseGetSecurityToken" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="Authorize">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q13="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Requests" minOccurs="0" name="request" nillable="true" type="q13:RequestAuthorize" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="AuthorizeResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q14="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Responses" minOccurs="0" name="AuthorizeResult" nillable="true" type="q14:ResponseAuthorize" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="MarkPaymentAsProfile">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q15="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.TransactionV2.Model.Requests" minOccurs="0" name="request" nillable="true" type="q15:RequestMarkPaymentAsProfile" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="MarkPaymentAsProfileResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q16="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.TransactionV2.Model.Responses" minOccurs="0" name="MarkPaymentAsProfileResult" nillable="true" type="q16:ResponseMarkPaymentAsProfile" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="RatePaymentMethodRisk">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q17="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Requests" minOccurs="0" name="request" nillable="true" type="q17:RequestRatePaymentMethodRisk" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="RatePaymentMethodRiskResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q18="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Responses" minOccurs="0" name="RatePaymentMethodRiskResult" nillable="true" type="q18:ResponseRatePaymentMethodRisk" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="SubmitHostedPageOrder">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q19="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Requests" minOccurs="0" name="request" nillable="true" type="q19:RequestHostedPageOrder" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="SubmitHostedPageOrderResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q20="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Responses" minOccurs="0" name="SubmitHostedPageOrderResult" nillable="true" type="q20:ResponseHostedPageOrder" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="ReAuthorize">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q21="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Requests" minOccurs="0" name="request" nillable="true" type="q21:RequestAuthorize" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="ReAuthorizeResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q22="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Responses" minOccurs="0" name="ReAuthorizeResult" nillable="true" type="q22:ResponseAuthorize" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="Capture">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q23="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Requests" minOccurs="0" name="request" nillable="true" type="q23:RequestCapture" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="CaptureResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q24="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Responses" minOccurs="0" name="CaptureResult" nillable="true" type="q24:ResponseCapture" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="BulkCapture">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q25="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Requests" minOccurs="0" name="request" nillable="true" type="q25:RequestBulkCapture" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="BulkCaptureResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q26="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Responses" minOccurs="0" name="BulkCaptureResult" nillable="true" type="q26:ResponseBulkCapture" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="Cancel">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q27="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Requests" minOccurs="0" name="request" nillable="true" type="q27:RequestCancel" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="CancelResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q28="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Responses" minOccurs="0" name="CancelResult" nillable="true" type="q28:ResponseCancel" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="BulkCancel">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q29="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Requests" minOccurs="0" name="request" nillable="true" type="q29:RequestBulkCancel" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="BulkCancelResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q30="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Responses" minOccurs="0" name="BulkCancelResult" nillable="true" type="q30:ResponseBulkCancel" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="Refund">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q31="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Requests" minOccurs="0" name="request" nillable="true" type="q31:RequestRefund" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="RefundResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q32="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Responses" minOccurs="0" name="RefundResult" nillable="true" type="q32:ResponseRefund" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="BulkRefund">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q33="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Requests" minOccurs="0" name="request" nillable="true" type="q33:RequestBulkRefund" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="BulkRefundResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element xmlns:q34="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Responses" minOccurs="0" name="BulkRefundResult" nillable="true" type="q34:ResponseBulkRefund" />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model">
+         <xsd:complexType name="JsonServiceResponse">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Error" nillable="true" type="tns:JsonError" />
+               <xsd:element minOccurs="0" name="PaymentToken" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Success" type="xsd:boolean" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="JsonServiceResponse" nillable="true" type="tns:JsonServiceResponse" />
+         <xsd:complexType name="JsonError">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Details" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="ErrorCode" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Field" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="InnerErrors" nillable="true" type="tns:ArrayOfJsonError" />
+               <xsd:element minOccurs="0" name="Message" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="JsonError" nillable="true" type="tns:JsonError" />
+         <xsd:complexType name="ArrayOfJsonError">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="JsonError" nillable="true" type="tns:JsonError" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfJsonError" nillable="true" type="tns:ArrayOfJsonError" />
+         <xsd:complexType name="ServiceRequest">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="CorrelationId" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ServiceRequest" nillable="true" type="tns:ServiceRequest" />
+         <xsd:complexType name="OrderInfo">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Amount" type="xsd:decimal" />
+               <xsd:element minOccurs="0" name="BillingAddress" nillable="true" type="tns:AddressInfo" />
+               <xsd:element minOccurs="0" name="Description" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="OrderItems" nillable="true" type="tns:ArrayOfOrderItemInfo" />
+               <xsd:element minOccurs="0" name="ShippingAddress" nillable="true" type="tns:AddressInfo" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="OrderInfo" nillable="true" type="tns:OrderInfo" />
+         <xsd:complexType name="AddressInfo">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="City" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Company" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="CountryCode" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Email" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="FirstName" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="LastName" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Phone" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="State" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Street1" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Street2" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Type" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Zip" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="AddressInfo" nillable="true" type="tns:AddressInfo" />
+         <xsd:complexType name="ArrayOfOrderItemInfo">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="OrderItemInfo" nillable="true" type="tns:OrderItemInfo" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfOrderItemInfo" nillable="true" type="tns:ArrayOfOrderItemInfo" />
+         <xsd:complexType name="OrderItemInfo">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Currency" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="ProductName" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Quantity" type="xsd:int" />
+               <xsd:element minOccurs="0" name="SKU" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="TotalPrice" type="xsd:decimal" />
+               <xsd:element minOccurs="0" name="UnitPrice" type="xsd:decimal" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="OrderItemInfo" nillable="true" type="tns:OrderItemInfo" />
+         <xsd:complexType name="RiskData">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="BillingCustomer" nillable="true" type="tns:RiskCustomerData" />
+               <xsd:element minOccurs="0" name="ShippingCustomer" nillable="true" type="tns:RiskCustomerData" />
+               <xsd:element minOccurs="0" name="OrderDetailsData" nillable="true" type="tns:RiskOrderDetails" />
+               <xsd:element minOccurs="0" name="ProfileTrackingData" nillable="true" type="tns:RiskProfileTracking" />
+               <xsd:element minOccurs="0" name="Timestamp" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="RiskData" nillable="true" type="tns:RiskData" />
+         <xsd:complexType name="RiskCustomerData">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="BirthDay" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="CustomerId" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Email" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="FacsimileNumber" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="FirstName" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="LastName" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="MobileNumber" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Salutation" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="SeesionId" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="TelephoneNumber" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Title" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="AddressData" nillable="true" type="tns:RiskAddressData" />
+               <xsd:element minOccurs="0" name="ExtendedCustomerData" nillable="true" type="tns:RiskExtendedCustomerData" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="RiskCustomerData" nillable="true" type="tns:RiskCustomerData" />
+         <xsd:complexType name="RiskAddressData">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="CareOf" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="City" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="CountryCode" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Street" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="StreetNumber" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="StreetNumberAdditional" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="ZipCode" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="RiskAddressData" nillable="true" type="tns:RiskAddressData" />
+         <xsd:complexType name="RiskExtendedCustomerData">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="ExistingCustomer" type="xsd:boolean" />
+               <xsd:element minOccurs="0" name="VerifiedCustomerIdentification" type="xsd:boolean" />
+               <xsd:element minOccurs="0" name="CustomerSince" type="xsd:dateTime" />
+               <xsd:element minOccurs="0" name="CustomerClassification" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="HasCustomerCard" type="xsd:boolean" />
+               <xsd:element minOccurs="0" name="CustomerCardSince" type="xsd:dateTime" />
+               <xsd:element minOccurs="0" name="CustomerCardClassification" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="CustomerAcquisitionChannel" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="MarketingOptIn" type="xsd:boolean" />
+               <xsd:element minOccurs="0" name="RiskValue" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="RiskGroup" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="CurrentOutstandingSaldo" type="xsd:decimal" />
+               <xsd:element minOccurs="0" name="CurrentDunningLevel" type="xsd:int" />
+               <xsd:element minOccurs="0" name="MaxDunningLevelEver" type="xsd:int" />
+               <xsd:element minOccurs="0" name="CurrentPaymentSaldo" type="xsd:decimal" />
+               <xsd:element minOccurs="0" name="MaxOutstandingSaldo" type="xsd:decimal" />
+               <xsd:element minOccurs="0" name="MaxBalanceChange" type="xsd:decimal" />
+               <xsd:element minOccurs="0" name="ReturnDebitNoteCount" type="xsd:decimal" />
+               <xsd:element minOccurs="0" name="LastReturnDebitNoteDate" type="xsd:dateTime" />
+               <xsd:element minOccurs="0" name="LastPaymentReceiptDate" type="xsd:dateTime" />
+               <xsd:element minOccurs="0" name="CurrentReshipmentSaldo" type="xsd:decimal" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="RiskExtendedCustomerData" nillable="true" type="tns:RiskExtendedCustomerData" />
+         <xsd:complexType name="RiskOrderDetails">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Currency" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="OrderChannel" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="DeliveryType" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="RegisteredOrder" type="xsd:boolean" />
+               <xsd:element minOccurs="0" name="GrossTotalBill" type="xsd:decimal" />
+               <xsd:element minOccurs="0" name="Items" nillable="true" type="tns:ArrayOfRiskOrderItemDetail" />
+               <xsd:element minOccurs="0" name="TotalOrderValue" type="xsd:decimal" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="RiskOrderDetails" nillable="true" type="tns:RiskOrderDetails" />
+         <xsd:complexType name="ArrayOfRiskOrderItemDetail">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="RiskOrderItemDetail" nillable="true" type="tns:RiskOrderItemDetail" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfRiskOrderItemDetail" nillable="true" type="tns:ArrayOfRiskOrderItemDetail" />
+         <xsd:complexType name="RiskOrderItemDetail">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Position" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="ProductNumber" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="ProductGroupId" type="xsd:int" />
+               <xsd:element minOccurs="0" name="UnitPrice" type="xsd:decimal" />
+               <xsd:element minOccurs="0" name="UnitCount" type="xsd:int" />
+               <xsd:element minOccurs="0" name="Remarks" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="RiskOrderItemDetail" nillable="true" type="tns:RiskOrderItemDetail" />
+         <xsd:complexType name="RiskProfileTracking">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="HashID" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="SessionIDAddegree" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="ReasonCodeAddegree" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="IPAddress" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="HardwareScore" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="RiskProfileTracking" nillable="true" type="tns:RiskProfileTracking" />
+         <xsd:complexType name="ServiceResponse">
+            <xsd:sequence>
+               <xsd:element xmlns:q35="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Errors" minOccurs="0" name="Error" nillable="true" type="q35:Error" />
+               <xsd:element xmlns:q36="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Actions" minOccurs="0" name="ShopAction" nillable="true" type="q36:ShopAction" />
+               <xsd:element minOccurs="0" name="ShopActionRequired" type="xsd:boolean" />
+               <xsd:element minOccurs="0" name="Success" type="xsd:boolean" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ServiceResponse" nillable="true" type="tns:ServiceResponse" />
+         <xsd:complexType name="HostedPageCustomisationInfo">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="CssUrl" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="FooterHtml" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="HeaderHtml" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="HostedPageCustomisationInfo" nillable="true" type="tns:HostedPageCustomisationInfo" />
+         <xsd:complexType name="ArrayOfHostedPagePaymentMethod">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="HostedPagePaymentMethod" nillable="true" type="tns:HostedPagePaymentMethod" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfHostedPagePaymentMethod" nillable="true" type="tns:ArrayOfHostedPagePaymentMethod" />
+         <xsd:complexType name="HostedPagePaymentMethod">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="PaymentMethodDescription" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="PaymentMethodName" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="HostedPagePaymentMethod" nillable="true" type="tns:HostedPagePaymentMethod" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Errors" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Errors">
+         <xsd:complexType name="Error">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Message" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="Error" nillable="true" type="tns:Error" />
+         <xsd:complexType name="ErrorAuthorisation">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:Error">
+                  <xsd:sequence>
+                     <xsd:element xmlns:q37="http://schemas.datacontract.org/2004/07/Pmg.Core.Plugin" minOccurs="0" name="ErrorCode" type="q37:AuthorizationErrorCodes" />
+                     <xsd:element minOccurs="0" name="InnerErrors" nillable="true" type="tns:ArrayOfErrorAuthorisation" />
+                     <xsd:element minOccurs="0" name="PspErrorCode" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="PspErrorMessage" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ErrorAuthorisation" nillable="true" type="tns:ErrorAuthorisation" />
+         <xsd:complexType name="ArrayOfErrorAuthorisation">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="ErrorAuthorisation" nillable="true" type="tns:ErrorAuthorisation" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfErrorAuthorisation" nillable="true" type="tns:ArrayOfErrorAuthorisation" />
+         <xsd:complexType name="ErrorValidationEntry">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:Error">
+                  <xsd:sequence>
+                     <xsd:element xmlns:q38="http://schemas.datacontract.org/2004/07/Pmg.Core.Plugin" minOccurs="0" name="ErrorCode" type="q38:ValidationErrorCodes" />
+                     <xsd:element minOccurs="0" name="Field" type="tns:ValidationFields" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ErrorValidationEntry" nillable="true" type="tns:ErrorValidationEntry" />
+         <xsd:simpleType name="ValidationFields">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="Default" />
+               <xsd:enumeration value="CardHolder" />
+               <xsd:enumeration value="CardNumber" />
+               <xsd:enumeration value="Cvc" />
+               <xsd:enumeration value="ExpirationDate" />
+               <xsd:enumeration value="BankCode" />
+               <xsd:enumeration value="AccountNumber" />
+               <xsd:enumeration value="CountryCode" />
+               <xsd:enumeration value="Iban" />
+               <xsd:enumeration value="BankName" />
+               <xsd:enumeration value="AccountHolder" />
+               <xsd:enumeration value="DateofSignature" />
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:element name="ValidationFields" nillable="true" type="tns:ValidationFields" />
+         <xsd:complexType name="ErrorApplication">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:Error">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Details" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ErrorApplication" nillable="true" type="tns:ErrorApplication" />
+         <xsd:complexType name="ErrorUnhandled">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:Error">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Exception" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Stacktrace" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ErrorUnhandled" nillable="true" type="tns:ErrorUnhandled" />
+         <xsd:complexType name="ErrorValidation">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:Error">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="ValidationErrors" nillable="true" type="tns:ArrayOfErrorValidationEntry" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ErrorValidation" nillable="true" type="tns:ErrorValidation" />
+         <xsd:complexType name="ArrayOfErrorValidationEntry">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="ErrorValidationEntry" nillable="true" type="tns:ErrorValidationEntry" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfErrorValidationEntry" nillable="true" type="tns:ArrayOfErrorValidationEntry" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.Core.Plugin" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.Core.Plugin">
+         <xsd:simpleType name="AuthorizationErrorCodes">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="PaymentErrorBankSystemUnavailable">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentErrorExpiredCard">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentErrorCardLimitExceeded">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentErrorUnauthorizedSale">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentErrorUnkownError">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentErrorCardMisuse">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentErrorInvalidData">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentErrorPartiallyRefused">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentErrorTechnicalError">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentErrorSecurityError">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentErrorAcquirerError">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymenttErrorCapturingError">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">12</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentErrorActionCancelledByUser">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">13</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentErrorCurrencyNotSupported">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">14</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorCardNumber">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">100</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorExpiryDate">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">101</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorCardHolder">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">102</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorCVC">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">103</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorShippingCity">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">104</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorShippingCountry">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">105</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorShippingEMail">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">106</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorShippingFirstName">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">107</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorShippingLastName">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">108</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorShippingPhone">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">109</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorShippingState">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">110</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorShippingStreet1">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">111</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorShippingStreet2">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">112</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorShippingZip">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">113</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorShippingAddress">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">114</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorBillingAddress">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">115</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorBillingCity">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">116</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorBillingCountry">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">117</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorBillingEMail">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">118</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorBillingFirstName">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">119</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorBillingLastName">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">120</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorBillingPhone">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">121</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorBillingState">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">122</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorBillingStreet1">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">123</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorBillingStreet2">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">124</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorBillingZip">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">125</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorDatetimeValue">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">126</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorNumericValue">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">127</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorCountryCodeValue">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">128</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorCurrencyCodeValue">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">129</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorLanguageCodeValue">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">130</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ValidationErrorCPF_CNPJValue">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">131</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="RiskCheckAddressSuggestionAvailable">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">200</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="RiskCheckAddressCouldNotBeValidated">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">201</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="RiskCheckPaymentNotAvailable">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">202</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="RiskCheckPaymentRejected">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">203</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="AccountCheckPaymentAccountDataInvalid">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">204</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="RiskCheckPaymentValidationError">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">205</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="EmptyRequestReceived">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">300</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ParameterMissingOrInvalid">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">20000000</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="CountryCodeMissingOrInvalid">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">21000080</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ActionTypeMissingOrInvalid">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">301</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="OrderMissingOrInvalid">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">302</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="MerchantIdMissingOrInvalid">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">303</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="AmountMissingOrInvalid">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">304</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="CardNumberMissingOrInvalid">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">305</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="IPAddressMissingOrInvalid">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">306</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ExpiryDateMissingOrInvalid">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">307</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="MerchantReferenceMissingOrInvalid">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">308</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PaymentDataMissingOrInvalid">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">309</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalError">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">330</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalAuthenticationError">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">331</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalTransactionRefused">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">332</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalInvalidBillingAdress">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10701</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalInvalidBillingCity">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10704</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalInvalidBillingState">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10705</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalInvalidBillingZipCode">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10706</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalInvalidBillingCountryCode">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10707</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalInvalidShippingAdress">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10719</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalInvalidShippingCity">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10722</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalInvalidShippingState">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10723</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalInvalidShippingZipCode">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10724</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalInvalidShippingCountryCode">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10725</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalShippingAddressEmpty">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10727</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalShippingCityEmpty">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10728</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalShippingStateEmpty">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10729</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalShippingZipEmpty">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10730</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="PayPalShippingCountryEmpty">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10731</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="SecureCardAuthenticationErrorInvalidCard">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">340</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="SecureCardAuthenticationErrorInvalidData">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">341</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="SecureCardAuthenticationErrorMissingField">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">342</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="SecureCardAuthenticationErrorCardIsNotEnrolled">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">343</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="SecureCardAuthenticationErrorCardIsNotValidated">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">344</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="SecureCardAuthenticationErrorWrongPARES">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">345</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="TransactionAlreadyCancelled">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">350</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="TransactionCancelledByTheBank">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">351</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="InvalidPaymentProductIDForMerchant">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">352</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="NoPaymentMethodsFoundForCountryCode">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">353</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="NoPaymentMethodsFoundForMerchant">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">354</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="OrderAlreadyExists">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">355</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="TransactionRefusedByTheBank">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">356</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="ScenarioNotSuccesfull">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">399</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:element name="AuthorizationErrorCodes" nillable="true" type="tns:AuthorizationErrorCodes" />
+         <xsd:simpleType name="ValidationErrorCodes">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="NoError" />
+               <xsd:enumeration value="CardHolderEmpty" />
+               <xsd:enumeration value="CardHolderInvalid" />
+               <xsd:enumeration value="CardCVCEmpty" />
+               <xsd:enumeration value="CardCVCInvalid" />
+               <xsd:enumeration value="CardExpDateMonthEmpty" />
+               <xsd:enumeration value="CardExpDateYearEmpty" />
+               <xsd:enumeration value="CardExpDateInThePast" />
+               <xsd:enumeration value="CardExpDateIsToNear" />
+               <xsd:enumeration value="CardNumberEmpty" />
+               <xsd:enumeration value="CardNumberInvalid" />
+               <xsd:enumeration value="CardMonthInvalid" />
+               <xsd:enumeration value="CardholderNameExceedsLength" />
+               <xsd:enumeration value="AccountNumberEmpty" />
+               <xsd:enumeration value="IpAddressInvalid" />
+               <xsd:enumeration value="BankCodeEmpty" />
+               <xsd:enumeration value="CountryCodeEmpty" />
+               <xsd:enumeration value="CountryCodeInvalid" />
+               <xsd:enumeration value="IbanEmpty" />
+               <xsd:enumeration value="AccountHolderEmpty" />
+               <xsd:enumeration value="IbanInvalid" />
+               <xsd:enumeration value="DateOfSignature" />
+               <xsd:enumeration value="TransactionTokenEmtpy">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">101</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:element name="ValidationErrorCodes" nillable="true" type="tns:ValidationErrorCodes" />
+      </xsd:schema>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/">
+         <xs:element name="anyType" nillable="true" type="xs:anyType" />
+         <xs:element name="anyURI" nillable="true" type="xs:anyURI" />
+         <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
+         <xs:element name="boolean" nillable="true" type="xs:boolean" />
+         <xs:element name="byte" nillable="true" type="xs:byte" />
+         <xs:element name="dateTime" nillable="true" type="xs:dateTime" />
+         <xs:element name="decimal" nillable="true" type="xs:decimal" />
+         <xs:element name="double" nillable="true" type="xs:double" />
+         <xs:element name="float" nillable="true" type="xs:float" />
+         <xs:element name="int" nillable="true" type="xs:int" />
+         <xs:element name="long" nillable="true" type="xs:long" />
+         <xs:element name="QName" nillable="true" type="xs:QName" />
+         <xs:element name="short" nillable="true" type="xs:short" />
+         <xs:element name="string" nillable="true" type="xs:string" />
+         <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
+         <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
+         <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
+         <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
+         <xs:element name="char" nillable="true" type="tns:char" />
+         <xs:simpleType name="char">
+            <xs:restriction base="xs:int" />
+         </xs:simpleType>
+         <xs:element name="duration" nillable="true" type="tns:duration" />
+         <xs:simpleType name="duration">
+            <xs:restriction base="xs:duration">
+               <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
+               <xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
+               <xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:element name="guid" nillable="true" type="tns:guid" />
+         <xs:simpleType name="guid">
+            <xs:restriction base="xs:string">
+               <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:attribute name="FactoryType" type="xs:QName" />
+         <xs:attribute name="Id" type="xs:ID" />
+         <xs:attribute name="Ref" type="xs:IDREF" />
+      </xs:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Actions" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Actions">
+         <xsd:complexType name="ShopAction">
+            <xsd:sequence />
+         </xsd:complexType>
+         <xsd:element name="ShopAction" nillable="true" type="tns:ShopAction" />
+         <xsd:complexType name="ShopActionRedirectToPaymentGateway">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ShopAction">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Url" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ShopActionRedirectToPaymentGateway" nillable="true" type="tns:ShopActionRedirectToPaymentGateway" />
+         <xsd:complexType name="ShopActionRedirectToPaymentPage">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ShopAction">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ShopActionRedirectToPaymentPage" nillable="true" type="tns:ShopActionRedirectToPaymentPage" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Requests" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Requests">
+         <xsd:complexType name="RequestSavePayment">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q39="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q39:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element xmlns:q40="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" minOccurs="0" name="PaymentData" nillable="true" type="q40:PaymentData" />
+                     <xsd:element minOccurs="0" name="SecurityToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestSavePayment" nillable="true" type="tns:RequestSavePayment" />
+         <xsd:complexType name="RequestGetTransactionInfo">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q41="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q41:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestGetTransactionInfo" nillable="true" type="tns:RequestGetTransactionInfo" />
+         <xsd:complexType name="RequestAuthorize">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q42="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q42:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="ClientIp" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="CountryCode" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Culture" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Currency" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="ExternalId" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Order" nillable="true" type="q42:OrderInfo" />
+                     <xsd:element minOccurs="0" name="PaymentMethodName" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="PaymentToken" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="ReturnUrl" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="SessionId" nillable="true" type="xsd:string" />
+                     <xsd:element xmlns:q43="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserData" nillable="true" type="q43:ArrayOfKeyValueOfstringanyType" />
+                     <xsd:element minOccurs="0" name="CustomerId" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="AuthorizationRiskData" nillable="true" type="q42:RiskData" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestAuthorize" nillable="true" type="tns:RequestAuthorize" />
+         <xsd:complexType name="RequestGetSecurityToken">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q44="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q44:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="UsesCount" type="xsd:int" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestGetSecurityToken" nillable="true" type="tns:RequestGetSecurityToken" />
+         <xsd:complexType name="RequestGetPaymentMethods">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q45="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q45:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="CountryCode" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Currency" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="FilterRiskData" nillable="true" type="q45:RiskData" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestGetPaymentMethods" nillable="true" type="tns:RequestGetPaymentMethods" />
+         <xsd:complexType name="RequestRatePaymentMethodRisk">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q46="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q46:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="AccountPaymentToken" nillable="true" type="xsd:string" />
+                     <xsd:element xmlns:q47="http://schemas.datacontract.org/2004/07/Pmg.Core.Model" minOccurs="0" name="Address" nillable="true" type="q47:Address" />
+                     <xsd:element minOccurs="0" name="ClientIp" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="CountryCode" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Currency" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="PerformAccountValidation" type="xsd:boolean" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestRatePaymentMethodRisk" nillable="true" type="tns:RequestRatePaymentMethodRisk" />
+         <xsd:complexType name="RequestGetPaymentInfo">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q48="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q48:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="PaymentToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestGetPaymentInfo" nillable="true" type="tns:RequestGetPaymentInfo" />
+         <xsd:complexType name="RequestHostedPageOrder">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q49="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q49:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="CancelUrl" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="ClientIp" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="CountryCode" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Culture" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Currency" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="CustomisationInfo" nillable="true" type="q49:HostedPageCustomisationInfo" />
+                     <xsd:element minOccurs="0" name="ExternalId" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="FailedUrl" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Order" nillable="true" type="q49:OrderInfo" />
+                     <xsd:element minOccurs="0" name="PaymentMethods" nillable="true" type="q49:ArrayOfHostedPagePaymentMethod" />
+                     <xsd:element minOccurs="0" name="SessionId" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="SuccessUrl" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestHostedPageOrder" nillable="true" type="tns:RequestHostedPageOrder" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel">
+         <xsd:complexType name="PaymentData">
+            <xsd:sequence />
+         </xsd:complexType>
+         <xsd:element name="PaymentData" nillable="true" type="tns:PaymentData" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+         <xsd:complexType name="ArrayOfKeyValueOfstringanyType">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfstringanyType">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="Key" nillable="true" type="xsd:string" />
+                        <xsd:element name="Value" nillable="true" type="xsd:anyType" />
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfKeyValueOfstringanyType" nillable="true" type="tns:ArrayOfKeyValueOfstringanyType" />
+         <xsd:complexType name="ArrayOfKeyValueOfstringstring">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfstringstring">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="Key" nillable="true" type="xsd:string" />
+                        <xsd:element name="Value" nillable="true" type="xsd:string" />
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfKeyValueOfstringstring" nillable="true" type="tns:ArrayOfKeyValueOfstringstring" />
+         <xsd:complexType name="ArrayOfstring">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfstring" nillable="true" type="tns:ArrayOfstring" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.Core.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.Core.Model">
+         <xsd:complexType name="Address">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="City" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Company" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="CountryCode" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Email" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="FirstName" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Id" type="xsd:int" />
+               <xsd:element minOccurs="0" name="LastName" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Phone" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="State" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Street1" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Street2" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Type" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Zip" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="Address" nillable="true" type="tns:Address" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Responses" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model.Responses">
+         <xsd:complexType name="ResponseGetPaymentMethods">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q50="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q50:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="PaymentMethods" nillable="true" type="tns:ArrayOfPaymentMethodInfo" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseGetPaymentMethods" nillable="true" type="tns:ResponseGetPaymentMethods" />
+         <xsd:complexType name="ArrayOfPaymentMethodInfo">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="PaymentMethodInfo" nillable="true" type="tns:PaymentMethodInfo" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfPaymentMethodInfo" nillable="true" type="tns:ArrayOfPaymentMethodInfo" />
+         <xsd:complexType name="PaymentMethodInfo">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Description" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="DisplayName" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="PaymentType" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="PaymentMethodInfo" nillable="true" type="tns:PaymentMethodInfo" />
+         <xsd:complexType name="ResponseSavePayment">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q51="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q51:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="PaymentToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseSavePayment" nillable="true" type="tns:ResponseSavePayment" />
+         <xsd:complexType name="ResponseGetTransactionInfo">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q52="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q52:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="AuthorizationDone" type="xsd:boolean" />
+                     <xsd:element minOccurs="0" name="Order" nillable="true" type="q52:OrderInfo" />
+                     <xsd:element xmlns:q53="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" minOccurs="0" name="Payment" nillable="true" type="q53:PaymentData" />
+                     <xsd:element minOccurs="0" name="Status" nillable="true" type="xsd:string" />
+                     <xsd:element xmlns:q54="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserData" nillable="true" type="q54:ArrayOfKeyValueOfstringstring" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseGetTransactionInfo" nillable="true" type="tns:ResponseGetTransactionInfo" />
+         <xsd:complexType name="ResponseAuthorize">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q55="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q55:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="AuthorizationDone" type="xsd:boolean" />
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                     <xsd:element xmlns:q56="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserData" nillable="true" type="q56:ArrayOfKeyValueOfstringanyType" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseAuthorize" nillable="true" type="tns:ResponseAuthorize" />
+         <xsd:complexType name="ResponseGetSecurityToken">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q57="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q57:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="SecurityToken" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="RSAPublicKey" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseGetSecurityToken" nillable="true" type="tns:ResponseGetSecurityToken" />
+         <xsd:complexType name="ResponseRatePaymentMethodRisk">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q58="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q58:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="ProviderRating" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="ProviderRatingMessage" nillable="true" type="xsd:string" />
+                     <xsd:element xmlns:q59="http://schemas.datacontract.org/2004/07/Pmg.Core" minOccurs="0" name="RiskRating" type="q59:PaymentMethodRiskRatingResult" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseRatePaymentMethodRisk" nillable="true" type="tns:ResponseRatePaymentMethodRisk" />
+         <xsd:complexType name="ResponseGetPaymentInfo">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q60="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q60:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element xmlns:q61="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" minOccurs="0" name="Payment" nillable="true" type="q61:PaymentData" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseGetPaymentInfo" nillable="true" type="tns:ResponseGetPaymentInfo" />
+         <xsd:complexType name="ResponseHostedPageOrder">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q62="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q62:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="SecurityToken" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                     <xsd:element xmlns:q63="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserData" nillable="true" type="q63:ArrayOfKeyValueOfstringanyType" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseHostedPageOrder" nillable="true" type="tns:ResponseHostedPageOrder" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.Core" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.Core">
+         <xsd:simpleType name="PaymentMethodRiskRatingResult">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="InvoiceAndDirectDebit">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="DirectDebitOnly">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="NoGuarantee">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:element name="PaymentMethodRiskRatingResult" nillable="true" type="tns:PaymentMethodRiskRatingResult" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.TransactionV2.Model.Requests" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.TransactionV2.Model.Requests">
+         <xsd:complexType name="RequestMarkPaymentAsProfile">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q64="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q64:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="PaymentToken" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="SecurityToken" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Revoke" nillable="true" type="xsd:boolean" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestMarkPaymentAsProfile" nillable="true" type="tns:RequestMarkPaymentAsProfile" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.TransactionV2.Model.Responses" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.TransactionV2.Model.Responses">
+         <xsd:complexType name="ResponseMarkPaymentAsProfile">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q65="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.V2.Model" base="q65:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="PaymentToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseMarkPaymentAsProfile" nillable="true" type="tns:ResponseMarkPaymentAsProfile" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Requests" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Requests">
+         <xsd:complexType name="RequestAuthorize">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Amount" type="xsd:decimal" />
+                     <xsd:element minOccurs="0" name="PaymentToken" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestAuthorize" nillable="true" type="tns:RequestAuthorize" />
+         <xsd:complexType name="ServiceRequest">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="CorrelationId" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ServiceRequest" nillable="true" type="tns:ServiceRequest" />
+         <xsd:complexType name="RequestCapture">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Amount" type="xsd:decimal" />
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestCapture" nillable="true" type="tns:RequestCapture" />
+         <xsd:complexType name="RequestBulkGetTransactionInfoByOrderId">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element xmlns:q66="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="OrderIds" nillable="true" type="q66:ArrayOfstring" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestBulkGetTransactionInfoByOrderId" nillable="true" type="tns:RequestBulkGetTransactionInfoByOrderId" />
+         <xsd:complexType name="RequestBulkCapture">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Requests" nillable="true" type="tns:ArrayOfRequestCapture" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestBulkCapture" nillable="true" type="tns:RequestBulkCapture" />
+         <xsd:complexType name="ArrayOfRequestCapture">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="RequestCapture" nillable="true" type="tns:RequestCapture" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfRequestCapture" nillable="true" type="tns:ArrayOfRequestCapture" />
+         <xsd:complexType name="RequestBulkGetPaymentInfo">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element xmlns:q67="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PaymentTokens" nillable="true" type="q67:ArrayOfstring" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestBulkGetPaymentInfo" nillable="true" type="tns:RequestBulkGetPaymentInfo" />
+         <xsd:complexType name="RequestBulkGetTransactionInfoByTransactionToken">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element xmlns:q68="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TransactionTokens" nillable="true" type="q68:ArrayOfstring" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestBulkGetTransactionInfoByTransactionToken" nillable="true" type="tns:RequestBulkGetTransactionInfoByTransactionToken" />
+         <xsd:complexType name="RequestRefund">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Amount" type="xsd:decimal" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestRefund" nillable="true" type="tns:RequestRefund" />
+         <xsd:complexType name="RequestGetTransactionInfoByOrderId">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="OrderId" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestGetTransactionInfoByOrderId" nillable="true" type="tns:RequestGetTransactionInfoByOrderId" />
+         <xsd:complexType name="RequestGetTransactionInfoByTransactionToken">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestGetTransactionInfoByTransactionToken" nillable="true" type="tns:RequestGetTransactionInfoByTransactionToken" />
+         <xsd:complexType name="RequestBulkCancel">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element xmlns:q69="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TransactionTokens" nillable="true" type="q69:ArrayOfstring" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestBulkCancel" nillable="true" type="tns:RequestBulkCancel" />
+         <xsd:complexType name="RequestCancel">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestCancel" nillable="true" type="tns:RequestCancel" />
+         <xsd:complexType name="RequestBulkRefund">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceRequest">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Requests" nillable="true" type="tns:ArrayOfRequestRefund" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="RequestBulkRefund" nillable="true" type="tns:RequestBulkRefund" />
+         <xsd:complexType name="ArrayOfRequestRefund">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="RequestRefund" nillable="true" type="tns:RequestRefund" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfRequestRefund" nillable="true" type="tns:ArrayOfRequestRefund" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Responses" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Responses">
+         <xsd:complexType name="ResponseAuthorize">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                     <xsd:element xmlns:q70="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserData" nillable="true" type="q70:ArrayOfKeyValueOfstringanyType" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseAuthorize" nillable="true" type="tns:ResponseAuthorize" />
+         <xsd:complexType name="ServiceResponse">
+            <xsd:sequence>
+               <xsd:element xmlns:q71="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model" minOccurs="0" name="Error" nillable="true" type="q71:Error" />
+               <xsd:element minOccurs="0" name="Success" type="xsd:boolean" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ServiceResponse" nillable="true" type="tns:ServiceResponse" />
+         <xsd:complexType name="ResponseBulkGetTransactionInfo">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="TransactionInfos" nillable="true" type="tns:ArrayOfResponseGetTransactionInfo" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseBulkGetTransactionInfo" nillable="true" type="tns:ResponseBulkGetTransactionInfo" />
+         <xsd:complexType name="ArrayOfResponseGetTransactionInfo">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="ResponseGetTransactionInfo" nillable="true" type="tns:ResponseGetTransactionInfo" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfResponseGetTransactionInfo" nillable="true" type="tns:ArrayOfResponseGetTransactionInfo" />
+         <xsd:complexType name="ResponseGetTransactionInfo">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="AuthorizedAmount" type="xsd:decimal" />
+                     <xsd:element minOccurs="0" name="CapturedAmount" type="xsd:decimal" />
+                     <xsd:element minOccurs="0" name="CreateDate" type="xsd:dateTime" />
+                     <xsd:element minOccurs="0" name="Currency" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="OrderId" nillable="true" type="xsd:string" />
+                     <xsd:element xmlns:q72="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PaymentData" nillable="true" type="q72:ArrayOfKeyValueOfstringanyType" />
+                     <xsd:element minOccurs="0" name="PaymentType" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="PspAccount" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="ReferenceNumber" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Status" type="tns:TransactionStatus" />
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                     <xsd:element xmlns:q73="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserData" nillable="true" type="q73:ArrayOfKeyValueOfstringanyType" />
+                     <xsd:element minOccurs="0" name="RefundedAmount" type="xsd:decimal" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseGetTransactionInfo" nillable="true" type="tns:ResponseGetTransactionInfo" />
+         <xsd:simpleType name="TransactionStatus">
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="Authorized" />
+               <xsd:enumeration value="AuthorizedFailed" />
+               <xsd:enumeration value="Captured" />
+               <xsd:enumeration value="CapturedFailed" />
+               <xsd:enumeration value="Canceled" />
+               <xsd:enumeration value="CanceledFailed" />
+               <xsd:enumeration value="Refunded" />
+               <xsd:enumeration value="RefundedFailed" />
+            </xsd:restriction>
+         </xsd:simpleType>
+         <xsd:element name="TransactionStatus" nillable="true" type="tns:TransactionStatus" />
+         <xsd:complexType name="ResponseCapture">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Amount" type="xsd:decimal" />
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseCapture" nillable="true" type="tns:ResponseCapture" />
+         <xsd:complexType name="ResponseRefund">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Amount" type="xsd:decimal" />
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseRefund" nillable="true" type="tns:ResponseRefund" />
+         <xsd:complexType name="ResponseBulkCancel">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Responses" nillable="true" type="tns:ArrayOfResponseCancel" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseBulkCancel" nillable="true" type="tns:ResponseBulkCancel" />
+         <xsd:complexType name="ArrayOfResponseCancel">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="ResponseCancel" nillable="true" type="tns:ResponseCancel" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfResponseCancel" nillable="true" type="tns:ArrayOfResponseCancel" />
+         <xsd:complexType name="ResponseCancel">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="TransactionToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseCancel" nillable="true" type="tns:ResponseCancel" />
+         <xsd:complexType name="ResponseBulkRefund">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Responses" nillable="true" type="tns:ArrayOfResponseRefund" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseBulkRefund" nillable="true" type="tns:ResponseBulkRefund" />
+         <xsd:complexType name="ArrayOfResponseRefund">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="ResponseRefund" nillable="true" type="tns:ResponseRefund" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfResponseRefund" nillable="true" type="tns:ArrayOfResponseRefund" />
+         <xsd:complexType name="ResponseBulkGetPaymentInfo">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element xmlns:q74="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model" minOccurs="0" name="PaymentEntries" nillable="true" type="q74:ArrayOfPaymentInfoResponse" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseBulkGetPaymentInfo" nillable="true" type="tns:ResponseBulkGetPaymentInfo" />
+         <xsd:complexType name="ResponseBulkCapture">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Responses" nillable="true" type="tns:ArrayOfResponseCapture" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="ResponseBulkCapture" nillable="true" type="tns:ResponseBulkCapture" />
+         <xsd:complexType name="ArrayOfResponseCapture">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="ResponseCapture" nillable="true" type="tns:ResponseCapture" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfResponseCapture" nillable="true" type="tns:ArrayOfResponseCapture" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model">
+         <xsd:complexType name="Error">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Details" nillable="true" type="xsd:string" />
+               <xsd:element minOccurs="0" name="Message" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="Error" nillable="true" type="tns:Error" />
+         <xsd:complexType name="ArrayOfPaymentInfoResponse">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" maxOccurs="unbounded" name="PaymentInfoResponse" nillable="true" type="tns:PaymentInfoResponse" />
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="ArrayOfPaymentInfoResponse" nillable="true" type="tns:ArrayOfPaymentInfoResponse" />
+         <xsd:complexType name="PaymentInfoResponse">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q75="http://schemas.datacontract.org/2004/07/Pmg.ExternalApi.IntegrationV3.Model.Responses" base="q75:ServiceResponse">
+                  <xsd:sequence>
+                     <xsd:element xmlns:q76="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PaymentData" nillable="true" type="q76:ArrayOfKeyValueOfstringanyType" />
+                     <xsd:element minOccurs="0" name="PaymentToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentInfoResponse" nillable="true" type="tns:PaymentInfoResponse" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.Plugin.Cybersource" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.Plugin.Cybersource">
+         <xsd:complexType name="CybersourceTaxCalculationProvider">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:CybersourceProviderBase">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="CybersourceTaxCalculationProvider" nillable="true" type="tns:CybersourceTaxCalculationProvider" />
+         <xsd:complexType name="CybersourceProviderBase">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q77="http://schemas.datacontract.org/2004/07/Pmg.Plugin.Common" base="q77:CommonProviderBase">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="CybersourceProviderBase" nillable="true" type="tns:CybersourceProviderBase" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.Plugin.Common" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.Plugin.Common">
+         <xsd:complexType name="CommonProviderBase">
+            <xsd:sequence />
+         </xsd:complexType>
+         <xsd:element name="CommonProviderBase" nillable="true" type="tns:CommonProviderBase" />
+      </xsd:schema>
+      <xsd:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Pmg.Plugin.Common.PaymentTypes" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Pmg.Plugin.Common.PaymentTypes">
+         <xsd:complexType name="PaymentDataAlipay">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q78="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q78:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataAlipay" nillable="true" type="tns:PaymentDataAlipay" />
+         <xsd:complexType name="PaymentDataBoletoBancario">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q79="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q79:PaymentData">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="CpfCnpj" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="DueDate" type="xsd:dateTime" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataBoletoBancario" nillable="true" type="tns:PaymentDataBoletoBancario" />
+         <xsd:complexType name="PaymentDataCashOnDelivery">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q80="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q80:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCashOnDelivery" nillable="true" type="tns:PaymentDataCashOnDelivery" />
+         <xsd:complexType name="PaymentDataCreditCardAmericanExpress">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:PaymentDataCreditCard">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCreditCardAmericanExpress" nillable="true" type="tns:PaymentDataCreditCardAmericanExpress" />
+         <xsd:complexType name="PaymentDataCreditCard">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:PaymentDataCard">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCreditCard" nillable="true" type="tns:PaymentDataCreditCard" />
+         <xsd:complexType name="PaymentDataCard">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q81="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q81:PaymentData">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="CVC" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="CardHolder" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="CardNumber" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="ExpirationMonth" type="xsd:int" />
+                     <xsd:element minOccurs="0" name="ExpirationYear" type="xsd:int" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCard" nillable="true" type="tns:PaymentDataCard" />
+         <xsd:complexType name="PaymentDataCreditCardBonus">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:PaymentDataCreditCard">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCreditCardBonus" nillable="true" type="tns:PaymentDataCreditCardBonus" />
+         <xsd:complexType name="PaymentDataCreditCardDankort">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:PaymentDataCreditCard">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCreditCardDankort" nillable="true" type="tns:PaymentDataCreditCardDankort" />
+         <xsd:complexType name="PaymentDataCreditCardDinersClub">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:PaymentDataCreditCard">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCreditCardDinersClub" nillable="true" type="tns:PaymentDataCreditCardDinersClub" />
+         <xsd:complexType name="PaymentDataCreditCardDiscover">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:PaymentDataCreditCard">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCreditCardDiscover" nillable="true" type="tns:PaymentDataCreditCardDiscover" />
+         <xsd:complexType name="PaymentDataCreditCardJCB">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:PaymentDataCreditCard">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCreditCardJCB" nillable="true" type="tns:PaymentDataCreditCardJCB" />
+         <xsd:complexType name="PaymentDataCreditCardMasterCard">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:PaymentDataCreditCard">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCreditCardMasterCard" nillable="true" type="tns:PaymentDataCreditCardMasterCard" />
+         <xsd:complexType name="PaymentDataCreditCardMaximum">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:PaymentDataCreditCard">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCreditCardMaximum" nillable="true" type="tns:PaymentDataCreditCardMaximum" />
+         <xsd:complexType name="PaymentDataCreditCardVisa">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:PaymentDataCreditCard">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCreditCardVisa" nillable="true" type="tns:PaymentDataCreditCardVisa" />
+         <xsd:complexType name="PaymentDataCreditCardWorld">
+            <xsd:complexContent mixed="false">
+               <xsd:extension base="tns:PaymentDataCreditCard">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataCreditCardWorld" nillable="true" type="tns:PaymentDataCreditCardWorld" />
+         <xsd:complexType name="PaymentDataDirectDebit">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q82="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q82:PaymentData">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="AccountHolder" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="AccountNumber" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="BankCode" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="BankName" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="City" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Country" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataDirectDebit" nillable="true" type="tns:PaymentDataDirectDebit" />
+         <xsd:complexType name="PaymentDataDirectDebitSepa">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q83="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q83:PaymentData">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="AccountHolder" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="BankName" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="City" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Iban" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Mandate" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="MandateType" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="DateOfSignature" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataDirectDebitSepa" nillable="true" type="tns:PaymentDataDirectDebitSepa" />
+         <xsd:complexType name="PaymentDataDirectEBanking">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q84="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q84:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataDirectEBanking" nillable="true" type="tns:PaymentDataDirectEBanking" />
+         <xsd:complexType name="PaymentDataExternalTransaction">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q85="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q85:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataExternalTransaction" nillable="true" type="tns:PaymentDataExternalTransaction" />
+         <xsd:complexType name="PaymentDataGiropaySepa">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q86="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q86:PaymentData">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="AccountBic" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Iban" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataGiropaySepa" nillable="true" type="tns:PaymentDataGiropaySepa" />
+         <xsd:complexType name="PaymentDataIDeal">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q87="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q87:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataIDeal" nillable="true" type="tns:PaymentDataIDeal" />
+         <xsd:complexType name="PaymentDataIDealExt">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q88="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q88:PaymentData">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Holder" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="BankName" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="Country" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataIDealExt" nillable="true" type="tns:PaymentDataIDealExt" />
+         <xsd:complexType name="PaymentDataOpenInvoice">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q89="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q89:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataOpenInvoice" nillable="true" type="tns:PaymentDataOpenInvoice" />
+         <xsd:complexType name="PaymentDataPayPal">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q90="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q90:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataPayPal" nillable="true" type="tns:PaymentDataPayPal" />
+         <xsd:complexType name="PaymentDataProfile">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q91="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q91:PaymentData">
+                  <xsd:sequence>
+                     <xsd:element minOccurs="0" name="Cvc" nillable="true" type="xsd:string" />
+                     <xsd:element minOccurs="0" name="PaymentToken" nillable="true" type="xsd:string" />
+                  </xsd:sequence>
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataProfile" nillable="true" type="tns:PaymentDataProfile" />
+         <xsd:complexType name="PaymentDataRiskAccountCheck">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q92="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q92:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataRiskAccountCheck" nillable="true" type="tns:PaymentDataRiskAccountCheck" />
+         <xsd:complexType name="PaymentDataRiskCheck">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q93="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q93:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataRiskCheck" nillable="true" type="tns:PaymentDataRiskCheck" />
+         <xsd:complexType name="PaymentDataRiskDebtorAggregation">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q94="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q94:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataRiskDebtorAggregation" nillable="true" type="tns:PaymentDataRiskDebtorAggregation" />
+         <xsd:complexType name="PaymentDataRiskDebtorTransaction">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q95="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q95:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataRiskDebtorTransaction" nillable="true" type="tns:PaymentDataRiskDebtorTransaction" />
+         <xsd:complexType name="PaymentDataRiskStoreOrder">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q96="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q96:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataRiskStoreOrder" nillable="true" type="tns:PaymentDataRiskStoreOrder" />
+         <xsd:complexType name="PaymentDataUnionpay">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q97="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q97:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataUnionpay" nillable="true" type="tns:PaymentDataUnionpay" />
+         <xsd:complexType name="PaymentDataWebMoney">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q98="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q98:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataWebMoney" nillable="true" type="tns:PaymentDataWebMoney" />
+         <xsd:complexType name="PaymentDataWireTransfer">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q99="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q99:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataWireTransfer" nillable="true" type="tns:PaymentDataWireTransfer" />
+         <xsd:complexType name="PaymentDataYandexMoney">
+            <xsd:complexContent mixed="false">
+               <xsd:extension xmlns:q100="http://schemas.datacontract.org/2004/07/Pmg.Core.TransactionModel" base="q100:PaymentData">
+                  <xsd:sequence />
+               </xsd:extension>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:element name="PaymentDataYandexMoney" nillable="true" type="tns:PaymentDataYandexMoney" />
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="SoapTransactionService_Send_InputMessage">
+      <wsdl:part name="parameters" element="tns:Send" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_Send_OutputMessage">
+      <wsdl:part name="parameters" element="tns:SendResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_SavePayment_InputMessage">
+      <wsdl:part name="parameters" element="tns:SavePayment" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_SavePayment_OutputMessage">
+      <wsdl:part name="parameters" element="tns:SavePaymentResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_GetPaymentMethods_InputMessage">
+      <wsdl:part name="parameters" element="tns:GetPaymentMethods" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_GetPaymentMethods_OutputMessage">
+      <wsdl:part name="parameters" element="tns:GetPaymentMethodsResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_GetTransactionInfo_InputMessage">
+      <wsdl:part name="parameters" element="tns:GetTransactionInfo" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_GetTransactionInfo_OutputMessage">
+      <wsdl:part name="parameters" element="tns:GetTransactionInfoResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_GetPaymentInfo_InputMessage">
+      <wsdl:part name="parameters" element="tns:GetPaymentInfo" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_GetPaymentInfo_OutputMessage">
+      <wsdl:part name="parameters" element="tns:GetPaymentInfoResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_GetSecurityToken_InputMessage">
+      <wsdl:part name="parameters" element="tns:GetSecurityToken" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_GetSecurityToken_OutputMessage">
+      <wsdl:part name="parameters" element="tns:GetSecurityTokenResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_Authorize_InputMessage">
+      <wsdl:part name="parameters" element="tns:Authorize" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_Authorize_OutputMessage">
+      <wsdl:part name="parameters" element="tns:AuthorizeResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_MarkPaymentAsProfile_InputMessage">
+      <wsdl:part name="parameters" element="tns:MarkPaymentAsProfile" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_MarkPaymentAsProfile_OutputMessage">
+      <wsdl:part name="parameters" element="tns:MarkPaymentAsProfileResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_RatePaymentMethodRisk_InputMessage">
+      <wsdl:part name="parameters" element="tns:RatePaymentMethodRisk" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_RatePaymentMethodRisk_OutputMessage">
+      <wsdl:part name="parameters" element="tns:RatePaymentMethodRiskResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_SubmitHostedPageOrder_InputMessage">
+      <wsdl:part name="parameters" element="tns:SubmitHostedPageOrder" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_SubmitHostedPageOrder_OutputMessage">
+      <wsdl:part name="parameters" element="tns:SubmitHostedPageOrderResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_ReAuthorize_InputMessage">
+      <wsdl:part name="parameters" element="tns:ReAuthorize" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_ReAuthorize_OutputMessage">
+      <wsdl:part name="parameters" element="tns:ReAuthorizeResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_Capture_InputMessage">
+      <wsdl:part name="parameters" element="tns:Capture" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_Capture_OutputMessage">
+      <wsdl:part name="parameters" element="tns:CaptureResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_BulkCapture_InputMessage">
+      <wsdl:part name="parameters" element="tns:BulkCapture" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_BulkCapture_OutputMessage">
+      <wsdl:part name="parameters" element="tns:BulkCaptureResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_Cancel_InputMessage">
+      <wsdl:part name="parameters" element="tns:Cancel" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_Cancel_OutputMessage">
+      <wsdl:part name="parameters" element="tns:CancelResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_BulkCancel_InputMessage">
+      <wsdl:part name="parameters" element="tns:BulkCancel" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_BulkCancel_OutputMessage">
+      <wsdl:part name="parameters" element="tns:BulkCancelResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_Refund_InputMessage">
+      <wsdl:part name="parameters" element="tns:Refund" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_Refund_OutputMessage">
+      <wsdl:part name="parameters" element="tns:RefundResponse" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_BulkRefund_InputMessage">
+      <wsdl:part name="parameters" element="tns:BulkRefund" />
+   </wsdl:message>
+   <wsdl:message name="SoapTransactionService_BulkRefund_OutputMessage">
+      <wsdl:part name="parameters" element="tns:BulkRefundResponse" />
+   </wsdl:message>
+   <wsdl:portType name="SoapTransactionService">
+      <wsdl:documentation>
+         <title>PMG Transaction Service</title>
+         <version>7.1.12.28229</version>
+      </wsdl:documentation>
+      <wsdl:operation name="Send">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/Send" message="tns:SoapTransactionService_Send_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/SendResponse" message="tns:SoapTransactionService_Send_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="SavePayment">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/SavePayment" message="tns:SoapTransactionService_SavePayment_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/SavePaymentResponse" message="tns:SoapTransactionService_SavePayment_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="GetPaymentMethods">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/GetPaymentMethods" message="tns:SoapTransactionService_GetPaymentMethods_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/GetPaymentMethodsResponse" message="tns:SoapTransactionService_GetPaymentMethods_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="GetTransactionInfo">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/GetTransactionInfo" message="tns:SoapTransactionService_GetTransactionInfo_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/GetTransactionInfoResponse" message="tns:SoapTransactionService_GetTransactionInfo_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="GetPaymentInfo">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/GetPaymentInfo" message="tns:SoapTransactionService_GetPaymentInfo_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/GetPaymentInfoResponse" message="tns:SoapTransactionService_GetPaymentInfo_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="GetSecurityToken">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/GetSecurityToken" message="tns:SoapTransactionService_GetSecurityToken_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/GetSecurityTokenResponse" message="tns:SoapTransactionService_GetSecurityToken_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="Authorize">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/Authorize" message="tns:SoapTransactionService_Authorize_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/AuthorizeResponse" message="tns:SoapTransactionService_Authorize_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="MarkPaymentAsProfile">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/MarkPaymentAsProfile" message="tns:SoapTransactionService_MarkPaymentAsProfile_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/MarkPaymentAsProfileResponse" message="tns:SoapTransactionService_MarkPaymentAsProfile_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="RatePaymentMethodRisk">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/RatePaymentMethodRisk" message="tns:SoapTransactionService_RatePaymentMethodRisk_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/RatePaymentMethodRiskResponse" message="tns:SoapTransactionService_RatePaymentMethodRisk_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="SubmitHostedPageOrder">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/SubmitHostedPageOrder" message="tns:SoapTransactionService_SubmitHostedPageOrder_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/SubmitHostedPageOrderResponse" message="tns:SoapTransactionService_SubmitHostedPageOrder_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="ReAuthorize">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/ReAuthorize" message="tns:SoapTransactionService_ReAuthorize_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/ReAuthorizeResponse" message="tns:SoapTransactionService_ReAuthorize_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="Capture">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/Capture" message="tns:SoapTransactionService_Capture_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/CaptureResponse" message="tns:SoapTransactionService_Capture_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="BulkCapture">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/BulkCapture" message="tns:SoapTransactionService_BulkCapture_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/BulkCaptureResponse" message="tns:SoapTransactionService_BulkCapture_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="Cancel">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/Cancel" message="tns:SoapTransactionService_Cancel_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/CancelResponse" message="tns:SoapTransactionService_Cancel_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="BulkCancel">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/BulkCancel" message="tns:SoapTransactionService_BulkCancel_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/BulkCancelResponse" message="tns:SoapTransactionService_BulkCancel_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="Refund">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/Refund" message="tns:SoapTransactionService_Refund_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/RefundResponse" message="tns:SoapTransactionService_Refund_OutputMessage" />
+      </wsdl:operation>
+      <wsdl:operation name="BulkRefund">
+         <wsdl:input wsaw:Action="http://services.arvato.com/SoapTransactionService/BulkRefund" message="tns:SoapTransactionService_BulkRefund_InputMessage" />
+         <wsdl:output wsaw:Action="http://services.arvato.com/SoapTransactionService/BulkRefundResponse" message="tns:SoapTransactionService_BulkRefund_OutputMessage" />
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="BasicHttpBinding_SoapTransactionService" type="tns:SoapTransactionService">
+      <wsp:PolicyReference URI="#BasicHttpBinding_SoapTransactionService_policy" />
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+      <wsdl:operation name="Send">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/Send" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SavePayment">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/SavePayment" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPaymentMethods">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/GetPaymentMethods" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetTransactionInfo">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/GetTransactionInfo" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPaymentInfo">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/GetPaymentInfo" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSecurityToken">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/GetSecurityToken" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Authorize">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/Authorize" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="MarkPaymentAsProfile">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/MarkPaymentAsProfile" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RatePaymentMethodRisk">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/RatePaymentMethodRisk" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SubmitHostedPageOrder">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/SubmitHostedPageOrder" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ReAuthorize">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/ReAuthorize" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Capture">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/Capture" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="BulkCapture">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/BulkCapture" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Cancel">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/Cancel" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="BulkCancel">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/BulkCancel" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Refund">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/Refund" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="BulkRefund">
+         <soap:operation soapAction="http://services.arvato.com/SoapTransactionService/BulkRefund" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="SoapTransactionService">
+      <wsdl:port name="BasicHttpBinding_SoapTransactionService" binding="tns:BasicHttpBinding_SoapTransactionService">
+         <soap:address location="https://test.arvato-payment.de/converse/Pmg.Site/V2/TransactionPaymentService" />
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

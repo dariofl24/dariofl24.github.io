@@ -1,0 +1,35 @@
+/**
+* Determines whether a PayPal re-authentication is required to continue the checkout,
+* i.e. the current CentinelLookupResult is checked against the basket content to check
+* if the later changed from the Genesco order type perspective (ex. Inline Only became Combined, Combined became DYO Only, etc.)
+*
+* @input Basket : dw.order.Basket
+* @input CentinelLookupResult : Object
+* @output ShouldReauthenticate : Boolean
+*/
+
+importPackage ( dw.system );
+importPackage ( dw.order);
+importPackage ( dw.util);
+
+importScript( "converse_core:constants.ds" );
+importScript( "converse_core:cart/CartUtils.ds" );
+
+function execute( args : PipelineDictionary ) : Number
+{
+    let centinelLookupResult = args.CentinelLookupResult;
+    let authenticatedShipmentTypes : SortedSet = new SortedSet();
+    let currentShipmentTypes : SortedSet = CartUtils.getGenescoShipmentTypes(args.Basket);
+    
+    for each (let order : String in centinelLookupResult.orders) {
+        authenticatedShipmentTypes.add(order.shipmentType);
+    }
+    
+    args.ShouldReauthenticate = areNotEqual(currentShipmentTypes, authenticatedShipmentTypes);
+    
+    return PIPELET_NEXT;
+}
+
+function areNotEqual(currentShipmentTypes : SortedSet, authenticatedShipmentTypes : SortedSet) {
+    return authenticatedShipmentTypes.length !== currentShipmentTypes.length || new ArrayList(currentShipmentTypes).join() !== new ArrayList(authenticatedShipmentTypes).join();
+}

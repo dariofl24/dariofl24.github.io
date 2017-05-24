@@ -1,0 +1,15 @@
+*** Settings ***
+Documentation   Test the homepage with basic functionality
+Suite Setup     Open Browser to Converse Site
+Suite Teardown  Close All Browsers
+Force Tags      Regression  Production
+Resource        footer_definitions.txt
+Resource        site_declarations.txt
+
+*** Test Cases ***
+Checks All Footer Links Response is OK
+  [Tags]  Smoke
+  Verifies Each Footer Link
+
+Verifies Store Locator Page
+  Store Locator Page Verification

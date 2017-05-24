@@ -1,0 +1,46 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function(){
+
+    var SubscriberBuilder = Class.extend({
+        init: function(webReference: Object) {
+            this.webReference = webReference;
+            this.subscriber = new webReference.Subscriber();
+        },
+
+        setEmail: function(email) {
+            this.subscriber.setSubscriberKey(email);
+            this.subscriber.setEmailAddress(email);
+            return this;
+        },
+
+        createSubscribeList: function(status: Object, listIds: Array) {
+             var subscribeList = listIds.map(function(listId) {
+                var subscriberList = new this.webReference.SubscriberList();
+                
+                subscriberList.setID(listId);
+                subscriberList.setStatus(status);
+                
+                return subscriberList;
+            }, this);
+            
+            this.subscriber.setLists(subscribeList);
+            
+            return this;
+        },
+
+        build: function() {
+            return this.subscriber;
+        }
+    });
+
+    var ns = Namespace.extendFromString(integration, "exacttarget.objects");
+    Namespace.extend(ns, {
+        SubscriberBuilder: SubscriberBuilder
+    });
+
+})();

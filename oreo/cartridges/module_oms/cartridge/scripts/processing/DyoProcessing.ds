@@ -1,0 +1,180 @@
+importPackage(dw.system);
+importPackage(dw.object);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libLang.ds");
+
+(function() {
+
+    let logger : Logger = Logger.getLogger('DyoProcessing');
+
+    var DyoProcessing = Class.extend({
+        init: function(configuration : Object, now: Date) {
+            this.configuration = configuration;
+            this.now = now;
+
+            this.thresholdDate = Lang.addDays(now, -configuration.checkingThreshold);
+            this.nowWithFirstDelay = Lang.addDays(now, configuration.delayForFirst);
+            this.nowWithSecondDelay = Lang.addDays(now, configuration.delayForSecond);
+        },
+
+        process : function(orders) {
+            logger.info("DyoProcessing - Starting process.");
+
+            for each (let order in orders) {
+                if (order.creationDate < this.thresholdDate) {
+                    logger.warn("Order with no {0} is older than threshold ( Creation Date = {1} ). Skipping.", order.orderNo, order.creationDate);
+                }
+                else {
+                    this.processUpdatedOrder(order);
+                }
+
+                order.custom.updated = null;
+            };
+
+            logger.info("DyoProcessing - Process finished.");
+        },
+    
+        processUpdatedOrder : function(order) {
+            logger.info("Processing order {0}", order.orderNo);
+
+            let items : Array = this.getDYOItems(order);
+            for each (let item in items) {
+                let logTracking = { logged : false };
+
+                if (!empty(item.custom.updatedStatus)) {
+                    let updatedStatus : Number = item.custom.updatedStatus;
+                    logger.info("Processing item {0} of order {1}, with updated status {2}", item.custom.metricID, order.orderNo, updatedStatus);
+
+                    if (updatedStatus < this.configuration.firstTrigger) {
+                        this.markUpdatedStatusAsProcessed(item, updatedStatus);
+
+                        logger.info("Item with metric id {0} of order {1} has the updated status {2}, lower than first action status ( {3} ). No action required.", 
+                            item.custom.metricID, order.orderNo, updatedStatus, this.configuration.firstTrigger);
+                        logTracking.logged = true;
+                    }
+                    else {
+                        this.processItem(item, order, logTracking);
+                    };
+                } else {
+                    logger.info("Item {0} of order {1} has no updated status. Skipping", item.custom.metricID, order.orderNo);
+                    logTracking.logged = true;
+                }
+
+                if (!logTracking.logged) {
+                    logger.warn("Item {0} of order {1}, action was not logged. Updated: {2}, processed: {3}, orderInProductionEmailWasSent: {4}, preparingForShipmentEmailWasSent: {5}",
+                        item.custom.metricID, order.orderNo, item.custom.updatedStatus || "(null)", item.custom.processedStatus || "null",
+                        item.custom.orderInProductionEmailWasSent || "(null)", item.custom.preparingForShipmentEmailWasSent || "(null)");
+                }
+            }
+        },
+
+        processItem : function(item, order, logTracking) {
+            let updatedStatus : Number = item.custom.updatedStatus;
+            let processedStatus : Number = item.custom.processedStatus || 0;
+
+            if (this.updatedStatusCrossedFirstTrigger(processedStatus, updatedStatus)) {
+
+                if (empty(item.custom.orderInProductionEmailOn)) {
+                    item.custom.orderInProductionEmailOn = this.nowWithFirstDelay;
+                    item.custom.orderInProductionEmailWasSent = false;
+                    order.custom.readyToSendEmail = true;
+
+                    logger.info("Item {0} of order {1} is ready for 'OrderInProduction' email on {2}. processed/updated: {3}/{4}",
+                        item.custom.metricID, order.orderNo, this.nowWithFirstDelay, processedStatus, updatedStatus);
+                    logTracking.logged = true;
+                } 
+
+                this.markUpdatedStatusAsProcessed(item, updatedStatus);
+            }
+
+            if (this.updatedStatusCrossedSecondTrigger(processedStatus, updatedStatus)) {
+
+                if (empty(item.custom.preparingForShipmentEmailOn)) {
+
+                    if (empty(item.custom.orderInProductionEmailWasSent) ||
+                        (item.custom.orderInProductionEmailWasSent == false))
+                    {
+                        item.custom.orderInProductionEmailOn = this.now;
+                        item.custom.orderInProductionEmailWasSent = true;
+
+                        logger.info("Item {0} of order {1}, skipping 'OrderInProduction' email, since secondTrigger was crossed",
+                            item.custom.metricID, order.orderNo);
+                    }
+
+                    item.custom.preparingForShipmentEmailOn = this.nowWithSecondDelay;
+                    item.custom.preparingForShipmentEmailWasSent = false;
+                    order.custom.readyToSendEmail = true;
+
+                    this.markUpdatedStatusAsProcessed(item, updatedStatus);
+
+                    logger.info("Item {0} of order {1} is ready for 'PreparingForShipment' email on {2}. processed/updated: {3}/{4}",
+                        item.custom.metricID, order.orderNo, this.nowWithSecondDelay, processedStatus, updatedStatus);
+                    logTracking.logged = true;
+                } 
+            }
+
+            if (this.updatedAndProcessedStatusesAreBothBetweenFirstAndSecondTrigger(processedStatus, updatedStatus)) {
+                this.markUpdatedStatusAsProcessed(item, updatedStatus);
+
+                logger.info("Item {0} of order {1}, both updated ( {2} ) and processed ( {3} ) statuses are between first and second trigger. No action required.",
+                    item.custom.metricID, order.orderNo, updatedStatus, processedStatus);
+                logTracking.logged = true;
+            }
+
+            if (this.updatedAndProcessedStatusesAreBothAfterSecondTrigger(processedStatus, updatedStatus)) {
+                this.markUpdatedStatusAsProcessed(item, updatedStatus);
+
+                logger.info("Item {0} of order {1}, both updated ( {2} ) and processed ( {3} ) statuses are after second trigger. No action required.",
+                    item.custom.metricID, order.orderNo, updatedStatus, processedStatus);
+                logTracking.logged = true;
+            }
+        },
+
+        getDYOItems : function(order) : Array {
+            for each (let shipment : Shipment in order.getShipments()) {
+                if (shipment.custom.productType === converse.constants.ProductType.C1) {
+                    return shipment.getProductLineItems();
+                }
+            }
+
+            logger.warn("Order with no {0} and updated status doesn't have C1 shipment.", order.orderNo);
+            return [];
+        },
+
+        markUpdatedStatusAsProcessed : function(item : Object, updatedStatus : Number) { 
+            item.custom.processedStatus = updatedStatus;
+            item.custom.updatedStatus = null;
+        },
+
+        updatedStatusCrossedFirstTrigger : function(processedStatus : Number, updatedStatus : Number) : Boolean {
+            let processedStatusWasBeforeFirstTrigger = processedStatus < this.configuration.firstTrigger;
+            let updatedStatusIsBetweenFirstAndSecondTrigger = (updatedStatus >= this.configuration.firstTrigger) && (updatedStatus < this.configuration.secondTrigger);
+
+            return processedStatusWasBeforeFirstTrigger && updatedStatusIsBetweenFirstAndSecondTrigger;
+        },
+
+        updatedStatusCrossedSecondTrigger : function(processedStatus : Number, updatedStatus : Number) : Boolean {
+            return (processedStatus < this.configuration.secondTrigger) && (updatedStatus >= this.configuration.secondTrigger);
+        },
+
+        updatedAndProcessedStatusesAreBothBetweenFirstAndSecondTrigger : function(processedStatus : Number, updatedStatus : Number) : Boolean {
+            let processedStatusBetweenFirstAndSecond = (processedStatus >= this.configuration.firstTrigger) && (processedStatus < this.configuration.secondTrigger);
+            let updatedStatusBetweenFirstAndSecond = (updatedStatus >= this.configuration.firstTrigger) && (updatedStatus < this.configuration.secondTrigger);
+
+            return processedStatusBetweenFirstAndSecond && updatedStatusBetweenFirstAndSecond;
+        },
+
+        updatedAndProcessedStatusesAreBothAfterSecondTrigger : function(processedStatus : Number, updatedStatus : Number) : Boolean {
+            return (processedStatus >= this.configuration.secondTrigger) && (updatedStatus >= this.configuration.secondTrigger);
+        }
+    });
+
+    var ns = Namespace.extendFromString(converse, "oms");
+    Namespace.extend(ns, { DyoProcessing : DyoProcessing });
+        
+})();

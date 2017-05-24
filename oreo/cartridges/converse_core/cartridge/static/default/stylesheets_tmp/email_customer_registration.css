@@ -1,0 +1,22 @@
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* line 7, ../css/package/sass/email_customer_registration.scss */
+.customer-registration td {
+  text-align: center;
+  padding-bottom: 40px;
+}
+/* line 13, ../css/package/sass/email_customer_registration.scss */
+.customer-registration .greetings p {
+  font-size: 20px;
+  margin: 0px;
+}
+/* line 21, ../css/package/sass/email_customer_registration.scss */
+.customer-registration .promotion td p {
+  font-size: 18px;
+  background-color: #B1C4AE;
+  padding: 20px 0px;
+}

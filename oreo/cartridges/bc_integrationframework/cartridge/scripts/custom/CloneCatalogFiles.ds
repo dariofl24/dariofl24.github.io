@@ -1,0 +1,142 @@
+/**
+*   @input sourceCatalogXMLFilePattern : String
+*
+*   @input targetCatalogIDs : String
+*/
+importPackage(dw.io);
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+var logger = Logger.getLogger('CloneCatalogFiles');
+
+(function() {
+	
+	
+    var CloneCatalogFiles = Class.extend({
+    	append: false,
+    	
+    	init : function(){
+    		this.CatalogIDRegExp = new RegExp("catalog-id\\s?=\\s?\"\\w+\"");
+    	},
+    	
+        clone : function(sourceFolder : String ,
+        sourceCatalogXMLFilePattern : String,
+        targetCatalogIDs : Collection,
+        resultFilesPostFix : String,
+        targetPath:String) {
+        	
+        	var fileMatches = this.getFileListingFromSource(sourceFolder,sourceCatalogXMLFilePattern);
+        	
+        	if(fileMatches.length != 1){
+        		throw new Error("More than one file match the sourceCatalogXMLFilePattern. Ensure only one file matches.");
+        	}
+        	
+        	if(targetCatalogIDs.isEmpty()){
+        		throw new Error("The target catalog IDs collection is empty.");
+        	}
+        	
+        	var masterFile : File = fileMatches.get(0);
+        	var resultFile : File;
+        	var newName : String;
+        	
+        	for each(targetID in targetCatalogIDs){
+        		logger.debug("TARGET ID: {0}",targetID);
+        		
+        		resultFie = new File( this.getTargetCatalogFilePath((targetPath)?targetPath:sourceFolder,targetID,resultFilesPostFix) );
+        		
+        		logger.debug("RESULT FILE NAME: {0}",resultFie);
+        		
+        		this.changeTargetID(masterFile,targetID,resultFie);
+        		
+        	}
+        	
+        },
+        
+        getTargetCatalogFilePath : function(targetFolder:String,targetID:String,postfix:String) : String {
+        	logger.debug("TARGET PATH: {0}",targetFolder);
+        	return targetFolder.concat(File.SEPARATOR,targetID,postfix,".xml");
+        	
+        },
+        
+        changeTargetID : function (master:File , targetID:String, resultFile:File){
+        	
+        	let reader = this.getFileReader(master);
+        	let inCatalogTag = false;
+        	let changed = false;
+        	var line : String;
+        	
+        	let fileWriter = this.getFileWriter(resultFile);
+        	
+        	try{
+        		
+        		while( (line = reader.readLine()) != null ){
+        			
+        			let lineToUse : String = line;
+	        		
+	        		if(!changed){
+	        			
+	        			let catalogIDRegexMatches = lineToUse.match(this.CatalogIDRegExp);
+	        		
+		        		if(catalogIDRegexMatches != null && catalogIDRegexMatches.length > 0 ){
+		        			
+		        			lineToUse = line.replace(this.CatalogIDRegExp,"catalog-id=\"".concat(targetID).concat("\"") );
+		        			inCatalogTag = true;
+		        			
+		        			changed = true;
+		        		}		
+	        		}
+	        		
+	        		this.appendToFile(lineToUse,fileWriter);
+        			
+        		}
+        		
+        	}finally{
+        		fileWriter.close();
+        	}
+        	
+        },
+        
+        appendToFile : function (line:String,fw:FileWriter){
+        	fw.writeLine(line);
+        },
+        
+        getFileWriter : function (resultFile : File){
+        	return new FileWriter(resultFile,"UTF-8",true);
+        },
+        
+        getFileReader : function (fileToRead : File){
+        	return new FileReader(fileToRead,"UTF-8");
+        },
+        
+        getFileListingFromSource : function(sourceFolder : string, filePattern : string) : Collection {
+			let fileList : Collection = new ArrayList();
+			
+			let theDir : File = this.getSourceFolder(sourceFolder);
+	
+			let regExp : RegExp = new RegExp(filePattern);
+			
+			fileList.addAll(theDir.listFiles(function(file : File) 
+				{		
+					if (!empty(filePattern)) {
+						return regExp.test(file.name);
+					}
+					
+					return true;
+				}));
+			
+			return fileList;
+		},
+		
+		getSourceFolder : function(sourceFolder: String ){
+			return new File(sourceFolder);
+		}
+        
+    });
+
+    var ns = Namespace.extendFromString(converse, "utils");
+    Namespace.extend(ns, { CloneCatalogFiles : CloneCatalogFiles });
+})();

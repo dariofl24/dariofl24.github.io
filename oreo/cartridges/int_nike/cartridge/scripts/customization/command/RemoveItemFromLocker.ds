@@ -1,0 +1,54 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/command/HttpClientCommand.ds");
+importScript("int_nike:customization/objects/RemoveItemFromLockerRequest.ds");
+
+(function(){
+    var RemoveItemFromLockerRequest = integration.nike.customization.RemoveItemFromLockerRequest;
+
+    var isSuccess = function(response : String) {
+        return response.indexOf("status=success") != -1;
+    }
+    
+    var RemoveItemFromLocker = converse.webservices.command.HttpClientCommand.extend({
+        init: function(lockerItemId : String) {
+            this.lockerItemId = lockerItemId;
+            this.logger = Logger.getLogger("CUSTOMIZATION");
+        },
+        
+        createRequest: function () {
+            this.requestObject = new RemoveItemFromLockerRequest(this.lockerItemId);
+            return this.requestObject;
+        },
+        
+        execute: function(request) {
+            let url = this.configuration.nikeidDomain + this.configuration.removeItemFromLockerUri;
+            let parameters = request.getParameters(); 
+            
+            this.logger.info("Removing locker item {0} from Nike", this.lockerItemId);
+
+            let response = this.doPost(url, this.encodeParameters(parameters));
+            
+            this.logger.info("Response got from Nike for lockerItemId={0}", this.lockerItemId);
+            
+            return response;
+        },
+        
+        handleResponse: function(response) {
+            this._super(response);
+
+            this.responseObject = isSuccess(response);
+
+            return this.responseObject;
+        },
+
+        hasError: function() {
+            return this._super() || this.response.indexOf("<error") != -1;
+        }
+    });
+    
+    var ns = Namespace.extendFromString(integration, "nike.customization.command");
+    Namespace.extend(ns, { RemoveItemFromLocker: RemoveItemFromLocker });
+})();

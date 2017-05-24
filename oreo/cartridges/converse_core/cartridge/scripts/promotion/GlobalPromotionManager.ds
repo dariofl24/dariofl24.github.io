@@ -1,0 +1,197 @@
+importPackage(dw.campaign);
+importPackage(dw.customer);
+importPackage(dw.system);
+importPackage(dw.value);
+importPackage(dw.util);
+importPackage(dw.web);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("converse_core:promotion/PromotionManagerFactory.ds");
+
+(function() {
+    
+    var NS = converse.promotion,
+        EMPTY_LIST : List = new ArrayList();
+
+    var Promo = Class.extend({
+        init: function(id, name, exclusivity, promotionClass, content, cartMessage, gridwallMessage, pdpMessage) {
+            this.id = id;
+            this.name = name;
+            this.exclusivity = exclusivity;
+            this.promotionClass = promotionClass;
+            this.content = content;
+            this.cartMessage = cartMessage;
+            this.gridwallMessage = gridwallMessage;
+            this.pdpMessage = pdpMessage;
+        },
+
+        getMessage: function(calloutMessageType: String) : String {
+            if (calloutMessageType == 'Cart') {
+                return this.cartMessage;
+            }
+
+            if (calloutMessageType == 'Gridwall') {
+                return this.gridwallMessage;
+            }
+
+            if (calloutMessageType == 'PDP') {
+                return this.pdpMessage;
+            }
+
+            return this.content;
+        }
+    });
+    
+    var getPromotionManager = function() {
+        return NS.PromotionManagerFactory.getPromotionManager();
+    }; 
+    
+    var getActiveCustomerPromotions = function() : Collection {
+        var customerPromotions : Collection = new ArrayList();
+        
+        customerPromotions.addAll(getActiveCustomerProductPromotions());
+        customerPromotions.addAll(getActiveCustomerOrderPromotions());
+        customerPromotions.addAll(getActiveCustomerShippingPromotions());
+        
+        return customerPromotions;
+    };
+    
+    var getActiveCustomerProductPromotions = function() {
+        var promotionPlan : PromotionPlan = getPromotionManager().getActiveCustomerPromotions();
+        return extractPromos(promotionPlan.getProductPromotions());
+    };
+    
+    var getActiveCustomerOrderPromotions = function() {
+        var promotionPlan : PromotionPlan = getPromotionManager().getActiveCustomerPromotions();
+        return extractPromos(promotionPlan.getOrderPromotions());
+    };
+    
+    var getActiveCustomerShippingPromotions = function() {
+        var promotionPlan : PromotionPlan = getPromotionManager().getActiveCustomerPromotions();
+        return extractPromos(promotionPlan.getShippingPromotions());
+    };
+    
+    
+    var getApproachingPromotions = function(basket : Basket) : Collection {
+        var approachingPromotions : Collection = new ArrayList();
+        
+        if (!empty(basket) && !empty(basket.productLineItems)) {
+            approachingPromotions.addAll(getApproachingOrderPromotions(basket));
+            approachingPromotions.addAll(getApproachingShippingPromotions(basket));
+        }
+        
+        return approachingPromotions;
+    };
+    
+    var getApproachingOrderPromotions = function(basket : Basket) : Collection {
+        var discountPlan : DiscountPlan = getPromotionManager().getDiscounts(basket);
+        var discounts : Collection = discountPlan.getApproachingOrderDiscounts();
+        
+        return extractApproachingPromos(discounts, 'approachingpromo.orderpromomessage');
+    };
+    
+    var getApproachingShippingPromotions = function(basket : Basket) : Collection {
+        var discountPlan : DiscountPlan = getPromotionManager().getDiscounts(basket);
+        var defaultShipment : Shipment = basket.getDefaultShipment();
+        
+        if (empty(defaultShipment)) {
+            return EMPTY_LIST;
+        }
+        else {
+            var discounts : Collection = discountPlan.getApproachingShippingDiscounts(defaultShipment);
+            return extractApproachingPromos(discounts, 'approachingpromo.shippingpromomessage');
+        }
+    };
+    
+    
+    var extractPromos = function(promotions : Collection) : Collection {
+        var promos : Collection = new ArrayList();
+        
+        for each (let promotion : Promotion in promotions) {
+            let content : String = getPromotionContent(promotion);
+            let cartMessage : String = getCartCalloutMessageOrContent(promotion, content);
+            let gridwallMessage : String = getGridwallCalloutMessageOrContent(promotion, content);
+            let pdpMessage : String = getPDPCalloutMessageOrContent(promotion, content);
+            
+            if (!empty(content)) {
+                let promo = newPromo(promotion, content, cartMessage, gridwallMessage, pdpMessage);
+                promos.add(promo);
+            }
+        }
+        
+        return promos;
+    };
+    
+    var getPromotionContent = function(promotion: Promotion) : String {
+        return promotion.getCalloutMsg();
+    };
+
+    var getCartCalloutMessageOrContent = function(promotion: Promotion, content: String) : String {
+        return empty(promotion.custom.calloutMessageCart) ? content : promotion.custom.calloutMessageCart;
+    };
+
+    var getGridwallCalloutMessageOrContent = function(promotion: Promotion, content: String) : String {
+        return empty(promotion.custom.calloutMessageGridwall) ? content : promotion.custom.calloutMessageGridwall;
+    };
+
+    var getPDPCalloutMessageOrContent = function(promotion: Promotion, content: String) : String {
+        return empty(promotion.custom.calloutMessagePDP) ? content : promotion.custom.calloutMessagePDP;
+    };
+    
+    var extractApproachingPromos = function(approachingDiscounts : Collection, messageKey : String) : Collection {
+        var approachingPromos : Collection = new ArrayList();
+        
+        for each (let discount : ApproachingDiscount in approachingDiscounts) {
+            let promotion : Promotion = discount.getDiscount().getPromotion();
+            let content : String = getApproachingPromotionContent(discount, promotion, messageKey);
+            let cartMessage : String = getCartCalloutMessageOrContent(promotion, content);
+            let gridwallMessage : String = getGridwallCalloutMessageOrContent(promotion, content);
+            let pdpMessage : String = getPDPCalloutMessageOrContent(promotion, content);
+            
+            if (!empty(content)) {
+                let approachingPromo = newPromo(promotion, content, cartMessage, gridwallMessage, pdpMessage);
+                approachingPromos.add(approachingPromo);
+            }
+        }
+        
+        return approachingPromos;
+    };
+    
+    var getApproachingPromotionContent = function(discount : ApproachingDiscount, promotion: Promotion, messageKey : String) : String {
+        return empty(promotion.getCalloutMsg()) ?
+                        null : 
+                        Resource.msgf(messageKey,
+                                      'checkout',
+                                      promotion.getCalloutMsg(),
+                                      discount.getDistanceFromConditionThreshold(),
+                                      discount.getConditionThreshold(),
+                                      promotion.getCalloutMsg());
+    };
+    
+    var newPromo = function(promotion : Promotion, content : String, cartMessage: String, gridwallMessage: String, pdpMessage: String) {
+        return new Promo(promotion.getID(), 
+                         promotion.getName(), 
+                         promotion.getExclusivity(), 
+                         promotion.getPromotionClass(), 
+                         content,
+                         cartMessage,
+                         gridwallMessage,
+                         pdpMessage);
+    };
+       
+    Namespace.extend(NS, {
+        GlobalPromotionManager: {
+            getActiveCustomerPromotions: getActiveCustomerPromotions,
+            getActiveCustomerProductPromotions: getActiveCustomerProductPromotions,
+            getActiveCustomerOrderPromotions: getActiveCustomerOrderPromotions,
+            getActiveCustomerShippingPromotions: getActiveCustomerShippingPromotions, 
+            getApproachingPromotions: getApproachingPromotions,
+            getApproachingOrderPromotions: getApproachingOrderPromotions,
+            getApproachingShippingPromotions: getApproachingShippingPromotions
+        }
+    });
+    
+})();

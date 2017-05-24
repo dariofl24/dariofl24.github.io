@@ -1,0 +1,15 @@
+<isscript>
+    var pageContext={title:'Store Locator', type:'StoreLocator'};
+
+    var FooterTemplates = FooterTemplates || [];
+    FooterTemplates.push("storelocator/pt_storelocator_footer");
+</isscript>
+<isdecorate template="pt_commonlayout">
+	<isinclude template="util/modules" />
+    <div id="main-overlay" class="no-top-margin">
+        <div class="pt_store-locator">
+            <isbanners p_dyo=false />
+            <isreplace/>
+        </div>
+    </div>
+</isdecorate>

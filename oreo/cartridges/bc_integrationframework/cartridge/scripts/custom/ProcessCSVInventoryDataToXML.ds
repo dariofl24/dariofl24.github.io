@@ -1,0 +1,236 @@
+/**
+* Read Inventory data from csv
+*
+* @input ImportFile : dw.io.File The file to import
+* @input InventoryXMLFileName : String Inventory XML File Name
+*
+* @output ErrorMsg : String The error message if any
+*/
+importPackage(dw.io);
+importPackage(dw.order);
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.catalog);
+
+importScript("custom/libCsvHelper.ds");
+
+let logger: Logger = Logger.getLogger('InventoryPreProcessUS');
+
+
+function execute(args: PipelineDictionary): Number {
+    let importFile: File = args.ImportFile;
+    let inventoryXMLFile: String = args.InventoryXMLFileName;
+
+    logger.info("filename is ---" + importFile.name);
+    logger.info("inventoryXMLFile is ---" + inventoryXMLFile);
+
+    let inventoryData: Array = [];
+
+    let errorMsg: String = null;
+    try {
+    	//read CSV data
+        inventoryData = readInventoryData(importFile);
+        //process and convert to XML
+        processAndConvertToXML(inventoryData, inventoryXMLFile);
+    } catch (e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+
+    args.ErrorMsg = errorMsg;
+
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function readInventoryData(importFile: File): Array {
+    let propertyToColumnMap: Map = getPropertyToColumnMap();
+    logger.info("propertyToColumnMap is ---" + propertyToColumnMap);
+    let csvHelper = new CsvHelper({
+        failOnMissingColumn: true
+    });
+
+    let inventoryData: Array = [];
+
+    csvHelper.streamCsvFile(importFile,
+        0,
+        function(headerLine: Array, line: Array, index: Number, isHeader: Boolean) {
+            if (isHeader) return;
+
+            var record = csvHelper.lineToObject(headerLine, line, propertyToColumnMap);
+
+            inventoryData.push(record);
+        });
+
+    return inventoryData;
+}
+
+function getPropertyToColumnMap(): Map {
+    var map: Map = new HashMap();
+
+    map.put("sku", "Style2");
+    map.put("width", "Width2");
+    map.put("size", "Size");
+    map.put("allocation", "Qty On Hand");
+    map.put("expectDate", "Expect Date");
+    map.put("poQty", "Qty On PO for Size");
+    map.put("poNum", "Expt Po Po Num");
+    map.put("upc", "Pa Num");
+
+    return map;
+}
+
+function processAndConvertToXML(inventoryData, inventoryXMLFile){
+	logger.info("begin processing and XML conversion");
+	logger.info("inventoryData size is ---" + inventoryData.length);
+	//get products 
+    var productsItr: SeekableIterator = ProductMgr.queryAllSiteProducts();
+	logger.info("productsItr is ---" + productsItr.count);
+
+	var genescoSKUMap : HashMap = new HashMap();
+	var customProductList : ArrayList = new ArrayList();
+	var genescoFullMap : HashMap = new HashMap();
+	
+
+	while (productsItr.hasNext()) {
+        var product: Product = productsItr.next();
+        if(!empty(product.custom.GenescoSKU) && (product.manufacturerSKU != product.custom.GenescoSKU)){
+
+        	genescoSKUMap.put(product.custom.GenescoSKU+"_"+product.custom.size, product.ID);
+		}
+		
+		if(!empty(product.custom.GenescoSKU)){
+			//full genesco list			
+        	genescoFullMap.put(product.custom.GenescoSKU, product.ID);
+        	
+		}		
+		
+		if(product.custom.productType == "dyo" || product.custom.productType == "electronicgc" || product.custom.productType == "physicalgc"){
+			customProductList.add(product.ID);
+		}
+	}
+
+	logger.info("genescoSKUMap size is ---" + genescoSKUMap.size() );
+	logger.info("customProductList size is ---" + customProductList.size() );
+	logger.info("genescoFullMap size is ---" + genescoFullMap.size() );
+
+	
+	var fileWriter: FileWriter = new FileWriter(new File(inventoryXMLFile), "UTF-8");
+    var xsw: XMLIndentingStreamWriter = new XMLIndentingStreamWriter(fileWriter);
+
+
+    xsw.writeStartDocument();
+    xsw.writeStartElement("inventory");
+    xsw.writeDefaultNamespace("http://www.demandware.com/xml/impex/inventory/2007-05-31");
+    xsw.writeStartElement("inventory-list");
+	    xsw.writeStartElement("header");
+	    xsw.writeAttribute("list-id", "inventory_Converse_US");
+		    xsw.writeStartElement("default-instock");
+		    xsw.writeCharacters("false");
+		    xsw.writeEndElement();
+		    xsw.writeStartElement("description");
+		    xsw.writeCharacters("Product Sku inventory");
+		    xsw.writeEndElement();
+		    xsw.writeStartElement("use-bundle-inventory-only");
+		    xsw.writeCharacters("false");
+		    xsw.writeEndElement();
+		xsw.writeEndElement();
+	
+	
+	    xsw.writeStartElement("records");
+	    //process dyo items
+	    for (var j: Number = 0; j < customProductList.size(); j++) {    	
+	    		xsw.writeStartElement("record");
+	            xsw.writeAttribute("product-id", customProductList.get(j));
+	            xsw.writeStartElement("allocation");
+	            xsw.writeCharacters("0");
+	            xsw.writeEndElement();
+	            xsw.writeStartElement("perpetual");
+	            xsw.writeCharacters("true");
+	            xsw.writeEndElement();
+	            xsw.writeEndElement();
+	    }
+	    //process regular items
+	    for (var i: Number = 0; i < inventoryData.length; i++) {
+	        var inventoryRecord = inventoryData[i];
+	       	var productID;
+	        if (inventoryRecord.sku && inventoryRecord.size) {
+	        	var size = inventoryRecord.size;
+	        	if(size == "SM"){
+	        		size = "S";
+	        	}
+	            var csvProductID = inventoryRecord.sku + "_" + size;
+	            //check if product exists in DW
+	            var product = ProductMgr.getProduct(csvProductID);
+	            if(product){
+	            	productID = csvProductID;
+	            } else {
+	            	//check if this is genesco specific SKU            	
+	            	productID = checkForGenescoSKU(genescoSKUMap, csvProductID);
+	            }
+	        }
+	            
+	       //if productId is still empty, check finally in full genesco list with only sku 
+	       if (!inventoryRecord.size){
+	       		productID = checkInFullGenescoList(genescoFullMap, inventoryRecord.sku);
+	       }
+	       
+	       //write record to xml     
+	       if (productID) {
+	             xsw.writeStartElement("record");
+	             xsw.writeAttribute("product-id", productID);
+	             xsw.writeStartElement("allocation");
+	             xsw.writeCharacters(checkForNegative(inventoryRecord.allocation));
+	             xsw.writeEndElement();
+	             xsw.writeStartElement("preorder-backorder-handling");
+	             xsw.writeCharacters("none");
+	             xsw.writeEndElement();
+	             xsw.writeEndElement();
+	         }
+	        
+	    }
+	    //end records element
+	    xsw.writeEndElement();
+
+	//end inventory-list element
+    xsw.writeEndElement();
+    //end inventory
+    xsw.writeEndElement();
+    
+    xsw.writeEndDocument();
+
+    xsw.close();
+    fileWriter.close();
+    
+    logger.info("---XML Generation Finished ---");
+	
+}
+
+function checkForGenescoSKU(genescoSKUMap, csvProductID): String {
+    var productID: String;
+	if (genescoSKUMap.containsKey(csvProductID)) {
+            productID = genescoSKUMap.get(csvProductID);
+            logger.info("genescosku alternate found, return productID ---"+productID);
+       }
+    return productID;
+
+}
+
+function checkForNegative (quantity){
+	
+	if(new Number(quantity) < 0){
+		return "0";
+	} 
+	
+	return quantity;
+	
+}
+
+function checkInFullGenescoList(genescoFullMap, csvSKU): String {
+    var productID: String;
+	if (genescoFullMap.containsKey(csvSKU)) {
+            productID = genescoFullMap.get(csvSKU);
+            logger.info("genescosku found, return productID ---"+productID);
+       }
+    return productID;
+
+}

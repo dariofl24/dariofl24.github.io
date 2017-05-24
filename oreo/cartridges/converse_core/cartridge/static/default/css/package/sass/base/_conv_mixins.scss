@@ -1,0 +1,1199 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_media_query";
+@import "_sprites";
+@import "compass/css3/background-size";
+@import "compass/css3/border-radius";
+@import "compass/css3/box-sizing";
+@import "compass/css3/box-shadow";
+
+@mixin input_field () {
+    &.error:before{
+        color:$CONVERSE_COLOR_7;
+    }
+
+    &.error:after{
+        color:$CONVERSE_COLOR_7;
+    }
+
+    &:before {
+        content:attr(namelabel);
+        border-color: #959595;
+        color: $CONVERSE_COLOR_4;
+        text-align: left;
+        text-transform: uppercase;
+        position: absolute;
+        margin-top: pxtoembase((15 * -1), 10);
+        font-size: 10px;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    &:after {
+        content:attr(errorlabel);
+        color:$CONVERSE_COLOR_4;
+        font-size: 10px;
+        white-space:nowrap;
+        display:none;
+    }
+}
+
+%hide_text {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@mixin unselectable() {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@mixin badge_background ($color, $size) {
+    height:$size;
+    width:$size;
+    @include border-radius($size, $size);
+    background-color:$color;
+}
+
+@mixin retina-sprite ($retina-sprite, $sprite-image, $important:false) {
+    @if $important {
+        background-image: sprite-url($retina-sprite) !important;
+    } @else {
+        background-image: sprite-url($retina-sprite);
+    }
+
+    $sprite-width: image-width(sprite-path($retina-sprite))/2;
+    $sprite-height: image-height(sprite-path($retina-sprite))/2;
+    $sprite-position: sprite-position($retina-sprite, $sprite-image);
+
+    @if $important {
+        background-position: nth($sprite-position, 1)/2 nth($sprite-position, 2)/2 !important;
+        -webkit-background-size: $sprite-width $sprite-height !important;
+        -moz-background-size: $sprite-width $sprite-height !important;
+        -o-background-size: $sprite-width $sprite-height !important;
+        background-size: $sprite-width $sprite-height !important;
+    } @else {
+        background-position: nth($sprite-position, 1)/2 nth($sprite-position, 2)/2;
+        -webkit-background-size: $sprite-width $sprite-height;
+        -moz-background-size: $sprite-width $sprite-height;
+        -o-background-size: $sprite-width $sprite-height;
+        background-size: $sprite-width $sprite-height;
+    }
+
+    background-repeat: no-repeat;
+}
+
+@mixin before_after_base($sprite-image, $icon-width, $icon-height, $top-offset, $image-color) {
+
+    @if $sprite-image != false {
+        background: sprite($SPRITEHEADER, $sprite-image) no-repeat transparent;
+
+        @include mq-retina {
+            @include retina-sprite($SPRITEHEADER_2X, $sprite-image);
+        }
+
+    } @else {
+        background: transparent;
+        line-height:$icon-height;
+        font-size:17px;
+    }
+    top: $top-offset;
+    content: "";
+    text-align: center;
+    color:white;
+    position:absolute;
+    width:$icon-width;
+    height:$icon-height;
+}
+
+@mixin conv_header_button ($color, $background, $hover-color, $hover-background, $sprite-image, $dim:false) {
+    $icon-width: $dim;
+    $icon-height: $dim;
+    $margin-desktop: 14;
+    $margin-mobile: 10;
+
+    @if $dim == false {
+        $icon-width: image-width(sprite-file($SPRITEHEADER, $sprite-image));
+        $icon-height: image-height(sprite-file($SPRITEHEADER, $sprite-image));
+    }
+
+    @if $sprite-image != false {
+        background: sprite($SPRITEHEADER, $sprite-image) no-repeat $background;
+
+        @include mq-retina {
+            @include retina-sprite($SPRITEHEADER_2X, $sprite-image);
+        }
+
+        @if $sprite-image == cart or $sprite-image == cart-active {
+            margin-left: pxtoem($margin-desktop);
+
+            @include mq-medium-cascade {
+                margin-left: pxtoem($margin-mobile);
+            }
+
+        } @else {
+            margin: 0 pxtoem($margin-desktop);
+
+            @include mq-medium-cascade {
+                margin: 0 pxtoem($margin-mobile);
+            }
+        }
+
+    } @else {
+        background: $background;
+        font-size: 17px;
+    }
+
+    position: relative;
+    float: right;
+    height: pxtoembase($icon-height, $HEADER_FONT_SIZE);
+    width: pxtoembase($icon-width, $HEADER_FONT_SIZE);
+    font-size: pxtoem($HEADER_FONT_SIZE);
+    color: $color;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+    @extend %hide_text;
+}
+
+@mixin font-smoothing($val: antialiased) {
+    -webkit-font-smoothing: $val;
+    -moz-font-smoothing: $val;
+    -ms-font-smoothing: $val;
+    -o-font-smoothing: $val;
+    font-smoothing: $val;
+}
+
+@mixin conv_button_style($background, $color, $font-size:$BASE_PX) {
+    font-size: pxtoem($font-size);
+    line-height: 100%;
+    background: $background;
+    color: $color;
+    padding: pxtoembase(9, $font-size) pxtoembase(18, $font-size);
+    text-transform: uppercase;
+    font-weight: bold;
+    border-width: 0;
+    width: auto;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    display: block;
+    @include box-sizing(border-box);
+
+    @if $background == $CONVERSE_COLOR_1 {
+        &:hover {
+            background: $CONVERSE_COLOR_2;
+        }
+    }
+}
+
+@mixin converse-select-box ($width:100%, $height:pxtoembase(30,$BASE_PX), $fontsize: $BASE_PX) {
+    @include box-sizing(border-box);
+    @include mq-medium-plus {
+        width: $width;
+        height: $height;
+        overflow: hidden;
+        background: image-url($CONVERSE_SELECT_ARROW_IMAGE, false, $IMAGE_CACHE_BUSTER) no-repeat right $CONVERSE_COLOR_12;
+        border: 1px solid $CONVERSE_COLOR_6;
+
+        &.error {
+            border: 1px solid $CONVERSE_ERROR_COLOR;
+            background: image-url($CONVERSE_SELECT_ARROW_IMAGE, false, $IMAGE_CACHE_BUSTER) no-repeat right $CONVERSE_COLOR_12;
+        }
+
+        select {
+            width: 100%;
+            height: 100%;
+            -ms-appearance: none;
+            -moz-appearance: window;
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            padding: pxtoembase(5, $fontsize);
+            padding-right: pxtoembase(29, $fontsize);
+            line-height: 100%;
+            border: 0;
+            border-radius: 0;
+            cursor: pointer;
+            text-indent: 0.01px;
+            text-overflow: "";
+
+            &::-ms-expand {
+                display: none;
+            }
+
+            option[disabled], option:disabled {
+                color: $DISABLED_DROPDOWN_OPTION_COLOR !important;
+            }
+        }
+    }
+
+    @include mq-small() {
+        select {
+            width: 99%;
+            margin-left: 1%;
+        }
+    }
+}
+
+@mixin form-column-base($width:48%) {
+    width: $width;
+    @include box-sizing(border-box);
+
+    input[type="text"], input[type="password"], textarea {
+        width: 100%;
+    }
+}
+
+@mixin opacity($opacity: 50) {
+    opacity: $opacity / 100;
+    filter: alpha(opacity=$opacity);
+    -khtml-opacity: $opacity / 100;
+    -moz-opacity: $opacity / 100;
+}
+
+@mixin div_table {
+    .div-table {
+        display: table;
+        border-collapse: collapse;
+        margin: 0 auto;
+    }
+
+    .div-table-caption {
+        display: table-caption;
+    }
+
+    .div-table-row {
+        display: table-row;
+    }
+
+    .div-table-cell {
+        display: table-cell;
+    }
+}
+
+@mixin resize-sprite($map, $sprite, $percent) {
+  $spritePath:    sprite-path($map);
+  $spriteWidth:   image-width($spritePath);
+  $spriteHeight:  image-height($spritePath);
+  $width: image-width(sprite-file($map, $sprite));
+  $height: image-height(sprite-file($map, $sprite));
+
+  @include background-size(ceil($spriteWidth * ($percent/100)) ceil($spriteHeight * ($percent/100)));
+  width: ceil($width*($percent/98));
+  height: ceil($height*($percent/98)) - 1;
+  background-position: ceil(nth(sprite-position($map, $sprite), 1)  * ($percent/100) ) ceil(nth(sprite-position($map, $sprite), 2)  * ($percent/100) );
+}
+
+@mixin triangle($size, $color, $direction) {
+    height: 0;
+    width: 0;
+
+    @if ($direction == up) or ($direction == down) or ($direction == right) or ($direction == left) {
+        border-color: transparent;
+        border-style: solid;
+        border-width: $size / 2;
+
+        @if $direction == up {
+            border-bottom-color: $color;
+
+        } @else if $direction == right {
+            border-left-color:   $color;
+
+        } @else if $direction == down {
+            border-top-color:    $color;
+
+        } @else if $direction == left {
+            border-right-color:  $color;
+        }
+    }
+
+    @else if ($direction == up-right) or ($direction == up-left) {
+        border-top: $size solid $color;
+
+        @if $direction == up-right {
+            border-left:  $size solid transparent;
+
+        } @else if $direction == up-left {
+            border-right: $size solid transparent;
+        }
+    }
+
+    @else if ($direction == down-right) or ($direction == down-left) {
+        border-bottom: $size solid $color;
+
+        @if $direction == down-right {
+            border-left:  $size solid transparent;
+
+        } @else if $direction == down-left {
+            border-right: $size solid transparent;
+        }
+    }
+}
+
+@mixin conv_sidebar_summary($prefix) {
+        color: $CONVERSE_COLOR_1;
+        background-color: $CONVERSE_COLOR_10;
+        width: 25%;
+        float: right;
+        padding: 0;
+
+        @include mq-small() {
+            width: 100%;
+            clear: both;
+            float: left;
+            border: 1px solid $CONVERSE_COLOR_5;
+            border-width: 1px 0 1px 0;
+        }
+
+        $side-bar-padding: 20;
+
+        .#{$prefix}-sidebar-inner {
+            @include clearfix;
+            padding: pxtoem(32) pxtoem($side-bar-padding);
+
+            @include mq-small() {
+                padding-top: 0;
+            }
+        }
+
+        .order-summary-title{
+            $font-size: 18;
+            font-size: pxtoem(18);
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 0 0 pxtoembase(20, $font-size) 0;
+
+            @include mq-small() {
+                display: none;
+            }
+        }
+
+        .section-header {
+            padding: 0 0 pxtoem(20) 0;
+        }
+
+        .details {
+            padding: 0;
+        }
+
+        .#{$prefix}-order-totals {
+
+            .order-row {
+                @include clearfix;
+                border-top: 1px solid $CONVERSE_COLOR_8;
+                padding: pxtoem(16) 0;
+
+                &:first-child {
+                    border: none;
+                }
+
+                .label {
+                    font-size: pxtoem(9);
+                    font-weight: normal;
+                    line-height: pxtoem(17);
+                    text-transform: uppercase;
+                }
+
+                .price {
+                    $font-size: 14;
+                    width: pxtoembase(70, $font-size);
+                    float: right;
+                    font: bold pxtoem(14) $CONVERSE_FONT_FAMILY_2_REG;
+                    text-align: right;
+                }
+            }
+
+            .promotions {
+                > ul {
+                    margin-left: pxtoem(-$side-bar-padding);
+                    margin-right: pxtoem(-$side-bar-padding);
+                    padding: 0 pxtoem($side-bar-padding);
+                    background-color: $CONVERSE_COLOR_12;
+                    position: relative;
+
+                    li {
+                        $font-size: 13;
+                        font-weight: bold;
+                        font-size: pxtoem($font-size);
+                        line-height: pxtoembase(18, $font-size);
+
+                        &:first-child {
+                            padding-top: pxtoembase(20, $font-size);
+                        }
+
+                        &:last-child {
+                            padding-bottom: pxtoembase(20, $font-size);
+
+                            &:after {
+                                $arrow-size: pxtoembase(10, $font-size);
+                                content: "";
+                                display: block;
+                                position: absolute;
+                                bottom: -$arrow-size;
+                                left:50%;
+                                margin-left: -$arrow-size/2;
+                                width: 0;
+                                height: 0;
+                                border-left: $arrow-size solid transparent;
+                                border-right: $arrow-size solid transparent;
+                                border-top: $arrow-size solid $CONVERSE_COLOR_12;
+                            }
+                        }
+                    }
+                }
+
+                + div.order-total {
+                    border-top: none;
+                }
+            }
+
+            .order-total {
+                border-top: 1px solid $CONVERSE_COLOR_5;
+
+                .price {
+                    font-size: pxtoem(42);
+
+                    @include mq-medium() {
+                        font-size: pxtoem(18);
+                    }
+                }
+
+                @include mq-small() {
+                    .label {
+                        width: 36%;
+                        text-align: right;
+                        margin-top: pxtoem(12);
+                    }
+                    .price {
+                        width: 60%;
+                        text-align: left;
+                    }
+                }
+            }
+
+            .gift-card-total {
+                border-top: 1px solid $CONVERSE_COLOR_8;
+                border-bottom: 1px solid $CONVERSE_COLOR_5;
+                margin-bottom: pxtoem(20);
+
+                .price {
+                    font-size: pxtoem(14);
+                }
+            }
+        }
+
+
+        .info {
+            width: auto;
+            font-size: inherit;
+            margin: 0;
+            padding: pxtoem(24) 0 0 0;
+
+            .title {
+                font-size: pxtoem(18);
+                font-weight: bold;
+                margin-bottom: pxtoem(14);
+            }
+
+            a{
+                color: $CONVERSE_COLOR_4;
+                &:hover {
+                    color: $CONVERSE_COLOR_1;
+                }
+            }
+
+            li {
+                $font-size: 11;
+                font-size: pxtoem($font-size);
+                line-height: pxtoembase(15, $font-size);
+                margin-bottom: pxtoembase(10, $font-size);
+
+                @include mq-small() {
+                    font-size: pxtoem(12);
+                    margin-bottom: pxtoem(16);
+                }
+            }
+        }
+
+}
+
+@mixin css-arrow($position: bottom, $size: 1em, $color: grey, $border-width: 0, $border-color: false, $border-style: solid, $offset: 50%) {
+    $arrow-orientation: opposite-position($position);
+    $arrow-position: left;
+    $border-size: $size + $border-width * 1.41421356;
+
+    @if ($position == right) or ($position == left) {
+        $arrow-position : top;
+    }
+
+    position: relative;
+    background: $color;
+
+    @if ($border-width > 0) or ($border-color) {
+        @if not ($border-width > 0) {
+            $border-width: $size*.25;
+            $border-size: $size + $border-width * 1.41421356;
+    }
+
+    @if not $border-color {
+        $border-color: darken($color,5);
+    }
+        border: $border-width $border-style $border-color;
+    }
+
+    &:after,
+    &:before {
+        #{$arrow-orientation}: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    &:after {
+        border-#{$arrow-orientation}-color: $color;
+        border-width: $size;
+        #{$arrow-position}: $offset;
+        margin-#{$arrow-position}: -$size;
+    }
+
+    &:before {
+        border-#{$arrow-orientation}-color: $border-color;
+        border-width: $border-size;
+        #{$arrow-position}: $offset;
+        margin-#{$arrow-position}: -$border-size;
+    }
+}
+
+@mixin slider-cntrl-btn($side) {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background: $CONVERSE_COLOR_PDP_7 url($CONVERSE_CTRL_ARROW_IMAGE_PDP) top left no-repeat;
+    border-radius: 50%;
+
+    @if($side == 'right') {
+        background-position: top right;
+    }
+
+    &:hover {
+        background-color: darken($CONVERSE_COLOR_PDP_7, 10%);
+    }
+}
+
+@mixin image-slider() {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+
+    > .slide {
+        display: none;
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+
+        .frame {
+            width: 400%;
+            height: 100%;
+            margin-left: -150%;
+            text-align: center;
+
+            img {
+                margin: auto;
+                height: 100%;
+            }
+        }
+    }
+
+    > .active,
+    > .next,
+    > .prev {
+        display: block;
+    }
+
+    > .active {
+        left: 0;
+    }
+
+    > .next,
+    > .prev {
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    > .next {
+        left: 100%;
+    }
+    > .prev {
+        left: -100%;
+    }
+    > .next.left,
+    > .prev.right {
+        left: 0;
+    }
+
+    > .active.left {
+        left: -100%;
+    }
+    > .active.right {
+        left: 100%;
+    }
+}
+
+
+@mixin copy-slider() {
+    position: relative;
+    min-height: 150px;
+
+    .slide {
+        position: absolute;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        width: 100%;
+        text-align: center;
+
+        &.active {
+            opacity: 1;
+            z-index: 2;
+        }
+    }
+}
+
+
+@mixin mobile-indicator-dots() {
+    .indicators {
+        display: none;
+        padding: pxtoem(12) 0 pxtoem(50);
+        list-style-type: none;
+        margin: 0;
+        text-align: center;
+
+        li {
+            width: pxtoem(10);
+            height: pxtoem(10);
+            border-radius: pxtoem(10);
+            background-color: $CONVERSE_COLOR_PDP_8;
+            display: inline-block;
+            margin-right: pxtoem(8);
+            cursor: pointer;
+
+            &.active {
+                background-color: $CONVERSE_COLOR_1;
+            }
+
+            &:last-child {
+                margin: 0;
+            }
+        }
+    }
+}
+
+@mixin display-flex() {
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+@mixin color-swatch() {
+    .color-swatch {
+        text-align: center;
+
+        .product-properties {
+            span {
+                font-weight: bold;
+
+                &.product-color {
+                    text-transform: capitalize;
+                }
+
+                &.separator {
+                    margin: 0 pxtoem(10);
+                    font-weight: normal;
+                }
+
+                &.product-manufacturer {
+                    font-weight: bold;
+                    color: $CONVERSE_COLOR_1;
+                    font-size: inherit;
+                }
+            }
+
+            @include mq-small-pdp {
+                display: block;
+            }
+
+            @include mq-x-small-pdp {
+                display: block;
+            }
+        }
+
+        .swatch-list-wrapper {
+            width: 100%;
+            overflow: auto;
+            margin-bottom: 12px;
+            
+            &.horizontal-scrollable-list-large{
+            	@media screen and (max-width: 765px) {
+            		width: 90%;
+            	}
+            	
+            	@media screen and (max-width: 490px) {
+            		width: 84%;
+            	}
+            }
+            
+            &.horizontal-scrollable-list{
+            	@media screen and (max-width: 625px) {
+            		width: 90%;
+            	}
+            	
+            	@media screen and (max-width: 490px) {
+            		width: 84%;
+            	}        
+            }
+        }
+        
+        .scrollbar_style-1::-webkit-scrollbar-track{
+			-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+			border-radius: 10px;
+			background-color: #F5F5F5;
+		}
+
+		.scrollbar_style-1::-webkit-scrollbar{
+			width: 12px;
+			height: 6px;
+			background-color: #F5F5F5;
+		}
+		
+		.scrollbar_style-1::-webkit-scrollbar-thumb{
+			border-radius: 10px;
+			-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+			background-color: #555;
+		}
+
+        .popover {
+            display: none !important;
+        }
+
+        ul.swatch-list {
+            margin: pxtoem(20) auto pxtoem(45);
+            display: table;
+
+            li {
+                border: pxtoem(1) $CONVERSE_COLOR_PDP_3 solid;
+                float: left;
+                overflow: hidden;
+
+                &:first-child {
+                    @include border-radius(5px 0 0 5px, 5px 0 0 5px);
+                }
+
+                &:last-of-type {
+                    @include border-radius(0 5px 5px 0, 0 5px 5px 0);
+                }
+
+                &.active {
+                    border: pxtoem(2) solid $CONVERSE_COLOR_1;
+
+                    &:hover {
+                        border: pxtoem(2) solid $CONVERSE_COLOR_6;
+                    }
+
+                    &[data-swatch-hex="#{$CONVERSE_COLOR_12}"]{
+                        border: pxtoem(2) solid $CONVERSE_COLOR_1;
+                    }
+
+                    &[data-swatch-hex="#{$CONVERSE_COLOR_12}"]:hover{
+                        border: pxtoem(2) solid $CONVERSE_COLOR_6;
+                    }
+
+                    > a {
+                        margin-bottom: pxtoem(-1);
+                    }
+                }
+
+                &:hover {
+                    border: pxtoem(1) solid $CONVERSE_COLOR_1;
+                }
+
+                &[data-swatch-hex="#{$CONVERSE_COLOR_12}"]{
+                    border: pxtoem(1) solid $CONVERSE_COLOR_6;
+                    &:hover {
+                        border: pxtoem(1) solid $CONVERSE_COLOR_1;
+                    }
+                }
+
+                &[data-swatch-hex="#{$CONVERSE_COLOR_1}"]{
+                    &:hover {
+                        border: pxtoem(1) solid $CONVERSE_COLOR_6;
+                    }
+                }
+
+                a {
+                    display: block;
+                    width: pxtoem(80);
+                    height: pxtoem(80);
+                    padding: pxtoem(14);
+                    background-color: $CONVERSE_COLOR_12;
+                    @include box-sizing(border-box);
+                }
+            }
+
+            &.sneakers {
+                li a {
+                    margin-top: pxtoem(-25);
+                }
+            }
+
+            @include mq-medium-cascade {
+                margin-bottom: pxtoem(22);
+            }
+
+            @include mq-small-pdp {
+                margin-bottom: pxtoem(12);
+                @include display-flex;
+            }
+
+            @include mq-x-small-pdp {
+                margin-bottom: pxtoem(12);
+                @include display-flex;
+            }
+        }
+    }
+}
+
+@mixin select-size-quantity() {
+    .select2 {
+        width: 100% !important;
+
+        &.error {
+            background-color: $CONVERSE_COLOR_PDP_5;
+            margin-bottom: pxtoem(14);
+            padding: 0;
+            height: pxtoem(35);
+            border: pxtoem(5);
+        }
+
+        .select2-selection {
+            position: relative;
+            background: $CONVERSE_COLOR_12;
+            height: pxtoem(40);
+            padding-left: pxtoem(10);
+            padding-top: pxtoem(10);
+            padding-bottom: pxtoem(28);
+            font-size: pxtoem(12);
+            @include border-radius(5px, 5px);
+            border-color: $CONVERSE_COLOR_6;
+            font-family: $CONVERSE_FONT_FAMILY_PDP;
+            outline: none;
+
+            &:after {
+                content: "\f107";
+                position: absolute;
+                right: pxtoem(10);
+                top: pxtoem(8);
+                font-family: FontAwesome;
+                color: $CONVERSE_COLOR_PDP_2;
+                font-size: pxtoem(18);
+                pointer-events: none;
+            }
+
+            .select2-selection__arrow {
+                display: none;
+            }
+
+            &.error {
+                border-color: $CONVERSE_COLOR_PDP_5;
+            }
+        }
+    }
+
+    #ui-datepicker-div {
+    
+    	span.select2{
+    		width: 80px !important;
+    	}
+    	
+    }
+
+    // Select2 override
+
+    .select2-dropdown {
+        z-index: 10005 !important;
+        border: 1px solid $CONVERSE_COLOR_6 !important;
+    }
+
+    .select2-selection__rendered {
+        font-family: arial, sans-serif !important;
+        line-height: pxtoem(19) !important;
+    }
+
+    #select2-quantity-container {
+        font-weight: bold;
+    }
+    
+   .font-weight-normal {
+        font-weight: normal;
+    }
+
+    #select2-quantity-results {
+        @include mq-large-pdp {
+            max-height: pxtoem(270) !important;
+        }
+
+        li {
+            background-color: $CONVERSE_COLOR_PDP_4;
+            font-size: pxtoem(13);
+        }
+    }
+    
+    ul.select2-results__options::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+		border-radius: 10px;
+		background-color: #F5F5F5;
+	}
+
+	ul.select2-results__options::-webkit-scrollbar {
+		width: 8px;
+		background-color: #F5F5F5;
+	}
+
+	ul.select2-results__options::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		background-color: rgb(190,190,190);
+	}
+
+    #select2-sizes-results {
+        @include mq-large-pdp {
+            max-height: pxtoem(270) !important;
+        }
+
+        li {
+            font-size: pxtoem(11);
+            background-color: $CONVERSE_COLOR_12;
+        }
+    }
+
+    #select2-quantity-results, #select2-sizes-results {
+        margin: pxtoem(10);
+
+        li {
+            @include border-radius(5px, 5px);
+            border: 1px solid $CONVERSE_COLOR_12;
+            text-align: center;
+            font-family: arial, sans-serif;
+            font-weight: bold;
+            color: $CONVERSE_COLOR_1;
+
+            &:hover {
+                background-color: $CONVERSE_COLOR_PDP_3;
+                color: $CONVERSE_COLOR_1;
+            }
+
+            &.select2-results__option:first-child {
+                text-transform: uppercase;
+
+                &:hover {
+                    background-color: $CONVERSE_COLOR_12;
+                }
+            }
+
+            &:active, &:focus, &.select2-results__option[aria-selected=true] {
+                background-color: $CONVERSE_COLOR_PDP_5;
+                color: $CONVERSE_COLOR_12;
+            }
+
+            &.select2-results__option[aria-disabled=true] {
+                color: $CONVERSE_COLOR_PDP_1;
+            }
+        }
+    }
+}
+
+@mixin select2() {
+    .select2-container--default {
+        &.error {
+            background-color: $CONVERSE_COLOR_PDP_5;
+            margin-bottom: pxtoem(14);
+            padding: 0;
+            height: pxtoem(35);
+            border: pxtoem(5);
+        }
+
+        .select2-selection {
+            position: relative;
+            background: $CONVERSE_COLOR_12;
+            height: pxtoem(40);
+            padding-left: pxtoem(10);
+            padding-top: pxtoem(10);
+            padding-bottom: pxtoem(28);
+            font-size: 13px;
+            @include border-radius(3px, 3px);
+            border-color: $CONVERSE_COLOR_6;
+            font-family: $CONVERSE_FONT_FAMILY_PDP;
+            outline: none;
+
+            &:after {
+                content: "\f107";
+                position: absolute;
+                right: pxtoem(10);
+                top: 9px !important;
+                font-family: FontAwesome;
+                color: $CONVERSE_COLOR_PDP_2;
+                font-size: pxtoem(18);
+                pointer-events: none;
+            }
+
+            .select2-selection__arrow {
+                display: none;
+            }
+
+            &.error {
+                border-color: $CONVERSE_COLOR_PDP_5;
+            }
+        }
+
+        .select2-selection__rendered {
+            font-family: arial, sans-serif !important;
+            line-height: pxtoem(19) !important;
+            font-weight: normal;
+            padding-left: 0 !important;
+        }
+
+        .select2-selection--single.default {
+            border: 1px solid $CONVERSE_COLOR_6 !important;
+            padding-bottom: 29px !important;
+            padding-top: 7px;
+            font-size: 15px;
+        }
+    }
+
+    .select2-dropdown.default {
+        z-index: 10000 !important;
+        border: 1px solid $CONVERSE_COLOR_6 !important;
+
+        .select2-results__option--highlighted {
+            font-weight: bold;
+        }
+
+        .select2-results__option--highlighted[aria-selected] {
+            background-color: $CONVERSE_COLOR_PDP_3;
+            color: $CONVERSE_COLOR_1;
+        }
+
+        .select2-results__options li.select2-results__option {
+            text-transform: capitalize;
+            &:first-child:hover {
+                background-color: $CONVERSE_COLOR_PDP_3 !important;
+                color: $CONVERSE_COLOR_1 !important;
+            }
+        }
+
+        .select2-results__options {
+            margin: pxtoem(10);
+
+            li {
+                @include border-radius(3px, 3px);
+                border: 1px solid $CONVERSE_COLOR_12;
+                text-align: center;
+                font-family: arial, sans-serif;
+                font-weight: bold;
+                color: $CONVERSE_COLOR_1;
+
+                &:hover {
+                    background-color: $CONVERSE_COLOR_PDP_3;
+                    color: $CONVERSE_COLOR_1;
+                }
+
+                &.select2-results__option:first-child {
+                    text-transform: capitalize;
+
+                    &:hover {
+                        background-color: $CONVERSE_COLOR_12;
+                    }
+                }
+
+                &:active, &:focus, &.select2-results__option[aria-selected=true] {
+                    background-color: $CONVERSE_COLOR_PDP_5;
+                    color: $CONVERSE_COLOR_12;
+                }
+
+                &.select2-results__option[aria-disabled=true] {
+                    color: $CONVERSE_COLOR_PDP_1;
+                }
+            }
+        }
+    }
+}
+
+@mixin styled-radio() {
+    .styled-radio-button {
+        @extend %styled-input;
+        @include border-radius(50%, 50%);
+        margin-right: 12px;
+        cursor: pointer;
+
+        &.active {
+            height: 6px;
+            width: 6px;
+            border: none;
+            margin: 6px 16px 3px 7px;
+            @include single-box-shadow(0, 0, 0, 5px, $CONVERSE_COLOR_1);
+        }
+    }
+}
+
+@mixin styled-checkbox() {
+    .styled-checkbox {
+        @extend %styled-input;
+        @include border-radius(3px, 3px);
+        margin-right: 8px;
+        cursor: pointer;
+
+        &.active {
+            height: 17px;
+            width: 17px;
+            border: none;
+            background-color: $CONVERSE_COLOR_1;
+            background-image: url('../images/check.png');
+            background-repeat: no-repeat;
+            background-size: initial;
+            background-position: 4px 4px;
+        }
+
+        &.disabled {
+            background-color: $CONVERSE_COLOR_PDP_6;
+            @include border-radius(50%, 50%);
+            width: 10px;
+            height: 10px;
+            border: none;
+            margin-top: 3px;
+            margin-right: 13px;
+            background-image: none;
+        }
+    }
+}
+
+%styled-input {
+    height: 15px;
+    width: 15px;
+    border: 1px solid $CONVERSE_COLOR_6;
+    display: inline-block;
+    background-color: $CONVERSE_COLOR_12;
+    float: left;
+}
+
+%pdp-width-constraint {
+    max-width: pxtoem($PDP_MAX_WIDTH);
+    margin-left: auto;
+    margin-right: auto;
+}

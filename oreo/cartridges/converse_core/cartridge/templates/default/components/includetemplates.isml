@@ -1,0 +1,5 @@
+<isif condition="${!empty(pdict.templates)}">
+    <isloop items="${pdict.templates}" var="templatePath">
+        <isinclude template="${templatePath}" />
+    </isloop>
+</isif>

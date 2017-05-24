@@ -1,0 +1,27 @@
+*** Settings ***
+Library         Selenium2Library
+Resource        site_requests_definitions.txt
+
+*** Variables ***
+${FOOTER_LINKS}  //div[@id='footer-container']//ul[@class='link-list']//li//a
+${FOOTER_LINK}  //div[@id='footer-container']//ul[@class='link-list']//li
+${L_STORE_LOCATOR_LINK}  //div[@id='footer-storelocator']//a[@id='stores-link']
+${D_FIND_A_STORE}  //div[@id='store-locator-content']
+${FIND_A_STORE_LINK}  //div[@id='footer-storelocator']//a[@id='stores-link']@href
+
+*** Keywords ***
+Verifies Each Footer Link
+  ${footer_links} =  Get Matching Xpath Count  ${FOOTER_LINKS}
+  ${links_number} =  Evaluate  ${footer_links}
+  : FOR  ${index}  IN RANGE  ${links_number}
+  \  ${index1} =  Evaluate  ${index} + 1
+  \  ${linkpath} =  Get Element Attribute  ${FOOTER_LINK}[${index1}]//a@href
+  \  Log  Verifying page response for:${linkpath}
+  \  Verify Link Response  ${linkpath}
+
+Store Locator Page Verification
+  Wait Until Page Contains Element  ${L_STORE_LOCATOR_LINK}
+  ${findastoreLink} =  Get Element Attribute  ${FIND_A_STORE_LINK}
+  Verify Link Response  ${findastoreLink}
+  Click Element  ${L_STORE_LOCATOR_LINK}
+  Wait Until Page Contains Element  ${D_FIND_A_STORE}

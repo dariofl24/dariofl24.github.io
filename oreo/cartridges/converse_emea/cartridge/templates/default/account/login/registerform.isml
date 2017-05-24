@@ -1,0 +1,109 @@
+<!--- TEMPLATENAME: registerform.isml --->
+<isscript>
+importPackage(dw.system);
+importPackage( dw.util );
+
+var date = dw.util.StringUtils.formatCalendar(new dw.util.Calendar(),pdict.CurrentRequest.getLocale(), dw.util.Calendar.INPUT_DATE_PATTERN);
+
+var date_format = "";
+var date_separator = "";
+
+var datef_regex : RegExp= /^(0?[1-9]|[12][0-9]|3[01])[\/](0?[1-9]|1[012])[\/]\d{4}$/;
+
+if(datef_regex.test(date.toString())){
+	date_format = "dd/mm/yy";
+	date_separator = "/";
+}else{
+	date_format = "dd.mm.yy";
+	date_separator = ".";
+}
+
+</isscript>
+    <div class="isEmeaSite"></div>
+    <div id="new-account-table" class="div-table">
+        <div class="div-table-row clearfix">
+            <div id="register-email-cell" class="div-table-cell">
+            
+                <div class="input-container" errorlabel=" "
+                     namelabel="${Resource.msg('profile.email.placeholder','forms',null)}">
+                    <isinputfield formfield="${pdict.CurrentForms.profile.customer.email}" type="email"
+                                  label="false"
+                                  xhtmlclass="email-input"
+                                  requiredtext="${Resource.msg('profile.email.missing-error','forms',null)}"
+                                  rowclass="form-row email"
+                                  attribute1="autocomplete"
+                        		  value1="username"/>
+                </div>
+            </div>
+            <!-- BIRD DAY CELL -->
+            <p id="date_format" style="display: none;" >${date_format}</p>
+            <p id="date_separator" style="display: none;" >${date_separator}</p>
+            <div id="register-birdday-cell" class="div-table-cell emea">
+            	<div class="input-container" errorlabel=" "
+                	     namelabel="${Resource.msgf('profile.birthday.placeholder.wseparator','forms',null,date_separator)}">
+            		<isinputfield formfield="${pdict.CurrentForms.profile.customer.birthday}" 
+                		          label="true"
+                    		      type="input"
+                        		  requiredtext="${Resource.msg('profile.birthday.missing-error','forms',null)}"
+                        		  rowclass="form-row"
+                        		  attribute1="autocomplete"
+                        		  value1="bday" />
+            	</div>
+            </div>
+            
+        </div>
+        <div class="div-table-row clearfix">
+        	<!-- PWD -->
+            <div id="register-password-cell" class="div-table-cell emea">
+                <div class="input-container" errorlabel=" "
+                     namelabel="${Resource.msg('profile.password.placeholder','forms',null)}">
+                    <isinputfield formfield="${pdict.CurrentForms.profile.login.password}" type="password"
+                                  label="false"
+                                  xhtmlclass="password-input"
+                                  requiredtext="${Resource.msg('login.password.missing-error','forms',null)}"
+                                  rowclass="form-row password"
+                                  attribute1="autocomplete"
+                        		  value1="new-password" />
+                </div>
+            </div>
+            
+            <!-- GENDER (OPTIONAL) -->
+            <div id="register-gender-cell" class="div-table-cell emea">
+                <div class="input-container" errorlabel=" "
+                    namelabel="${Resource.msg('profile.gender','forms',null)} ${Resource.msg('label.optionalfield','forms',null)}">
+                    <span>
+                        <input type="radio" id="gender-input-male" class="gender-input" name="${pdict.CurrentForms.profile.customer.gender.htmlName}" value="1"/>
+                        <label for="gender-input-male">${Resource.msg('profile.gender.male','forms',null)}</label>
+                    </span>
+                    <span>
+                        <input type="radio" id="gender-input-female" class="gender-input" name="${pdict.CurrentForms.profile.customer.gender.htmlName}" value="2"/>
+                        <label for="gender-input-female">${Resource.msg('profile.gender.female','forms',null)}</label>
+                    </span>
+                </div>
+            </div>
+
+            <div id="button-cell" class="div-table-cell emea">
+                <div class="form-row form-row-button clearfix">
+                    <div id="register-btn" href="javascript:void(0)" class="button">${Resource.msg('global.submit','locale',null)}</div>
+                    <a id="cancel-registration-btn" href="javascript:void(0)">${Resource.msg('global.cancel','locale',null)}</a>
+                </div>
+            </div>
+            <div class="div-table-cell emea" id="copy-cell">
+                <isset name="newsletterClass" value="${"form-row emea newsletter"}" scope="page"/>
+                <isset name="ageconfirmClass" value="${"form-row emea ageconfirm"}" scope="page"/>
+                <isinputfield formfield="${pdict.CurrentForms.profile.login.newsletter}" type="checkbox" rowclass="${newsletterClass}"/>
+                
+            </div>
+        </div>
+        <div class="div-table-caption">
+            <div class="error-form" style="display:none;"></div>
+        </div>
+    </div>
+
+    <isinputfield formfield="${pdict.CurrentForms.profile.customer.firstname}" type="hidden" xhtmlclass="firstname-input"/>
+    <isinputfield formfield="${pdict.CurrentForms.profile.customer.lastname}" type="hidden" xhtmlclass="lastname-input"/>
+    <isinputfield formfield="${pdict.CurrentForms.profile.customer.photoURL}" type="hidden" xhtmlclass="photourl-input"/>
+    <isinputfield formfield="${pdict.CurrentForms.profile.customer.thumbnailURL}" type="hidden" xhtmlclass="thumbnailurl-input"/>
+    
+    <input type="hidden" name="${pdict.CurrentForms.profile.register.htmlName}" value="Register"/>
+    <input type="hidden" name="${pdict.CurrentForms.profile.secureKeyHtmlName}" value="${pdict.CurrentForms.profile.secureKeyValue}"/>

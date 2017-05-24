@@ -1,0 +1,62 @@
+<isinclude template="util/modules"/>
+
+<div class="new-member hc-content">
+    <a class="button add-new-member-button" href="javascript:void(0)">${Resource.msg('family.addnewmember','family',null)}</a>
+    
+    <form 
+          id="add-family-member-form" 
+          name="${pdict.CurrentForms.family.htmlName}" 
+          action="${URLUtils.httpsContinue()}" 
+          method="post" 
+          autocomplete="off" 
+          class="add-new-member-form"
+          data-validate="parsley">
+        
+        <div class="form-row error-form"></div>
+        
+        <h2>${Resource.msg('family.newmember','family',null)}</h2>
+        
+        <isinputfield formfield="${pdict.CurrentForms.family.employeeid}" type="hidden"/>
+        
+        <div class="form-fields">
+            <div class="form-row first-name-row">
+                <ispinputfield formfield="${pdict.CurrentForms.family.firstname}" 
+                              type="input" 
+                              rowclass="form-column-full" 
+                              xhtmlclass="firstname-input"
+                              required_message="${Resource.msg('familymember.firstname.missing-error','forms',null)}"/>
+            </div>
+            <div class="form-row last-name-row">
+                <ispinputfield formfield="${pdict.CurrentForms.family.lastname}" 
+                              type="input"
+                              rowclass="form-column-full" 
+                              xhtmlclass="lastname-input"
+                              required_message="${Resource.msg('familymember.lastname.missing-error','forms',null)}"/>
+            </div>
+            <div class="form-row">
+                <ispinputfield formfield="${pdict.CurrentForms.family.email}" 
+                              type="input"
+                              rowclass="form-column-full" 
+                              xhtmlclass="email-input"
+                              required_message="${Resource.msg('familymember.email.missing-error','forms',null)}"
+                              regexp_message="${Resource.msg('profile.emailparseerror','forms',null)}"
+                              maxlength_message="${Resource.msg('profile.email.maxlength-error','forms',null)}"/>
+            </div>
+            <div class="form-row">
+                <ispinputfield formfield="${pdict.CurrentForms.family.relationship}" 
+                              type="select"
+                              rowclass="form-column-full" 
+                              xhtmlclass="relationship-select"
+                              required_message="${Resource.msg('familymember.relationship.missing-error','forms',null)}"/>
+            </div>
+       </div>
+       
+       <div class="form-row button-row">
+           <button id="save-new-member-btn" class="apply-button" type="submit" name="${pdict.CurrentForms.family.save.htmlName}" value="${Resource.msg('global.save','locale',null)}">${Resource.msg('global.save','locale',null)}</button>
+           <a class="button cancel cancel-button">${Resource.msg('global.cancel','locale',null)}</a>
+       </div>
+       
+       <input type="hidden" name="${pdict.CurrentForms.family.save.htmlName}" value="Save"/>
+       <input type="hidden" name="${pdict.CurrentForms.family.secureKeyHtmlName}" value="${pdict.CurrentForms.family.secureKeyValue}"/>
+    </form>
+</div>

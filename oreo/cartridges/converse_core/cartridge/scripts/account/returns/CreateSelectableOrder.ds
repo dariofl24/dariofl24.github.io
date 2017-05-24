@@ -1,0 +1,22 @@
+/**
+ * This script wraps an order object for return by decorating with selectable
+ * 
+ * @input Order: dw.order.Order
+ *
+ * @output SelectableOrder: Object The order parts of which can be selected.
+ * 
+ */
+importPackage(dw.system);
+
+importScript("constants.ds");
+importScript("account/returns/objects/SelectableOrder.ds");
+
+function execute(args : PipelineDictionary) : Number 
+{
+    if (!empty(args.Order)) {
+        args.SelectableOrder = new converse.account.returns.SelectableOrder(args.Order);
+        return PIPELET_NEXT;
+    }
+    
+    return PIPELET_ERROR;
+}

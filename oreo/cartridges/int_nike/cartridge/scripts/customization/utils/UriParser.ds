@@ -1,0 +1,42 @@
+importPackage( dw.system );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+    var UriParser = {
+        parse : function(str : String) : Object {
+            var config = {
+                key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
+                query: {
+                    name:   "queryKey",
+                    parser: /(?:^|&)([^&=]*)=?([^&]*)/g
+                },
+                parser: /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
+            };
+
+            var matcher = config.parser.exec(str);
+            var uri = {};
+            var i = 14;
+
+            while (i--) uri[config.key[i]] = matcher[i] || "";
+
+            uri[config.query.name] = {};
+            uri[config.key[12]].replace(config.query.parser, function ($0, $1, $2) {
+                if ($1) uri[config.query.name][$1] = $2;
+            });
+
+            return uri;
+        }
+    };
+    
+    Namespace.extend(integration, {
+        nike: {
+            customization: {
+                utils: {
+                    UriParser : UriParser
+                }
+            }
+        }
+    });
+})();

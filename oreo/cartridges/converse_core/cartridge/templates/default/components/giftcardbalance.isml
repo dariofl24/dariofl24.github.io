@@ -1,0 +1,54 @@
+<isinclude template="util/modules"/>
+
+<iscache status="off" />
+
+<div id="gift-card-landing-container">
+    <div id="giftcard-balance-container">
+        <form 
+                name="giftcardBalanceForm" 
+                id="${pdict.CurrentForms.giftcard.htmlName}" 
+                action="${URLUtils.https('GiftCard-CheckBalanceProcess')}" 
+                method="post" 
+                data-validate="parsley">
+            
+            <div class="error-form"></div>
+            
+            <div class="title-text">${Resource.msg('giftcard.title','checkout',null)}</div>
+            
+            <div class="form-row inputs">
+                <ispinputfield
+                    trigger="keyup"
+                    rowClass="form-column-left"
+                    xhtmlclass="cardnumber-input"
+                    formfield="${pdict.CurrentForms.giftcard.balance.cardnumber}" 
+                    required_message="${Resource.msg('giftcard.cardnumber.required','forms',null)}"
+                    input_type="digits"
+                    type="input"/>
+                
+                <ispinputfield
+                    trigger="keyup"
+                    rowClass="form-column-left"
+                    xhtmlclass="pin-input"
+                    formfield="${pdict.CurrentForms.giftcard.balance.pin}"
+                    attribute1="data-required-message"
+                    value1="${Resource.msg('giftcard.pin.required','forms',null)}"
+                    input_type="digits"
+                    type="input"/>
+            </div>
+            
+            <div id="balancevalue" class="hidden">
+                <span>${Resource.msg('giftcard.balance.label','forms',null)}:</span> <span id="amount"></span>
+            </div>
+            
+            <div class="button-cont">
+                <input 
+                    type="submit" 
+                    id="checkbalancebtn" 
+                    class="button" 
+                    value="${Resource.msg('giftcard.input.checkbutton','checkout',null)}"/>
+            </div>
+            
+            <input type="hidden" name="${pdict.CurrentForms.giftcard.balance.check.htmlName}" value="Check"/>
+        </form>
+    </div>
+</div>

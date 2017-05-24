@@ -1,0 +1,87 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isinclude template="util/modules"/>
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:product/ProductUtils.ds");
+    importScript("converse_core:mail/ProductMailHelper.ds");
+
+    var ProductMailHelper = converse.mail.ProductMailHelper;
+
+    var productMailHelper = new ProductMailHelper();
+
+    var product = pdict.Product;
+    var productMetricId = pdict.MetricId;
+    var productUrl = URLUtils.http('Product-Show', 'pid', product.ID, 'metricId', productMetricId);
+    var productImage = productMailHelper.getDYOProductImage(product, productMetricId);
+
+    var shareMessage = '';
+    if (!empty(pdict.CurrentHttpParameterMap.message.value)) {
+        shareMessage = pdict.CurrentHttpParameterMap.message.stringValue;
+    }
+</isscript>
+
+<table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td width="25%"></td>
+        <td width="50%">
+            <table cellpadding="0" cellspacing="0" border="0" width="600px">
+                <tr>
+                    <td height="80px" width="100%" style="background-color:#000" align="center" valign="middle" colspan="2">
+                        <iscontentasset_inline aid="email-header" />
+                    </td>
+                </tr>
+                <tr>
+                    <td height="100px" valign="bottom" colspan="2">
+                        <div>
+                            <div style="display: inline-block; width: 260px; text-align: right; "><hr style="display: inline-block; width: 50px;" /></div>
+                            <div style="display: inline-block; width: 60px; text-align: center;">
+                                <span style="font-family: 'Adobe Garamond Italic', 'Garamond'; font-style: italic; font-size: 20px;">${Resource.msg('sharedyoproduct.check','mail',null)}</span>
+                            </div>
+                            <div style="display: inline-block; width: 260px; text-align: left;"><hr style="display: inline-block; width: 50px;"/></div>
+                        </div>
+                        
+                        <div style="font-family: 'Helvetica'; font-size: 22px; font-weight: bold; text-align: center;">${Resource.msg('sharedyoproduct.thisout','mail',null)}</div>    
+                    </td>
+                </tr>
+                <tr>
+                    <td height="200px" width="100%" align="center" colspan="2">
+                        <a href="${productUrl}" title="${product.name}">
+                            <img src="${productImage.Url}" alt="${productImage.Alt}" title="${productImage.Title}"/>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2">
+                        <h1>${product.name}</h1>
+                        <h4>${shareMessage}</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" height="10px"></td>
+                </tr>
+                <tr>
+                    <td align="center" valign="middle" colspan="2">
+                        <a href="${productUrl}" title="${product.name}" style="width: 180px; height: 40px; background-color:#000; display: block; line-height: 40px; text-decoration: none;">
+                            <span style="font-family: 'Helvetica'; font-size: 18px; font-weight: bold; color: #fff; text-transform: uppercase;">${Resource.msg('sharedyoproduct.viewdesign','mail',null)}</span>
+                        </a>
+                    </td>
+                </tr>
+                <isinclude template="mail/components/sharepdp-crosssels" />
+                <tr>
+                    <td colspan="2" height="30px"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <iscontentasset_inline aid="email-share" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <iscontentasset_inline aid="email-footer" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td width="25%"></td>
+    </tr>
+</table>

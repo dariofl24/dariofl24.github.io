@@ -1,0 +1,28 @@
+/**
+ * This script gets submitted form's errors.
+ *
+ * @input CurrentForms : dw.web.Forms The current forms.
+ * @input FormtoEval : dw.web.Form
+ * @output FormErrors : Object The object with form errors. 
+ */
+
+importPackage(dw.system);
+importPackage(dw.web);
+
+importScript("util/ViewHelpers.ds");
+
+function execute(args : PipelineDictionary) : Number
+{	
+	var form;
+	
+	if(args.FormtoEval ==null){
+		form = ViewHelpers.getSubmittedForm(args.CurrentForms);	
+	}else{
+		form = args.FormtoEval;
+	}
+	
+	
+	args.FormErrors = ViewHelpers.getFormElementsWithError(form);
+	
+	return PIPELET_NEXT;
+}

@@ -1,0 +1,191 @@
+/* quick view */
+/* --------------------------------------------------------------------------------------- */
+/* line 4, ../css/package/sass/quick_view.scss */
+.js .ui-dialog-content a {
+  color: #22b0e8;
+}
+
+/* line 5, ../css/package/sass/quick_view.scss */
+.js .ui-dialog-content .product-col-1 {
+  padding: 13px 1%;
+  width: 39%;
+}
+
+/* line 6, ../css/package/sass/quick_view.scss */
+.js .ui-dialog-content .product-col-1 .product-image {
+  max-width: 100%;
+}
+
+/* line 7, ../css/package/sass/quick_view.scss */
+.js .ui-dialog-content .product-col-2 {
+  padding: 20px 0;
+  width: 58%;
+}
+
+/* line 8, ../css/package/sass/quick_view.scss */
+.js .ui-dialog-content .pdp-main h1.product-name {
+  margin: .4em 0 0.1em;
+  width: 58%;
+}
+
+/* line 9, ../css/package/sass/quick_view.scss */
+.js .ui-dialog-content .pdp-main .product-set-list {
+  border: 1px solid #d9d9d9;
+  height: 500px;
+  overflow: auto;
+}
+
+/* line 10, ../css/package/sass/quick_view.scss */
+.js .ui-dialog-content .pdp-main .product-set-list .product-set-item {
+  margin: 1em 0;
+}
+
+/* line 11, ../css/package/sass/quick_view.scss */
+.js .ui-dialog-content .pdp-main .product-set-list .product-set-image {
+  width: 25%;
+}
+
+/* line 12, ../css/package/sass/quick_view.scss */
+.js .ui-dialog-content .pdp-main .product-set-list .product-set-details {
+  width: 75%;
+}
+
+/* line 13, ../css/package/sass/quick_view.scss */
+.js .ui-dialog-content .pdp-main .product-set-list .product-name {
+  margin: 0;
+}
+
+/* line 14, ../css/package/sass/quick_view.scss */
+.js .ui-dialog-content .pdp-main .product-set-list .block-add-to-cart .price {
+  font-size: 1.5em;
+  padding: 0.4em 0 0;
+  width: 130px;
+}
+
+/* line 16, ../css/package/sass/quick_view.scss */
+.js .zoomPad {
+  position: relative;
+  float: left;
+  z-index: 99;
+  cursor: crosshair;
+  width: 100%;
+}
+
+/* line 17, ../css/package/sass/quick_view.scss */
+.js .zoomPreload {
+  -moz-opacity: 0.8;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  color: #333;
+  font-size: 12px;
+  font-family: Tahoma;
+  text-decoration: none;
+  border: 1px solid #CCC;
+  background-color: white;
+  padding: 8px;
+  text-align: center;
+  background-image: url('../images/zoomloader.gif?1472148728');
+  background-repeat: no-repeat;
+  background-position: 43px 30px;
+  z-index: 110;
+  width: 90px;
+  height: 43px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  *width: 100px;
+  *height: 49px;
+}
+
+/* line 18, ../css/package/sass/quick_view.scss */
+.js .zoomPup {
+  overflow: hidden;
+  background-color: #FFF;
+  -moz-opacity: 0.6;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+  z-index: 120;
+  position: absolute;
+  border: 1px solid #CCC;
+  z-index: 101;
+  cursor: crosshair;
+}
+
+/* line 19, ../css/package/sass/quick_view.scss */
+.js .zoomOverlay {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background: #FFF;
+  /*opacity:0.5;*/
+  z-index: 5000;
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 101;
+}
+
+/* line 20, ../css/package/sass/quick_view.scss */
+.js .zoomWindow {
+  position: absolute;
+  left: 110%;
+  top: 40px;
+  background: #FFF;
+  z-index: 6000;
+  height: auto;
+  z-index: 10000;
+  z-index: 110;
+}
+
+/* line 21, ../css/package/sass/quick_view.scss */
+.js .zoomWrapper {
+  position: relative;
+  border: 1px solid #999;
+  z-index: 110;
+}
+
+/* line 22, ../css/package/sass/quick_view.scss */
+.js .zoomWrapperTitle {
+  display: block;
+  background: #999;
+  color: #FFF;
+  height: 18px;
+  line-height: 18px;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  font-size: 10px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 120;
+  -moz-opacity: 0.6;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+}
+
+/* line 23, ../css/package/sass/quick_view.scss */
+.js .zoomWrapperImage {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  z-index: 110;
+}
+
+/* line 24, ../css/package/sass/quick_view.scss */
+.js .zoomWrapperImage img {
+  border: 0px;
+  display: block;
+  position: absolute;
+  z-index: 101;
+}
+
+/* line 25, ../css/package/sass/quick_view.scss */
+.js .zoomIframe {
+  z-index: -1;
+  filter: alpha(opacity=0);
+  -moz-opacity: 0.80;
+  opacity: 0.80;
+  position: absolute;
+  display: block;
+}

@@ -1,0 +1,38 @@
+<div>
+    <h2>${Resource.msg('htmlbuilder.emailpanel.title','product',null)}</h2>
+    <h3>${Resource.msg('htmlbuilder.emailpanel.subtitle','product',null)}</h3>
+
+    <div class="form-container">
+        <img class="dyo-shoe-image" src="">
+
+        <form class="email-design-form" data-validate="parsley">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="sender-input">${Resource.msg('htmlbuilder.emailpanel.from','product',null)}</label>
+                    <input type="text" id="sender-input" class="sender-input" placeholder="${Resource.msg('htmlbuilder.emailpanel.fromplaceholder','product',null)}" data-trigger="keyup" data-required="true" data-required-message="${Resource.msg('htmlbuilder.emailpanel.frominputrequired','product',null)}">
+                    <div class="message-placeholder"></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="recipients-input">${Resource.msg('htmlbuilder.emailpanel.to','product',null)}</label>
+                    <input type="text" id="recipients-input" class="recipients-input" placeholder="${Resource.msg('htmlbuilder.emailpanel.toplaceholder','product',null)}" data-trigger="keyup" data-required="true" data-required-message="${Resource.msg('htmlbuilder.emailpanel.toinputrequired','product',null)}">
+                    <div class="message-placeholder"></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="message-input">${Resource.msg('htmlbuilder.emailpanel.message','product',null)}</label>
+                    <textarea id="message-input" class="message-input" placeholder="${Resource.msg('htmlbuilder.emailpanel.messageplaceholder','product',null)}" data-trigger="keyup" data-maxlength="320"></textarea>
+                    <div class="message-placeholder"></div>
+                </div>
+            </div>
+
+            <div class="button-row">
+                <button class="button send-email">${Resource.msg('htmlbuilder.emailpanel.sendbutton','product',null)}</button>
+            </div>
+        </form>
+    </div>
+</div>  

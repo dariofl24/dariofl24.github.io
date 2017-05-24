@@ -1,0 +1,27 @@
+/**
+ * @input BuildData : Object 
+ * @output Result : Object
+ */
+importPackage( dw.system );
+importScript("converse_core:constants.ds");
+
+importScript("int_nike:v4persistbuild/V4PersistBuildService.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+    let V4PersistBuildService = integration.nike.v4persistbuild.V4PersistBuildService;
+    let v4PersistBuildServiceInstance = new V4PersistBuildService();
+
+    let metricId = v4PersistBuildServiceInstance.persist(args.BuildData);
+
+    if( metricId === null )
+    {
+    	return PIPELET_ERROR;
+    }
+    
+    args.Result = { 
+    	'metricId': metricId 
+    };
+   
+    return PIPELET_NEXT;
+}

@@ -1,0 +1,66 @@
+importPackage(dw.system);
+importPackage(dw.content);
+importPackage(dw.object);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libLang.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function(){
+
+    function getDefaultCustomerServiceContent() {
+        var selectedTabLink: Object = getTabLinks().selectedLink;
+        return selectedTabLink && selectedTabLink.defaultContent;
+    }
+
+    function createTablLink(folder: Folder) {
+        var onlineContent: Collection = folder.onlineContent;
+        return {
+            "id": folder.ID,
+            "name": folder.displayName,
+            "onlineContent" : onlineContent,
+            "defaultContent": onlineContent.length > 0 && onlineContent[0]
+        };
+    }
+
+    function createTabList(tabLinks: Collection): Array {
+        var list: Array = [];
+        for each(let tabLink: dw.content.Folder in tabLinks) {
+            list.push(createTablLink(tabLink));
+        }
+        return list;
+    }
+
+    function createResponseObject(title, tabLinks, selectedTabLink) : Object {
+        return {
+            "title" : title,
+            "links" : tabLinks,
+            "selectedLink" : selectedTabLink
+        };
+    }
+
+    function getTabLinks(selectedContent: dw.content.Content, ContentMgr: dw.content.ContentMgr, folderID: String) : Object {
+        var supportFolder: Folder = ContentMgr.getFolder(folderID);
+        var title: String = supportFolder.getDisplayName();
+        var tabLinks: Array = createTabList(supportFolder.getOnlineSubFolders());
+
+        if(empty(tabLinks)) {
+            return createResponseObject(title);
+        }
+
+        var selectedTabLink: Folder = (selectedContent && !empty(selectedContent.getClassificationFolder())) ? createTablLink(selectedContent.getClassificationFolder()) : tabLinks[0];
+
+        return createResponseObject(title, tabLinks, selectedTabLink);
+    }
+
+    Namespace.extend(converse, { 
+        content: {
+            ContentUtils: {
+                getDefaultCustomerServiceContent: getDefaultCustomerServiceContent,
+                getTabLinks: getTabLinks
+            }
+        }
+    });
+
+})();

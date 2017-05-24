@@ -1,0 +1,129 @@
+<isinclude template="util/modules" />
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:util/LocaleInfo.ds");
+    var site = dw.system.Site.getCurrent(),
+    googleMapsAPIKey = site.getCustomPreferenceValue('storelocator.googleMapsAPIKey'),
+    apiKeyQueryString = (empty(googleMapsAPIKey)) ? '' : '&key='+googleMapsAPIKey,
+    googleMapsRegion = site.getCustomPreferenceValue('storelocator.googleMapsRegion'),
+    googleMapsLanguage : String = converse.utils.getLocaleLanguage(pdict.CurrentRequest.getLocale());
+</isscript>
+
+<isset name="pickUpPointForm" value="${pdict.CurrentForms.singleshipping.pickuppoint}" scope="page">
+<isset name="shippingAddressForm" value="${pdict.CurrentForms.singleshipping.shippingAddress}" scope="page">
+<isset name="shippingType" value="${pickUpPointForm.selectedShippingType.value}" scope="page">
+
+<div class="shipping-type-options">
+    <div class="form-row selector">
+        <isset name="selectedOption" value="${pickUpPointForm.selectedShippingType.value}" scope="page"/>
+        <div class="form-row shipping-type">
+            <input type="radio" ${selectedOption == "home" ? "checked='checked'" : ""} class="input-radio" name="${pickUpPointForm.selectedShippingType.htmlName}" value="home" id="is-home" />
+            <label for="is-home">${Resource.msg('forms.address.homeshipping','forms',null)}</label>
+        </div>
+        <div class="form-row shipping-type">
+            <input type="radio" ${selectedOption == "pup" ? "checked='checked'" : ""} class="input-radio" name="${pickUpPointForm.selectedShippingType.htmlName}" value="pup" id="is-pup" />
+            <label for="is-pup">${Resource.msg('forms.address.pickuppointshipping','forms',null)}</label>
+        </div>
+    </div>
+    <div class="form-row pup-search-container hidden">
+        <div class="form-row pup-search-box">
+            <ispinputfield
+                trigger="focusout"
+                rowClass="form-column-left postal-code"
+                formfield="${shippingAddressForm.addressFields.regional.zip}"
+                required_message="${Resource.msg('forms.errorzip','forms',null)}"
+                regexp_message="${Resource.msg('forms.address.field.invalid','forms',null)}"
+                maxlength_message="${Resource.msgf('forms.address.maxlength.error','forms',null,shippingAddressForm.addressFields.regional.zip.maxLength)}"
+                minlength_message="${Resource.msgf('forms.address.minlength.error','forms',null,shippingAddressForm.addressFields.regional.zip.minLength)}"
+                type="input"/>
+            <div class="form-group form-column-right pup-search-button-container">
+                <a class="btn-search-pup">${Resource.msg('forms.pickuppoint.nearestcollectionpoint','forms',null)}</a>
+            </div>
+        </div>
+        <div class="form-row selected-pup-info">
+            <div class="form-group form-column-left pup-info">
+                <isif condition="${shippingType === 'pup'}">
+                    <div class="selected-pup-info-inner-container" data-pup-id="${pickUpPointForm.pickupPointID.htmlValue}">
+                        <p class="name">${pickUpPointForm.pickupPointName.htmlValue}</p>
+                        <p class="address-1">${shippingAddressForm.addressFields.common.address1.htmlValue}</p>
+                        <p class="address-2">${shippingAddressForm.addressFields.common.city.htmlValue} ${shippingAddressForm.addressFields.regional.zip.htmlValue}</p>
+                    </div>
+                </isif>
+            </div>
+            <div class="form-group form-column-right pup-search-button-container">
+                <a class="btn-search-another-pup">${Resource.msg('forms.pickuppoint.anothercollectionpoint','forms',null)}</a>
+            </div>
+        </div>
+		<span class="pup-error-msg"></span>
+        <input type="hidden" name="shippingType" value="${shippingType}"/>
+        <input type="hidden" name="${pickUpPointForm.pickupPointID.htmlName}" value="${pickUpPointForm.pickupPointID.htmlValue}"/>
+        <input type="hidden" name="${pickUpPointForm.pickupPointName.htmlName}" value="${pickUpPointForm.pickupPointName.htmlValue}"/>
+        <input type="hidden" name="${pickUpPointForm.pickupPointCarrier.htmlName}" value="${pickUpPointForm.pickupPointCarrier.htmlValue}"/>
+    </div>
+</div>
+
+<script id="pup-info-box-tpl" type="text/template">
+    <div class="pup-info-box">
+        <h3>{{name}}</h3>
+        <div class="address">
+            <p>{{address.street}}</p>
+            <p>{{address.city}} {{address.postalCode}}</p>
+        </div>
+        <div>
+            <button class="select-button" data-pup-id="{{id}}">Select</button>
+            <button class="find-route-button" data-pup-id="{{id}}">Find Route</button>
+        </div>
+        <table class="business-hours">
+        {{${'#'}businessDays}}
+            <tr class="day-of-week">
+                <td class="day">{{dayOfWeek}}</td>
+                {{${'#'}businessHours}}
+                    <td class="hours">{{openFrom}} - {{openTill}}</td>
+                {{/businessHours}}
+            </tr>
+        {{/businessDays}}
+        </table>
+    </div>
+</script>
+
+<script id="pup-info-tpl" type="text/template">
+    <div class="pup-info" data-pup-id="{{id}}">
+        <h3>{{name}}</h3>
+        <div class="address-info">
+            <div class="address">
+                <p>{{address.street}}</p>
+                <p>{{address.city}} {{address.postalCode}}</p>
+            </div>
+            <span class="grey-car-icon" data-pup-id="{{id}}"></span>
+        </div>
+        <button class="select-button" data-pup-id="{{id}}">Select</button>
+    </div>
+</script>
+
+<script id="pup-selected-pup-info-tpl" type="text/template">
+    <div class="selected-pup-info-inner-container" data-pup-id="{{id}}">
+        <p class="name">{{name}}</p>
+        <p class="address-1">{{address.street}}</p>
+        <p class="address-2">{{address.city}} {{address.postalCode}}</p>
+    </div>
+</script>
+
+<script id="pup-recipient-name-form-tpl" type="text/template">
+    <div class="form-row recipient-name">
+        <ispinputfield
+            trigger="keyup"
+            rowClass="form-column-left pup-first-name"
+            formfield="${shippingAddressForm.addressFields.common.firstName}"
+            required_message="${Resource.msg('forms.address.firstname.missing','forms',null)}"
+            type="input"/>
+        <ispinputfield
+            trigger="keyup"
+            rowClass="form-column-right pup-last-name"
+            formfield="${shippingAddressForm.addressFields.common.lastName}"
+            required_message="${Resource.msg('forms.address.lastname.missing','forms',null)}"
+            type="input"/>
+    </div>
+</script>
+
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=geometry${apiKeyQueryString}&region=${googleMapsRegion}&language=${googleMapsLanguage}"></script>
+<script type="text/javascript" src="${URLUtils.staticURL('/js/onload_pickuppoint.js')}"></script>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site xmlns="http://www.demandware.com/xml/impex/site/2007-04-30" site-id="converse-nl">
+    <name>Converse NL</name>
+    <currency>EUR</currency>
+    <taxation>gross</taxation>
+    <custom-cartridges>site_nl:module_test:module_oms:int_builder:int_nike:int_social:int_exacttarget:int_device:int_postnl:int_pickuppoint:int_tealium:converse_webservices:converse_featuretoggle:converse_emea:converse_core:bc_integrationframework:bc_orderguard:int_customerexporttool:int_paynext:int_creditcheck:int_arvato</custom-cartridges>
+</site>

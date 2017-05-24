@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+    <field formid="zip" 
+        label="forms.zippostalcode" 
+        type="string" 
+        mandatory="true" 
+        min-length="5" 
+        max-length="10" 
+        regexp="^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$"
+        binding="postalCode" 
+        missing-error="forms.errorzip" 
+        range-error="forms.address.field.invalid" 
+        parse-error="forms.address.field.invalid" />
+
+    <field formid="phone"
+        label="profile.phone"
+        description="forms.address.phone.example"
+        type="string"
+        mandatory="true"
+        binding="phone"
+        max-length="20"
+        regexp="^[\s\d()+-]+$"
+        missing-error="forms.address.phone.missing"
+        range-error="forms.address.field.invalid"/>
+        
+    <field formid="phoneOpt"
+        label="profile.phoneopt"
+        description="forms.address.phone.example"
+        type="string"
+        mandatory="false"
+        binding="phone"
+        max-length="20"
+        regexp="^[\s\d()+-]+$"
+        missing-error="forms.address.phone.missing"
+        range-error="forms.address.field.invalid"/>
+        
+    <field formid="country"
+    	label="profile.country"
+        type="string"
+        default-value="FR"
+        mandatory="true"
+        binding="countryCode">
+
+        <options>
+            <option optionid="FR" label="country.france" value="FR" selected="selected"/>
+        </options>  
+    </field>
+    
+</form>

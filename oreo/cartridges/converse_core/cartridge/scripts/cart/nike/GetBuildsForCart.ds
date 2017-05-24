@@ -1,0 +1,57 @@
+/**
+* @input PersistedBuildsXMLString : String The XML data posted by Nike when calling back DW DYO cart service on Add To Cart event in Builder
+* @output NikeBuilds : Array A list of NikeBuild instances to be later persisted into DW basket
+*/
+importPackage( dw.system );
+
+importScript("converse_core:constants.ds");
+
+importScript("int_nike:customization/CustomizationService.ds");
+importScript("int_nike:customization/objects/NikeBuild.ds");
+
+var CustomizationService = integration.nike.customization.CustomizationService;
+var InvalidNikeBuild = integration.nike.customization.InvalidNikeBuild;
+
+var logger = Logger.getLogger("CUSTOMIZATION");
+
+function execute( args : PipelineDictionary ) : Number
+{
+    let metricIds : Array = fetchMetricIds(new XML(args.PersistedBuildsXMLString));
+    
+    try {
+        let customizationService = new CustomizationService();
+        let result = customizationService.getBuilds(metricIds);
+        
+        if(result.success) {
+            args.NikeBuilds = result.builds;
+        } else {
+            args.NikeBuilds = allFailedBuilds(metricIds);
+            logger.error("An error occured while fetching builds from Nike for metricIds={0}", metricIds.join(","));
+        }
+    } catch(exception) {
+        logger.error("An error occured while fetching builds from Nike for metricIds={0}, with exception: {1}", metricIds.join(","), exception);
+        args.NikeBuilds = allFailedBuilds(metricIds);
+    }
+    
+    return PIPELET_NEXT;
+}
+
+var fetchMetricIds = function(persistedBuilds : XML) : Array {
+    let metricIds : Array = new Array();
+    
+    for each (let metricId in persistedBuilds.configuration.metricId) {
+        metricIds.push(metricId.text().toXMLString());
+    }
+    
+    return metricIds;
+}
+
+var allFailedBuilds = function(metricIds : Array) : Array {
+    let failedBuilds : Array = new Array();
+    
+    for each (let metricId in metricIds) {
+        failedBuilds.push(new InvalidNikeBuild("Failed to fetch the build", metricId));
+    }
+    
+    return failedBuilds;
+}

@@ -1,0 +1,87 @@
+/**
+ * @input Unit: Object
+ */
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("int_device:libDevice.ds");
+importScript("int_device:libDeviceResolver.ds");
+
+function execute(args : PipelineDictionary) : Number {
+
+    args.Unit.describe("Device Test Suite")
+      .test("Device_normal_instanceof_check", function () {
+          var device = new integration.device.NormalDevice();
+          Assert.isTrue(device instanceof integration.device.NormalDevice, "Device wasn't an instance of NormalDevice");
+      })
+      .test("Device_tablet_instanceof_check", function () {
+          var device = new integration.device.TabletDevice();
+          Assert.isTrue(device instanceof integration.device.TabletDevice, "Device wasn't an instance of TabletDevice");
+      })
+      .test("Device_mobile_instanceof_check", function () {
+          var device = new integration.device.MobileDevice();
+          Assert.isTrue(device instanceof integration.device.MobileDevice, "Device wasn't an instance of MobileDevice");
+      })
+      .test("DeviceResolverRegistry_is_not_null", function () {
+          var deviceResolverRegistry = integration.device.DeviceResolverRegistry;
+          Assert.isNotNull(deviceResolverRegistry, "DeviceResolverRegistry was null");
+      })
+      .test("DeviceResolverRegistry_registering_null_resolver_throws_error", function () {
+          var deviceResolverRegistry = integration.device.DeviceResolverRegistry;
+          Assert.exception(deviceResolverRegistry.registerDeviceResolverImpl, "Invalid DeviceResolver implementation", "XYZ", null);
+      })
+      .test("DeviceResolverRegistry_registering_resolver_without_resolveDevice_method_throws_error", function () {
+          var deviceResolverRegistry = integration.device.DeviceResolverRegistry;
+          Assert.exception(deviceResolverRegistry.registerDeviceResolverImpl, "Invalid DeviceResolver implementation", "XYZ", {});
+      })
+      .test("DeviceResolverFactory_is_not_null", function () {
+          var deviceResolverFactory = integration.device.DeviceResolverFactory;
+          Assert.isNotNull(deviceResolverFactory, "DeviceResolverFactory was null");
+      })
+      .test("DeviceResolverFactory_return_null_for_non_exisitng_resolver", function () {
+          var deviceResolver = integration.device.DeviceResolverFactory.getDeviceResolver("XYZ");
+          Assert.isNull(deviceResolver, "DeviceResolver wasn't null");
+      })
+      .test("DeviceResolverFactory_simple_resolver_is_not_null", function () {
+          var deviceResolver = integration.device.DeviceResolverFactory.getDeviceResolver("Simple");
+          Assert.isNotNull(deviceResolver, "SimpleDeviceResolver was null");
+      })
+      .test("SimpleDeviceResolver_normal_device_type_when_user_agent_is_null", function () {
+          var deviceResolver = integration.device.DeviceResolverFactory.getDeviceResolver("Simple");
+          var device = deviceResolver.resolveDevice(null);
+          Assert.areEqual(device.deviceType, integration.device.Device.NORMAL, "Device type wasn't " + integration.device.Device.NORMAL);
+      })
+      .test("SimpleDeviceResolver_normal_device_type_when_user_agent_is_empty", function () {
+          var deviceResolver = integration.device.DeviceResolverFactory.getDeviceResolver("Simple");
+          var device = deviceResolver.resolveDevice("");
+          Assert.areEqual(device.deviceType, integration.device.Device.NORMAL, "Device type wasn't " + integration.device.Device.NORMAL);
+      })
+      .test("SimpleDeviceResolver_normal_device_type_when_user_agent_does_not_match", function () {
+            var deviceResolver = integration.device.DeviceResolverFactory.getDeviceResolver("Simple");
+            var device = deviceResolver.resolveDevice("Mozilla/5.0 (BlackBerry; U; BlackBerry 9900; en) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.1.0.346 Mobile Safari/534.11+");
+            Assert.areEqual(device.deviceType, integration.device.Device.NORMAL, "Device type wasn't " + integration.device.Device.NORMAL);
+      })
+      .test("SimpleDeviceResolver_mobile_device_type_when_iphone", function () {
+          var deviceResolver = integration.device.DeviceResolverFactory.getDeviceResolver("Simple");
+          var device = deviceResolver.resolveDevice("Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543 Safari/419.3");
+          Assert.areEqual(device.deviceType, integration.device.Device.MOBILE, "Device type wasn't " + integration.device.Device.MOBILE);
+      })
+      .test("SimpleDeviceResolver_tablet_device_type_when_ipad", function () {
+          var deviceResolver = integration.device.DeviceResolverFactory.getDeviceResolver("Simple");
+          var device = deviceResolver.resolveDevice("Mozilla/5.0 (iPad; CPU OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B176 Safari/7534.48.3");
+          Assert.areEqual(device.deviceType, integration.device.Device.TABLET, "Device type wasn't " + integration.device.Device.TABLET);
+      })
+      .test("SimpleDeviceResolver_mobile_device_type_when_android_phone", function () {
+          var deviceResolver = integration.device.DeviceResolverFactory.getDeviceResolver("Simple");
+          var device = deviceResolver.resolveDevice("Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19");
+          Assert.areEqual(device.deviceType, integration.device.Device.MOBILE, "Device type wasn't " + integration.device.Device.MOBILE);
+      })
+      .test("SimpleDeviceResolver_tablet_device_type_when_android_tablet", function () {
+          var deviceResolver = integration.device.DeviceResolverFactory.getDeviceResolver("Simple");
+          var device = deviceResolver.resolveDevice("Mozilla/5.0 (Linux; Android 4.1.1; Nexus 7 Build/JRO03D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166  Safari/535.19");
+          Assert.areEqual(device.deviceType, integration.device.Device.TABLET, "Device type wasn't " + integration.device.Device.TABLET);
+      });
+
+    return PIPELET_NEXT;
+};

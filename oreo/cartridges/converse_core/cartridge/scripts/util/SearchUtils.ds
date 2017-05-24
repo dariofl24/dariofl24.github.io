@@ -1,0 +1,79 @@
+/**
+* This script returns the Product ID of a product search result. The actual 
+* product ID that is returned is on of the following:
+* 1. The ID of the product if it is not a product master.
+* 2. The ID of the product if it is a product master and the ProductSearchHit collection is greater than one. 
+* 3. The ID of the product in the ProductSearchHit collection if there is only one product in the collection or all products have the same manufacturerSKU. 
+* 4. null in case there is no match for the search phrase and SKU for any of the products in the search results.
+*/
+importPackage( dw.catalog );
+importPackage( dw.system );
+importPackage( dw.util );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libLang.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+
+let FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+//TODO: check the impact of US site's custom ManufacturerSKU handling if search is executed for the custom value
+(function () {
+    resolveProductID = function(searchModel : ProductSearchModel) : String {
+        let productID : String = null;
+
+        if (searchModel.getCount() === 1) {
+            let targetProduct : Product = searchModel.getProducts().next();
+            productID = targetProduct.getID();
+
+            if (targetProduct.isMaster()) {
+                let productSearchHits : ArrayList = new ArrayList(searchModel.getProductSearchHits());
+                let productSearchHit : ProductSearchHit = productSearchHits.get(0);
+                
+                if (productSearchHit.getRepresentedProducts().size() === 1 || allVariationsForSameSKU(searchModel.getSearchPhrase(), productSearchHits)) {
+                    productID = productSearchHit.getFirstRepresentedProduct().getID();
+                }
+            }
+        } else {
+            if (FeatureToggleService.isFeatureEnabled("search-by-sku-enhancement")) {
+                let productSearchHits : ArrayList = new ArrayList(searchModel.getProductSearchHits());
+                let matchedProduct : Product = getFirstVariationToMatchSearchPhraseOnSKU(searchModel.getSearchPhrase(), productSearchHits);
+
+                if (!empty(matchedProduct)) {
+                    productID = matchedProduct.getID();
+                }
+            }
+        }
+
+        return productID;
+    }
+
+    getFirstVariationToMatchSearchPhraseOnSKU = function(searchPhrase : String, productSearchHits : ArrayList) : Boolean {
+        for each (let productSearchHit in productSearchHits) {
+            for each (let representedProduct in productSearchHit.getRepresentedProducts()) {
+                if (searchPhrase.toLowerCase() === representedProduct.manufacturerSKU.toLowerCase()) {
+                    return representedProduct;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    allVariationsForSameSKU = function(searchPhrase : String, productSearchHits : ArrayList) : Boolean {
+        if (productSearchHits.size() > 1) return false;
+
+        for each (let representedProduct in productSearchHits.get(0).getRepresentedProducts()) {
+            if (searchPhrase.toLowerCase().indexOf(representedProduct.manufacturerSKU.toLowerCase()) === -1) {
+                return false;
+            }
+        }
+     
+        return true;
+    }
+
+    Namespace.extend(Namespace.extendFromString(converse, "search.SearchUtils"), {
+        resolveProductID: resolveProductID,
+        getFirstVariationToMatchSearchPhraseOnSKU: getFirstVariationToMatchSearchPhraseOnSKU
+    });
+})();

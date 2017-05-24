@@ -1,0 +1,17 @@
+<isset name="productInfo" value="${pdict.ProductToDisplayInfo}" scope="page" />
+<isset name="productInfoLow" value="${pdict.ProductToDisplayInfoLow}" scope="page" />
+<isset name="isChuckInStock" value="${productInfo.availability.isAvailable || productInfoLow.availability.isAvailable}" scope="page" />
+<isset name="textValue" value="${isChuckInStock ? 'Buy Now' : 'Colors'}" scope="page" />
+
+<div id="titleBar" class="hidden">
+    <h1>${Resource.msg('titlebar.allstar','chuckpromo',null)} <span>${Resource.msg('titlebar.allstar.2','chuckpromo',null)}</span></h1>
+    <div class="viewCart cta">
+        <a href="${URLUtils.https('Cart-Show')}" class="btn">${Resource.msg('titlebar.viewcart','chuckpromo',null)}</a>
+    </div>
+    <div id="jumpToPurchase" class="cta">
+        <a href="#chuck-promo" class="btn">${textValue}</a>
+    </div>
+    <div class="back" id="btt">
+        <a href="#" class="backtotop"><span>${Resource.msg('titlebar.backto','chuckpromo',null)} </span>${Resource.msg('titlebar.top','chuckpromo',null)}</a>
+    </div>
+</div>

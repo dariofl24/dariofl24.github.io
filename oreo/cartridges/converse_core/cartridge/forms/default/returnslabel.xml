@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+    <action formid="proceed" valid-form="true"/>
+
+    <include formid="returnaddress" name="addressfields"/>
+    <include formid="packageinfo" name="packageinfo"/>
+
+</form>
+

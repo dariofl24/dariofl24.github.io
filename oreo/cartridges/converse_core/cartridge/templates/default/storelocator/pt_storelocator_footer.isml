@@ -1,0 +1,11 @@
+<isinclude template="util/modules"/>
+<isscript>
+    var site = dw.system.Site.getCurrent(),
+        googleMapsAPIKey = site.getCustomPreferenceValue('storelocator.googleMapsAPIKey'),
+        googleMapsRegion = site.getCustomPreferenceValue('storelocator.googleMapsRegion');
+</isscript>
+
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=${googleMapsAPIKey}&region=${googleMapsRegion}&sensor=false&libraries=geometry"></script>
+<script type="text/javascript" src="${URLUtils.staticURL('/js/lib/infobox/infobox.js')}"></script>
+<script type="text/javascript" src="${URLUtils.staticURL('/js/onload_store_locator.core.js')}"></script>
+<script type="text/javascript" src="${URLUtils.staticURL('/js/onload_store_locator.js')}"></script>

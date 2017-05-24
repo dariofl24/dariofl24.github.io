@@ -1,0 +1,23 @@
+/**
+ * This script retrieves a custom object of the specified type that can be used as a template. 
+ *
+ * @input CustomObjectType : String The custom object type.
+ * @output TemplateCustomObject : dw.object.CustomObject The template custom object. 
+ */
+
+importPackage(dw.system);
+importPackage(dw.object);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:util/ObjectUtils.ds");
+
+function execute(args : PipelineDictionary) : Number
+{
+    var templateCustomObject : CustomObject = converse.object.ObjectUtils.getTemplateCustomObject(args.CustomObjectType);
+
+    args.TemplateCustomObject = templateCustomObject;
+
+    return PIPELET_NEXT;
+}
+

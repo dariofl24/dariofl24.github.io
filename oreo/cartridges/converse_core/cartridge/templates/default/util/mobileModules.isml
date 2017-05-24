@@ -1,0 +1,30 @@
+<!--- TEMPLATENAME: mobileModules.isml --->
+<iscomment>This will load a template for mobile content</iscomment>
+<ismodule
+    template="${Resource.msg('customTag.mobile','decorators',null)}"
+    name="mobilecontent"
+    attribute="template"/>
+    
+<iscomment>This will load a template for tablet content</iscomment>
+<ismodule
+    template="${Resource.msg('customTag.tablet','decorators',null)}"
+    name="tabletcontent"
+    attribute="template"/>
+    
+<iscomment>This will load a template for mobile & tablet content</iscomment>
+<ismodule
+    template="${Resource.msg('customTag.mobileTablet','decorators',null)}"
+    name="mobileandtabletcontent"
+    attribute="template"/>
+    
+<iscomment>This will load a template for desktop content</iscomment>
+<ismodule
+    template="${Resource.msg('customTag.desktop','decorators',null)}"
+    name="desktopcontent"
+    attribute="template"/>
+    
+<iscomment>This will load a template for all content</iscomment>
+<ismodule
+    template="${Resource.msg('customTag.all','decorators',null)}"
+    name="genericcontent"
+    attribute="template"/>

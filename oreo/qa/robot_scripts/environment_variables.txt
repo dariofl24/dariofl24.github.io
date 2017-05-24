@@ -1,0 +1,35 @@
+*** Settings ***
+Documentation     This resource file contains common
+...               and global variables
+
+*** Variables ***
+# Name for each environment used to create the base url
+@{LIST_ENVIRONMENT}    staging.store.converse    production.store.converse    development.store.converse    dev01.store.converse    dev01.store.converse    production.loaner0806.dw    dev07.store.converse
+...               dev07.store.converse    dev02.store.converse
+@{USER}           storefront    storefront    jenkins    admin    admin    pending    test
+...               admin    admin    # User for each environment
+@{PASSWORD}       More_Cowbell2    More_Cowbell2    chicharito22    EOo8QUHQLYMxo98n7VPQuVOp    EOo8QUHQLYMxo98n7VPQuVOp    pending    admin
+...               EOo8QUHQLYMxo98n7VPQuVOp    chicharito18    # Set Password for each environment
+@{EMPTY_CATEGORY}    sale-category    sale-category    sale-category    sale-category    sale-category    sale-category    sale-category
+...               sale-category    sale-category    # define a category that should be empty (No subcategories added)
+@{SEND_CREDENTIALS}    0    1    1    1    1    1    1
+...               1    1    # Some environments doesnt require to sent any credential set: 0 to send the defined credentials and 1 to skip credentials
+@{PAYPAL_PAGETITLE}    Converse Test's Test Store    Converse    Converse Test's Test Store    Converse Test's Test Store    Converse Test's Test Store    Converse Test's Test Store    Converse Test's Test Store Converse Test's Test Store
+@{DW_LOGIN}       jenkins    admin    jenkins    admin    admin    pending    admin
+...               admin    admin
+@{DW_PASS}        chicharito21    hSnFHkAHtUxQB4cW    chicharito22    P0tat0Ch1pz2    t4m4r1nd4    pending    t4m4r1nd1
+...               t4m4r1nd1    t4m4r2nd2
+@{FB_USER}        testertkgdl10@gmail.com    testertkgdl2@gmail.com    testertkgdl6@gmail.com    testertkgdl7@gmail.com    testertkgdl4@gmail.com    pending    pending
+...               pending    pending    #gigya doesn't allows to use the same social credentials in more than one env.
+@{TW_USER}        testertkgdl11@gmail.com    tkgeorginatest@gmail.com    rtestacc2602@gmail.com    testertkgdl5@gmail.com    testertkgdl3@gmail.com    pending    pending
+...               pending
+@{ENV_TYPE}       production    production    test    test    test    test    test
+...               test    test    #type of each env to check credentials and other configuration that should be set
+@{ENV_SUFFIX}     /on/demandware.store/Sites-converse-Site    /on/demandware.store/Sites-converse-Site    /on/demandware.store/Sites-converse-Site    /on/demandware.store/Sites-converse-Site    /on/demandware.store/Sites-converse-gb-Site    /on/demandware.store/Sites-converse-Site    /on/demandware.store/Sites-converse-gb-Site
+...               /on/demandware.store/Sites-converse-Site    /on/demandware.store/Sites-converse-Site
+@{ENV_LOCALE_SUFFIX}    converse    converse    converse    converse    converse-gb    converse    converse-gb
+...               converse    converse
+@{ENV_LOCALE}     US    US    US    US    UK    US    UK
+...               US    US
+@{ENV_LOCALENAME}    Converse    Converse    Converse    2    Converse GB    Converse    Converse GB
+...               Converse    Converse

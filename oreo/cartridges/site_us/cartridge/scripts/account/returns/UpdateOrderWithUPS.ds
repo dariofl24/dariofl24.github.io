@@ -1,0 +1,30 @@
+/**
+ * @input SelectableOrder: Object
+ * @input UPSResult: Object
+ */ 
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+
+let logger = Logger.getLogger("UPS");
+
+function execute(args : PipelineDictionary) : Number 
+{
+    try {
+        updateOrderItemsWithUPS(args.SelectableOrder, args.UPSResult);
+    } 
+    catch(e) {
+        logger.error(e.toString());
+        return PIPELET_ERROR;
+    }
+    
+    return PIPELET_NEXT;
+}
+
+function updateOrderItemsWithUPS(selectableOrder : Object, upsResult : Object) {
+    if (!empty(upsResult.trackingNumber)) {
+        for each (let selectedItem : ProductLineItem in selectableOrder.getSelectedItems()) {
+            selectedItem.custom.returnTrackingNumber = upsResult.trackingNumber;
+        }
+    }
+}

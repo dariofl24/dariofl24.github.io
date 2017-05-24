@@ -1,0 +1,71 @@
+<isset name="DecoratorTemplate" value="search/pt_productsearchresult" scope="page"/>
+
+<isif condition="${pdict.CurrentHttpParameterMap.format.stringValue == 'ajax'}">
+    <isset name="DecoratorTemplate" value="util/pt_empty" scope="page"/>
+</isif>
+
+<isdecorate template="${DecoratorTemplate}">
+    <isif condition="${!('ShowSearchOptions' in pdict) || pdict.ShowSearchOptions}">
+        <div class="category-header clearfix">
+            <isif condition="${!empty(pdict.ProductSearchResult) && !empty(pdict.ProductSearchResult.category)}">
+                <div class="slim-category-billboard">
+                    <isslot id="slim-category-billboard" description="Slim Category Billboard" context="category" context-object="${pdict.ProductSearchResult.category}"/>
+                </div>
+            </isif>
+            <isif condition="${!(pdict.ProductPagingModel == null) && !pdict.ProductPagingModel.empty}">
+                <h1 id="results-products">
+                <isscript>
+                	var parentName;
+                </isscript>
+                    <isif condition="${!(pdict.topMenuCategory == null) && !pdict.topMenuCategory.empty}" >
+                    	<isscript>
+                    		importPackage(dw.system);
+							importPackage(dw.catalog);
+							importPackage(dw.util);
+
+                    		importScript("converse_core:constants.ds");
+    						importScript("util/ViewHelpers.ds");
+    						importScript("converse_core:catalog/CategoryUtils.ds");
+    						
+    						var CategoryUtils = converse.catalog.CategoryUtils;
+    						
+    						var topMenuCategories2 = getSubcategoriesInMenuForTopLevelCategory(getTopLevelCategory());
+    						
+                    	</isscript>
+                    	<isloop items="${topMenuCategories2}" var="tq">
+                    		
+                    		<isif condition="${decodeURIComponent(pdict.topMenuCategory).equals(tq.getID())}" >
+                    			<p id="topmenucatid" style="display:none" >${encodeURIComponent(pdict.topMenuCategory)}</p>
+                    			<isscript>
+                    				importScript("converse_core:catalog/CategoryUtils.ds");
+                    				parentName =CategoryUtils.getCategoryMenuDisplayName(tq).toLowerCase();
+                    			</isscript>
+                    			<span id="topmenucatname" class="content-header-category">${parentName}</span>
+                    			<span class="content-header-category">${" " + Resource.msg('search.category.separator', 'search', null) + " "}</span>
+                    			
+                    		</isif>
+                    	</isloop>
+                    	
+                    	
+                    </isif>
+                    <isscript>
+                        importScript("converse_core:search/GridwallBreadcrumbHelper.ds");
+                    </isscript>
+                    <span class="content-header-category">${getHtmlHeaderString(pdict.ProductSearchResult,parentName)}</span>
+                    
+                    <isif condition="${!empty(pdict.ProductSearchResult) && !empty(pdict.ProductSearchResult.getCategory())}">
+                        <isactivedatacontext category="${pdict.ProductSearchResult.getCategory().getDisplayName()}">
+                    </isif>
+                </h1>
+                <isinclude template="rendering/category/categorysearchoptions"/>
+            </isif>
+        </div>
+    </isif>
+
+    <div id="main" role="main" class="primary-focus clearfix">
+        <div id="primary" class="primary-content">
+            <isinclude template="search/components/productsearchrefinebar"/>
+            <isreplace/>
+        </div>
+    </div>
+</isdecorate>

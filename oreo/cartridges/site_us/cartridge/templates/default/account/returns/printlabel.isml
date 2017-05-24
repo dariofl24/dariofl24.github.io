@@ -1,0 +1,43 @@
+<iscache status="off" />
+
+<isdecorate template="account/returns/pt_orderreturns">
+    <isinclude template="util/modules"/>
+
+    <div class="print-label-content">
+        <isif condition="${!empty(pdict.UPSResult)}">
+            <div class="order-details-main-header clearfix">
+                <div id="return-to-orders-section">
+                    <isif condition="${pdict.CurrentCustomer.authenticated}">
+                        <a href="${URLUtils.https('Order-History')}" title="${Resource.msg('orderdetails.returnorder','account',null)}" >
+                            <span class="back-to-orders-text">${Resource.msg('orderdetails.returnorder','account',null)}</span>
+                            <span class="remove-button-icon"></span>
+                        </a>
+                    </isif>
+                </div>
+            </div>
+
+            <div class="order-details-header">
+                ${Resource.msg('returns.print.label','account',null)}
+            </div>
+
+            <div id="return-label-container">
+                <div id="return-label-image-container">
+                    <img id="return-label-image" class="label-img" src="data:image/gif;base64,${pdict.UPSResult.printLabel}"/>
+                </div>
+                <div class="cut-separator"></div>
+                <div id="return-label-directions-container">
+                    <iscontentasset aid="return-label-directions"/>
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <div id="print-return-label" class="label-view-order button">${Resource.msg('global.print','locale',null)}</div>
+            </div>
+        <iselse/>
+            <isinclude template="account/returns/nomodelfound.isml" />
+        </isif>
+    </div>
+
+    <script type="text/javascript" src="${URLUtils.staticURL('/js/onload_account_ups.js')}"></script>
+
+</isdecorate>

@@ -1,0 +1,7 @@
+<iscontent type="application/json" charset="UTF-8" compact="true"/>
+<isset name="enableCheckout" value="${pdict.EnableCheckout}" scope="page" />
+<isif condition="${(pdict.BasketStatus !== null && pdict.BasketStatus.error) || (!enableCheckout)}">
+	<isinclude template="util/errorjson.isml"/>
+<iselse>
+	<isinclude template="util/successjson.isml"/> 
+</isif>

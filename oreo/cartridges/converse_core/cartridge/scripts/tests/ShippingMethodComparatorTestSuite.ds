@@ -1,0 +1,161 @@
+/**
+* @input Unit: Object
+*/
+
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:checkout/converse/shipping/classes/ShippingMethodsComparator.ds");
+
+function execute(args : PipelineDictionary) : Number {
+    args.Unit.describe("Shipping Method Comparator Test Suite")
+        .test("shipping_method_compartor_shall_return_0_when_equal", function() {
+			var method = {
+				shippingMethod : {
+					custom : {
+						productTypeGroupOrder: 1
+					}
+				}
+			};
+
+			var comparator = new ShippingMethodComparator();
+			var result = comparator.compare(method, method);
+
+			Assert.areEqual(0, result, "Should be equal to zero");
+        })
+        .test("shipping_method_compartor_shall_return_1_when_second_arg_is_smaller", function() {
+			var method1 = {
+				shippingMethod : {
+					custom : {
+						productTypeGroupOrder: 2
+					}
+				}
+			};
+
+			var method2 = {
+				shippingMethod : {
+					custom : {
+						productTypeGroupOrder: 1
+					}
+				}
+			};
+
+			var comparator = new ShippingMethodComparator();
+			var result = comparator.compare(method1, method2);
+
+			Assert.areEqual(1, result, "Should be equal to one");
+        })
+        .test("shipping_method_compartor_shall_return_minus_1_when_second_arg_is_bigger", function() {
+			var method1 = {
+				shippingMethod : {
+					custom : {
+						productTypeGroupOrder: 1
+					}
+				}
+			};
+
+			var method2 = {
+				shippingMethod : {
+					custom : {
+						productTypeGroupOrder: 2
+					}
+				}
+			};
+
+			var comparator = new ShippingMethodComparator();
+			var result = comparator.compare(method1, method2);
+
+			Assert.areEqual(-1, result, "Should be equal to minus one");
+        })
+        .test("shipping_method_compartor_shall_return_minus_1_when_second_arg_is_null", function() {
+			var method1 = {
+				shippingMethod : {
+					custom : {
+						productTypeGroupOrder: 1
+					}
+				}
+			};
+
+			var method2 = {
+				shippingMethod : {
+					custom : {
+						productTypeGroupOrder: null
+					}
+				}
+			};
+
+			var comparator = new ShippingMethodComparator();
+			var result = comparator.compare(method1, method2);
+
+			Assert.areEqual(-1, result, "Should be equal to minus one");
+        })
+        .test("shipping_method_compartor_shall_return_minus_1_when_second_arg_is_undefined", function() {
+			var method1 = {
+				shippingMethod : {
+					custom : {
+						productTypeGroupOrder: 1
+					}
+				}
+			};
+
+			var method2 = {
+				shippingMethod : {
+					custom : {
+					}
+				}
+			};
+
+			var comparator = new ShippingMethodComparator();
+			var result = comparator.compare(method1, method2);
+
+			Assert.areEqual(-1, result, "Should be equal to minus one");
+        })
+        .test("shipping_method_compartor_shall_return_1_when_first_arg_is_null", function() {
+			var method1 = {
+				shippingMethod : {
+					custom : {
+						productTypeGroupOrder: null
+					}
+				}
+			};
+
+			var method2 = {
+				shippingMethod : {
+					custom : {
+						productTypeGroupOrder: 1
+					}
+				}
+			};
+
+			var comparator = new ShippingMethodComparator();
+			var result = comparator.compare(method1, method2);
+
+			Assert.areEqual(1, result, "Should be equal to minus one");
+        })
+        .test("shipping_method_compartor_shall_return_1_when_first_arg_is_undefined", function() {
+			var method1 = {
+				shippingMethod : {
+					custom : {
+					}
+				}
+			};
+
+			var method2 = {
+				shippingMethod : {
+					custom : {
+						productTypeGroupOrder: 1
+					}
+				}
+			};
+
+			var comparator = new ShippingMethodComparator();
+			var result = comparator.compare(method1, method2);
+
+			Assert.areEqual(1, result, "Should be equal to minus one");
+        });
+
+    return PIPELET_NEXT;
+}

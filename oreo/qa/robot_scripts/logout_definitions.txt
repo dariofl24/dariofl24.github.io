@@ -1,0 +1,24 @@
+*** Settings ***
+Library         Selenium2Library
+
+*** Variables ***
+${A_LOGIN_MENU}  account-info-box
+${A_HIMENU}     //div[@id='header']//div[@id='menu-utility-user']//div[@id='account-info-box'][contains(@class, 'logout')]
+${A_LOGOUT}     logout-link
+${U_ACCOUNTURL}  Profile-View
+${S_MYACCOUNTSTGS}  //div[@id='account-info-box'][contains(@class, 'logout')]
+#${U_HOMESHOW}  home
+${S_PROFILEMAIL}  //form[@id='profile-form']/div[2]/div[1]//span[@id='profileCustomerEmail']
+${LOGINSIGNUP}  Log In / Sign Up
+${LOGINDIV}     //div[@id='account-info-box'][@class='login']
+
+*** Keywords ***
+Menu Logout
+  Wait Until Page Contains Element  ${A_HIMENU}
+  Click Element  ${A_HIMENU}
+  Click Link  ${A_LOGOUT}
+
+Verify Logout
+  [Arguments]  ${homeshow}=home
+  Wait Until Page Contains Element  ${LOGINDIV}
+  Location Should Contain  ${homeshow}

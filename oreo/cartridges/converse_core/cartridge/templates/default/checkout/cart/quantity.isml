@@ -1,0 +1,11 @@
+<div class="attribute quantity-attr">
+    <select id="${pdict.id}" name="${pdict.name}" class="quantity" data-available="${pdict.available_count}" data-type="quantity" ${pdict.iseditdisabled}>
+	    <isloop items="${[10,9,8,7,6,5,4,3,2,1]}" var="value" >
+	        <isif condition="${value.toString() != pdict.selectedvalue}">
+	            <option value="${value.toString()}">${value.toString()}</option>
+	        <iselseif condition="${value.toString() == pdict.selectedvalue}" >
+	           <option value="${value.toString()}" selected="selected">${pdict.selectedvalue}</option>
+	        </isif>
+	    </isloop>
+	</select>
+</div>

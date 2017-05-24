@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="https://gpab.genesco.com:89/services/CustomerActivityDetail" xmlns:impl="https://gpab.genesco.com:89/services/CustomerActivityDetail" xmlns:intf="https://gpab.genesco.com:89/services/CustomerActivityDetail" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns1="urn:CustomerActivityDetail" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/"><wsdl:types><schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:CustomerActivityDetail"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ActivityDetailLine"><sequence><element name="lineIndicator" type="xsd:int"/><element name="text" nillable="true" type="xsd:string"/></sequence></complexType><complexType name="ArrayOfActivityDetailLine"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:ActivityDetailLine[]"/></restriction></complexContent></complexType><complexType name="CustomerActivityDetailResponse"><sequence><element name="detailLines" nillable="true" type="tns1:ArrayOfActivityDetailLine"/><element name="responseCode" nillable="true" type="xsd:string"/><element name="responseMessage" nillable="true" type="xsd:string"/><element name="transactionID" nillable="true" type="xsd:string"/></sequence></complexType></schema></wsdl:types>
+  <wsdl:message name="getDetailRequest">
+    <wsdl:part name="transactionID" type="xsd:string"/>
+    <wsdl:part name="companyNumber" type="xsd:int"/>
+    <wsdl:part name="customerNumber" type="xsd:int"/>
+    <wsdl:part name="activityType" type="xsd:string"/>
+    <wsdl:part name="activityNumber" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="getDetailResponse">
+    <wsdl:part name="getDetailReturn" type="tns1:CustomerActivityDetailResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="CustomerActivityDetail">
+    <wsdl:operation name="getDetail" parameterOrder="transactionID companyNumber customerNumber activityType activityNumber">
+      <wsdl:input name="getDetailRequest" message="impl:getDetailRequest"/>
+      <wsdl:output name="getDetailResponse" message="impl:getDetailResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CustomerActivityDetailSoapBinding" type="impl:CustomerActivityDetail">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getDetail">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getDetailRequest">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservices.sigma.com"/>
+      </wsdl:input>
+      <wsdl:output name="getDetailResponse">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://gpab.genesco.com:89/services/CustomerActivityDetail"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CustomerActivityDetailService">
+    <wsdl:port name="CustomerActivityDetail" binding="impl:CustomerActivityDetailSoapBinding">
+      <wsdlsoap:address location="https://gpab.genesco.com:89/services/CustomerActivityDetail"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

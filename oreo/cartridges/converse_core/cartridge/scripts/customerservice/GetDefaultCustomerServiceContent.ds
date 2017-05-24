@@ -1,0 +1,19 @@
+/**
+ * This script gets the default customer service content (the first one in the list from the customer-service library folder)
+ *
+ * @output Content : dw.content.Content The default content
+ */
+
+importPackage( dw.system );
+importPackage( dw.util );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:content/ContentUtils.ds");
+
+var ContentUtils = converse.content.ContentUtils;
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+    pdict.Content = ContentUtils.getDefaultCustomerServiceContent();
+    return PIPELET_NEXT;
+}

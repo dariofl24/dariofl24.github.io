@@ -1,0 +1,39 @@
+@import "_constants";
+/* bonus products */
+/* ------------------------------------- */
+
+.select-bonus-btn,
+.no-bonus-btn {
+	float:left;
+	margin:0 5px 0 0;
+}
+
+.buttonbar {
+	margin:11px 0;
+	overflow:hidden;
+	width:336px;
+}
+
+.bonus-product-list {
+	.bonus-product-item {
+		border-bottom:1px solid $COMMON_BORDER_COLOR;
+		clear:both;
+	}
+	
+	.product-name {
+		float:none;
+		margin:1em 0;
+	}
+	
+	.product-add-to-cart button {
+		float:left;margin-top:24px;
+	}
+}
+
+.bonus-product-list-footer {
+	clear:both;
+	
+	button {
+		float:right;
+	}
+}

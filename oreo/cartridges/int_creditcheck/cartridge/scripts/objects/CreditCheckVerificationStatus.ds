@@ -1,0 +1,19 @@
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:objects/AbstractPaymentVerificationStatus.ds");
+
+(function() {
+	var CreditCheckVerificationStatus = integration.payment.AbstractPaymentVerificationStatus.extend({
+		getPaymentType: function() {
+            return converse.constants.PaymentMethodId.Invoice;
+        }
+	});
+	
+	Namespace.extend(integration, {
+       creditcheck: {
+            CreditCheckVerificationStatus: CreditCheckVerificationStatus
+       }
+    });
+
+})();

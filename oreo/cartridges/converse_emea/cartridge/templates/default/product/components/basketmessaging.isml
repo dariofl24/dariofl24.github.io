@@ -1,0 +1,12 @@
+
+<div id="maxPLIsPerCO" data-maxPLIsPerCO="${pdict.MaxPLIsPerCO}"></div>
+
+<div class="error-form cart-is-full warning-form hide ">
+	<div class="header"><isprint value="${Resource.msg('cart.is_full_head', 'checkout', null)}" /></div>
+	<div><isprint value="${Resource.msg('cart.is_full_tail', 'checkout', null)}" /></div>
+</div>
+
+<div class="error-form cart-full-error hide">
+	<div class="header"><isprint value="${Resource.msg('cart.full_error_head', 'checkout', null)}" /></div>
+	<div><isprint value="${Resource.msg('cart.full_error_tail', 'checkout', null)}" /></div>
+</div>

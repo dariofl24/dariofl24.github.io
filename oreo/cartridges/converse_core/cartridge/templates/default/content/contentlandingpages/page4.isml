@@ -1,0 +1,27 @@
+<iscache type="relative" hour="24"/>
+<isdecorate template="content/home/pt_storefront">
+
+<iscomment>this is the template rendering the clp4 (Custom)</iscomment>
+	<div id="oc"></div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page4/singletout"/>
+	</div>
+	<div>
+        <isinclude template="components/heroslideshow/categorylandingpages/page4/heroslot.isml"/>
+	</div>
+    <div class="featured-categories">
+    	<isslot id="clp-4-featured-tabs" description="clp 4 featured category" context="global" />
+    </div>
+	<div class="lc">
+	    <isinclude template="components/brandsegments/categorylandingpages/page4/tripletout"/>
+        <isinclude template="components/brandsegments/categorylandingpages/page4/tripletout_row2"/>
+        <isinclude template="components/brandsegments/categorylandingpages/page4/tripletout_row3"/>
+		<div class="featured-categories">
+			<isslot id="clp-4-static-gridwall-1" description="clp 4 featured categories" context="global" />
+			<isslot id="clp-4-static-gridwall-2" description="clp 4 featured categories" context="global" />
+			<isslot id="clp-4-static-gridwall-3" description="clp 4 featured categories" context="global" />
+			<isslot id="clp-4-static-gridwall-4" description="clp 4 featured categories" context="global" />
+		</div>
+        <isslot id="clp-4-view-all-cta" description="cta for view all link" context="global" />
+	</div>
+</isdecorate>

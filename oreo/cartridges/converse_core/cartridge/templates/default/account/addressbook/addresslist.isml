@@ -1,0 +1,61 @@
+<iscache status="off" />
+<isscript>
+	importPackage(dw.system);
+	importPackage( dw.util );
+	importScript("converse_core:constants.ds");
+    importScript("converse_core:product/ProductUtils.ds");
+    importScript("converse_core:account/order/OrderUtils.ds");
+    importScript("converse_core:util/LocaleInfo.ds");
+
+	var currentCountry = converse.utils.getCurrentCountryCode( pdict.CurrentRequest );
+	var customerAddressLimit =  converse.utils.getCustomerStoredAddressesLimit( Site.current );
+</isscript>
+<isdecorate template="account/pt_account">
+    <isinclude template="account/modules" />
+
+    <isset name="addressesTabActive" value="active" scope="pdict"/>
+
+    <activetab data-active-tab="#address-view"></activetab>
+    
+    <div id="address-save-message">
+    	<span>${Resource.msg('account.addressdetailssaved','account',null)}</span>
+    </div>
+    
+    <isif condition="${!empty(pdict.CurrentCustomer.profile.addressBook.addresses)}">
+    
+        	<ul class="address-list">
+            	<isloop items="${pdict.CurrentCustomer.profile.addressBook.addresses}" var="address" status="loopstate">
+            	<isif condition="${converse.utils.getCountryForAddress(address).equals(currentCountry) }" >
+                	<li>
+                    	<div class="profile-address">
+                        	<isaddressdetail p_address="${address}"/>
+                    	</div>
+                    	<hr/>
+                	</li>
+                </isif>
+            	</isloop>
+        	</ul>
+    	  
+    </isif>
+    
+
+    <isif condition="${pdict.CurrentCustomer.profile.addressBook.addresses.size() < customerAddressLimit}">
+    
+        <isif condition="${pdict.CurrentCustomer.profile.addressBook.addresses.size()===0}">
+            <isset name="additional_class" value="no-addresses" scope="page"/>
+        <iselse>
+            <isset name="additional_class" value=" " scope="page"/>
+        </isif>
+
+        <div id="add-address-panel" class="profile-address ${additional_class}">
+            <div id="add-address-place-holder">
+                <isaddressedit p_action="add"/>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div id="add-address-button-container" class="${additional_class}">
+            <button id="add-address-button" class="button-fancy">${Resource.msg('addressinclude.add','account',null)}</button>
+        </div>
+    </isif>
+</isdecorate>

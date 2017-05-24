@@ -1,0 +1,57 @@
+/**
+* This pipelet calls Genesco web service
+*
+* @input GenescoContext : dw.util.Map The Genesco web service execution context.
+*
+* @output GenescoResponses : dw.util.Collection The Genesco order responses.
+* @output GenescoFailedResponse : Object The first failed response if any.
+*/
+importPackage(dw.system);
+importPackage(dw.order);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_genesco:GenescoConstants.ds");
+importScript("int_genesco:GenescoService.ds");
+importScript("int_genesco:command/CommandFactory.ds");
+
+function execute(pdict : PipelineDictionary) : Number
+{
+    var context : Map = pdict.GenescoContext;
+
+    var G_NS = integration.genesco;
+    var service = new G_NS.GenescoService();
+    var commandFactory = G_NS.command.CommandFactory;
+
+    var responses : Collection = new ArrayList();
+    var failedResponse = null;
+
+    let basketSummary = context.get("basketSummary");
+
+    var shipmentsIter : Iterator = basketSummary.getShipmentSummaryList().iterator();
+    while (shipmentsIter.hasNext()) {
+        var shipment = shipmentsIter.next();
+        context.put("shipment", shipment);
+
+        var response = processShipment(service, commandFactory, context);
+        responses.add(response);
+
+        if (!empty(response) && !response.isSuccess()) {
+            failedResponse = response;
+            break;
+        }
+    }
+
+    pdict.GenescoResponses = responses;
+    pdict.GenescoFailedResponse = failedResponse;
+
+    return empty(failedResponse) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function processShipment(service : Object, commandFactory : Object, context : Map) : Object {
+    var command = commandFactory.createCommand(context);
+    var status = service.call(command);
+    return command.responseObject;
+}

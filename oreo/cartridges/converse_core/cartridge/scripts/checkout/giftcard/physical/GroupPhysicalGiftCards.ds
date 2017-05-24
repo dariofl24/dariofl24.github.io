@@ -1,0 +1,39 @@
+/**
+* Groups the physical gift cards by price and sleeve
+*
+* @input PhysicalGiftCardCategory : dw.catalog.Category Physical gift cards category.
+* @output PhysicalGiftGroups : Object
+*
+*/
+importPackage(dw.catalog);
+importPackage(dw.system);
+
+importScript('checkout/giftcard/physical/lib/PhysicalGiftGroups.ds');
+
+function execute( args : PipelineDictionary ) : Number
+{
+	var category : Category = args.PhysicalGiftCardCategory;
+	var products = category.getProducts();
+	var groups = new PhysicalGiftGroups();
+	
+	var regex : RegExp = new RegExp("gc(\\d+)(.+)");
+	regex.ignoreCase = true;
+	
+	for each(var product : Product in products) {
+		var id = product.getID();
+		var matches = regex.exec(id);
+		
+		if (matches.length === 3) {
+			var priceGroup = matches[1];
+			var sleeveGroup = matches[2];
+			
+			groups.addPriceGroup(priceGroup);
+			groups.addSleeveGroup(sleeveGroup);
+			groups.addMatch(priceGroup, sleeveGroup, product);
+		}
+	}
+	
+	args.PhysicalGiftGroups = groups;
+	
+   	return PIPELET_NEXT;
+}

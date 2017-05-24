@@ -1,0 +1,12 @@
+*** Settings ***
+Documentation   Testing dyo's (using a preset metric ID)
+Suite Teardown  Close All Browsers
+Test Setup      Open Browser to Converse Site
+Force Tags      DYO  Regression  Checkout  NotReady
+Library         HttpLibrary.HTTP
+Resource        dyo_definitions.txt
+
+*** Test Cases ***
+Checkout With a preconfigured DYO for US Site
+  [Tags]  US
+  Run Keyword If  '@{ENV_TYPE}[${env_id}]'!='production'  Start DYO Checkout  ELSE  Log  Checkout DYO was not tested, we need ecn40 HTML Builder in dev01  WARN

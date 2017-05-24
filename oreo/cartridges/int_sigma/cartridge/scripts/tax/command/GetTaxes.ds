@@ -1,0 +1,47 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/command/SoapCommand.ds");
+
+importScript("SigmaConstants.ds");
+importScript("SigmaUtils.ds");
+
+(function(){
+    
+    var SigmaUtils = integration.sigma.SigmaUtils;
+    var SigmaConstants = integration.sigma.SigmaConstants;
+
+    var GetTaxes = converse.webservices.command.SoapCommand.extend({
+
+        init: function (requestHelper) {
+            this.requestHelper = requestHelper;
+            this.logger = Logger.getLogger(converse.constants.Logger.Sigma);
+        },
+
+        createRequest: function () {
+            return this.requestHelper.build();
+        },
+//TODO: check impact of custom manufacturerSKU
+        execute: function(request) {
+            var transactionID = request[0];
+            
+            this.logger.info("Calling Sigma Tax service for transactionID: {0}", transactionID);
+            
+            var response = this.serviceClient.editOrder.apply(this.serviceClient, request);
+            
+            this.logger.info("Sigma Tax service response for transactionID - {0} : {1}", transactionID, SigmaUtils.formatOrderTransResponse(response));
+            
+            return response;
+        },
+        
+        handleResponse: function(response) {
+            this._super(response);
+            this.responseObject = response;
+        }
+    });
+
+    var ns = Namespace.extendFromString(integration, "sigma.tax.command");
+    Namespace.extend(ns, { GetTaxes: GetTaxes });
+    
+})();

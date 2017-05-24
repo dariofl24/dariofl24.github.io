@@ -1,0 +1,38 @@
+<iscontent type="text/html " charset="UTF-8"/>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+    <head>
+        <link href="${URLUtils.staticURL('css/email-style.css')}" rel="stylesheet" type="text/css">
+        <isinclude template="util/modules"/>
+    </head>
+<body>
+    <table align="center" class="mail" width="auto" cellpadding="0" cellspacing="0" style="font-family: Arial; font-size: 16px; background-color: white;">
+        <tr>
+            <td>
+                <iscontentasset_inline aid="email-header" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <iscontentasset_inline aid="email-customer-registration" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <iscontentasset_inline aid="email-shop-links" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <iscontentasset_inline aid="email-share" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <iscontentasset_inline aid="email-footer" />
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

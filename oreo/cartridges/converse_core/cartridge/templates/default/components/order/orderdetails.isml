@@ -1,0 +1,115 @@
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:checkout/Utils.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+    importScript("converse_core:product/ProductUtils.ds");
+    importScript("converse_core:account/order/OrderUtils.ds");
+    importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+
+    var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+    var ProductImageResolver = converse.product.ProductImageResolver;
+    var OrderUtils = converse.account.order.OrderUtils;
+
+    var EnableOrderReturns = FeatureToggleService.getFeature("order-returns").isEnabled();
+</isscript>
+
+<iscomment>
+    Displays order details, such as order number, creation date, payment information,
+    order totals and information for each contained shipment.
+    This template module can be used in order confirmation pages as well as in the
+    order history to render the details of a given order. Depending on the context
+    being used in, one might omit rendering certain information.
+
+    Parameters:
+
+    order       : the order whose details to render
+    orderstatus : if set to true, the order status will be rendered
+                  if set to false or not existing, the order status will not be rendered
+</iscomment>
+
+<isset name="Order" value="${pdict.order}" scope="page"/>
+<isset name="constants" value="${converse.constants}" scope="page"/>
+
+<div class="order-details-container">
+
+    <div class="order-details-main-header clearfix">
+        <div id="return-to-orders-section">
+            <isif condition="${pdict.CurrentCustomer.authenticated}">
+                <a href="${URLUtils.https('Order-History')}" title="${Resource.msg('orderdetails.returnorder','account',null)}" >
+                    <span class="back-to-orders-text">${Resource.msg('orderdetails.returnorder','account',null)}</span>
+                    <span class="remove-button-icon"></span>
+                </a>
+            </isif>
+        </div>
+    </div>
+
+    <div class="order-details-header order-details-shipment-separator">${Resource.msg('orderdetails.shippingaddress','components',null)}</div>
+
+    <div class="order-details-shipping-address-container">
+        <div class="detail">
+            <isset name="shipment" value="${Order.getShipments()[0]}" scope="page"/>
+            <isminishippingaddress p_shipment="${shipment}" p_editable="${false}" p_showmethod="${false}" p_showpromos="${false}" p_showcountry="${false}"/>
+            <isif condition="${!empty(pdict.CurrentCustomer.profile) && !empty(pdict.CurrentCustomer.profile.email)}">          
+               <p>${Resource.msg('orderdetails.email','account',null) + pdict.CurrentCustomer.profile.email}</p>
+            </isif>
+        </div>
+    </div>
+
+    <iscomment>render a box for each shipment</iscomment>
+    <isloop items="${Order.shipments}" var="shipment" status="shipmentloopstate">
+        <isset name="orderNo" value="${dw.system.Site.current.ID == "converse" ? shipment.custom.journeysOrderID : pdict.Order.orderNo}" scope="page"/>
+        <isif condition="${empty(orderNo)}">
+            <div class="order-details-header order-details-shipment-separator red">${Resource.msg('summary.order.error.technical','checkout',null)}</div>
+        <iselse>
+            <div class="order-details-header order-details-shipment-separator">${Resource.msg('orderdetails.order','components',null)} ${orderNo}</div>
+        </isif>
+
+        <isif condition="${shipment.productLineItems.size() > 0}">
+            <div class="order-details-shipment-container">
+                <iscomment>Shipment items table</iscomment>
+                <isset name="productType" value="${shipment.custom.productType}" scope="page"/>
+                <isset name="isGiftCard" value="${constants.ProductType.PhysicalGiftCard.equals(productType) || constants.ProductType.ElectronicGiftCard.equals(productType)}" scope="page"/>
+                
+                <div class="shipment">
+                    <isloop items="${shipment.productLineItems}" var="productLineItem" status="pliloopstate">
+                        <isset name="product" value="${productLineItem.product}" scope="page"/>
+                        <isset name="itemStatus" value="${productLineItem.externalLineItemStatus}" scope="page"/>
+                        
+                        <div class="shipment-product-details">
+                            <div class="shipment-column image-cell">
+                                <isset name="mediaFile" value="${ProductImageResolver.getProductLineItemImage(productLineItem, 'lineItemTile', request.httpSecure)}" scope="page"/>
+                                <a class="thumb-link" href="${ProductUtils.getProductLineItemLink(productLineItem)}" title="${product.name}">
+                                    <img src="${mediaFile.getURL()}" alt="${mediaFile.alt}" title="${mediaFile.title}" />
+                                </a>
+                            </div>
+                            
+                            <div class="shipment-column detail">
+                                <isdisplayliproduct p_productli="${productLineItem}" p_dynamicpricing="${false}" p_hidepromo="${true}" p_hideavailability="${true}"/>
+                            </div>
+                        </div>
+
+                        <isif condition="${!isGiftCard}">
+                            <div class="shipment-column tracking-shipment">
+                                <isif condition="${!empty(productLineItem.custom.itemTrackingNumber)}">
+                                    <a target="_blank" href="${Resource.msgf('orderdetails.trackingurl','account',null,productLineItem.custom.itemTrackingNumber)}">
+                                        <button value="${Resource.msg('orders.tracking','account',null)}">${Resource.msg('orders.tracking','account',null)}</button>
+                                    </a>
+                                <iselse>
+	                                <div>
+	                                    <span>${itemStatus}</span>
+	                                </div>
+                                </isif>
+
+                                <isif condition="${EnableOrderReturns && OrderUtils.canReturnOrder(Order)}">
+                                    <a href="${URLUtils.url('Returns-Start', 'orderID', Order.getUUID())}">
+                                        <button class="return-button"value="${Resource.msg('orders.orderreturn','account',null)}">${Resource.msg('orders.orderreturn','account',null)}</button>
+                                    </a>
+                                </isif>
+                            </div>
+                        </isif>
+                    </isloop>
+                </div>
+            </div>
+        </isif>
+    </isloop>
+</div>

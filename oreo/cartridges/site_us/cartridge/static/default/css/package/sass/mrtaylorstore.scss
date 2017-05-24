@@ -1,0 +1,166 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_conv_mixins";
+@import "_media_query";
+
+#mr-taylor-header{
+    border-bottom: 1px solid $CONVERSE_COLOR_6;
+
+    h1 {
+        $font-size: $FONT_SIZE_3;
+
+        max-width: pxtoembase($CONTENT_MAX_WIDTH_LARGE, $font-size);
+        margin: 0 auto;
+        padding: 0 pxtoembase(20, $font-size);
+        text-align: left;
+        font-size: pxtoem($font-size);
+        line-height: pxtoembase(3 * $font-size, $font-size);
+
+        @include mq-small() {
+            $font-size: $FONT_SIZE_2;
+            font-size: pxtoem($font-size);
+            text-align: center;
+        }
+    }
+}
+
+#mr-taylor-container{
+    max-width: pxtoem($CONTENT_MAX_WIDTH_LARGE);
+    margin: 0 auto;
+    padding: pxtoem(20);
+
+    .first-form-group-error{
+        color: $CONVERSE_COLOR_7;
+    }
+
+    h2{
+        padding: pxtoem(10) 0 pxtoem(30) 0;
+    }
+
+    #mr-taylor-left-container{
+        width: 20%;
+        float: left;
+        margin-right: 5%;
+        font-size: 1.45em;
+        font-weight: bold;
+
+        p{
+            margin-bottom: 1em;
+        }
+    }
+
+    .button-column{
+        font-size: pxtoem(18);
+
+        @include mq-small() {
+            font-size: pxtoem(12);
+        }
+
+        button, .button {
+            display: inline-block;
+            text-decoration: initial;
+        }
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    .content-asset {
+        font-size: 1.1em;
+        text-align: justify;
+        line-height: pxtoem(16);
+
+        h1 {
+            font-weight: bold;
+            padding-bottom: pxtoem(10);
+        }
+
+        h2 {
+            font-weight: bold;
+            padding-bottom: pxtoem(10);
+            padding-top: pxtoem(20);
+        }
+
+        h3 {
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: disc inside;
+        }
+
+        ol {
+            list-style: decimal inside;
+            padding-left: pxtoem(10);
+        }
+
+        strong {
+            font-weight: bold;
+        }
+    }
+}
+
+%right-container{
+    width: 60%;
+    float: left;
+
+    @include mq-medium-cascade() {
+        width: 75%;
+    }
+}
+
+#mr-taylor-right-container{
+    @extend %right-container;
+}
+
+#verify-employee-form{
+    @extend %right-container;
+}
+
+#register-employee-form {
+    @extend %right-container;
+
+    #birthday-cell {
+
+        input {
+            display: none;
+        }
+
+        .date-select-box {
+            $width: 31%;
+            margin-left: 3.5%;
+            float: left;
+            @include converse-select-box($width);
+
+            &:nth-of-type(1){
+                margin-left: 0;
+            }
+        }
+
+        .form-caption{
+            display: none;
+        }
+
+        .form-caption.error-message{
+            display: block;
+            clear: both;
+        }
+    }
+
+    #gender-cell{
+        span{
+            width: pxtoem(90);
+            float: left;
+            margin-left: pxtoem(2);
+
+            &:nth-child(1){
+                margin-right: pxtoem(20);
+            }
+
+            input, label{
+                float: left;
+            }
+        }
+    }
+}

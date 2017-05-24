@@ -1,0 +1,80 @@
+/**
+*   @input SecurityTokenVerificationStatus : Object
+*
+*   @input PaymentMethodId : String
+*   @input CreditCardForm : dw.web.FormGroup The credit card form.
+*   @input RegionalPaymentsForm : dw.web.FormGroup The regional payment fields form.
+*   @input Basket : dw.order.Basket
+*   @input PaymentInstrument : dw.order.PaymentInstrument
+*
+*   @output SavePaymentVerificationStatus : Object
+*
+*/
+importPackage(dw.system);
+importPackage(dw.svc);
+
+importScript("converse_core:constants.ds");
+
+importScript("converse_core:common/libNamespace.ds");
+importScript("objects/PaynextVerificationStatus.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+    var service : SOAPService = ServiceRegistry.get("PayNext.SavePayment");
+    
+    var securityToken = args.SecurityTokenVerificationStatus.securityToken;
+    var creditCardForm : FormGroup = args.CreditCardForm;
+    
+    
+    var paymentData = new Object();
+    
+    if(args.PaymentMethodId == converse.constants.PaymentMethodId.CreditCard) {
+    
+        paymentData.Method = converse.constants.PaymentMethodId.CreditCard;
+        
+        paymentData.CreditCardHolder = args.Basket.billingAddress.fullName;
+        
+        paymentData.CreditCardType = creditCardForm.type.value;
+        paymentData.CreditCardNumber = creditCardForm.number.value;
+        paymentData.CreditCardExpirationMonth = creditCardForm.month.value;
+        paymentData.CreditCardExpirationYear = creditCardForm.year.value;
+        paymentData.CreditCardCVC = creditCardForm.cvn.value;
+    
+    } else if(args.PaymentMethodId == converse.constants.PaymentMethodId.PayPal) {
+ 
+        paymentData.Method = converse.constants.PaymentMethodId.PayPal;        
+ 
+    } else if(args.PaymentMethodId == converse.constants.PaymentMethodId.IDeal) {
+ 
+        paymentData.Method = converse.constants.PaymentMethodId.IDeal;
+        paymentData.BankName = args.RegionalPaymentsForm.idealBankName.value;
+        paymentData.Country = args.Basket.defaultShipment.shippingAddress.countryCode;             
+                    
+    } else if(args.PaymentMethodId == converse.constants.PaymentMethodId.Sofort) {
+ 
+        paymentData.Method = converse.constants.PaymentMethodId.Sofort;        
+ 
+    }
+    
+    var result = service.call(securityToken, paymentData);
+    
+    if( result.getStatus() == 'OK' ) {
+        
+        args.SavePaymentVerificationStatus = result.getObject().PaynextVerificationStatus;
+
+        if( !args.SavePaymentVerificationStatus.passedSavePayment ) {
+            return PIPELET_ERROR;
+        }
+        
+        args.PaymentInstrument.custom.paynextPaymentToken = args.SavePaymentVerificationStatus.paymentToken;
+    }
+    else {
+        args.SavePaymentVerificationStatus = result.getObject().PaynextVerificationStatus;
+        args.SavePaymentVerificationStatus.passedSavePayment = false;
+        
+
+        return PIPELET_ERROR;
+    }
+
+    return PIPELET_NEXT;
+}

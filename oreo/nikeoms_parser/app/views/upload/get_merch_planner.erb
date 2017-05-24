@@ -1,0 +1,11 @@
+<h3>Upload merchandise data file</h3>
+
+<%= form_tag url_for(:action => 'post_merch_planner'), :multipart => true do %>
+    <div>
+        <label for="datafile">Import File:</label>
+        <%=file_field_tag 'datafile', {} %>    
+    </div>
+    <div>
+       <%=submit_tag 'Upload', :class => 'btn' %> 
+    </div>
+<% end %>

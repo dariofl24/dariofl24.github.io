@@ -1,0 +1,13 @@
+<isscript>
+    importPackage( dw.system );
+    var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+
+    var enableSheerID = FeatureToggleService.isFeatureEnabled("sheerid");
+    var VerifySheerIDUrl = dw.system.Site.getCurrent().getCustomPreferenceValue('sheerID.verifyUrl');
+</isscript>
+
+<isif condition="${enableSheerID && !session.custom.sheeridValid}">
+    <div id="sheerid">
+        <iframe class="hidden" src="${VerifySheerIDUrl}"></iframe>
+    </div>
+</isif>

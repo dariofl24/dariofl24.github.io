@@ -1,0 +1,189 @@
+/**
+ * @input Unit: Object
+ */
+
+importPackage(dw.value);
+importPackage(dw.util);
+importPackage(dw.campaign);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Mocks/BasketSummaryMocks.ds");
+
+importScript("constants.ds");
+importScript("common/libInheritance.ds");
+importScript("converse_core:promotion/PromotionHelper.ds");
+
+function execute(args: PipelineDictionary) {
+
+    let TEST_MOCKS = converse.test.mocks;
+    let CURRENCY = converse.constants.CurrencyCode;
+    let ProductType = converse.constants.ProductType;
+    let PromotionType = converse.constants.PromotionType;
+    
+    let PromotionCode = "500off";
+    let ProductPromotionCode = "500offproduct";
+    let PROMOTION_ID = "1";
+    
+    let CreatePromotionMock = function(promotionOptions) {
+        return {
+            custom: {
+                promoCodeOverride: promotionOptions.promoCodeOverride,
+                promotionType: {
+                    value: PromotionType.BOGO
+                }
+            },
+            getPromotionClass: function () : String {
+                return promotionOptions.promotionClass;
+            },
+            getID: function() {
+                return promotionOptions.ID;
+            }
+        };
+    };
+    
+    let CreatePriceAdjustmentMock = function(priceAdjustmentOptions) {
+        return {
+            getPromotion: function() {
+                return CreatePromotionMock({
+                    promoCodeOverride: priceAdjustmentOptions.promoCodeOverride,
+                    promotionClass: priceAdjustmentOptions.promotionClass,
+                    ID: priceAdjustmentOptions.promotionID
+                });
+            },
+            
+            getNetPrice: function () : Money {
+                return priceAdjustmentOptions.netPrice || new Money(0, CURRENCY);
+            }
+        };
+    };
+    
+    let CreatePromotionManagerMock = function(promotionManagerOptions) {
+        return {
+            getActiveCustomerPromotions: function() {
+                return {
+                    getProductPromotions: function() {
+                        return new ArrayList(CreatePromotionMock({ ID: promotionManagerOptions.promotionID }));
+                    }
+                };
+            }
+        };
+    };
+    
+    let PromotionHelper = new converse.promotion.PromotionHelper(CreatePromotionManagerMock({promotionID: PROMOTION_ID}));
+    
+    args.Unit.describe("PromotionHelper")
+        .test("Zero savings are returned in case the basket doesn't have an order level discount associated", function() {
+            let basket = new TEST_MOCKS.MockBasket();
+            let savings : Money = PromotionHelper.getOrderLevelDiscountSavings(basket);
+            
+            Assert.isTrue(new Money(0, CURRENCY).equals(savings), "Zero savings are expected for bask with no order level discounts");
+        })
+        .test("Savings are returned for basket with an order level discount associated", function() {
+            let orderDiscount : Money = new Money(-15, CURRENCY);
+            
+            let basket = new TEST_MOCKS.MockBasket();
+            basket.setPriceAdjustments(new ArrayList(CreatePriceAdjustmentMock({
+                promotionClass: Promotion.PROMOTION_CLASS_ORDER,
+                netPrice: orderDiscount
+            })));
+            
+            let savings : Money = PromotionHelper.getOrderLevelDiscountSavings(basket);
+            
+            Assert.isTrue(orderDiscount.equals(savings), "Zero savings are expected for bask with no order level discounts");
+        })
+        .test("Correct product level discount promo code should be returned in promotion info", function() {
+            let basket = new TEST_MOCKS.MockBasket();
+            let shipment = new TEST_MOCKS.MockShipment();
+            shipment.custom.productType = ProductType.Regular;
+            shipment.setItemList(new ArrayList());
+            shipment.setPriceAdjustments(new ArrayList(CreatePriceAdjustmentMock({
+                promotionClass: Promotion.PROMOTION_CLASS_PRODUCT
+            })));
+            
+            basket.setShipmentList(new ArrayList(shipment));
+            
+            let promotionInfo = PromotionHelper.getLineItemCtnrPromotionInfo(basket, ProductType.Regular);
+            Assert.isTrue(promotionInfo[PromotionType.BOGO], "Expected to get PromotionType.BOGO in results");
+        })
+        .test("Order level discount promo code should be exclusively returned in promotion info for Regular shipment, no other promos should be there", function() {
+            let basket = new TEST_MOCKS.MockBasket();
+            basket.setPriceAdjustments(new ArrayList(CreatePriceAdjustmentMock({
+                promotionClass: Promotion.PROMOTION_CLASS_ORDER,
+                promoCodeOverride: PromotionCode,
+                promotionID: PROMOTION_ID
+            })));
+            
+            let shipment = new TEST_MOCKS.MockShipment();
+            shipment.custom.productType = ProductType.Regular;
+            shipment.setItemList(new ArrayList(new TEST_MOCKS.MockItem()));
+            shipment.setPriceAdjustments(new ArrayList(CreatePriceAdjustmentMock({
+                promotionClass: Promotion.PROMOTION_CLASS_PRODUCT
+            })));
+            
+            basket.setShipmentList(new ArrayList(shipment));
+            
+            let promotionInfo = PromotionHelper.getLineItemCtnrPromotionInfo(basket, ProductType.Regular);
+            Assert.areEqual(PromotionCode, promotionInfo[PromotionType.ORDER_DISCOUNT], "Expecting PromotionType.OREDER_DISCOUNT as the only promotion returned");
+        })
+        .test("Order level discount promo code should be exclusively returned in promotion info for DYO shipment, no other promos should be there", function() {
+            let basket = new TEST_MOCKS.MockBasket();
+            basket.setPriceAdjustments(new ArrayList(CreatePriceAdjustmentMock({
+                promotionClass: Promotion.PROMOTION_CLASS_ORDER,
+                promoCodeOverride: PromotionCode,
+                promotionID: PROMOTION_ID
+            })));
+            
+            let shipment = new TEST_MOCKS.MockShipment();
+            shipment.custom.productType = ProductType.C1;
+            shipment.setItemList(new ArrayList(new TEST_MOCKS.MockItem()));
+            
+            basket.setShipmentList(new ArrayList(shipment));
+            
+            let promotionInfo = PromotionHelper.getLineItemCtnrPromotionInfo(basket, ProductType.C1);
+            Assert.areEqual(PromotionCode, promotionInfo[PromotionType.ORDER_DISCOUNT], "Expecting PromotionType.OREDER_DISCOUNT as the only promotion returned");
+        })
+        .test("Get coupon discounts when there is no coupon line item", function() {
+            let couponLineItem = null;
+
+            Assert.areEqual(0, PromotionHelper.getCouponLineItemDiscounts(couponLineItem).length);
+        })
+        .test("Get coupon discounts when coupon line item has no price adjustments", function() {
+            let pas = new ArrayList();
+            let couponLineItem = { "priceAdjustments": pas };
+
+            Assert.areEqual(0, PromotionHelper.getCouponLineItemDiscounts(couponLineItem).length);
+        })
+        .test("Get coupon discounts when coupon line item has different price adjustments", function() {
+            let pas = new ArrayList();
+            pas.add({"promotionID": "promo1", "lineItemText": "promo1", "price": new Money(11, "USD")});
+            pas.add({"promotionID": "promo2", "lineItemText": "promo2", "price": new Money(22, "USD")});
+
+            let couponLineItem = { "priceAdjustments": pas };
+            let discounts = PromotionHelper.getCouponLineItemDiscounts(couponLineItem);
+
+            Assert.areEqual(2, discounts.length);
+
+            Assert.areEqual("promo1", discounts[0].id);
+            Assert.areEqual("promo1", discounts[0].name);
+            Assert.isTrue(new Money(11, "USD").equals(discounts[0].ammount));
+
+            Assert.areEqual("promo2", discounts[1].id);
+            Assert.areEqual("promo2", discounts[1].name);
+            Assert.isTrue(new Money(22, "USD").equals(discounts[1].ammount));
+        })
+        .test("Get coupon discounts when coupon line item has same price adjustments", function() {
+            let pas = new ArrayList();
+            pas.add({"promotionID": "promo1", "lineItemText": "promo1", "price": new Money(11, "USD")});
+            pas.add({"promotionID": "promo1", "lineItemText": "promo1", "price": new Money(11, "USD")});
+
+            let couponLineItem = { "priceAdjustments": pas };
+            let discounts = PromotionHelper.getCouponLineItemDiscounts(couponLineItem);
+
+            Assert.areEqual(1, discounts.length);
+            Assert.areEqual("promo1", discounts[0].id);
+            Assert.areEqual("promo1", discounts[0].name);
+            Assert.isTrue(new Money(22, "USD").equals(discounts[0].ammount));
+        });
+
+    return PIPELET_NEXT;
+};

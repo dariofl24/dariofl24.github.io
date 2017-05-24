@@ -1,0 +1,28 @@
+@import "_constants";
+@import "_conv_mixins";
+@import "_media_query";
+@import "_sprites";
+@import "_helper_functions";
+@import "compass/css3/box-sizing";
+
+/* Upgrade Browser Notification */
+/* ------------------------------------- */
+
+#upgrade-browser-notification {
+    font-size: pxtoem(18);
+    padding: pxtoem(10) pxtoem(16);
+    margin: auto;
+    text-align: center;
+    background-color: $CONVERSE_COLOR_13;
+    @include box-sizing(border-box);
+
+    a {
+        color: $CONVERSE_COLOR_14;
+        text-decoration: underline;
+    }
+    
+    b {
+      font-weight: bold;
+    }
+}
+

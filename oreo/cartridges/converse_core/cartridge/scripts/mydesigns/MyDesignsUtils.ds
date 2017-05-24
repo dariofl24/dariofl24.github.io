@@ -1,0 +1,66 @@
+importPackage(dw.system);
+importPackage(dw.object);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libLang.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function(){
+	
+	var logger = Logger.getLogger("MyDesignsUtils");
+	
+	
+    function getLockerItems(customerEmail : String) : List {
+    	var lockerItems : List = new ArrayList();
+    	
+        var it : SeekableIterator = null;
+        try {
+            it = CustomObjectMgr.queryCustomObjects("LockerItem", "custom.customerEmail = {0}", "custom.ID asc", customerEmail);
+            while (it.hasNext()) {
+                lockerItems.add1(it.next());
+            }
+        }
+        finally {
+            if (it) {
+                it.close();
+            }
+        }
+        
+        return lockerItems;
+    }
+    
+    function addLockerItem(metricID : String, customerEmail : String) {
+        
+     	try {
+				var item : CustomObject = CustomObjectMgr.createCustomObject('LockerItem', metricID);
+				item.custom.customerEmail = customerEmail;
+        		return item;
+        }
+        catch(ex) {
+            	throw new Error("An error occured while adding item");
+    	}
+    	
+    }
+    
+    function removeLockerItem(metricID : String) {
+    
+    	var item = CustomObjectMgr.getCustomObject('LockerItem', metricID);
+    	
+    	if(!empty(item)) {
+    		CustomObjectMgr.remove(item);
+    	}
+    		
+    }
+	
+    Namespace.extend(converse, { 
+	    mydesigns: {
+	        MyDesignsUtils: {
+	            getLockerItems : getLockerItems,
+	            addLockerItem : addLockerItem,
+	            removeLockerItem : removeLockerItem
+	        }
+	    }
+	});
+    
+})();

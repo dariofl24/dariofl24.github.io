@@ -1,0 +1,130 @@
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* line 4, ../css/package/sass/social.scss */
+.social-container {
+  padding-left: 42px;
+}
+@media screen and (min-width: 59.9375em) and (max-width: 77.5em) {
+  /* line 4, ../css/package/sass/social.scss */
+  .social-container {
+    padding-top: 8px;
+    margin-bottom: 60px;
+  }
+}
+
+/* line 15, ../css/package/sass/social.scss */
+.social-column h2 {
+  text-align: center;
+}
+/* line 19, ../css/package/sass/social.scss */
+.social-column .social-container {
+  padding-left: 0px;
+  width: 157px;
+  margin: 0px auto;
+}
+
+/* line 26, ../css/package/sass/social.scss */
+.social-column-tablet .social-container {
+  margin: 0px auto;
+  display: table;
+  padding-right: 170px;
+  padding-top: 5px;
+}
+@media screen and (min-width: 37.5em) and (max-width: 59.9375em) {
+  /* line 26, ../css/package/sass/social.scss */
+  .social-column-tablet .social-container {
+    padding-left: 180px;
+    padding-top: 16px;
+  }
+}
+@media screen and (max-width: 37.5em) {
+  /* line 26, ../css/package/sass/social.scss */
+  .social-column-tablet .social-container {
+    padding-left: 10px;
+    padding-right: 0px;
+    padding-top: 16px;
+  }
+}
+
+/* line 47, ../css/package/sass/social.scss */
+.social-icon-converse {
+  background: url('../images/sprites_social-s4f38220cbe.png') 0 0 no-repeat;
+  width: 25px;
+  height: 25px;
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+/* line 56, ../css/package/sass/social.scss */
+.social-icon-separator {
+  background: url('../images/sprites_social-s4f38220cbe.png') 0 -147px no-repeat;
+  width: 1px;
+  height: 25px;
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+/* line 65, ../css/package/sass/social.scss */
+.social-icon-email {
+  background: url('../images/sprites_social-s4f38220cbe.png') 0 -29px no-repeat;
+  width: 25px;
+  height: 25px;
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+/* line 75, ../css/package/sass/social.scss */
+.social-icon-facebook {
+  background: url('../images/sprites_social-s4f38220cbe.png') 0 -58px no-repeat;
+  width: 25px;
+  height: 25px;
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+/* line 85, ../css/package/sass/social.scss */
+.social-icon-pinterest {
+  background: url('../images/sprites_social-s4f38220cbe.png') 0 -117px no-repeat;
+  width: 25px;
+  height: 25px;
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+/* line 95, ../css/package/sass/social.scss */
+.social-icon-twitter {
+  background: url('../images/sprites_social-s4f38220cbe.png') 0 -177px no-repeat;
+  width: 25px;
+  height: 25px;
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+/* line 105, ../css/package/sass/social.scss */
+.social-icon-instagram {
+  background: url('../images/sprites_social-s4f38220cbe.png') 0 -87px no-repeat;
+  width: 25px;
+  height: 25px;
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+/* line 116, ../css/package/sass/social.scss */
+.product-actions .social-container {
+  display: table;
+  margin: 0 auto;
+  padding-left: 0px;
+  padding-top: 10px;
+}

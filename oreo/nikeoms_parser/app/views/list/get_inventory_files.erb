@@ -1,0 +1,9 @@
+<h3>List of inventory files</h3>
+
+<ul>
+    <% for file in @files %>
+        <li><%= link_to file, list_download_inventory_file_path(file_name: file) %></li>
+    <% end %>
+</ul>
+
+

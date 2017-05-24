@@ -1,0 +1,32 @@
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage (dw.catalog );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libLang.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+
+    function AttrBuilder() {
+        this.result = new ArrayList();
+    }
+    
+    AttrBuilder.prototype.add = function(name, value) {
+        if(name != null && value != null ) {
+            this.result.add1(' ' + name + '="' + value + '"');
+        }
+        return this;
+    }
+    
+    AttrBuilder.prototype.toString = function() {
+        return this.result.join(" ");
+    }
+
+    Namespace.extend(converse, {
+        ui: {
+            AttrBuilder: AttrBuilder
+        } 
+    });
+
+})();

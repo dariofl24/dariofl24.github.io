@@ -1,0 +1,48 @@
+<isscript>
+    var HtmlHeadTemplates = HtmlHeadTemplates || [];
+    HtmlHeadTemplates.push("mrtaylorstore/onload_mrtaylor_head");
+</isscript>
+
+<isdecorate template="content/home/pt_storefront">
+    <isinclude template="util/modules"/>
+
+    <div id="mr-taylor-header" class="page-header">
+        <h1>${Resource.msg('mrtaylorstore.signup','mrtaylorstore',null)}</h1>
+    </div>
+
+    <div id="mr-taylor-container" class="clearfix">
+        <isfirstformgrouperror form="${pdict.CurrentForms.mrtaylorstore}"/>
+    
+        <h2><iscontentasset aid="mrtaylorstore-signup-details"/></h2>
+        
+        <div id="mr-taylor-left-container">
+            ${Resource.msg('mrtaylorstore.letsstart','mrtaylorstore',null)}
+        </div>
+        
+        <form 
+            id="verify-employee-form"
+            name="${pdict.CurrentForms.mrtaylorstore.htmlName}"
+            action="${URLUtils.httpsContinue()}"
+            method="post"
+            data-validate="parsley"
+            autocomplete="off">
+            <div id="email-cell" class="form-row">
+                <ispinputfield 
+                    trigger="keyup"
+                    rowclass="form-column-full" 
+                    formfield="${pdict.CurrentForms.mrtaylorstore.customer.email}" 
+                    required_message="${Resource.msg('mrtaylorstore.email.missing-error','forms',null)}"
+                    regexp_message="${Resource.msg('profile.emailparseerror','forms',null)}"
+                    maxlength_message="${Resource.msg('profile.email.maxlength-error','forms',null)}"
+                    type="email"/>
+            </div>
+            <div class="form-row button-row">
+                <div class="button-column">
+                    <button id="verify-btn" type="submit" name="${pdict.CurrentForms.mrtaylorstore.verify.htmlName}" value="${Resource.msg('global.continue','locale',null)}">${Resource.msg('global.continue','locale',null)}</button>
+                    <button id="cancel-btn" class="cancel" type="submit" name="${pdict.CurrentForms.mrtaylorstore.cancel.htmlName}" value="${Resource.msg('global.cancel','locale',null)}">${Resource.msg('global.cancel','locale',null)}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+</isdecorate>

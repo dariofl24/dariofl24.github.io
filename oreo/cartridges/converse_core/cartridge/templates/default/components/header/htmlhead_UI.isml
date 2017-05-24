@@ -1,0 +1,46 @@
+<isscript>
+    importPackage(dw.system);
+    importScript("converse_core:constants.ds");
+    importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+    importScript("util/ViewHelpers.ds");
+    importScript("cart/CartUtils.ds");
+
+    var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+    var EnableMaxymiser = FeatureToggleService.getFeature("tagging-maxymiser").isEnabled();
+    
+   	if(!isSite('US') && request.httpCookies.acceptConverseCookiePolicy){    
+    	if(request.httpCookies.acceptConverseCookiePolicy.value == 0 || 
+    	        request.httpCookies.acceptConverseCookiePolicy.value == 2){
+    		EnableMaxymiser = false;
+    	}  	
+    }
+
+</isscript>
+
+<iscomment>THIRD PARTY STYLESHEETS STYLING</iscomment>
+<link href="${URLUtils.staticURL('/js/lib/jquery/ui/jquery.ui.all.css')}" type="text/css" rel="stylesheet" />
+<link href="${URLUtils.staticURL('/css/js-style.css')}" type="text/css" rel="stylesheet" />
+
+<isif condition="${EnableMaxymiser}">
+<!-- Maxymiser script start -->
+<script type="text/javascript" src="//service.maxymiser.net/cdn/converse/js/mmcore.js"></script>
+<!-- Maxymiser script end -->
+</isif>
+
+
+<!-- jQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">window.jQuery || document.write('<script src="${URLUtils.staticURL("/js/lib/jquery/jquery-1.7.1.min.js")}" type="text/javascript"><\/script>')</script>
+<script src="${URLUtils.staticURL('/js/lib/jquery/cookie/jquery.cookie.js')}" type="text/javascript"></script>
+
+<!-- Custom dropdown -->
+<script src="${URLUtils.staticURL('/js/lib/select2.js')}" type="text/javascript"></script>
+
+<!-- PDP Slider -->
+<script src="${URLUtils.staticURL('/js/lib/pdpSliderBlockPlugin.min.js')}" type="text/javascript"></script>
+
+<script>var app={};</script>
+<!--[if lt IE 9]>
+<script src="${URLUtils.staticURL('/js/lib/html5.js')}"></script>
+<![endif]-->
+<isactivedatahead/>

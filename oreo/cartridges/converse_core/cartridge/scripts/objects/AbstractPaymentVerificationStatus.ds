@@ -1,0 +1,31 @@
+importScript("constants.ds");
+importScript("common/libInheritance.ds");
+importScript("common/libNamespace.ds");
+
+(function() {
+	var AbstractPaymentVerificationStatus = Class.extend({
+        init: function(passedVerification: Boolean, errorMessage: String) {
+            this.passedVerification = passedVerification;
+            this.errorMessage = errorMessage;
+        },
+        
+        hasPassedVerification : function() {
+            return this.passedVerification;
+        },
+        
+        getErrorMessage: function() {
+            return this.errorMessage;
+        },
+        
+        getPaymentType: function() {
+            return "ABSTRACT_PAYMENT_TYPE";
+        }
+	});
+	
+	Namespace.extend(integration, { 
+       payment: {
+           AbstractPaymentVerificationStatus: AbstractPaymentVerificationStatus
+       }
+    });
+
+})();

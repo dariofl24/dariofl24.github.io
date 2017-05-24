@@ -1,0 +1,39 @@
+importPackage( dw.system );
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:constants.ds");
+
+importScript("int_cardinal:CardinalConstants.ds");
+
+(function() {
+    
+    var CARDINAL = integration.cardinal.constants.CardinalConstants;
+
+    var RawCentinelResponse = Class.extend({
+        
+        init: function(command) {
+            if (!command.hasError()) {
+                var xmlResponse : XML = new XML(command.response);
+                for each (var field : XML in xmlResponse.*) {
+                    this[field.name()] = field.text().toXMLString();
+                }
+            }
+            else {
+                this.ErrorNo = CARDINAL.Messages.CommunicationErrorNo;
+                this.ErrorDesc = CARDINAL.Messages.CommunicationErrorDesc;
+            }
+        },
+        
+        isSuccess: function() {
+            return (empty(this.ErrorNo) || this.ErrorNo == "0");
+        },
+        
+        hasMultipleOrders: function() {
+            return this.OrderNumber_2 != null;
+        }
+
+    });
+    
+    var ns = Namespace.extendFromString(integration, "cardinal.objects");
+    Namespace.extend(ns, { RawCentinelResponse : RawCentinelResponse });
+})();

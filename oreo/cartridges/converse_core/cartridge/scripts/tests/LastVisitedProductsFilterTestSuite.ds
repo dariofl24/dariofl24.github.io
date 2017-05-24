@@ -1,0 +1,101 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("converse_core:product/LastVisitedProductsFilter.ds");
+
+function execute(args : PipelineDictionary) : Number {
+
+    var LastVisitedProductsFilter = converse.product.LastVisitedProductsFilter;
+
+    function createProductMock(id: String) : Object {
+        return {
+            ID: id
+        };
+    }
+
+    function createLastVisitedProducts(numberOfProducts: Number, currentProduct: Object) : Collection {
+        var lastVisitedProducts: ArrayList = new ArrayList();
+
+        if(currentProduct) {
+            lastVisitedProducts.add(currentProduct);
+            numberOfProducts = numberOfProducts - 1;
+        }
+
+        for(let i = 0; i < numberOfProducts; i++) {
+            lastVisitedProducts.add(createProductMock(i));
+        }
+
+        return lastVisitedProducts;
+    }
+
+    args.Unit.describe("LastVisitedProductsFilter Test Suite")
+        .test("When currently viewed product is not in the last visited products list the list is not modified", function () {
+            var lastVisitedProducts: Collection = createLastVisitedProducts(5);
+            var currentProduct = {
+                ID: "current",
+                variant: false
+            };
+
+            LastVisitedProductsFilter.filter(currentProduct, lastVisitedProducts, 5);
+
+            Assert.isTrue(lastVisitedProducts.size() === 5);
+        })
+        .test("When currently viewed product is in the last visited products list it is removed from the list", function () {
+            var currentProduct = {
+                ID: "current",
+                variant: false
+            };
+            var lastVisitedProducts: Collection = createLastVisitedProducts(5, currentProduct);
+
+            LastVisitedProductsFilter.filter(currentProduct, lastVisitedProducts, 5);
+
+            Assert.isTrue(lastVisitedProducts.size() === 4);
+            Assert.isFalse(lastVisitedProducts.contains(currentProduct), "Current product should be removed from the recently viewed products");
+        })
+        .test("The currently viewed variaion product's master product is removed from the last visited list", function () {
+            var masterProduct = {
+                ID: "master",
+                master: true
+            };
+            var currentProduct = {
+                ID: "variation",
+                variant: true,
+                variationModel: {
+                    master: masterProduct
+                }
+            };
+
+            var lastVisitedProducts: Collection = createLastVisitedProducts(5, masterProduct);
+
+            LastVisitedProductsFilter.filter(currentProduct, lastVisitedProducts, 5);
+
+            Assert.isTrue(lastVisitedProducts.size() === 4);
+            Assert.isFalse(lastVisitedProducts.contains(masterProduct), "Current product should be removed from the recently viewed products");
+        })
+        .test("The number of items in the last visted products list does not exceed the maximum allowed", function () {
+            var actualNumberOfRecentlyViewed: Number = 10,
+                maxProductsInCollection: Number = 5;
+            var currentProduct = {
+                ID: "current",
+                variant: false
+            };
+            var lastVisitedProducts: Collection = createLastVisitedProducts(actualNumberOfRecentlyViewed, currentProduct);
+
+            LastVisitedProductsFilter.filter(currentProduct, lastVisitedProducts, maxProductsInCollection);
+
+            Assert.isTrue(lastVisitedProducts.size() === maxProductsInCollection);
+        });
+
+    return PIPELET_NEXT;
+};

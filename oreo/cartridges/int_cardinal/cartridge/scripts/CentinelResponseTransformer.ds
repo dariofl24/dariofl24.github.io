@@ -1,0 +1,174 @@
+importPackage( dw.system );
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:constants.ds");
+
+importScript("int_cardinal:objects/RawCentinelResponse.ds");
+importScript("int_cardinal:CardinalConstants.ds");
+
+(function() {
+    
+    var CARDINAL_NS = integration.cardinal.objects;
+    var CARDINAL_CONST = integration.cardinal.constants.CardinalConstants;
+    
+    var RawCentinelResponse = CARDINAL_NS.RawCentinelResponse;
+    
+    var CentinelResponse = Class.extend({
+        
+        init: function(rawResponse) {
+            this.errorNo = rawResponse.ErrorNo;
+            this.errorDesc = rawResponse.ErrorDesc;
+            
+            this.orders = {};
+            
+            if (rawResponse.isSuccess())
+            {
+                this.orderNumber = rawResponse.OrderNumber;
+                this.orderId = rawResponse.OrderId;
+                this.transactionId = rawResponse.TransactionId;
+                
+                this.orders[rawResponse.OrderNumber_1] = { orderId: rawResponse.OrderId_1, transactionId: rawResponse.TransactionId_1, shipmentType: rawResponse.MerchantData_1 };
+                
+                if (rawResponse.hasMultipleOrders()) {
+                    this.orders[rawResponse.OrderNumber_2] = { orderId: rawResponse.OrderId_2, transactionId: rawResponse.TransactionId_2, shipmentType: rawResponse.MerchantData_2 };
+                }
+                
+                this.reasonDesc = rawResponse.ReasonDesc;
+                this.reasonCode = rawResponse.ReasonCode;
+                this.merchantData = rawResponse.MerchantData;
+            }
+ 
+        }
+    });
+    
+    var CentinelLookupResponse = CentinelResponse.extend({
+        
+        init: function(rawResponse) {
+            this._super(rawResponse);
+            
+            if (rawResponse.isSuccess())
+            {
+                this.acsUrl = rawResponse.ACSUrl;
+                this.payload = rawResponse.Payload;
+                this.enrolled = rawResponse.Enrolled;
+            }
+        },
+        
+        isSuccess: function() {
+            return this.enrolled != null && this.enrolled === CARDINAL_CONST.PaymentStatus.Available;
+        }
+    });
+    
+    var CentinelAuthenticateResponse = CentinelResponse.extend({
+        
+        init: function(rawResponse) {
+            this._super(rawResponse);
+            
+            if (rawResponse.isSuccess())
+            {
+                // for parallel payments we'll be ignoring the addresses for the second order
+                // as the shipping to multiple addresses wont be implemented for Converse
+                this.paResStatus = rawResponse.PAResStatus;;
+                this.signatureVerification = rawResponse.SignatureVerification;
+                this.userStatus = rawResponse.ProcessorUserStatus;
+                this.userFirstName = rawResponse.ProcessorUserFirstName;
+                this.userLastName = rawResponse.ProcessorUserLastName;
+                this.userEmail = rawResponse.ProcessorUserEmail;
+                this.shippingFullName = rawResponse.ProcessorShippingFullName;
+                this.shippingAddress1 = rawResponse.ProcessorShippingAddress1;
+                this.shippingAddress2 = rawResponse.ProcessorShippingAddress2;
+                this.shippingCity = rawResponse.ProcessorShippingCity;
+                this.shippingState = rawResponse.ProcessorShippingState;
+                this.shippingPostalCode = rawResponse.ProcessorShippingPostalCode;
+                this.shippingCountryCode = rawResponse.ProcessorShippingCountryCode;
+                this.shippingPhone = rawResponse.ProcessorShippingPhone;
+                this.billingFullName = rawResponse.ProcessorBillingFullName;
+                this.billingAddress1 = rawResponse.ProcessorBillingAddress1;
+                this.billingAddress2 = rawResponse.ProcessorBillingAddress2;
+                this.billingCity = rawResponse.ProcessorBillingCity;
+                this.billingState = rawResponse.ProcessorBillingState;
+                this.billingPostalCode = rawResponse.ProcessorBillingPostalCode;
+                this.billingCountryCode = rawResponse.ProcessorBillingCountryCode;
+                this.billingPhone = rawResponse.ProcessorBillingPhone;
+                this.shippingMethod = rawResponse.ProcessorShippingMethod;
+            }
+        },
+        
+        isSuccess: function() {
+            return this.paResStatus != null && this.paResStatus === CARDINAL_CONST.TransactionStatus.Success;
+        },
+        
+        isCanceled: function() {
+            return this.paResStatus != null && this.paResStatus === CARDINAL_CONST.TransactionStatus.Canceled;
+        }
+    });
+    
+    var CentinelOrderResponse = CentinelResponse.extend({
+        
+        init: function(rawResponse) {
+            this._super(rawResponse);
+            
+            if (rawResponse.isSuccess())
+            {
+                this.orders[rawResponse.OrderNumber_1].statusCode = rawResponse.StatusCode_1;
+                
+                if (rawResponse.hasMultipleOrders()) {
+                    this.orders[rawResponse.OrderNumber_2].statusCode = rawResponse.StatusCode_2;
+                }
+            }
+        },
+        
+        isSuccess: function() {
+            if (Object.getOwnPropertyNames(this.orders).length === 0) return false;
+            
+            var success:Boolean = true;
+            for each (var order in this.orders) {
+                success = success && (order.statusCode === CARDINAL_CONST.StatusCode.Approved);
+            }
+            
+            return success;
+        }
+    });
+    
+    var CentinelVoidResponse = Class.extend({
+        
+        init: function(rawResponse) {
+            this.errorNo = rawResponse.ErrorNo;
+            this.errorDesc = rawResponse.ErrorDesc;
+            
+            if (rawResponse.isSuccess())
+            {
+                this.statusCode = rawResponse.StatusCode;
+                this.reasonDesc = rawResponse.ReasonDesc;
+                this.reasonCode = rawResponse.ReasonCode;
+                this.orderId = rawResponse.OrderId;
+            }
+        },
+        
+        isSuccess: function() {
+            return this.statusCode != null && this.statusCode === CARDINAL_CONST.StatusCode.Approved;
+        }
+    });
+    
+    var CentinelResponseTransformer = {
+        
+        getLookupResponse: function(rawResponse: RawCentinelResponse) {
+            return new CentinelLookupResponse(rawResponse);
+        },
+        
+        getAuthenticateResponse: function(rawResponse: RawCentinelResponse) {
+            return new CentinelAuthenticateResponse(rawResponse);
+        },
+        
+        getOrderResponse: function(rawResponse: RawCentinelResponse) {
+            return new CentinelOrderResponse(rawResponse);
+        },
+        
+        getVoidResponse: function(rawResponse: RawCentinelResponse) {
+            return new CentinelVoidResponse(rawResponse);
+        }
+    }; 
+    
+    var ns = Namespace.extendFromString(integration, "cardinal");
+    Namespace.extend(ns, { CentinelResponseTransformer : CentinelResponseTransformer });
+})();

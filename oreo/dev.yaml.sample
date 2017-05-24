@@ -1,0 +1,12 @@
+user: 'sample'
+password: 'sample_password'
+host: 'devXX.store.converse.demandware.net'
+versions_to_keep: 5
+env_override: "dev"
+cartridges:
+  local_dir: './cartridges'
+  remote_dir: '/on/demandware.servlet/webdav/Sites/Cartridges/version1'
+  version: 'version1'
+catalog_images:
+  local_dir: './catalog_images'
+  catalog: 'siteCatalog_Converse_US'

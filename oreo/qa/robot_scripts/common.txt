@@ -1,0 +1,106 @@
+*** Settings ***
+Documentation     This resource file contains common
+...               and global variables
+...               Configure the environment you want to use
+Library           Selenium2Library
+
+*** Variables ***
+# Choose Firefox Chrome Browser :
+# You can change here your web browser.
+${browser}        firefox
+${sel_speed}      .3
+${homepageUrl}    .demandware.net
+${productionURL}    http://www.converse.com
+${env_id}         3    # Choose 0=Staging(US), 1=Production(US), 2=Development(US),
+#3=dev01(US), 4=dev01(UK)    5=production.loaner0806.dw(US)    6=dev07(UK)    7=dev07(US)    8=dev02(US)
+${sel_timeout}    60
+# Test variables For Gift Cards
+${valid_gc_number}    6050516351000000010
+${valid_gc_pin}    629070
+# Test variables for Paypal integration
+${paypal_cred_email}    gvillafuerte_ppus@tacitknowledge.com    # Test access to paypal site
+${paypal_cred_pass}    tester2602    # test password credentials to paypal site
+${paypal_site}    https://developer.paypal.com
+${paypal_siteuser}    converse-dev@tacitknowledge.com    # General converse credentials to paypal site
+${paypal_password}    t4cit2@13!    # General converse password credentials to paypal site
+#Site valid user for login and account settings tests
+${validSite_user}    cgomez@tacitknowledge.com
+${validSite_pass}    tacittacit
+${validSite_name}    Carlos
+${validSite_lastName}    Tester
+${DEFAULTADDRESS}    123 Happy Place
+${DEFAULTCITY}    New York
+${DEFAULTSTATE}    New York
+${DEFAULTZIPCODE}    10163
+${DEFAULTPHONE}    333-333-3333
+${DEFAULTCC}      4112344112344113
+${DEFAULTTYPECC}    Visa
+${DEFAULTEXPYEAR}    2018
+${DEFAULTEXPMONTH}    January
+${DEFAULTSECCODE}    111
+#Variables for product backorder and checkout
+${id_Inlineproduct}    M5039
+${InlineSize}     100
+#Shipping methods validations
+#3 for ups_express, 2 for ups_ground, 4 for ups_next day
+@{regularShippingMethods}    3    2    4
+@{regularShippingMethodsName}    UPS Express Delivery    UPS Ground    UPS Next Day Air
+#Site Preferences definitions
+@{PMT_CREDENTIALS_TEST}    https://wsvar.paymentech.net/PaymentechGateway    T6904CONVERS    72Y6SBP499WR    007964
+@{PMT_CREDENTIALS_PROD}    https://ws.paymentech.net/PaymentechGateway    CONV6904    718WM9VS    007964
+@{SEEWHY_CREDENTIALS_TEST}    AB15984256
+@{SEEWHY_CREDENTIALS_PROD}    AB15984256
+@{ET_CREDENTIALS_TEST}    https://webservice.s6.exacttarget.com/Service.asmx    Converse_API_Test_User    Wearsneakers@2    263    Test_Subscriber_List_CP_Jan2014    551
+@{ET_CREDENTIALS_PROD}    https://webservice.s6.exacttarget.com/Service.asmx    Converse_API_Prod_User    Sneakers2012@1    263    Web_Subscriber_List_MultiSite    391
+@{GEN_CREDENTIALS_TEST}    http://journeys.virid.com/portallanding.aspx    http://journeys.virid.com/portallanding2.aspx    journeys    Nashville!
+@{GEN_CREDENTIALS_PROD}    https://www.journeys.com/portallanding.aspx    https://www.journeys.com/portallanding2.aspx    journeys    nashville!
+@{CARD_CREDENTIALS_TEST}    https://centineltest.cardinalcommerce.com/MAPS/txns.asp    1.7    135    2131410003    PP    Order    007964
+...               converse    converseone
+@{CARD_CREDENTIALS_PROD}    https://paymentech.cardinalcommerce.com/MAPS/txns.asp    1.7    135    2131410003    PP    Order    007964
+...               converse    converseone
+@{GIV_CREDENTIALS_TEST}    https://dev-gapi.givex.com:50081/1.0/trans/    5745b0102e3717f2e48a390437fd9868    10832    9864
+@{GIV_CREDENTIALS_PROD}    https://gapi-us2.givex.com:50081/1.0/trans/    d03c8f13ef7909b8f3de6fc59784d0d9    175882    3784
+@{GIG_CREDENTIALS_TEST}    3_nJPyS0dLvJeTmMcbCcAU1aCoRS0Xny3RpDBlCV3K0kEvPXi1zmI8zzAmhp5ecvt0    :FALSE:    U3GVJzN0p67mgheUVgw0znBVBPZWXu+L3sYp/Eqt7X8=
+@{GIG_CREDENTIALS_PROD}    3_lywyd28xaBQogh_oAEZyI_IgqZuLlE14t9WobHDDRU9N395TanZcYp1kTGoENJDf    :FALSE:    lgAw5YwZcH31KZYcWJM7CpwHSYhh5MTe92sUDJt1D/Q=
+@{BUI_CREDENTIALS_TEST}    ecn39-nikeid.nikedev.com
+@{BUI_CREDENTIALS_PROD}    nikeid.nike.com
+@{CUS_CREDENTIALS_TEST}    ecn39-nikeid.nikedev.com    s.idbuilder.test    Eiscuck_2cGenvere_2s
+@{CUS_CREDENTIALS_PROD}    nikeid.nike.com    ${EMPTY}    ${EMPTY}
+@{BVA_CREDENTIALS_TEST}    https://secure-niketown.nike.com/services/converseVerification.ser    digitas    Owderb_3
+@{BVA_CREDENTIALS_PROD}    https://secure-niketown.nike.com/services/converseVerification.ser    digitas    Owderb_3
+@{STO_CREDENTIALS_TEST}    AIzaSyBe_brX51XulH9nZrYQUYbt6l0VcFSQHas    US
+@{STO_CREDENTIALS_PROD}    AIzaSyBe_brX51XulH9nZrYQUYbt6l0VcFSQHas    US
+@{TEA_CREDENTIALS_TEST}    converse    :FALSE:    usproduction
+@{TEA_CREDENTIALS_PROD}    converse    :FALSE:    usproduction
+@{RES_CREDENTIALS_TEST}    https://ecn25-secure-store.nike.com    /services/gateway/nikeid-legacy-order-web/reserve_n_rdd/converse    4    nikeid-legacy    Dermara_4c
+@{RES_CREDENTIALS_PROD}    https://secure-store.nike.com    /services/gateway/nikeid-legacy-order-web/reserve_n_rdd/converse    4    nikeid-legacy    Roneeri_6p
+@{UPS_CREDENTIALS_TEST}    ACC14C69E1D8CA43    DigitalReturns    Dotcom2013    A3455Y    https://wwwcie.ups.com/ups.app/xml/ShipConfirm    https://wwwcie.ups.com/ups.app/xml/ShipAccept    Converse.com
+@{UPS_CREDENTIALS_PROD}    ACC14C69E1D8CA43    DigitalReturns    Dotcom2013    A3455Y    https://wwwcie.ups.com/ups.app/xml/ShipConfirm    https://wwwcie.ups.com/ups.app/xml/ShipAccept    Converse.com
+@{REFLEKTION_CRED_TEST}    //product.reflektion.com/widget/recommendation/11117-85270411/init.js?cv=test
+@{REFLEKTION_CRED_PROD}    //product.reflektion.com/widget/recommendation/11117-85270411/init.js
+@{Concord}        Concord    Concord    NH    03303    New Hampshire
+@{Fairfield}      Fairfield    Fairfield    CA    94533    California
+@{Ceres}          Ceres    Ceres    CA    95307    California
+@{Wakefield}      Wakefield    Wakefield    MA    01880    Massachusetts
+@{Duluth}         Duluth    Duluth    GA    30096    Georgia
+@{Los-Angeles}    Los-Angeles    Los Angeles    CA    90045    California
+@{Longport}       Longport    Longport    NJ    08403    New Jersey
+@{New-York}       New-York    New York    NY    10163    New York
+@{Redmond}        Redmond    Redmond    WA    98052    Washington
+@{Rochester}      Rochester    Rochester    MN    55904    Minnesota
+@{Miami}          Miami    Miami    FL    33153    Florida
+@{Tucson}         Tucson    Tucson    AZ    85703    Arizona
+@{Austin}         Austin    Austin    TX    78702    Texas
+@{Provo}          Provo    Provo    UT    84604    Texas
+@{Salt-Lake-City}    Salt-Lake-City    Salt Lake City    UT    84123    Utah
+@{Minneapolis}    Minneapolis    Minneapolis    MN    55412    Minneapolis
+@{Manhattan}      Manhattan    Manhattan    NY    10006    New York
+#DYO Preset product info
+#${US_PRODUCT_DESCRIPTION}    design-your-own-chuck-taylor-4-7-yr
+${US_PRODUCT_ID}    544135C
+${US_PRODUCT}     Design Your Own Chuck Taylor Shoreline
+${US_METRICID}    67570293
+#${UK_PRODUCT_DESCRIPTION}    design-your-own-chuck-taylor
+${UK_PRODUCT_ID}    122683
+${UK_PRODUCT}     Design Your Own Chuck Taylor All Star
+${UK_METRICID}    67570293

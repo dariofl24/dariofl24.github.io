@@ -1,0 +1,29 @@
+/**
+ * Returns the amount of order total that is not covered by any gift card.
+ *
+ * @input Basket : dw.order.Basket The basket.
+ * @output NonGiftCardAmount : dw.value.Money The amount to pay that is not covered by any gift card.
+ * @output GiftCardAmount : dw.value.Money The amount to pay that is covered by all applied gift cards.
+ */
+importPackage( dw.order );
+importPackage( dw.system );
+importPackage( dw.util);
+importPackage( dw.value );
+
+importScript("checkout/Utils.ds");
+importScript("converse_core:constants.ds");
+importScript("checkout/giftcard/GiftCardPayment.ds");
+
+var GiftCardPayment = converse.order.GiftCardPayment;
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+    var basket : Basket = pdict.Basket;
+
+    var money : Money = GiftCardPayment.calculateNonGiftCardAmount( basket );
+    
+    pdict.NonGiftCardAmount = GiftCardPayment.calculateNonGiftCardAmount( basket );
+    pdict.GiftCardAmount = GiftCardPayment.calculateGiftCardAmount( basket );
+
+    return PIPELET_NEXT;
+}

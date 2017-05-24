@@ -1,0 +1,97 @@
+importPackage(dw.order);
+importPackage(dw.system);
+importPackage(dw.svc);
+importPackage(dw.util);
+importPackage(dw.ws);
+importPackage(dw.web);
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("objects/CreditCheckVerificationStatus.ds");
+
+/**
+ * @input Basket: dw.order.Basket
+ * @input BillingAddressForm : dw.web.FormGroup BillingAddress form.
+ * @output VerificationStatus : Object This object is used on templates to display relevant error message if INVOICE cannot be used for one reason or another
+ * @output billingSameAsShipping : Boolean
+ */
+function execute( args : PipelineDictionary ) : Number 
+{
+    var logger = Logger.getLogger("CreditRiskCheck");
+    logger.info("CreditCheck riskCheck call, get service reference from registry");
+   //get reference from registry
+    var service = ServiceRegistry.get("CreditCheckService.riskCheck");
+    // return error , if no service found in the registry
+    if (service == null) {
+        return PIPELET_ERROR;
+    }
+    var billingAddressForm : FormGroup = args.BillingAddressForm;
+    if (!empty(billingAddressForm.billingSameAsShipping) && billingAddressForm.billingSameAsShipping.value === true) {
+        args.billingSameAsShipping = true;
+    } else {
+        args.billingSameAsShipping = false;
+    }
+    var result = service.call(args);
+    var errorMessage;
+    
+    if (result == null) {
+        logger.error("CreditCheckService.riskCheck returned null result");
+        errorMessage = Resource.msg("creditcheck.error.service.nullresult", "creditcheck", null);
+        args.VerificationStatus = new integration.creditcheck.CreditCheckVerificationStatus(false, errorMessage);
+        return PIPELET_ERROR;
+    }
+    
+    logger.info("CreditCheck riskCheck result status ---"+result.getStatus());
+    if (result.getStatus() == 'ERROR') {
+        logger.error("CreditCheckService.riskCheck returned ERROR result");
+        errorMessage = Resource.msg("creditcheck.error.service.errorresult", "creditcheck", null);
+        args.VerificationStatus = new integration.creditcheck.CreditCheckVerificationStatus(false, errorMessage);
+        return PIPELET_ERROR;
+    }
+
+    logger.info("CreditCheckService.riskCheck response ---"+result.getObject());
+    var resultCode = result.getObject().code;
+    logger.debug("resultCode="+resultCode);
+    switch(resultCode) {
+        case "0":
+            if (result.getObject().creditAllowed) {
+                logger.debug("invoice allowed");
+                args.VerificationStatus = new integration.creditcheck.CreditCheckVerificationStatus(true, "Success");
+                return PIPELET_NEXT;
+            } else {
+                logger.debug("invoice not allowed");
+                errorMessage = Resource.msg("creditcheck.error.invoice.declined", "creditcheck", null);
+            }
+            break;
+        case "1":
+            if (result.getObject().creditAllowed) {
+                //regardles of the fact that Aravto suggests some minor address change(optionally),
+                //it allows invoice option for this customer
+                logger.debug("invoice allowed, ");
+                args.VerificationStatus = new integration.creditcheck.CreditCheckVerificationStatus(true, "Success");
+                return PIPELET_NEXT;
+            }
+            if (result.getObject().customervalidated == true) {
+                logger.debug("billing address change required");
+                errorMessage = Resource.msg("creditcheck.error.billing.changeaddress", "creditcheck", null);
+            } else {
+                logger.debug("could not validate customer's billing address");
+                errorMessage = Resource.msg("creditcheck.error.customer.cannotvalidate", "creditcheck", null);
+            }
+            break;
+        case "50":
+            logger.error("billing address could not be validated b/c of invalid change request");
+            errorMessage = Resource.msg("creditcheck.error.service.errorresult", "creditcheck", null);
+            break;
+        case "99":
+            logger.error("billing address could not be validated b/c of CreditCheck internal error");
+            errorMessage = Resource.msg("creditcheck.error.service.errorresult", "creditcheck", null);
+            break;
+        default:
+        logger.error("billing address could not be validated b/c of CreditCheck unknown error");       
+        errorMessage = Resource.msg("creditcheck.error.default", "creditcheck", null);
+    }
+    
+    args.VerificationStatus = new integration.creditcheck.CreditCheckVerificationStatus(false, errorMessage);
+
+    return PIPELET_ERROR;
+}

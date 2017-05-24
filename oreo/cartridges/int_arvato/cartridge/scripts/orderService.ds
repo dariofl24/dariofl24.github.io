@@ -1,0 +1,69 @@
+/**
+*
+* @input OrderNo : String Order redord to export
+*/
+
+importPackage(dw.system);
+importPackage(dw.svc);
+importPackage(dw.util);
+importPackage(dw.ws);
+importPackage(dw.order);
+
+var logger = Logger.getLogger("ArvatoIntegration");
+var service: Service;
+
+function execute(pdict: PipelineDictionary): Number {
+
+    logger.info("OrderService get service reference from registry");
+    //get reference from registry
+    service = ServiceRegistry.get("OrderService.import");
+    // retrun error , if no service found in the registry
+    if (service == null) {
+        return PIPELET_ERROR;
+    }
+    //get orderNo from Job Params
+    var orderNo: String = pdict.OrderNo;
+
+    logger.info("OrderService orderNo from params -->" + orderNo);
+    //if orderNo is passed, process that order otherwise process all pending orders
+    if (!orderNo) {
+    	logger.info("OrderService processing all orders");
+        var queryString = "(status = 3 OR status = 4) AND (custom.transferStatus = NULL OR custom.transferStatus = 'PENDING' OR custom.transferStatus = 'ERROR')";
+
+        OrderMgr.processOrders(transferOrder, queryString);
+    } else {
+        transferOrder(OrderMgr.getOrder(orderNo));
+    }
+    return PIPELET_NEXT;
+}
+
+
+function transferOrder(orderRef: Order) {
+
+
+    logger.info("processing Order  --->" + orderRef.orderNo);
+    logger.info("Order transfer status ---" + orderRef.custom.transferStatus);
+
+    var result = service.call(orderRef);
+
+    logger.info("OrderService import result status ---" + result.getStatus());
+
+    if (result.getObject() != null) {
+        logger.info("OrderService import response result ---" + result.getObject().result);
+    }
+
+    if (result.getStatus() == 'ERROR' || result.getObject() == null || result.getObject().result != 'OK') {
+        //error while transferring the order
+        logger.info("Order transfer status failed");
+        orderRef.custom.transferStatus = "ERROR";
+
+    } else {
+        //order transfer success
+         logger.info("Order transfer status success");
+        orderRef.custom.transferStatus = "COMPLETE";
+    }
+
+
+
+
+}

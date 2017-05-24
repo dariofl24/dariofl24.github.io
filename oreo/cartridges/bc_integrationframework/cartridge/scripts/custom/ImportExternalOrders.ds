@@ -1,0 +1,53 @@
+/**
+* Import order tracking data for external orders
+*
+* @input OrderData : Array Order data to import
+* @input ImportType : String The import type (DYO or Inline)
+*
+* @output ErrorMsg : String The error message if any
+* @output ExternalOrders : Array Orders that are not present in our system
+*/
+importPackage(dw.io);
+importPackage(dw.order);
+importPackage(dw.system);
+importPackage(dw.util);
+
+let logger : Logger = Logger.getLogger('OrderTrackingImport');
+
+let ImportType = {
+    Inline: "inline",
+    DYO: "dyo"
+}
+
+function execute(args : PipelineDictionary) : Number
+{
+    let orderData : Array = args.OrderData;
+    let importType : String = args.ImportType.toLowerCase();
+
+    let errorMsg : String = null;
+    let externalOrders : Array = [];
+
+    try {
+        processExternalOrders(orderData, importType, externalOrders);
+    }
+    catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+
+    args.ErrorMsg = errorMsg;
+    args.ExternalOrders = externalOrders;
+
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function processExternalOrders(orderData: Array, importType : String, externalOrders : Array) {
+    for each (let record in orderData) {
+        if ((record.processed === false) && (importType === ImportType.DYO)) {
+            externalOrders.push({
+                "invoiceNumber" : record.invoiceNumber,
+                "email" : record.email 
+            });
+        }
+    }
+}

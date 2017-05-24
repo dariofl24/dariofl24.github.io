@@ -1,0 +1,101 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:storelocator/StoreLocatorUtils.ds");
+importScript("module_test:Framework/Assert.ds"); 
+
+function execute(args : PipelineDictionary) : Number {
+
+    let Utils = converse.storelocator.Utils;
+
+    args.Unit.describe("Store Locator Suite")
+        .test("Store Sorter test reseller stores sorted by distance", function () {
+            let stores = new LinkedHashMap();
+            stores.put({ID : 1, custom: {} }, 0.3);
+            stores.put({ID : 2, custom: {} }, 0.1);
+            stores.put({ID : 3, custom: {} }, 0.2);
+            
+            let result = Utils.sort(stores);
+            
+            Assert.areEqual(2, result[0].store.ID, "Store 2 expected first");
+            Assert.areEqual(3, result[1].store.ID, "Store 3 expected second");
+            Assert.areEqual(1, result[2].store.ID, "Store 1 expected third");
+        })
+        .test("Store Sorter test retail (flagship) stores over reseller always first", function () {
+            let stores = new LinkedHashMap();
+            stores.put({ID : 1, custom: { flagship : false } }, 0.2);
+            stores.put({ID : 2, custom: { flagship : true } }, 0.8);
+            stores.put({ID : 3, custom: {} }, 0.5);
+            
+            let result = Utils.sort(stores);
+            
+            Assert.areEqual(2, result[0].store.ID, "Flagship store expected first");
+            Assert.areEqual(1, result[1].store.ID, "Store 1 expected second");
+            Assert.areEqual(3, result[2].store.ID, "Store 3 expected third");
+        })
+        .test("Store Sorter test outlet stores over reseller always first", function () {
+            let stores = new LinkedHashMap();
+            stores.put({ID : 1, custom: { outlet : false } }, 0.2);
+            stores.put({ID : 2, custom: { outlet : true } }, 0.8);
+            stores.put({ID : 3, custom: {} }, 0.5);
+            
+            let result = Utils.sort(stores);
+            
+            Assert.areEqual(2, result[0].store.ID, "Outlet store expected first");
+            Assert.areEqual(1, result[1].store.ID, "Store 1 expected second");
+            Assert.areEqual(3, result[2].store.ID, "Store 3 expected third");
+        })
+        .test("Store Sorter test retail (flagship) stores over outlet and reseller always first", function () {
+            let stores = new LinkedHashMap();
+            stores.put({ID : 1, custom: { flagship : false } }, 0.2);
+            stores.put({ID : 2, custom: { flagship : true } }, 0.8);
+            stores.put({ID : 3, custom: { outlet : false } }, 0.3);
+            stores.put({ID : 4, custom: { outlet : true } }, 0.9);
+            stores.put({ID : 5, custom: {} }, 0.5);
+            
+            let result = Utils.sort(stores);
+            
+            Assert.areEqual(2, result[0].store.ID, "Flagship store expected first");
+            Assert.areEqual(4, result[1].store.ID, "Outlet store expected second");
+            Assert.areEqual(1, result[2].store.ID, "Store 1 expected third");
+            Assert.areEqual(3, result[3].store.ID, "Store 3 expected 4th");
+            Assert.areEqual(5, result[4].store.ID, "Store 5 expected 5th");
+        })
+        .test("Store Sorter test retail (flagship) stores sorted by distance", function () {
+            let stores = new LinkedHashMap();
+            stores.put({ID : 1, custom: { flagship : true } }, 0.8);
+            stores.put({ID : 2, custom: { flagship : true } }, 2.3);
+            stores.put({ID : 3, custom: {} }, 0.1);
+            stores.put({ID : 4, custom: { flagship : true } }, 0.5);
+            
+            let result = Utils.sort(stores);
+            
+            Assert.areEqual(4, result[0].store.ID, "Store 4 expected first");
+            Assert.areEqual(1, result[1].store.ID, "Store 1 expected second");
+            Assert.areEqual(2, result[2].store.ID, "Store 2 expected third");
+            Assert.areEqual(3, result[3].store.ID, "Store 3 expected 4th");
+        })
+        .test("Store Sorter test outlet stores sorted by distance", function () {
+            let stores = new LinkedHashMap();
+            stores.put({ID : 1, custom: { outlet : true } }, 0.8);
+            stores.put({ID : 2, custom: { outlet : true } }, 2.3);
+            stores.put({ID : 3, custom: {} }, 0.1);
+            stores.put({ID : 4, custom: { outlet : true } }, 0.5);
+            stores.put({ID : 5, custom: { flagship : true } }, 5.5);
+            
+            let result = Utils.sort(stores);
+            
+            Assert.areEqual(5, result[0].store.ID, "Store 5 expected first");
+            Assert.areEqual(4, result[1].store.ID, "Store 4 expected second");
+            Assert.areEqual(1, result[2].store.ID, "Store 1 expected third");
+            Assert.areEqual(2, result[3].store.ID, "Store 2 expected 4th");
+            Assert.areEqual(3, result[4].store.ID, "Store 3 expected 5th");
+        });
+
+   return PIPELET_NEXT;
+}

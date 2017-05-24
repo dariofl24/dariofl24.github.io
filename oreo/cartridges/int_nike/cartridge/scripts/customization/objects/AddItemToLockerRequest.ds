@@ -1,0 +1,48 @@
+importPackage( dw.system );
+importPackage( dw.util );
+importScript("converse_core:constants.ds");
+importScript("converse_core:util/TimeUtils.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("int_nike:NikeConstants.ds");
+
+(function() {
+    var CONST = integration.nike.constants;
+    
+    var AddItemToLockerRequest = Class.extend({
+        init: function(userId: String, userDefinedName: String, metricId: String, returnUrl: String ) {
+            this.userId = userId;
+            this.userDefinedName = userDefinedName;
+            this.metricId = metricId;
+            this.returnUrl = returnUrl;
+        },
+        
+        getParameters: function() {
+            this.parameters = {
+                'channel' : CONST.Channel, //Always this value per requirements
+                'gender_id' : "", //Always empty per requirements
+                'time_stamp' : this.getFormattedDate(TimeUtils.getUTCTime()), //Always UTC
+                'user_id' : this.userId,
+                'user_defined_name' : this.userDefinedName,
+                'return_url' : this.returnUrl,
+                'extra_data' : "scene7", //Always this value per requirements
+                'metrics_id' : this.metricId
+            };
+            
+            return this.parameters;
+        },
+        
+        getFormattedDate: function( date ) {
+            let currentTime : Calendar = new Calendar( date );
+            return StringUtils.formatCalendar(currentTime, "yyyy:MM:dd:HH:mm:ss" );
+        }
+    });
+    
+    Namespace.extend(integration, {
+        nike: {
+            customization: {
+                AddItemToLockerRequest : AddItemToLockerRequest
+            }
+        }
+    });
+})();

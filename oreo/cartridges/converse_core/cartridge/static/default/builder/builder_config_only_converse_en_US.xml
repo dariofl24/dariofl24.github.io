@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<!-- can be overwritten with an object with properties using these value names -->
+	<!-- site related -->
+	<site>
+		<!-- general -->
+		<channel>CONVERSE_ONE</channel>
+		<!-- <channel>US_NIKEID</channel> -->
+		<!-- <channel>CONVERSE_ONE</channel> -->
+		<region>CONVERSE</region>
+		<country>US</country>
+		<language>EN</language>
+		<siteURL>http://www.converse.com</siteURL>
+		<!-- should be in config because it needs domain -->
+		<siteId>12</siteId>
+		<domain>www.converse.com</domain>
+		<!-- store will pass in -->
+		<site/>
+		<!-- <site>CHUCK</site> -->
+		<shellDomain>www.converse.com</shellDomain>
+		<!-- <extraButton>EXTRA BUTTON</extraButton> -->
+		<!-- <overrideCSS>.iDdefault.menu.btn.extra{ color: #0000FF; hover: #FF0000; background: #000000; backgroundOver: #666666 }</overrideCSS> -->
+		<!-- retail -->
+		<retailType/>
+		<!-- <retailType>pos_us</retailType> -->
+		<!-- string -->
+		<takeawayType/>
+		<!-- string -->
+		<!-- boolean -->
+		<hasRetailCookie value="false"/>
+		<!-- <hasRetailCookie value="true"/> -->
+		<PCUenabled value="false"/>
+		<!-- boolean -->
+		<!-- enablements -->
+		<!-- <loggedIn value="false"/> -->
+		<lockerEnabled value="true"/>
+		<emailEnabled value="true"/>
+		<wallpaperEnabled value="true"/>
+		<priceEnabled value="true"/>
+		<printingEnabled value="true"/>
+		<shareItEnabled value="true"/>
+		<pinterestEnabled value="true"/>
+		<tumblrEnabled value="false"/>
+		
+		<!-- start add share 2.0 -->
+		<shareVersion value="1"/>
+		<makeDesignsPublic value="false"/>
+		<!-- end add share 2.0 -->
+		<!-- start add share 2.1 -->
+		<socialNetworksConnect value="false"/><!-- CG -->
+		<!-- end add share 2.1 -->
+		<endeca value="true"/>
+		<multipleAddToCart value="true"/>
+		<!-- can add multiple quantities of one size -->
+		<!-- can add groups of sizes -->
+		<teamPurchase value="true"/>
+		<!-- size type available. must have localized text as well -->
+		<sizeTypes>us,uk,cm,euro</sizeTypes>
+		<!-- <sizeTypes>us</sizeTypes> -->
+		<!-- builder size -->
+		<width value="910"/>
+		<!-- integer -->
+		<height value="520"/>
+		<!-- integer -->
+
+		<defaultBg>bg/defaultBg.jpg</defaultBg>
+
+		<!-- UI options -->
+		<!-- if node missing, no zoom -->
+		<uiZoom>1.5,2.4,*</uiZoom>
+		<!-- steps 1.5x, 3x and max -->
+		<!-- prebuild tool -->
+		
+		<isPatTool value="false"/>
+		<!-- used for prebuild tool only -->
+		<versionId>PCV_10002</versionId>
+		<!-- used for prebuild tool only -->
+		<!-- other Nike IT -->
+		<!-- won't attempt to load the price file -->
+		<disablePricing value="false"/>
+		<!-- won't attempt to load the constraints file -->
+		<disableConstraints value="true"/>
+		<!-- start add converse -->
+		<!--  -->
+		<showBaseSize value="true"/>
+		<yellowPageContext/>
+		<!-- <yellowPageContext>CONVERSE</yellowPageContext> -->
+		<!-- end add converse -->
+		<skipPrecart value="false"/>
+		<confirmAdd value="true"/>
+	</site>
+	<product>
+		<!-- string -->
+		<productId/>
+		<context/>
+		<instanceId/>
+		<metricId/>
+		<prebuildId/>
+		<!-- edit from cart url -->
+		<returnURL>returnURL</returnURL>
+		<!-- link to design url... can be passed in with config object. {siteSrc} will be replaced. Defined in share. -->
+		<designURL><![CDATA[http://{shellDomain}/nikeid/index.jsp?sitesrc={siteSrc}_{site}&designId={designId}&size=false]]></designURL>
+		<cartId/>
+		<!-- <proceedToNikeid><![CDATA[http://{nikeidDomain}/nikeid/index.jsp?sitesrc=hssportsnet&designId={designId}]]></proceedToNikeid> -->
+		<!-- <proceedToNikeid><![CDATA[http://{nikeidDomain}/nikeid/index.jsp?sitesrc=hssportsnet&location=launchBuilder,,{productId}.{context},,{designId}]]></proceedToNikeid> -->
+		<!-- boolean -->
+		<isInspiration/>
+		<!-- <primaryHex>141414</primaryHex> -->
+		<!-- <secondaryHex>cab591</secondaryHex> -->
+		<!-- <tertiaryHex>002852</tertiaryHex> -->
+		<!-- 1 not supported, 2 full builder, 3 simple builder -->
+		<builderVersion/>
+		<uiView></uiView>
+	</product>
+	<ui builderVersion="2" externalLibrary="UIDefault_assets.swf" file="UIDefault.swf" /> 
+	<ui builderVersion="3" externalLibrary="SCUI_assets.swf" file="SCUI.swf" /> 
+	<ui builderVersion="5" externalLibrary="UIReset_assets.swf" file="UIReset.swf">
+		<width value="910"/>
+		<!-- integer -->
+		<height value="675"/>
+		<!-- integer -->
+	</ui>
+	
+	<ui builderVersion="5.1" externalLibrary="/builder/UIOneConverse_assets.swf" file="/builder/UIOneConverse.swf">>
+		<!--<width value="910"/>-->
+		<!-- integer -->
+		<!--<height value="596"/>-->
+		<height value="675"/>
+		<!-- integer -->
+	</ui>
+	
+</config>

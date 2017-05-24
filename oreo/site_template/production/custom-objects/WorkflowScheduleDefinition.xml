@@ -1,0 +1,1293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-objects xmlns="http://www.demandware.com/xml/impex/customobject/2006-10-31">
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-OrdersDaily">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export daily order file to ExactTarget FTP (for CP) and DataHub (for Converse)</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2014-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionActiveTo">2019-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T05:15:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Export-OrdersDaily</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-OrdersOnDemand">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export daily order file on demand. Does not send file to any endpoint.</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionTime">2015-10-21T18:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2014-11-06T05:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Export-OrdersOnDemand</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-nl</value>
+            <value>converse-it</value>
+            <value>converse-be</value>
+            <value>converse-es</value>
+            <value>converse-fr</value>
+            <value>converse-de</value>
+            <value>converse-gb</value>
+            <value>converse-eu</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">SINGLE</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-NikeOMSRequests">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Imports Nike OMS Requests file from DataHub and sends to ET FTP (for CP)</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2014-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionActiveTo">2019-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T12:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import-NikeOMSRequests</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="OMS-Send-Emails">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2014-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionActiveTo">2019-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T14:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">OMS-Send-Emails</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="ProductStatusReport-OnlineWihtoutInventory">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="enabled">false</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2014-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionActiveTo">2019-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-02T04:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">ProductStatusReport-OnlineWihtoutInventory</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-OrderTrackingUS">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Transfers files with inline and DYO order status updates from Genesco (via Datahub's sftp) and processed them</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-10-26T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T11:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Order Tracking US</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-Catalog-Prices">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">SCHEDULED for Prod - Exports US Catalogs and Prices before sending them to Reflektion</object-attribute>
+        <object-attribute attribute-id="enabled">false</object-attribute>
+        <object-attribute attribute-id="executionTime">2015-11-02T05:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Export Catalog and Prices</object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">SINGLE</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="ImportInventoryUS">
+        <object-attribute attribute-id="componentLogLevel">info</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">SCHEDULED - Import US inventory feed from Genesco</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-10-26T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T10:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">info</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Inventory US</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">VERBOSE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="ImportInventoryEMEA">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">SCHEDULED - Import Inventory from Arvato</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-10-16T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-02T03:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Inventory EMEA</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>Sites-Site</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-InlineOrderTrackingES">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">SCHEDULED for Prod - SFTPs order tracking file from Arvato for ES inline orders and imports it into the system</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-10-29T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">HOUR</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T05:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Inline Order Status ES</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-es</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-InlineOrderTrackingIT">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">SCHEDULED for Prod - SFTPs order tracking file from Arvato for IT inline orders and imports it into the system</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-10-29T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">HOUR</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T05:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Inline Order Status IT</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-it</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+    
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-InlineOrderTrackingEU">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">SCHEDULED for Prod - SFTPs order tracking file from Arvato for EU inline orders and imports it into the system</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-10-29T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">HOUR</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T05:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Inline Order Status EU</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-eu</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-DeletedCustomers">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2014-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionActiveTo">2019-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">12</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">HOUR</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T05:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Export-DeletedCustomers</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="OMS-Process-Emails">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2014-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionActiveTo">2019-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T13:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">OMS-Process-Emails</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="ProductStatusReport-OfflineWihtInventory">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="enabled">false</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2014-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionActiveTo">2019-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-02T04:15:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">ProductStatusReport-OfflineWihtInventory</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-InlineOrderTrackingArvato">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">SCHEDULED for Prod - SFTPs order tracking file from Arvato for DE inline orders and imports it into the system</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-10-26T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">HOUR</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T11:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Inline Order Status DE</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-de</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="TransferIn-NikeEmployees">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">This is a placeholder for SFTP transfer of Nike employee verification file. We don't have NIKE credentials, and because of that use DataHub test SFTP to facilitate the transfer.&#13;
+NOTE: please DO NOT MODIFY THIS Workflow. Send all modification requests to converse-dev@tacitknowledge.com</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-12-09T05:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T08:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">SFTP Transfer of Weekly Employees file from NIKE</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+            <value>Surin.Bhawsar@converse.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">VERBOSE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>Sites-Site</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-Performics_v2">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports Performics product feed (converse_ddi.txt)</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2014-12-14T05:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T10:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Export-Performics_v2</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-InlineOrderTrackingFR">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">SCHEDULED for Prod - SFTPs order tracking file from Arvato for FR inline orders and imports it into the system</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-10-29T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">HOUR</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T05:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Inline Order Status FR</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-fr</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-InlineOrderTrackingGB">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">SCHEDULED for Prod - SFTPs order tracking file from Arvato for GB inline orders and imports it into the system</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-10-29T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">HOUR</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T05:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Inline Order Status GB</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-gb</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-NikeEmployeeData">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Reads csv file with Employee Records and then updates matching (by email address) User Profiles by updating its employeeActive and employeeID attributes.&#13;
+This job should run in each of the EMEA site (except for NL, which has a its own job to do this), because Employee eligibility is not site specific and we don't yet have Master Record in place to track eligibility across sites.</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-12-09T05:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T08:45:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import of Weekly Employee Data from Nike for EMEA sites</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+            <value>Surin.Bhawsar@converse.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">VERBOSE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-es</value>
+            <value>converse-be</value>
+            <value>converse-fr</value>
+            <value>converse-gb</value>
+            <value>converse-de</value>
+            <value>converse-it</value>
+            <value>converse-eu</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-WeeklyNikeEmployeeReport">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Weekly Employee (@converse.com, @nike.com) report.</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-11-22T05:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T16:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Weekly Nike Employee Report</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>converse-dev@tacitknowledge.com</value>
+            <value>surin.bhawsar@converse.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">VERBOSE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-es</value>
+            <value>converse-nl</value>
+            <value>converse-be</value>
+            <value>converse-fr</value>
+            <value>converse-gb</value>
+            <value>converse-de</value>
+            <value>converse-it</value>
+            <value>converse-eu</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-Products_v2">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export products_converse.csv to ExactTarget FTP (for CP)</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2014-12-12T05:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T14:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Export-Products_v2</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-InlineOrderTrackingNL">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">SCHEDULED for Prod - SFTPs order tracking file from Arvato for NL inline orders and imports it into the system</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-12-14T05:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">HOUR</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T05:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Inline Order Status NL</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-nl</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-RubberTracks">
+        <object-attribute attribute-id="description" xml:lang="x-default">Export RubberTracks registrations. Does not send file to any endpoint.</object-attribute>
+        <object-attribute attribute-id="enabled">false</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2014-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionActiveTo">2019-08-04T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">WEEK</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T07:15:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Export-RubberTracks</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>cindy.ascolillo@converse.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-Performics">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports Merchandiser Feed to Linkshare</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2014-11-18T05:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T08:45:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Export-MerchandiserFeed</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-dev@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-InlineOrderTrackingBE">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">SCHEDULED for Prod - SFTPs order tracking file from Arvato for BE inline orders and imports it into the system</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-10-29T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">HOUR</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T05:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Inline Order Status BE</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-be</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-Customers">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export CSV of coupons and associated promotions to ExactTarget FTP (for CP)</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-01-15T05:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T07:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Export-Coupons</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-NikeEmployeeData.LAST">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">The purpose of this job is the same as ImportEmployeeData. However, b/c we need to process the same file against all EMEA sites, but only archive one copy, this job will run the last for just one site, and clean up after itself by archiving the data file.</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-11-22T05:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T08:55:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import of Weekly Employee Data from Nike for NL site and cleanup</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>converse-dev@tacitknowledge.com</value>
+            <value>surin.bhawsar@converse.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">VERBOSE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-nl</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="ProductInformationReport">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports Product Information Report to Converse FTP</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2015-10-28T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T08:45:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">ProductInformationReport</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>converse-dev@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-es</value>
+            <value>converse-nl</value>
+            <value>converse-be</value>
+            <value>converse-fr</value>
+            <value>converse</value>
+            <value>converse-gb</value>
+            <value>converse-de</value>
+            <value>converse-it</value>
+            <value>converse-eu</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-Performics_EMEA">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports Performics product feed _ddi.txt for each EMEA site into local IMPEX folder without transferring them anywhere. Transfer to a remote SFTP host is done by TransferOut-Performics_EMEA workflow.</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2016-06-08T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T06:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Export-Performics_EMEA</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-es</value>
+            <value>converse-nl</value>
+            <value>converse-be</value>
+            <value>converse-fr</value>
+            <value>converse-gb</value>
+            <value>converse-de</value>
+            <value>converse-it</value>
+            <value>converse-eu</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="CreateDYOInventory.EMEA">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">On demand job to generate perpetual inventory for all DYO products based on what is available in DE site catalog.</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2016-09-08T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-02T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Create perpetual DYO inventory for EMEA sites</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>Sites-Site</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-NikeOMSRequestsEMEA">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Daily import of Nike OMS requests for EMEA sites, which is used to update DYO order status</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2016-03-24T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T12:05:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Nike OMS requests for EMEA</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>converse-dev@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">VERBOSE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-es</value>
+            <value>converse-be</value>
+            <value>converse-fr</value>
+            <value>converse-gb</value>
+            <value>converse-de</value>
+            <value>converse-it</value>
+            <value>converse-eu</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="TransferIn-NikeOMSRequestsEMEA">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">SFTP transfer of file with Nike OMS requests for EMEA from DATAHUB</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2016-03-24T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T12:05:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">TransferIn-NikeOMSRequestsEMEA</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>converse-dev@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">VERBOSE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>Sites-Site</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Import-NikeOMSRequestsEMEA.LAST">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">This job runs a bit later than its counterparts on the other EMEA sites and performs a cleanup by removing the datafile after it is imported</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2016-03-24T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T12:15:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Import Nike OMS requests for EMEA and cleanup</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>converse-dev@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">VERBOSE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-nl</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-OrdersDailyEMEA">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Daily export of orders from each EMEA site, run in the context of that site</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2016-04-12T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T05:30:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Export-OrdersDailyEMEA</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>petr.haloun@converse.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-nl</value>
+            <value>converse-it</value>
+            <value>converse-be</value>
+            <value>converse-es</value>
+            <value>converse-fr</value>
+            <value>converse-de</value>
+            <value>converse-gb</value>
+            <value>converse-eu</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="TransferOut-Performics_EMEA">
+        <object-attribute attribute-id="componentLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Transfers EMEA performics report files to a remote SFTP host on files.fornova.net</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2016-06-08T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T08:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">debug</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">TransferOut-Performics_EMEA</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>Sites-Site</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowScheduleDefinition" object-id="Export-Goldenfeeds">
+        <object-attribute attribute-id="componentLogLevel">error</object-attribute>
+        <object-attribute attribute-id="enabled">true</object-attribute>
+        <object-attribute attribute-id="executionActiveFrom">2016-09-30T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionActiveTo">2020-09-29T04:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionInterval">1</object-attribute>
+        <object-attribute attribute-id="executionIntervalType">DAY</object-attribute>
+        <object-attribute attribute-id="executionTime">1970-01-01T15:00:00.000+0000</object-attribute>
+        <object-attribute attribute-id="executionWeekdays">
+            <value>2</value>
+            <value>6</value>
+            <value>3</value>
+            <value>7</value>
+            <value>4</value>
+            <value>1</value>
+            <value>5</value>
+        </object-attribute>
+        <object-attribute attribute-id="fileLogLevel">error</object-attribute>
+        <object-attribute attribute-id="name" xml:lang="x-default">Export Goldenfeeds</object-attribute>
+        <object-attribute attribute-id="notificationEmails">
+            <value>confoo-reports-jobs@tacitknowledge.com</value>
+        </object-attribute>
+        <object-attribute attribute-id="notificationMode">CONCISE</object-attribute>
+        <object-attribute attribute-id="notificationStatuses">
+            <value>FINISHED_OK</value>
+            <value>FINISHED_ERROR</value>
+            <value>FINISHED_WARN</value>
+            <value>FINISHED_SKIPPED</value>
+        </object-attribute>
+        <object-attribute attribute-id="siteIds">
+            <value>converse-es</value>
+            <value>converse-nl</value>
+            <value>converse-be</value>
+            <value>converse-fr</value>
+            <value>converse-gb</value>
+            <value>converse-de</value>
+            <value>converse-it</value>
+            <value>converse-eu</value>
+        </object-attribute>
+        <object-attribute attribute-id="type">RECURRING</object-attribute>
+    </custom-object>
+
+</custom-objects>

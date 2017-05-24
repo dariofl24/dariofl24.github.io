@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+
+    <field formid="firstName"
+        label="family.firstname"
+        type="string" 
+        mandatory="true" 
+        binding="firstName" 
+        max-length="50" 
+        missing-error="forms.address.firstname.missing" 
+        range-error="forms.address.field.invalid" />
+
+    <field formid="lastName" 
+        label="family.lastname"
+        type="string" 
+        mandatory="true" 
+        binding="lastName" 
+        max-length="50" 
+        missing-error="forms.address.lastname.missing" 
+        range-error="forms.address.field.invalid" />
+
+    <field formid="address1" 
+        label="forms.address1" 
+        type="string" 
+        mandatory="true" 
+        binding="address1" 
+        max-length="64" 
+        missing-error="forms.addresserror" 
+        range-error="forms.address.field.invalid" />
+
+    <field formid="address2" 
+        label="forms.address2" 
+        type="string" 
+        mandatory="false" 
+        binding="address2" 
+        max-length="30" 
+        range-error="forms.address.field.invalid" />
+
+    <field formid="city" 
+        label="forms.city" 
+        type="string" 
+        mandatory="true" 
+        binding="city" 
+        max-length="20" 
+        missing-error="forms.address.city.missing" 
+        range-error="forms.address.field.invalid" />
+
+</form>

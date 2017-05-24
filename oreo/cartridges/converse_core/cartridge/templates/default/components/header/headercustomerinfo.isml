@@ -1,0 +1,96 @@
+<isscript>
+    importScript("util/ViewHelpers.ds");
+    importScript("account/Utils.ds");
+    var customer = pdict.CurrentCustomer,
+        userName = getCustomerUsername(customer);
+</isscript>
+
+<iscomment>
+Cross domain calls, used to login from http over https via ajax, do not work in IE9 and below.
+For all IE9 and lower users we are forcing them to https using the js code below.
+Removal of this will break ie9 and lower support for logging in and who knows what else.
+</iscomment>
+<isif condition="${!customer.isAuthenticated()}">
+<!--[if lt IE 10 ]>
+<script type="text/javascript">
+    if (window.location.protocol == "http:") {
+        var restOfUrl = window.location.href.substr(5);
+        window.location = "https:" + restOfUrl;
+    }
+</script>
+<![endif]-->
+</isif>
+
+<isif condition="${customer.isAuthenticated()}">
+<script type="text/javascript">
+	var triggermail_email_address = "${ pdict.CurrentUser.profile.email }";
+</script>
+</isif>
+
+<isif condition="${customer.isRegistered()}">
+    <isif condition="${customer.isAuthenticated() && empty(request.httpCookies['ifyouarenot'])}">
+        <div id="menu-utility-user">
+            <div id="account-info-box" class="logout" title="${Resource.msg('global.accountlink','locale',null)}">
+                ${Resource.msgf('headercustomerinfo.welcome','components','User', userName)}
+            </div>
+        </div>
+        <ul class="account-box">
+            <li class="first">
+                <a href="${URLUtils.https('Profile-View')}" title="${Resource.msg('headercustomerinfo.myaccount','components',null)}">
+                    ${Resource.msg('headercustomerinfo.myaccount','components',null)}
+                </a>
+            </li>
+            <li>
+                <a href="${URLUtils.https('MyDesigns-Show')}">
+                    ${Resource.msg('headercustomerinfo.saveddesigns','components',null)}
+                </a>
+            </li>
+            <li>
+                <a href="${URLUtils.https('Order-History')}" title="${Resource.msg('headercustomerinfo.orderstatus','components',null)}" >
+                    ${Resource.msg('headercustomerinfo.orderstatus','components',null)}
+                </a>
+            </li>
+            <isif condition="${isEmployee(customer)}">
+            <li>
+                <a href="${URLUtils.https('MyFamily-Show')}" title="${Resource.msg('headercustomerinfo.myfamily','components',null)}" >
+                    ${Resource.msg('headercustomerinfo.myfamily','components',null)}
+                </a>
+            </li>
+            </isif>
+            <li>
+                <a id="logout-link" href="${URLUtils.url('Login-Logout')}" title="${Resource.msg('global.logout','locale',null)}" class="user-account">
+                    ${Resource.msg('global.logout','locale',null)}
+                </a>
+            </li>
+        </ul>
+     <iselse>
+        <div id="menu-utility-user">
+            <div id="account-info-box" class="login" title="View Account">
+                <div class="inner">
+                    <div>
+                        ${Resource.msg('headercustomerinfo.welcomeback','components',null)}
+                        <a href="${URLUtils.https('Profile-View')}" title="${Resource.msg('global.accountlink','locale',null)} " class="user-account">
+                            <isprint value="${userName}"/>
+                        </a> <br>
+                        (
+                            <a title="${Resource.msg('global.login','locale',null)}${userName}" href="javascript:void();" class="user-account-login" >
+                                ${Resource.msg('headercustomerinfo.pleaselogin','components',null)}
+                            </a>
+                        )
+                    </div>
+                    <div>
+                        <a title="${Resource.msg('headercustomerinfo.not','components',null)} ${userName}" href="${URLUtils.url('Login-Logout')}">
+                            (
+                                ${Resource.msg('headercustomerinfo.not','components',null)} <isprint value="${userName}"/>?
+                            )
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </isif>
+<iselse>
+    <div id="menu-utility-user">
+     <div id="account-info-box" class="login" title="${Resource.msg('global.account.login.or.register','locale',null)}"><span class="clicked">${Resource.msg('global.account.login.or.register','locale',null)}</span></div>
+    </div>
+</isif>

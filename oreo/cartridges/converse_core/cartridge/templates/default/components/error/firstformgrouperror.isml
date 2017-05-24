@@ -1,0 +1,5 @@
+<isscript>
+    importScript("util/ViewHelpers.ds");
+    var firstFormGroupError = ViewHelpers.getFirstFormGroupError(pdict.form);
+</isscript>
+<isif condition="${!empty(firstFormGroupError)}"><span class="first-form-group-error">${Resource.msg(firstFormGroupError.error,'forms',null)}</span></isif>

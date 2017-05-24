@@ -1,0 +1,32 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+    
+    var Code = Class.extend({
+        
+        init: function(code : String, description : String) {
+            this.code = code;
+            this.description = description;
+        },
+        
+        getCode: function() : String {
+            return this.code;
+        },
+        
+        getDescription: function() : String {
+            return this.description;
+        }
+    });
+    
+    Code.create = function(code : String, description : String) : Object {
+        return new Code(code, description || "");
+    }; 
+    
+    var ns = Namespace.extendFromString(integration, "ups.objects");
+    Namespace.extend(ns, { Code: Code });
+        
+})();

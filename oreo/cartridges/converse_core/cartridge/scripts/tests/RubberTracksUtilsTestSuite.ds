@@ -1,0 +1,96 @@
+/**
+* @input Unit: Object
+*/
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:rubbertracks/RubberTracksUtils.ds");
+
+function execute(args : PipelineDictionary) : Number{
+    let createFormData = function () {
+        let result = {
+                firstName: "firstName",
+                lastName: "lastName",
+                email: "email",
+                phone: "phone",
+                city: "city",
+                stateUs: "AL",
+                stateNonUs: "",
+                countryCode: "US",
+                bandName: "bandName",
+                bandDescription: "bandDescription",
+                bandUrls: "bandUrls",
+                songs: "songs",
+                goals: "songs",
+                stages: "stages",
+                genres: "genres",
+                signupCenter: "",
+                guitarCenter: ""
+            }
+
+        return result;
+    };
+
+    args.Unit.describe("RubberTracksUtil Test Suite")
+        .test("RubberTracks_serialize_registration_to_json_when_country_US_and_state_US", function() {
+            let formData = createFormData();
+            let content = RubberTracksUtils.saveRegistrationToJson(null, formData);
+            let result = JSON.parse(content);
+
+            Assert.areEqual(1, result.length, "JSON array should have one element");
+            Assert.areEqual("AL", result[0].state, "For US we should have an US state");
+        })
+        .test("RubberTracks_serialize_registration_to_json_when_country_non_US_and_state_non_US_is_null", function() {
+            let formData = createFormData();
+            formData.stateNonUs = null;
+            formData.countryCode = "DE";
+            let content = RubberTracksUtils.saveRegistrationToJson(null, formData);
+            let result = JSON.parse(content);
+
+            Assert.areEqual(1, result.length, "JSON array should have one element");
+            Assert.areEqual("", result[0].state, "For Non US we should have an empty state in case non US state is null");
+        })
+        .test("RubberTracks_serialize_registration_to_json_when_country_non_US_and_state_non_US_has_value", function() {
+            let formData = createFormData();
+            formData.stateNonUs = "Munich";
+            formData.countryCode = "DE";
+            let content = RubberTracksUtils.saveRegistrationToJson(null, formData);
+            let result = JSON.parse(content);
+
+            Assert.areEqual(1, result.length, "JSON array should have one element");
+            Assert.areEqual("Munich", result[0].state, "For Non US we should have state set in case non US state is not null");
+        })
+        .test("RubberTracks_serialize_registration_to_json_when_band_urls_not_set", function() {
+            let formData = createFormData();
+            formData.bandUrls = null;
+            let content = RubberTracksUtils.saveRegistrationToJson(null, formData);
+            let result = JSON.parse(content);
+
+            Assert.areEqual(1, result.length, "JSON array should have one element");
+            Assert.areEqual("", result[0].bandUrls, "Band URLs are null in case it wasn't set");
+        })
+        .test("RubberTracks_serialize_registration_to_json_when_a_registration_already_exists", function() {
+            let formData = createFormData();
+            let content = RubberTracksUtils.saveRegistrationToJson(null, formData);
+            content = RubberTracksUtils.saveRegistrationToJson(content, formData)
+            let result = JSON.parse(content);
+
+            Assert.areEqual(2, result.length, "JSON array should have two elements");
+        })
+        .test("RubberTracks_state_valid_when_country_US_and_state_exists", function() {
+            let formData = {countryCode: "US", stateUs: "AL"};
+
+            Assert.isTrue(RubberTracksUtils.hasValidState(formData), "State is required when country US");
+        })
+        .test("RubberTracks_state_valid_when_country_non_US", function() {
+            let formData = {countryCode: "DE", stateUs: null};
+
+            Assert.isTrue(RubberTracksUtils.hasValidState(formData), "State is NOT required when country non-US");
+        });
+
+    return PIPELET_NEXT;
+}

@@ -1,0 +1,39 @@
+<isscript>
+    if (pdict.CurrentRequest.getHttpHeaders().get("x-is-query_string") !== null) {
+        var requestQueryStringArray = pdict.CurrentRequest.getHttpHeaders().get("x-is-query_string").split('&');
+        var PMapValue = '';
+        
+        for(var x = 0; x < requestQueryStringArray.length; x++) {
+            PMapValue = requestQueryStringArray[x];
+            
+            if ((PMapValue.indexOf('metricId') != -1) || (PMapValue.indexOf('metricsId') != -1)) {
+                var metricID = PMapValue.split('=')[1];
+            }
+            
+            if (PMapValue.indexOf('color') != -1) {
+                var colorAttributeID = PMapValue.split('=')[0];
+                var productColorValue = PMapValue.split('=')[1].replace('%20', ' ');
+            }
+
+            if (PMapValue.indexOf('enableHTMLBuilder') != -1) {
+                var enableHTMLBuilder = PMapValue.split('=')[1];
+            }
+        }
+    }
+
+    var isDYO = (pdict.Product.custom.productType.value === 'dyo') ? true : false;
+</isscript>
+
+<isset name="DecoratorTemplate" value="product/pt_productdetails" scope="page"/>
+<isif condition="${pdict.CurrentHttpParameterMap.format.stringValue == 'ajax'}">
+    <isset name="DecoratorTemplate" value="util/pt_empty" scope="page"/>
+</isif>
+
+<isdecorate template="${DecoratorTemplate}">
+
+    <isif condition="${metricID != null}">
+        <isinclude url="${URLUtils.url('Product-Detail','pid', pdict.Product.ID, colorAttributeID, productColorValue, 'metricId', metricID, 'enableHTMLBuilder', enableHTMLBuilder)}"/>
+    <iselse>
+        <isinclude url="${URLUtils.url('Product-Detail','pid', pdict.Product.ID, colorAttributeID, productColorValue, 'enableHTMLBuilder', enableHTMLBuilder)}"/>
+    </isif>
+</isdecorate>

@@ -1,0 +1,214 @@
+/**
+ * CalculateCart.ds
+ *
+ * This script implements a typical shopping cart calculation algorithm.
+ * The script is provided with the Demandware reference application. Some
+ * parts of the calculation script are specific to the reference application
+ * logic and might not be applicable to our customer's storefront applications.
+ * However, the shopping cart calculation script can be customized to meet
+ * specific needs and requirements.
+ *
+ * The script implements a complete recaculation of the shopping cart. This
+ * includes the following steps:
+ * - determine the prices of products contained in the cart
+ * - determine the shipping cost for the shipments of the cart
+ * - determine and apply all types of promotions
+ * - calculate the totals of shipments as well as the cart
+ *
+ * The script also handles gift certificate line items. In particular,
+ * gift certificates are:
+ * - not being taxed
+ * - are not count towards order-level promotions
+ * - are not count towards order-level shipping cost
+ *
+ * Shipping cost for a shipment are calculated if a shipping method is assigned
+ * to the shipment. If no shipping method is assigned to a shipment, shipping
+ * is not calculated and set to N/A.
+ *
+ * @input  Basket : dw.order.Basket
+ */
+
+
+ importPackage( dw.system );
+ importPackage( dw.web );
+ importPackage( dw.value );
+ importPackage( dw.util );
+ importPackage( dw.order );
+ importPackage( dw.campaign );
+ importPackage( dw.catalog );
+ importPackage( dw.customer );
+
+
+/**
+ * Function: execute
+ *
+ * Main function of the calculation script.
+ */
+function execute( pdict : PipelineDictionary ) : Number
+{
+    // ===================================================
+	// =====     	PROCESS INPUT PARAMETERS 		 =====
+    // ===================================================
+
+	var basket : Basket = pdict.Basket;
+	
+    // ===================================================
+	// =====   CALCULATE PRODUCT LINE ITEM PRICES    =====
+    // ===================================================
+
+	calculateProductPrices(basket);
+	
+    // ===================================================
+	// =====    CALCULATE GIFT CERTIFICATE PRICES    =====
+    // ===================================================
+
+	calculateGiftCertificatePrices(basket);
+	
+    // ===================================================
+	// =====   Note: Promotions must be applied      =====
+	// =====   after the tax calculation for         =====
+	// =====   storefronts based on GROSS prices     =====
+    // ===================================================
+	
+    // ===================================================
+	// =====   APPLY PROMOTION DISCOUNTS			 =====
+	// =====   Apply product and order promotions.   =====
+	// =====   Must be done before shipping 		 =====
+	// =====   calculation. 					     =====
+    // ===================================================
+
+	PromotionMgr.applyDiscounts(pdict.Basket);
+
+    // ===================================================
+	// =====        CALCULATE SHIPPING COSTS         =====
+    // ===================================================
+
+	// apply product specific shipping costs
+	// and calculate total shipping costs
+	ShippingMgr.applyShippingCost(basket);
+	
+    // ===================================================
+	// =====   APPLY PROMOTION DISCOUNTS			 =====
+	// =====   Apply product and order and 			 =====
+	// =====   shipping promotions.                  =====
+    // ===================================================
+
+	PromotionMgr.applyDiscounts(pdict.Basket);
+
+	// since we might have bonus product line items, we need to
+	// reset product prices
+	calculateProductPrices(basket);
+
+    // ===================================================
+	// =====            DONE                         =====
+    // ===================================================
+	
+    return PIPELET_NEXT;
+}
+
+
+/**
+ * FUNCTION: calculateProductPrices
+ *
+ * Calculates product prices based on line item quantities. Set calculates prices
+ * on the product line items.
+ */
+function calculateProductPrices(basket : Basket)
+{
+	// get total quantities for all products contained in the basket
+	var productQuantities : HashMap = basket.getProductQuantities();
+	
+	// get product prices for the accumulated product quantities
+	var products : Iterator = productQuantities.keySet().iterator();
+	var productPrices : HashMap = new HashMap();
+	
+	while(products.hasNext())
+	{
+		var product : Product = products.next();
+		var quantity : Quantity = productQuantities.get(product);
+		productPrices.put(product, product.priceModel.getPrice(quantity));
+	}
+	
+	// iterate all product line items of the basket and set prices
+	var productLineItems : Iterator = basket.getAllProductLineItems().iterator();
+	while(productLineItems.hasNext())
+	{
+		var productLineItem : ProductLineItem = productLineItems.next();
+		
+		// handle non-catalog products
+		if(!productLineItem.catalogProduct)
+		{
+			productLineItem.setPriceValue(productLineItem.basePrice.valueOrNull);
+			continue;
+		}
+		
+		var product : Product = productLineItem.product;
+
+		// handle option line items
+		if(productLineItem.optionProductLineItem)
+		{
+			// for bonus option line items, we do not update the price
+			// the price is set to 0.0 by the promotion engine
+			if(!productLineItem.bonusProductLineItem)
+			{
+				productLineItem.updateOptionPrice();
+			}
+		}
+		// handle bundle line items, but only if they're not a bonus
+		else if(productLineItem.bundledProductLineItem)
+		{
+			// no price is set for bundled product line items
+		}
+		// handle bonus line items
+		// the promotion engine set the price of a bonus product to 0.0
+		// we update this price here to the actual product price just to
+		// provide the total customer savings in the storefront
+		// we have to update the product price as well as the bonus adjustment
+		else if(productLineItem.bonusProductLineItem && product != null)
+		{
+			var price : Money = product.priceModel.price;
+			productLineItem.setPriceValue(price.valueOrNull);
+			// get the product quantity
+			var quantity : Quantity = productLineItem.quantity;
+			// we assume that a bonus line item has only one price adjustment
+			var adjustments : Collection = productLineItem.priceAdjustments;
+			if(!adjustments.isEmpty())
+			{
+				var adjustment : PriceAdjustment = adjustments.iterator().next();
+				var adjustmentPrice : Money = price.multiply(quantity.value).multiply(-1.0);
+				adjustment.setPriceValue(adjustmentPrice.valueOrNull);
+			}
+		}			
+		
+		// set the product price. Updates the 'basePrice' of the product line item,
+		// and either the 'netPrice' or the 'grossPrice' based on the current taxation
+		// policy
+		
+		// handle product line items unrelated to product
+		else if(product == null)
+		{
+			productLineItem.setPriceValue(null);				
+		}
+		// handle normal product line items
+		else
+		{
+			productLineItem.setPriceValue(productPrices.get(product).valueOrNull);
+		}
+    }
+}
+
+/**
+ * FUNCTION: calculateGiftCertificates
+ *
+ * Function sets either the net or gross price attribute of all gift certificate
+ * line items of the basket by using the gift certificate base price.
+ */
+function calculateGiftCertificatePrices(basket : Basket)
+{
+	var giftCertificates : Iterator = basket.getGiftCertificateLineItems().iterator();
+	while(giftCertificates.hasNext())
+	{
+		var giftCertificate : GiftCertificateLineItem = giftCertificates.next();
+		giftCertificate.setPriceValue(giftCertificate.basePrice.valueOrNull);
+	}
+}

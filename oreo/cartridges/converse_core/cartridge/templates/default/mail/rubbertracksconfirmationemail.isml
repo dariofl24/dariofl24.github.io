@@ -1,0 +1,40 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<subject>RubberTracks Registration Confirmation</subject>
+<html>
+<head>
+<title>RubberTracks Registration Confirmation</title>
+</head>
+<body>
+<table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <p>
+                Hey, ${pdict.FirstName}.
+
+
+                <br /><br />
+                Thanks for applying to Rubber Tracks. We're reviewing your application to record.
+                <br />
+                Stay tuned and we will let you know the status of your application.
+
+
+                <br /><br />
+                Good luck.
+
+
+                <br /><br />
+                Please do not reply to this message; this email was sent from a notification-only address that 
+                cannot accept incoming email.     
+
+
+                <br /><br />
+                You received this message as a Rubber Tracks' registration confirmation.
+                <br />
+                Converse Inc, One High Street, North Andover, MA 01845
+            </p>        
+        </td>
+    </tr>
+</table>    
+</body>
+</html>

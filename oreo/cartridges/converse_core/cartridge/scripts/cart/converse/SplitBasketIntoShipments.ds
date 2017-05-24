@@ -1,0 +1,20 @@
+/**
+* Splits the basket line items into two shipments.
+
+* @input Basket : dw.order.Basket The basket to be splited
+*
+*/
+
+importPackage(dw.system);
+importPackage(dw.order);
+
+importScript("converse_core:cart/converse/BasketSplitter.ds");
+
+function execute(args : PipelineDictionary) : Number
+{
+	var basket : Basket = args.Basket;
+	var basketSplitter : BasketSplitter = new BasketSplitter();
+	basketSplitter.splitBasket(basket);
+	
+	return PIPELET_NEXT;
+}

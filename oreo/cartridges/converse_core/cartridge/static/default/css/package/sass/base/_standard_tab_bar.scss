@@ -1,0 +1,108 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_selected_element_arrow";
+@import "_media_query";
+@import "compass/css3/box-sizing";
+
+%tab-header-main-container {
+    position: relative;
+    border-top: 1px solid $CONVERSE_COLOR_6;
+    border-bottom: 1px solid $CONVERSE_COLOR_6;
+    margin-bottom: pxtoem(36);
+
+    @include mq-small() {
+        margin: 0 pxtoem(18);
+        border: 0;
+    }
+}
+
+%tab-list-container {
+    width: 100%;
+    max-width: pxtoem($HEADER_MAX_WIDTH_LARGE);
+    margin: 0 auto;
+    text-align: center;
+
+    @include mq-medium() {
+        max-width: pxtoem($HEADER_MAX_WIDTH_MEDIUM);
+    }
+
+    @include mq-small() {
+        border: 0;
+    }
+}
+
+%base-active-tab {
+    @include mq-small() {
+        color: $CONVERSE_COLOR_12;
+        background: $CONVERSE_COLOR_1;
+    }
+
+    &:after {
+        @include selected-element-arrow($CONVERSE_COLOR_12, $CONVERSE_COLOR_6);
+    }
+}
+
+%tab-element {
+    display: inline-block;
+    width: $SECONDARY_NAVIGATION_COLUMN_WIDTH;
+    text-align: center;
+    position: relative;
+
+    @include mq-small() {
+        width: 100%;
+        padding-bottom: pxtoem(13.2);
+    }
+
+    a {
+        $font-size-desktop: 17;
+        $font-size-tablet: 14;
+        $font-size-mobile: 12;
+
+        display: block;
+        font-size: pxtoem($font-size-desktop);
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: pxtoembase(12.6, $font-size-desktop) 0;
+        border-right: 1px solid $CONVERSE_COLOR_6;
+        overflow: visible;
+        @include box-sizing(border-box);
+
+        @include mq-medium {
+            font-size: pxtoem($font-size-tablet);
+            padding: pxtoembase(12.6, $font-size-tablet) 0;
+            border-right: 1px solid $CONVERSE_COLOR_6;
+        }
+
+        @include mq-small {
+            font-size: pxtoem($font-size-mobile);
+            padding: pxtoem(12);
+            border: 1px solid $CONVERSE_COLOR_6;
+        }
+
+        &.active {
+            @extend %base-active-tab;
+        }
+    }
+
+    &:first-child {
+        a {
+            border-left: 1px solid $CONVERSE_COLOR_6;
+
+            &:after {
+                border-left: 0;
+            }
+        }
+    }
+}
+
+@mixin converse-tab-bar() {
+    @extend %tab-header-main-container;
+
+    > ul {
+        @extend %tab-list-container;
+
+        > li {
+            @extend %tab-element;
+        }
+    }
+}

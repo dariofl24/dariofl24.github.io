@@ -1,0 +1,337 @@
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* line 9, ../css/package/sass/content_pages.scss */
+.pt_customer-service {
+  padding-bottom: 5em;
+}
+/* line 18, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-page-content .support-page-left-nav, .pt_customer-service .support-tab-content > ul.desktop-content-navigation {
+  width: 27.5%;
+  padding-right: 2.14286em;
+  float: left;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 18, ../css/package/sass/content_pages.scss */
+  .pt_customer-service .support-page-content .support-page-left-nav, .pt_customer-service .support-tab-content > ul.desktop-content-navigation {
+    display: none;
+  }
+}
+/* line 28, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-page-content .support-page-left-nav > li.last, .pt_customer-service .support-tab-content > ul.desktop-content-navigation > li.last {
+  border-bottom: none;
+}
+/* line 32, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-page-content .support-page-left-nav > li.active:after, .pt_customer-service .support-tab-content > ul.desktop-content-navigation > li.active:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 40%;
+  right: -0.42857em;
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 0.42857em;
+  border-left-color: #000000;
+}
+/* line 43, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-page-content .support-page-left-nav {
+  text-transform: uppercase;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 43, ../css/package/sass/content_pages.scss */
+  .pt_customer-service .support-page-content .support-page-left-nav {
+    width: 100%;
+  }
+}
+/* line 51, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-page-content .support-page-left-nav > li {
+  position: relative;
+  padding: 1.28571em 0;
+  border-bottom: 0.08333em solid #CACACA;
+  font-size: 1.16667em;
+  font-weight: bold;
+  cursor: pointer;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 51, ../css/package/sass/content_pages.scss */
+  .pt_customer-service .support-page-content .support-page-left-nav > li {
+    display: block;
+  }
+}
+/* line 63, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-page-content .support-page-left-nav > li:last-child {
+  border-bottom: none;
+}
+/* line 69, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-page-content .support-page-right-content, .pt_customer-service .support-tab-content > ul.mobile-content-navigation {
+  position: relative;
+  padding-right: 0;
+  float: left;
+  width: 72.5%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 69, ../css/package/sass/content_pages.scss */
+  .pt_customer-service .support-page-content .support-page-right-content, .pt_customer-service .support-tab-content > ul.mobile-content-navigation {
+    float: none;
+    width: 100%;
+  }
+}
+/* line 82, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-page-content .support-page-right-content > li:not(.content-page), .pt_customer-service .support-tab-content > ul.mobile-content-navigation > li:not(.content-page) {
+  display: none;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 82, ../css/package/sass/content_pages.scss */
+  .pt_customer-service .support-page-content .support-page-right-content > li:not(.content-page), .pt_customer-service .support-tab-content > ul.mobile-content-navigation > li:not(.content-page) {
+    display: block;
+  }
+}
+/* line 89, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-page-content .support-page-right-content > li:not(.content-page):after, .pt_customer-service .support-tab-content > ul.mobile-content-navigation > li:not(.content-page):after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 30%;
+  right: 0;
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 0.42857em;
+  border-top-color: #000000;
+}
+/* line 99, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-page-content .support-page-right-content > li:not(.content-page).active:after, .pt_customer-service .support-tab-content > ul.mobile-content-navigation > li:not(.content-page).active:after {
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 0.42857em;
+  border-bottom-color: #000000;
+  bottom: 40%;
+}
+/* line 106, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-page-content .support-page-right-content > li.content-page, .pt_customer-service .support-tab-content > ul.mobile-content-navigation > li.content-page {
+  border-bottom: none;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 106, ../css/package/sass/content_pages.scss */
+  .pt_customer-service .support-page-content .support-page-right-content > li.content-page, .pt_customer-service .support-tab-content > ul.mobile-content-navigation > li.content-page {
+    padding-top: 3em;
+    padding-bottom: 5em;
+    border-bottom: 0.08333em solid #CACACA;
+  }
+  /* line 114, ../css/package/sass/content_pages.scss */
+  .pt_customer-service .support-page-content .support-page-right-content > li.content-page:last-child, .pt_customer-service .support-tab-content > ul.mobile-content-navigation > li.content-page:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+/* line 123, ../css/package/sass/content_pages.scss */
+.pt_customer-service #main {
+  display: none;
+}
+/* line 127, ../css/package/sass/content_pages.scss */
+.pt_customer-service .careers-social-links {
+  float: right;
+  margin-top: 2.33333em;
+}
+/* line 131, ../css/package/sass/content_pages.scss */
+.pt_customer-service .careers-social-links > li {
+  display: inline-block;
+}
+/* line 136, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-page-content {
+  overflow: hidden;
+  *zoom: 1;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 144, ../css/package/sass/content_pages.scss */
+  .pt_customer-service .support-page-content .support-page-right-content {
+    width: 100%;
+  }
+}
+/* line 153, ../css/package/sass/content_pages.scss */
+.pt_customer-service .content-page {
+  clear: both;
+}
+/* line 160, ../css/package/sass/content_pages.scss */
+.pt_customer-service #support-tabs.secondary-menu ul li {
+  width: 19.5%;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 160, ../css/package/sass/content_pages.scss */
+  .pt_customer-service #support-tabs.secondary-menu ul li {
+    width: 100%;
+  }
+}
+/* line 171, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content {
+  overflow: hidden;
+  *zoom: 1;
+  margin-bottom: 5em;
+}
+/* line 175, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content #content-marker {
+  display: none;
+}
+/* line 179, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content > ul {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 182, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content > ul > li {
+  position: relative;
+  border-bottom: 0.08333em solid #CACACA;
+}
+/* line 186, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content > ul > li:not(.content-page) {
+  font-size: 1.16667em;
+  font-weight: bold;
+  padding: 1.28571em 0;
+  cursor: pointer;
+}
+/* line 216, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page p, .pt_customer-service .support-tab-content .content-page ul, .pt_customer-service .support-tab-content .content-page ol, .pt_customer-service .support-tab-content .support-page-content p, .pt_customer-service .support-tab-content .support-page-content ul, .pt_customer-service .support-tab-content .support-page-content ol {
+  font-size: 1.06667em;
+  line-height: 1.32813em;
+  margin-bottom: 1.25em;
+}
+/* line 221, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page p:last-child, .pt_customer-service .support-tab-content .content-page ul:last-child, .pt_customer-service .support-tab-content .content-page ol:last-child, .pt_customer-service .support-tab-content .support-page-content p:last-child, .pt_customer-service .support-tab-content .support-page-content ul:last-child, .pt_customer-service .support-tab-content .support-page-content ol:last-child {
+  margin-bottom: 0em;
+}
+/* line 226, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page ol, .pt_customer-service .support-tab-content .support-page-content ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+/* line 231, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page i, .pt_customer-service .support-tab-content .support-page-content i {
+  font-style: italic;
+}
+/* line 235, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page a, .pt_customer-service .support-tab-content .support-page-content a {
+  font-weight: bold;
+}
+/* line 239, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page .distributors-info, .pt_customer-service .support-tab-content .support-page-content .distributors-info {
+  margin-bottom: 2em;
+}
+/* line 242, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page .distributors-info .styled-select, .pt_customer-service .support-tab-content .support-page-content .distributors-info .styled-select {
+  width: 50%;
+}
+/* line 246, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page .distributors-info .distributor-details, .pt_customer-service .support-tab-content .support-page-content .distributors-info .distributor-details {
+  padding-top: 2em;
+  display: none;
+}
+/* line 251, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page .distributors-info .content, .pt_customer-service .support-tab-content .support-page-content .distributors-info .content {
+  line-height: 1.4em;
+}
+/* line 255, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page .distributors-info .error, .pt_customer-service .support-tab-content .support-page-content .distributors-info .error {
+  color: #940000;
+}
+/* line 260, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page .rightnow-title, .pt_customer-service .support-tab-content .support-page-content .rightnow-title {
+  height: 1.625em;
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 260, ../css/package/sass/content_pages.scss */
+  .pt_customer-service .support-tab-content .content-page .rightnow-title, .pt_customer-service .support-tab-content .support-page-content .rightnow-title {
+    height: 3.25em;
+  }
+}
+/* line 271, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page h1, .pt_customer-service .support-tab-content .content-page .section-title, .pt_customer-service .support-tab-content .support-page-content h1, .pt_customer-service .support-tab-content .support-page-content .section-title {
+  font-family: "Helvetica";
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 0.91667em;
+  padding-bottom: 0.66667em;
+  border-bottom: 0.04167em solid #CACACA;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 271, ../css/package/sass/content_pages.scss */
+  .pt_customer-service .support-tab-content .content-page h1, .pt_customer-service .support-tab-content .content-page .section-title, .pt_customer-service .support-tab-content .support-page-content h1, .pt_customer-service .support-tab-content .support-page-content .section-title {
+    display: none;
+    position: absolute;
+  }
+}
+/* line 282, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page h2, .pt_customer-service .support-tab-content .support-page-content h2 {
+  font-family: "Helvetica";
+  font-size: 1.83333em;
+  font-weight: 700;
+  margin-bottom: 0.90909em;
+}
+/* line 286, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page h3, .pt_customer-service .support-tab-content .support-page-content h3 {
+  font-family: "Helvetica";
+  font-size: 1.56348em;
+  font-weight: 700;
+  margin-bottom: 0.8528em;
+}
+/* line 290, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page h4, .pt_customer-service .support-tab-content .support-page-content h4 {
+  font-family: "Helvetica";
+  font-size: 1.33333em;
+  font-weight: 700;
+  margin-bottom: 0.875em;
+}
+/* line 294, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page h5, .pt_customer-service .support-tab-content .support-page-content h5 {
+  font-family: "Helvetica";
+  font-size: 1.10694em;
+  font-weight: 700;
+  margin-bottom: 0.75282em;
+}
+/* line 298, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page h6, .pt_customer-service .support-tab-content .support-page-content h6 {
+  font-family: "Helvetica";
+  font-size: 0.89306em;
+  font-weight: 700;
+  margin-bottom: 1.67962em;
+}
+/* line 302, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page em, .pt_customer-service .support-tab-content .support-page-content em {
+  font-weight: bold;
+}
+/* line 306, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page .horizontal-line, .pt_customer-service .support-tab-content .support-page-content .horizontal-line {
+  width: 100%;
+  border-bottom: 0.08333em solid #CACACA;
+  margin: 1.66667em 0;
+}
+/* line 312, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page .flagship-store, .pt_customer-service .support-tab-content .support-page-content .flagship-store {
+  vertical-align: text-top;
+  padding-right: 1.66667em;
+  padding-bottom: 1.66667em;
+}
+/* line 317, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page .flagship-store .store-hours, .pt_customer-service .support-tab-content .support-page-content .flagship-store .store-hours {
+  margin-top: 0.83333em;
+}
+/* line 322, ../css/package/sass/content_pages.scss */
+.pt_customer-service .support-tab-content .content-page .country-list li, .pt_customer-service .support-tab-content .support-page-content .country-list li {
+  margin-bottom: 0.41667em;
+}

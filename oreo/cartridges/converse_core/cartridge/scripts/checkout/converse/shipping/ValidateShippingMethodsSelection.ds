@@ -1,0 +1,91 @@
+/**
+ *
+ * @input Basket: dw.order.Basket
+ * @input HttpParameters: dw.web.HttpParameterMap
+ * @input AddressForm: Object
+ * @input CurrentRequest: dw.system.Request
+ *
+ * @output ValidationIssues: dw.util.ArrayList
+ *
+ */
+importPackage(dw.order);
+importPackage(dw.util);
+importPackage(dw.system);
+importPackage(dw.web);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:util/LocaleInfo.ds");
+importScript("converse_core:checkout/converse/shipping/classes/ShippingMethodsSplitter.ds");
+importScript("converse_core:checkout/converse/shipping/classes/ShippingMethodsFilter.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+	let splitter = new ShippingMethodsSplitter();
+	let filter = new ShippingMethodsFilter();
+	
+	let basket: Basket = args.Basket;
+	let parameters: HttpParameterMap = args.HttpParameters;
+	let addressForm: FormGroup = args.AddressForm.addressFields;
+	
+    let getParameterValue = function(field: HttpParameter) {
+        return field && field.value && StringUtils.trim(field.value);
+    }
+	
+	let shippingType = getParameterValue(parameters.shippingType);
+	
+	
+	let getValue = function(field: FormField) {
+		return field && field.value;
+	} 
+	
+	let addressObj = {
+		'countryCode': converse.utils.getCurrentCountryCode( args.CurrentRequest ),
+		'stateCode': getValue(addressForm.states.stateCode),
+		'postalCode': getValue(addressForm.regional.zip),
+		'city': getValue(addressForm.common.city),
+		'address1': getValue(addressForm.common.address1)
+	};
+	
+	let shipments: Collection = basket.getShipments();
+	let methods = ShippingMgr.getAllShippingMethods();
+	
+	let shippingMethodsGroups = splitter.split(methods);
+	let applicableShippingMethodsGroups = filter.filterByAddress(addressObj, shippingMethodsGroups, basket, shippingType);
+	
+	let validateShippingMethod = function(shippingMethodID: String, productType: String, validationIssues: ArrayList) {
+		if (!shippingMethodID) {
+			validationIssues.add("shipping.issues." + productType + ".null");
+			return;
+		}
+		
+		let applicableMethods: ArrayList = applicableShippingMethodsGroups.getShippingMethods(productType);
+		if (applicableMethods.length === 0) {
+			validationIssues.add("shipping.issues." + productType + ".none");
+			return;
+		}
+		
+		for each(var method in applicableMethods) {
+			let shippingMethod: ShippingMethod = method.shippingMethod;
+			if (shippingMethod.getID() === shippingMethodID) {
+				return;
+			}
+		}
+		
+		validationIssues.add("shipping.issues." + productType + ".notApplicable");
+	};
+	
+	let validationIssues: ArrayList = new ArrayList();
+	
+	for each(let shipment in shipments) {
+		var productType: String = shipment.custom.productType;
+		var selectectShippingMethod: HttpParameter = parameters.get(productType + "-shipping-methods");
+		validateShippingMethod(selectectShippingMethod.value, productType, validationIssues);
+	}		
+	
+	if (validationIssues.length !== 0) {
+		args.ValidationIssues = validationIssues;
+		return PIPELET_ERROR;
+	}
+	
+   	return PIPELET_NEXT;
+}

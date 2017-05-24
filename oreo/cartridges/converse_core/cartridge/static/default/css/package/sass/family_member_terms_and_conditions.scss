@@ -1,0 +1,17 @@
+@import "_constants";
+@import "_helper_functions";
+
+#family-member-terms-and-conditions-dialog {
+    display: none;
+    overflow: hidden;
+
+    .slot-content {
+        height: pxtoem(400);
+        overflow-y: auto;
+    }
+}
+
+#family-member-terms-and-conditions-success, #family-member-terms-and-conditions-error {
+    display: none;
+}
+

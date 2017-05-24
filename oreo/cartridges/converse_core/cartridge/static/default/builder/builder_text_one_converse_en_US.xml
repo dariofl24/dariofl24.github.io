@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+	<!--  for deploy -->
+	<fonts>
+		<font externalLibrary="http://{shellDomain}/nikeidv2/current_release/US_NIKEID/fonts/_Helvetica.swf">Helvetica</font> 
+		<font externalLibrary="http://{shellDomain}/nikeidv2/current_release/US_NIKEID/fonts/_Garamond_Converse.swf">Garamond</font> 
+		<!--font externalLibrary="http://{nikeidDomain}/nikeidv2/current_release/US_NIKEID/fonts/_TradeGothicLTStdBdCn20.swf">TradeGothicLTStdBdCn20</font> 
+		<font externalLibrary="http://{nikeidDomain}/nikeidv2/current_release/US_NIKEID/fonts/_FuturaStdCondensedExtraBold.swf">FuturaStd</font-->
+	</fonts>
+	<styles url="http://{shellDomain}/nikeidv2/current_release/data/builder_style_one_converse.css" />
+	
+	
+
+	<!-- for remote testing by remapping reset files
+	<fonts>
+		<font externalLibrary="http://{nikeidDomain}/nikeidv2/current_release/US_NIKEID/fonts/_HelveticaNeueLTStd.swf">HelveticaNeueLT Std</font> 
+		<font externalLibrary="http://{nikeidDomain}/nikeidv2/current_release/US_NIKEID/fonts/_FuturaStdCondensedExtraBold.swf">TradeGothicLTStdBdCn20</font> 
+		<font externalLibrary="http://{nikeidDomain}/nikeidv2/current_release/US_NIKEID/fonts/_HelveticaNeueLTStd_Th.swf">Helvetica</font>
+	</fonts>
+	<styles url="http://{nikeidDomain}/nikeidv2/current_release/data/builder_style_reset.css" />
+	 -->
+	
+	
+	<!-- for local testing 
+	<fonts>
+		<font externalLibrary="_Helvetica.swf">Helvetica</font>
+		<font externalLibrary="_TradeGothicLTStdBdCn20.swf">TradeGothicLTStdBdCn20</font>
+	</fonts>
+	<styles url="builder_style_one.css" />
+	 -->
+	
+	<localizedText>
+		<!-- {shellDomain} will be replaced by the domain of the shell site -->
+		<!-- {nikeidDomain} will be replaced by the domain from which the builder files are loaded -->
+		<!-- {productName} will be replaced with the product name from the middleware -->
+		<!-- {escapedProductName} will be replaced with the escaped product name -->
+		<!-- {designId} will be replaced with the current metricId -->
+		<!-- {productPrice} will be replaced with the product price from the middleware -->
+		<!-- {priceType} will be replaced with the curency type fron the product xml loaded by the middleware -->
+		<!-- {productId} will be replaced with the product id from parent movie -->
+		<!-- {count} will be replaced with the maximum character count from the middleware -->
+		
+		<!-- {numSymbols} -->
+		<!-- {remainingSteps} -->
+		<!-- {paletteTitle} -->
+		<!-- {questionTitle} -->
+
+		<productInfo>
+			<sizingButton>SIZE</sizingButton>
+			<sizingButtonOneSize>QUANTITY</sizingButtonOneSize>
+			<sizeDisabledTip>All choices must be completed before you can select a size.</sizeDisabledTip>
+			<saveButton>SAVE</saveButton>
+			<cartButton>ADD TO CART</cartButton>
+			<!--
+			<cartTooltipTitleSingle>ONLY ONE STEP LEFT</cartTooltipTitleSingle>
+			<cartTooltipTitleMultiple>ONLY {remainingSteps} STEPS LEFT</cartTooltipTitleMultiple>
+			-->
+			<cartTooltipBodyMultiple>{remainingSteps} Steps Left:</cartTooltipBodyMultiple>
+			<cartTooltipBodySingle>{remainingSteps} Step Left:</cartTooltipBodySingle>
+			<cartTooltipIncompleteQuestion>{paletteTitle}: {questionTitle}</cartTooltipIncompleteQuestion>
+			<buildCompleteTip>
+				<title><![CDATA[YOU’RE ALL SET! ]]></title>
+				<bodySize><![CDATA[Look over your design and buy it now.]]></bodySize>
+				<bodyCart><![CDATA[Look over your design and buy it now.]]></bodyCart>
+			</buildCompleteTip>
+		</productInfo>
+		<startOver>Start Over</startOver>
+		<shippingMsg>
+			<label>Estimated Delivery</label>
+			<timeFrame>3 to 4 weeks</timeFrame>
+		</shippingMsg>
+		<glowDark>SEE IT IN THE DARK</glowDark>
+		<progressbar>
+			<completionPromptTooltip>Finish the {paletteTitle} question in order to purchase your product.</completionPromptTooltip>
+		</progressbar>
+		<toolmenu>
+			<zoom-tooltip>Hold and drag to pan.</zoom-tooltip>
+			<snapshot-info-intro>Take a snapshot of this design to share with friends or save for later.</snapshot-info-intro>
+			<snapshot-info-max><![CDATA[You've created the maximum number of designs for this session. Delete a snapshot so you can capture another.]]></snapshot-info-max>
+			<snapshot-share-text><![CDATA[Not sure?<br>Ask your friends]]></snapshot-share-text>
+			<snapshot-share-btn><![CDATA[COMPARE]]></snapshot-share-btn>
+			<snapshot-share-options>facebook,twitter</snapshot-share-options> <!-- match 'socialNetwork' network IDs; email will always get appended automatically -->
+		</toolmenu>
+		<done>DONE</done>		
+		<back>Back</back>
+		<dialog>
+			<ok>OK</ok>
+			<yes>YES</yes>
+			<no>NO</no>
+			<cancel>CANCEL</cancel>
+		</dialog>
+		<priceDisplay>
+			<USD>${'$'}{productPrice}</USD>
+			<EUR>{productPrice} €</EUR>
+		</priceDisplay>
+		<upsell>Your choice has added {upsell} to the price.</upsell>
+		<downsell>Your choice has lowered the price by {upsell}.</downsell>
+		<palettes>
+			<next>Next</next>
+			<prev>Prev</prev>
+			<pid>
+				<!-- <editInfo>If you’re purchasing more than one of this item, you can edit personal iDs in your cart.</editInfo> -->
+				<idVerifying>Verifying...</idVerifying>
+				<idVerified>Verified.</idVerified>
+				<charCountText>{count} Characters Max</charCountText>
+				<personalizationButton>Personalization Policy</personalizationButton>
+				<idPrompt>Enter text for your iD.</idPrompt>
+				<idDeclinedHeader>Please try again.</idDeclinedHeader>
+				<idDeclined><![CDATA[Sorry, the iD you’ve entered does not fit within our guidelines. Please enter a new iD.]]></idDeclined>
+			</pid>
+			<symbol>
+				<viewAll>All ({numSymbols})</viewAll>
+				<viewMore>View More</viewMore>
+			</symbol>
+			<fontFace>
+				<label>Choose a Font</label>
+			</fontFace>
+			<disabled>This choice is not available.</disabled>
+			<!-- begin add apply all: title is required, the rest are optional -->
+			<applyAll>
+				<title>Apply All</title>
+				<importantInfo>Selecting this option applies your current color selection to certain linked parts of the product.</importantInfo>
+				<moreInfo/>
+			</applyAll>
+			<!-- end add apply all -->
+		</palettes>
+
+		<sizeQuantity>
+			<!-- <idEditCart>If you’re purchasing more than one of this item, you can edit personal iDs in your cart.</idEditCart> -->
+			<sizeTypeLabel>International Sizing</sizeTypeLabel>
+			<!-- these are the translations. If the ids are not in the site section they will not appear -->
+			<sizeTypes>
+				<us>USA - United States</us>
+				<!--<uk>UK - United Kingdom</uk>
+				<cm>CM - Centimeters</cm>
+				<euro>EURO - European</euro> -->
+			</sizeTypes>
+			<sizeEditCartInventoryInsufficient>Not all of your previously indicated selections are currently available. Please select from the current inventory.</sizeEditCartInventoryInsufficient>
+			<quantityLabel>Quantity</quantityLabel>
+			<addButton><![CDATA[Add more sizes]]></addButton>
+			<oneSize>This product is only available in one size.</oneSize>
+			<genderFirst>Select gender first.</genderFirst>
+			<sizeFirst>Select a size first.</sizeFirst>
+<!-- ADDED 6/3 -->
+			<incompleteRowTip>Complete this selection.</incompleteRowTip>
+		</sizeQuantity>		
+
+		<wallpaper>
+			<facebook>
+		    	<title>SHARE YOUR DESIGN ON FACEBOOK</title>
+		    	<body>Change up your background and share your design with your friends.</body>
+				<button>SHARE</button>
+        		<size previewSize="368x368" bgIdSize="130x130" value="130" view="facebook" imgY="0" titleY="" titleWidth="" titleHeight=""/>
+			</facebook>
+			<tweet>
+				<title>SHARE YOUR DESIGN ON TWITTER</title>
+			    <body>Showcase your design with different backgrounds, captions and views.</body>
+			    <button>TWEET</button>			
+			</tweet>	
+			<makePoster>
+				<title>Show It Off</title>
+				<body>Your sneakers look fresh! Now do the same with your poster using different backgrounds, captions and views.</body>
+        		<button>DOWNLOAD</button>
+            	<!--<colorChipList bgId="/v2/bg/onecolor_{size}_{color}_{view}.jpg">
+          			<colorChip id="red"     colorCode="0xc50219" copyColor="0xFFFFFF"/>
+          			<colorChip id="orange"  colorCode="0xff4e08" copyColor="0xFFFFFF"/>
+          			<colorChip id="yellow"  colorCode="0xffde00" copyColor="0xFFFFFF"/>
+          			<colorChip id="green"   colorCode="0x3b8d0e" copyColor="0xFFFFFF"/>
+          			<colorChip id="black"   colorCode="0x000000" copyColor="0xFFFFFF"/>
+          			<colorChip id="white"   colorCode="0xffffff" copyColor="0x000000"/>
+          			<colorChip id="brown"   colorCode="0x5e3d25" copyColor="0xFFFFFF"/>
+          			<colorChip id="blue"    colorCode="0x2379da" copyColor="0xFFFFFF"/>
+          			<colorChip id="purple"  colorCode="0x7e00ff" copyColor="0xFFFFFF"/>
+          			<colorChip id="violet"  colorCode="0xb6104d" copyColor="0xFFFFFF"/>
+        		</colorChipList>-->
+			</makePoster>
+      		<snapshot>
+        		<title>Select Your Designs to Share</title>
+        		<body>Choose two designs to share with your friends and hear what they think.</body>
+        		<button>
+          			<facebook>POST TO PROFILE</facebook>
+          			<email>SEND IT</email>
+          			<download>DOWNLOAD</download>
+        		</button>
+        		<select>
+          			<designA>Select Design 1</designA>
+          			<designB>Select Design 2</designB>
+        		</select>
+        		<input>
+          			<label>
+            			<designA>1</designA>
+            			<designB>2</designB>            
+          			</label>
+        		</input>
+            
+            	<!--<wallpaper id="onenike_snapshot"/>-->
+            	<wallpapers bgId="/nikeid/onetexture_{size}_{wallpaperID}.jpg">
+            		<wallpaper id="onenike_snapshot"/>
+            		<size bgIdSize="1024x768" previewSize="418x313"/>
+            	</wallpapers>
+            
+            	<size bgIdSize="1024x768" previewSize="418x313"/>
+        		<vs>VS</vs>
+        		<label>Click Title to Edit</label>
+				<emailTitle>EMAIL YOUR DESIGNS</emailTitle>
+				<exitLink>Go Back</exitLink>
+      		</snapshot>
+      		<addCaption>Add a caption</addCaption>
+			<title>Create Wallpaper</title>
+			<designName>Design Name</designName>
+			<designerName>Designer Name</designerName>
+			<changeViews>Change Views</changeViews>
+			<chooseBG></chooseBG>
+			<chooseSize>Choose a Size</chooseSize>
+			<cancel>Close</cancel>
+			<ok>Create Image</ok>
+
+      		<bgButtonURL>http://{nikeidDomain}/nikeidv2/current_release/assets/team/wallpaper/stamp/wp_{wallpaperID}.jpg</bgButtonURL>
+      		<bgPreviewURL>http://{nikeidDomain}/nikeidv2/current_release/assets/team/wallpaper/thumb_onenike/texture_{size}_{wallpaperID}_{view}.jpg</bgPreviewURL>
+      		<solidBgPreviewURL>http://{nikeidDomain}/nikeidv2/current_release/assets/team/wallpaper/thumb_onenike/color_{size}_{color}_{view}.jpg</solidBgPreviewURL>
+			<collectionBgPreviewURL>http://{nikeidDomain}/nikeidv2/current_release/assets/team/wallpaper/thumb_onenike/collection/{league}/{team_name}_{size}.jpg</collectionBgPreviewURL>
+			
+			<photoText>Photo</photoText>
+			<info><![CDATA[To make a wallpaper, click "Create Image"<br/>PC: Right-click the image. Choose "Set as Background"<br/>MAC: Save image to desktop. Open System Preferences, choose "Desktop"]]></info>
+      		<wallpapers bgId="/v2/bg/onetexture_{size}_{wallpaperID}_{view}.jpg">
+		        <wallpaper id="horizonlight" titleColor="000000" authorColor="000000"/>
+		        <!--<wallpaper id="horizondark" titleColor="FFFFFF" authorColor="FFFFFF"/>
+		        <wallpaper id="concretelight" titleColor="FFFFFF" authorColor="FFFFFF"/>
+		        <wallpaper id="concretedark" titleColor="FFFFFF" authorColor="FFFFFF"/>-->
+		        <!--<wallpaper id="01" titleColor="000000" authorColor="666666"/>
+				<wallpaper id="02" titleColor="000000" authorColor="666666"/>
+				<wallpaper id="03" titleColor="FFFFFF" authorColor="B6AB95"/>
+				<wallpaper id="04" titleColor="000000" authorColor="666666"/>
+				<wallpaper id="05" titleColor="000000" authorColor="666666"/>
+				<wallpaper id="06" titleColor="FFFFFF" authorColor="BBBBBB"/>
+				<wallpaper id="07" titleColor="000000" authorColor="666666"/>
+				<wallpaper id="08" titleColor="FFFFFF" authorColor="BBBBBB"/>
+				<wallpaper id="9" titleColor="000000" authorColor="000000"/>
+				<wallpaper id="10" titleColor="000000" authorColor="000000"/>
+				<wallpaper id="11" titleColor="000000" authorColor="000000"/>
+				<wallpaper id="12" titleColor="000000" authorColor="000000"/>
+				<wallpaper id="13" titleColor="000000" authorColor="000000"/>
+				<wallpaper id="14" titleColor="000000" authorColor="000000"/>
+				<wallpaper id="15" titleColor="000000" authorColor="000000"/> -->
+			</wallpapers>
+			<sizes>
+	      		<size bgIdSize="1920x1200"  previewSize="355x220" label="1920 X 1200"  value="1920,1200" view="landscape"  bgY="0" imgY="35"  titleY="15"  titleWidth="315" titleHeight="40" maxChars="21">Desktop</size>
+	      		<size bgIdSize="2048x2048"   previewSize="315x313" label="2048 X 2048"   value="2000,2000" view="portrait"  bgY="0" imgY="70"   titleY="35"   titleWidth="285" titleHeight="40" maxChars="19">iPad</size>
+       			<size bgIdSize="640x960"    previewSize="215x313" label="640 X 960"    value="640,960"  view="portrait"   bgY="0" imgY="70"  titleY="35"   titleWidth="185" titleHeight="70" maxChars="24">iPhone</size>
+        		<size bgIdSize="851x315"    previewSize="355x130" label="851 X 315"    value="851,315"  view="landscape"   bgY="0" imgY="0"   titleY="12"  titleWidth="120" titleHeight="115" maxChars="32">Facebook</size>
+	      	</sizes>
+	      	<path>http://{shellDomain}/on/demandware.store/Sites-converse-Site/default/FlashBuilder-ShowPoster</path>
+		</wallpaper>
+		
+		<designSearch>
+			<choose>Filter By Color</choose>
+			<!-- if searchAll exists, there will be a button in the interface and an event fired -->
+			<searchAll>Search All Designs</searchAll>
+      		<inspirations>
+        		<communityButton>Community Designs</communityButton>
+        		<showMoreButton>MORE</showMoreButton>        
+        		<showLessButton>FEWER</showLessButton>
+        		<title>START WITH AN INSPIRATION</title>
+        		<findMore>
+          			<title>FIND MORE INSPIRATION</title>
+          			<body>Explore thousands of community designs in the Converse Design Gallery.</body>
+          			<button>View Gallery</button>
+        		</findMore>
+			<product>
+          			<startHere><![CDATA[START\nHERE]]></startHere>
+          			<designer>designed by</designer>
+        		</product>
+      		</inspirations>
+		</designSearch>    
+		
+		<sendToFriend>
+			<sendIt>E-MAIL</sendIt>
+			<emailYourDesign>Email Your Design</emailYourDesign>
+			<body>Show off your design skills to your friends, get feedback or drop a hint for birthdays or holidays.</body>
+			<from>From</from>
+			<fromInfo>Your email</fromInfo>
+			<to>To</to>
+			<info>Your friends' emails (separated by commas)</info>
+			<messages>Message</messages>
+			<messagesInfo>Your message (320 character limit)</messagesInfo>
+			<ok>SEND IT</ok>
+		</sendToFriend>
+		
+		<messages>
+			<addingToCart>
+				<header>Adding to Cart</header>
+				<body>{productName}</body>
+			</addingToCart>
+			<cartFail>
+				<body>There was an error adding items to your cart. Please try again.</body>
+			</cartFail>
+			<cartPartialFail>
+				<body>Not everything was properly added to your cart.</body>
+			</cartPartialFail>
+			<designId>
+				<body>Getting DESIGNiD.</body>
+			</designId>
+			<designIdFail>
+				<body>We're sorry we are unable to get the DESIGNiD at this time.</body>
+			</designIdFail>
+			<printing>
+				<header>Preparing to print your design.</header>
+				<body>{productName}</body>
+			</printing>
+			<printFail>
+				<body>We're sorry we are unable to print at this time.</body>
+			</printFail>
+			<emailFail>
+				<body>We're sorry we are unable to send the email at this time.</body>
+			</emailFail>
+			<fromEmailEmpty>
+				<body>Please enter your email address.</body>
+			</fromEmailEmpty>
+			<fromEmailFail>
+				<body>Please enter a valid email address.</body>
+			</fromEmailFail>
+			<toEmailEmpty>
+				<body>Please enter an email address.</body>
+			</toEmailEmpty>
+			<toEmailFail>
+				<body>Please enter a valid email address.</body>
+			</toEmailFail>
+			<emailSent>
+				<body>Email sent.</body>
+			</emailSent>
+			<emailSending>
+				<body>Sending email.</body>
+			</emailSending>
+			<restricted>
+				<body>This is an exclusive product with restricted access. If you purchased this product, it’s being customized for you now.</body>
+				<ok>SEE AVAILABLE GEAR</ok>
+			</restricted>
+			<noDesignSearch>
+				<body><![CDATA[Design Search is currently unavailable.<br>Please try again later.]]></body>
+			</noDesignSearch>
+			<noDesignSearchResults>
+				<body><![CDATA[There are no designs for this product at this time.<br>Be the first to add your own design.]]></body>
+				<ok>CLOSE</ok>
+			</noDesignSearchResults>
+			<confirmAdd>
+				<header>Please Confirm Your Design</header>
+				<body>Before you go to cart, please take a last look and confirm that your design is finished.</body>
+				<outside>Outside Body</outside>
+				<heel>Heel Stripe</heel>
+				<inside>Inside Body</inside>
+				<top>Top</top>
+				<ok>CONFIRM DESIGN</ok>
+				<cancel>EDIT DESIGN</cancel>
+			</confirmAdd>
+			<confirmExit>
+				<header>Are You Sure You’d Like to Leave?</header>
+				<body>If you’d like to save your progress for your next visit, select ‘Save My Design’.</body>
+				<ok>LEAVE THIS PAGE</ok>
+				<save>SAVE MY DESIGN</save>
+			</confirmExit>
+			<confirmInspiration>
+				<!--<header>DO YOU WANT TO USE THIS INSPIRATION?</header>-->
+				<header>Do You Want to Save Your Design?</header>
+				<!--<body>If you'd like to save your progress, select 'Keep Designing' and then Capture or Save to store this design.</body>-->
+				<body><![CDATA[To save your progress, select "Keep Designing" and click the camera to take a snapshot or Save to store it in your locker.]]></body>
+				<ok>USE INSPIRATION</ok>
+				<save>KEEP DESIGNING</save>
+			</confirmInspiration>
+			<loadingInspiration>
+				<body>One moment please...</body>
+			</loadingInspiration>
+			<capacity>
+				<defaultError>This product is currently unavailable. Please check back at a later time.</defaultError>
+				<ok>CONTINUE AND SAVE FOR LATER</ok>
+				<button tag="gift_card" link="gotoGiftCard">Buy a Converse Gift Card</button>
+				<button tag="more_designs" link="gotoHome">View All Converse Products</button>
+			</capacity>
+			<designNameDeclined>
+				<body><![CDATA[Sorry, that design name does not fit within our guidelines. Please enter another name. You can review our Personalization Policy at: U.S.: <a href='http://help-us.nike.com/app/answers/detail/a_id/3419/related/1' target='_blank'>http://help-us.nike.com/app/answers/detail/a_id/3419/related/1</a><br/><br/>Europe, the Middle East and Africa: <a href='http://nike-eu.custhelp.com/app/answers/detail/a_id/3419/related/1' target='_blank'>http://nike-eu.custhelp.com/app/answers/detail/a_id/3419/related/1</a>]]></body>
+			</designNameDeclined>
+			<designerNameDeclined>
+				<body><![CDATA[Sorry, that designer’s name does not fit within our guidelines. Please enter another name. You can review our Personalization Policy at: U.S.: <a href='http://help-us.nike.com/app/answers/detail/a_id/3419/related/1' target='_blank'>http://help-us.nike.com/app/answers/detail/a_id/3419/related/1</a><br/><br/>Europe, the Middle East and Africa: <a href='http://nike-eu.custhelp.com/app/answers/detail/a_id/3419/related/1' target='_blank'>http://nike-eu.custhelp.com/app/answers/detail/a_id/3419/related/1</a>]]></body>
+			</designerNameDeclined>
+			<designNameEmpty>
+				<body>Please enter a name for your design before you continue.</body>
+			</designNameEmpty>
+			<designerNameEmpty>
+				<body>Please enter the designer’s name before you continue.</body>
+			</designerNameEmpty>
+			<inventoryInsufficient>
+				<header>SIZE AND QUANTITY UNAVAILABLE</header>
+				<body>The choice you made is not available in your previously selected size and quantity. It will be cleared. Please reselect your size and quantity.</body>
+			</inventoryInsufficient>
+			<confirmStartOver>
+				<header>Would You Like to Start Over?</header>
+				<body>If you’d like to save your progress, select ‘Save My Design’.</body>
+				<save>SAVE MY DESIGN</save>
+				<ok>START OVER</ok>
+			</confirmStartOver>
+			<dataFail>
+				<body>This product is currently unavailable. Please check back at a later time.</body>
+				<ok>SHOP CUSTOM SNEAKERS</ok>
+			</dataFail>
+			<!-- start add nikeid only -->
+			<skipPrecart>
+				<header>Your Cart Has Been Updated</header>
+				<body>What would you like to do?</body>
+				<ok>CHECKOUT</ok>
+				<cancel>CONTINUE SHOPPING</cancel>
+			</skipPrecart>
+			<!-- end add nikeid only -->
+			<optionsChanged>
+				<body>Please click OK to complete your design. Some of the options you selected may no longer be available.</body>
+			</optionsChanged>
+		</messages>
+		
+		<printInfo>
+			<header>DESIGNiD: {designId}</header>
+			<body>Use your DESIGNiD to view, edit and purchase your gear. Simply visit Converse.com and click on Design Search to get started.</body>
+		</printInfo>
+		
+		<startScreen>
+			<title>CUSTOM BUILD IT</title>
+      		<body>YOUR PERFORMANCE. YOUR STYLE. YOUR MARK.</body>
+			<intro>Touch to begin your design.</intro>
+			<startBlank><![CDATA[Start Your Design Blank]]></startBlank>
+			<inspirationTip>START HERE</inspirationTip>
+			<!-- button will appear if there is text and prebuilds -->
+			<designSearch><![CDATA[See more<br>designs]]></designSearch>
+			<!-- start screen stories-->
+			<startCustomizing><![CDATA[CUSTOMIZE]]></startCustomizing>
+		</startScreen>
+		
+		<protectedCart>
+			<header>Enter Your Code</header>
+			<body>You must have a code to purchase this product. This code can only be used one time – so customize wisely.</body>
+			<label>Password</label>
+			<submit>Submit</submit>
+			<submitting>Submitting...</submitting>
+			<errors>
+				<error id="blank">In order to purchase, you must input your code.</error>
+				<error id="1">This code has expired.</error>
+				<error id="2">This code is incorrect. Please input again.</error>
+				<error id="3">Invalid code. You have exceeded the number of attempts.</error>
+				<error id="unknown">We're sorry, the server is not responding. Please try again.</error>
+			</errors>
+		</protectedCart>
+		
+		<!-- start add -->
+		<saveAndShare>
+			<shareBar>
+    			<shareYourDesign>
+					<title>SHARE</title>
+					<facebook>SHARE</facebook>
+			    	<tweet>Tweet</tweet>
+			     	<email>Email</email>
+			     	<emailIncompleteDesign>To email, please complete your design.</emailIncompleteDesign>
+		        </shareYourDesign>
+		        <makePoster>
+		        	<title>MAKE A POSTER</title>
+		        	<getStarted>Get Started</getStarted>
+		        </makePoster>
+		        <addToGallery>
+		        	<title>ADD TO CONVERSE GALLERY</title>
+		        	<addYourDesign>Add Your Design</addYourDesign>
+		        </addToGallery>
+			</shareBar>
+			<menu>
+				<!-- start share change -->
+				<button>Save and Share</button>
+				<save>SAVE</save>
+				<share>SHARE</share>
+				<!-- end share change -->
+			</menu>
+			
+			<saveAndShareDialog>
+				<label>Save and Share</label>
+				<makeDesignsPublic>
+					<text>Add your design to the Converse Design Gallery for all to see.</text>
+					<button id="gallery">
+						<label>Add to Gallery</label>
+					</button>
+					
+				</makeDesignsPublic>
+				<shareItEnabled>
+					<text>Post to my networks.</text>
+					<socialNetworks>
+						    <network id="facebook" siteSrc="fbk_usid" src="http://www.nike.com/nikeos/global/image/enablement/social/facebook.gif">
+								<options/>
+								<socialNetworksConnect/>
+								<general>
+									<designURL><![CDATA[http://{shellDomain}/on/demandware.store/Sites-converse-Site/default/Product-ShareLink?pid={pid}&metricId={designId}]]></designURL>
+                					<url><![CDATA[http://www.facebook.com/sharer.php?u={escapedURL}]]></url> 
+                					<winParameters>toolbar=0,status=0,height=436,width=646,scrollbars=yes,resizable=yes</winParameters>
+								</general>
+							</network>
+							
+							<network id="twitter" siteSrc="twit_usid" src="http://www.nike.com/nikeos/global/image/enablement/social/twitter.png">
+								<general>
+									<designURL><![CDATA[http://{shellDomain}/share/{pid}/{designId}]]></designURL>
+									<url><![CDATA[http://twitter.com/share?text=I+designed+this+at+Converse.com&url={escapedURL}]]></url>
+	                				<winParameters>toolbar=0,status=0,height=485,width=565,scrollbars=yes,resizable=yes</winParameters></general>
+							</network>
+
+							<network id="pinterest" siteSrc="pint_usid" src="http://www.nike.com/nikeos/global/image/enablement/social/twitter.png">
+								<general>
+									<designURL><![CDATA[http://{shellDomain}/on/demandware.store/Sites-converse-Site/default/Product-Show?pid=${pdict.Pid}&metricId={designId}]]></designURL>
+									<imageURL><![CDATA[http://{nikeidDomain}/services/imgredirect/mtr-{designId}/wid-500/fmt-jpg/bgc-ffffff/ops-1,1,0/vw-1]]></imageURL>
+									<url><![CDATA[http://pinterest.com/pin/create/button/?url={designURL}&media={imageURL}&description=I+designed+this+at+Converse.com]]></url>
+									<winParameters>toolbar=0,status=0,height=485,width=565,scrollbars=yes,resizable=yes</winParameters>
+									<wait>
+										<header/>
+										<!-- optional. used only if there is an imageURL -->
+										<body>Creating your image for Pinterest.</body>
+										<!-- needed if there is an imageURL -->
+									</wait>
+									<complete>
+										<header/>
+										<!-- optional. used only if there is an imageURL -->
+										<body>Your image now is ready.</body>
+										<!-- needed if there is an imageURL -->
+										<ok>Post It</ok>
+									</complete>
+								</general>
+							</network>
+						
+						</socialNetworks>
+					
+
+					<button id="saveToLocker">
+						<label>SAVE TO MY DESIGNS</label>
+					</button>
+					<button id="addToGallery">
+						<label>ADD TO GALLERY</label>
+					</button>
+					<button id="makePoster">
+						<label>MAKE A POSTER</label>
+					</button>
+					
+					<!-- start change Save skin
+					<button id="emailEnabled">
+						<label>EMAIL Friend</label>
+					</button>
+					<button id="printCard">
+						<label>PRINT Card</label>
+					</button> -->
+					<!-- end change Save skin -->
+				</shareItEnabled>
+				<!-- <lockerEnabled>
+					<button id="locker">
+						<label>Save to MYLOCKER</label>
+					</button>
+					<hr/>
+				</lockerEnabled> need to deal with wallpaper -->
+				<!-- <enablements/> -->
+			</saveAndShareDialog>
+			<publicDialog>
+				<dialog>
+					<header>SHOWCASE YOUR DESIGN IN THE CONVERSE GALLERY</header>
+					<subheader>Add your design to the gallery to inspire others.</subheader>
+					<label id="designName">Design Details</label>
+					<input id="designName">Name your design (required)</input>
+					 
+					<label id="designerName">Your name (required)</label> 
+					<input id="designerName">Designer name</input> 
+					 
+					<input id="inspiration">What inspired this design? (optional)</input>
+					<button id="submit">
+						<label>ADD TO GALLERY</label>
+					</button>
+				</dialog>
+				<termsAndConditions>
+					<path>http://{nikeidDomain}/nikeidv2/current_release/US_NIKEID/EN/data/termsAndConditions.xml</path>
+					<text><![CDATA[I agree to the NIKEiD <a href="event:test"><font color="#666666"><u>Terms and Conditions</u></font></a>.]]></text>
+					<button id="goback">
+						<label>Go Back</label>
+					</button>
+				</termsAndConditions>
+				<progress>
+					<verifing>
+						<header>Verifying...</header>
+						<body>We're making sure what you've written is ok.</body>
+					</verifing>
+					<submit>
+						<header>Adding Your Design</header>
+						<body>Including your design in the Converse Design Gallery.</body>
+					</submit>
+				</progress>
+				<success>
+					<header>Thank You</header>
+					
+					<text>Your design has been submitted to the Converse Design Gallery of inspirations.</text>
+					<secondary id="lockerEnabled">You also have saved a copy in MY DESIGNS.</secondary>
+					<button id="lockerEnabled">
+						<!-- optional -->
+						<url/>
+						<label>GO TO MY DESIGNS</label>
+					</button>
+					<button id="searchAll">
+						<!-- optional -->
+						<url/>
+						<label>GO TO CONVERSE DESIGN GALLERY</label>
+					</button>
+				</success>
+				<errors>
+					<designNameEmpty>
+						<!-- <header>TBD</header> -->
+						<body>Please enter a name for your design before you continue.</body>
+					</designNameEmpty>
+					<termsNotSelected>
+						<!-- <header>TBD</header> -->
+						<body>Sorry! In order to continue, please agree to the Converse Terms and Conditions.</body>
+					</termsNotSelected>
+					<designerNameEmpty>
+						<!-- <header>TBD</header> -->
+						<body>Please enter the designer’s name before you continue.</body>
+					</designerNameEmpty>
+					<!-- used for all below -->
+					<header>PLEASE TRY AGAIN</header>
+					<designNameDeclined>
+						<body><![CDATA[Sorry, that design name does not fit within our guidelines. Please enter another name. You can review our Personalization Policy at:<br/><br/> U.S.: <a href='http://help-us.nike.com/app/answers/detail/a_id/3419/related/1' target='_blank'>http://help-us.nike.com/app/answers/detail/a_id/3419/related/1</a><br/><br/>Europe, the Middle East and Africa: <a href='http://nike-eu.custhelp.com/app/answers/detail/a_id/3419/related/1' target='_blank'>http://nike-eu.custhelp.com/app/answers/detail/a_id/3419/related/1</a>]]></body>
+					</designNameDeclined>
+					<designerNameDeclined>
+						<body><![CDATA[Sorry, that designer’s name does not fit within our guidelines. Please enter another name. You can review our Personalization Policy at:<br/><br/>U.S.: <a href='http://help-us.nike.com/app/answers/detail/a_id/3419/related/1' target='_blank'>http://help-us.nike.com/app/answers/detail/a_id/3419/related/1</a><br/><br/>Europe, the Middle East and Africa: <a href='http://nike-eu.custhelp.com/app/answers/detail/a_id/3419/related/1' target='_blank'>http://nike-eu.custhelp.com/app/answers/detail/a_id/3419/related/1</a>]]></body>
+					</designerNameDeclined>
+					<inspirationDeclined>
+						<body><![CDATA[Sorry, your inspiration story does not fit within our guidelines.  Please edit your story. You can review our Personalization Policy at:<br/><br/>U.S.: <a href='http://help-us.nike.com/app/answers/detail/a_id/3419/related/1' target='_blank'>http://help-us.nike.com/app/answers/detail/a_id/3419/related/1</a><br/><br/>Europe, the Middle East and Africa: <a href='http://nike-eu.custhelp.com/app/answers/detail/a_id/3419/related/1' target='_blank'>http://nike-eu.custhelp.com/app/answers/detail/a_id/3419/related/1</a>]]></body>
+					</inspirationDeclined>
+					<fail>
+						<!-- <header>TBD</header> -->
+						<body>We're sorry, we were unable to add to the Converse Design Gallery at this time.</body>
+					</fail>
+				</errors>
+			</publicDialog>
+			<lockerDialog>
+				<dialog>
+					<header>Save to My Designs</header>
+					<label1>Name Your Sneaker</label1>
+					<input id="designName">Sneaker Name</input>
+					<label2>Maximum {charCount} Characters</label2>
+					<button id="submit">
+						<label>SAVE</label>
+					</button>
+				</dialog>
+				<progress>
+					<submit>
+						<header>Adding Your Design</header>
+						<body>Including your design in MY DESIGNS</body>
+					</submit>
+				</progress>
+				<errors>
+					<designNameEmpty>
+						<!-- <header>TBD</header> -->
+						<body>Please enter a name for your design before you continue.</body>
+					</designNameEmpty>
+					<fail>
+						<!-- <header>TBD</header> -->
+						<body>We're sorry, we were unable to save to your locker at this time.</body>
+					</fail>
+				</errors>
+				<success>
+					<header>Thank You</header>
+					<text>Thank you, your design was added to MY DESIGNS.</text>
+					<button id="locker">
+						<!-- optional -->
+						<url/>
+						<label>GO TO MY DESIGNS</label>
+					</button>
+				</success>
+			</lockerDialog>
+			<nameDesignDialog>
+				<dialog>
+					<header>Name your design</header>
+					<text id="print">Print out a record so you can show off your design to your friends or return to it at a later date. Just fill out the information below so we can add it to your print-out.</text>
+					<text id="purchase">We'll start making your order right away. In the meantime, use your iD card to show off your design to your friends and family. Enter the information below so we can personalize your card to your design.</text>
+					
+					<label>Name your design</label>
+					<input id="designName">Design name</input>
+					<label>Your name</label>
+					<input id="designerName">Designer name</input>
+					
+					<button id="print">
+						<label>Print</label>
+					</button>
+					<button id="purchase">
+						<label>Add To Cart</label>
+					</button>
+				</dialog>
+				<progress>
+					<verifing>
+						<header>Verifying</header>
+						<body>We're making sure what you've written is ok.</body>
+					</verifing>
+				</progress>
+				<errors>
+					<designNameEmpty>
+						<!-- <header>TBD</header> -->
+						<body>Sorry! You must enter a name for your design.</body>
+					</designNameEmpty>
+					<designerNameEmpty>
+						<!-- <header>TBD</header> -->
+						<body>Sorry! You must enter a designer name to continue.</body>
+					</designerNameEmpty>
+					<header>Please Try Again</header>
+					<!-- used for all below -->
+					<designNameDeclined>
+						<body>Your design name was declined. Please try something else.</body>
+					</designNameDeclined>
+					<designerNameDeclined>
+						<body>Your designer name declined. Please try something else.</body>
+					</designerNameDeclined>
+				</errors>
+				<success/>
+			</nameDesignDialog>
+
+		</saveAndShare>
+		<!-- end add -->
+    <!-- beging - teampicker copy added-->
+    <teamPicker>
+      <header><![CDATA[PICK YOUR TEAM]]></header>
+      <changeTeam><![CDATA[CHANGE YOUR TEAM]]></changeTeam>
+      <selectTeamFirst><![CDATA[PICK YOUR TEAM FIRST]]></selectTeamFirst>
+      <dialog>
+        <ok><![CDATA[ok]]></ok>
+        <title><![CDATA[Selected Team: ${'$'}{TEAM_NAME}]]></title>
+        <body><![CDATA[This shoe is temporarily unavailable. We’re working to resolve the issue, so please try again soon.]]></body>
+      </dialog>
+    </teamPicker>
+    <!-- end - teampicker copy added-->
+	</localizedText>
+	
+</config>

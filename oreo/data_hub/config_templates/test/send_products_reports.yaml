@@ -1,0 +1,5 @@
+daily_reports_dir: '/home/demandware/outgoing'
+online_products_file_prefix: 'online-products-without-inventory'
+offline_products_file_prefix: 'offline-products-with-inventory'
+recipients: 'confoo-reports-jobs@tacitknowledge.com'
+from: 'cron@datahub.converse.com'

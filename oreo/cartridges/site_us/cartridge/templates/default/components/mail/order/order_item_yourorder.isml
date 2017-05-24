@@ -1,0 +1,10 @@
+<div class="msg-top">
+    <hr size="1"style="display: inline-block; width: 60px; vertical-align: text-bottom; color: rgb(178, 178, 178);" />
+    <span style="font-size: 30px; font-family: Garamond; font-style: italic; padding: 0px 20px;">
+        ${Resource.msg('order.orderitems.caption.yourorder','mail',null)}
+    </span>
+    <hr size="1" style="display: inline-block; width: 60px; vertical-align: text-bottom; color: rgb(178, 178, 178);" />
+</div>
+<div class="msg-bottom" style="font-size: 26px; font-weight: bold;">
+    <isprint value="${Shipment.custom.journeysOrderID}" />
+</div>

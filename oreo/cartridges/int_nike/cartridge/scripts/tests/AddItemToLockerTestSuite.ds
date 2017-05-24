@@ -1,0 +1,82 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.value)
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("int_nike:customization/command/AddItemToLocker.ds");
+importScript("int_nike:customization/objects/AddItemToLockerRequest.ds");
+importScript("int_nike:customization/objects/AddItemToLockerResponse.ds");
+importScript("int_nike:customization/CustomizationService.ds");
+importScript("int_nike:NikeConstants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+function execute(args : PipelineDictionary) : Number {
+    let NIKE = integration.nike.customization;
+    let NIKE_CMD = NIKE.command;
+    let NIKE_UTILS = NIKE.utils;
+    let CONST = integration.nike.constants;
+
+    args.Unit.describe("Nike's add_item_to_locker service Test Suite")
+        .test("AddItemToLocker correctly builds parameters", function () {
+            let lockerRequest = new NIKE.AddItemToLockerRequest( "test@gmail.com", "My New Design", "234567", "converse.com/dyp/mydesign");
+
+            let lockerRequestParams = lockerRequest.getParameters();
+
+            Assert.isTrue(lockerRequestParams.channel === "CONVERSE_ONE", "channel param is not correctly assigned");
+            Assert.isTrue(lockerRequestParams.gender_id === "", "gender_id param is not correctly assigned");
+            Assert.isTrue(lockerRequestParams.user_id === "test@gmail.com", "user_id param is not correctly assigned");
+            Assert.isTrue(lockerRequestParams.user_defined_name === "My New Design", "user_defined_name param is not correctly assigned");
+            Assert.isTrue(lockerRequestParams.return_url === "converse.com/dyp/mydesign", "return_url param is not correctly assigned");
+            Assert.isTrue(lockerRequestParams.extra_data === "scene7", "extra_data param is not correctly assigned");
+            Assert.isTrue(lockerRequestParams.metrics_id === "234567", "metrics_id param is not correctly assigned");
+            Assert.isTrue(!empty(lockerRequestParams.time_stamp), "time_stamp param should not be empty");
+        })
+        .test("AddItemToLocker correctly generates formatted time_stamp parameter", function () {
+            let lockerRequest = new NIKE.AddItemToLockerRequest( "test@gmail.com", "My New Design", "234567", "converse.com/dyp/mydesign");
+
+            let calendarSample : Calendar = new Calendar();
+            calendarSample.parseByFormat("2013-05-05 10:11:12" , "yyyy-MM-dd HH:mm:ss" ) ;
+
+            let currentTimeStamp =  lockerRequest.getFormattedDate( calendarSample.getTime() );
+
+            Assert.isTrue( currentTimeStamp === "2013:05:05:10:11:12", "time_stamp param should not be empty");
+        })
+        .test("AddItemToLocker correctly provides request", function () {
+            let lockerCommand = new NIKE_CMD.AddItemToLocker( "test@gmail.com", "My New Design", "234567", "converse.com/dyp/mydesign");
+
+            let lockerRequest = lockerCommand.createRequest();
+
+            Assert.isTrue(lockerRequest.userId === "test@gmail.com", "userIdd param is not correctly assigned");
+            Assert.isTrue(lockerRequest.userDefinedName === "My New Design", "userDefinedName param is not correctly assigned");
+            Assert.isTrue(lockerRequest.returnUrl === "converse.com/dyp/mydesign", "returnUrl param is not correctly assigned");
+            Assert.isTrue(lockerRequest.metricId === "234567", "metrics_id param is not correctly assigned");
+        })
+        .test("AddItemToLocker correctly builds responseObject", function () {
+            let lockerResponse = new NIKE.AddItemToLockerResponse( 200, "&success&id=10000");
+
+            Assert.isTrue(lockerResponse.getStatusCode() === 200, "statusCode param is not correctly assigned");
+            Assert.isTrue(lockerResponse.getResponse() === "&success&id=10000", "response param is not correctly assigned");
+        })
+        .test("AddItemToLocker obtains the service url from configuration", function () {
+
+            let configurationMock = {
+                    "nikeidDomain" : "http://nikeid.nike.com",
+                    "addItemToLockerUri" : "/services/add_item_to_locker.xml"
+            };
+
+            let lockerCommand = new NIKE_CMD.AddItemToLocker( "test@gmail.com", "My New Design", "234567", "converse.com/dyp/mydesign");
+            lockerCommand.configuration = configurationMock;
+
+            Assert.isTrue(lockerCommand.getServiceUrl() === "http://nikeid.nike.com/services/add_item_to_locker.xml", "lockerCommand.getServiceUrl is not well formed");
+
+        });
+
+    return PIPELET_NEXT;
+};

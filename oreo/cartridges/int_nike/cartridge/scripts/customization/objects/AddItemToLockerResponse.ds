@@ -1,0 +1,29 @@
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+(function() {
+    
+    var AddItemToLockerResponse = Class.extend({
+        init: function(statusCode : Number, response : String) {
+            this.statusCode = statusCode;
+            this.response = response;
+        },
+        
+        getStatusCode: function(){
+            return this.statusCode;
+        },
+        
+        getResponse: function(){
+            return this.response;
+        }
+    });
+    
+    Namespace.extend(integration, {
+        nike: {
+            customization: {
+                AddItemToLockerResponse : AddItemToLockerResponse
+            }
+        }
+    });
+})();

@@ -1,0 +1,54 @@
+<iscache type="relative" hour="24"/>
+<isdecorate template="content/home/pt_storefront">
+
+<iscomment>this is the template rendering the clp8 (Womens)</iscomment>
+	<div id="oc"></div>
+	<div>
+        <isinclude template="components/heroslideshow/categorylandingpages/page8/heroslot.isml"/>
+	</div>
+	<br><br>
+	<div class="lc">
+		<div class="featured-categories">
+			<isslot id="clp-8-static-gridwall-1" description="clp8 static gridwall" context="global" />
+		</div>
+	</div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page8/singletout"/>
+	</div>
+	<br>
+	<div class="lc">
+		<div class="featured-categories">
+			<isslot id="clp-8-static-gridwall-2" description="clp8 static gridwall" context="global" />
+		</div>
+	</div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page8/doubletout"/>
+        <isinclude template="components/brandsegments/categorylandingpages/page8/tripletout"/>
+    </div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page8/singletout_row2"/>
+	</div>
+	<br>
+	<div class="lc">
+		<div class="featured-categories">
+			<isslot id="clp-8-static-gridwall-3" description="clp8 static gridwall" context="global" />
+		</div>
+	</div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page8/doubletout_row2"/>
+        <isinclude template="components/brandsegments/categorylandingpages/page8/tripletout_row2"/>
+    </div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page8/singletout_row3"/>
+	</div>
+	<br>
+    <div class="lc">
+         <div class="featured-categories">
+		     <isslot id="clp-8-static-gridwall-4" description="clp8 static gridwall" context="global" />
+	     </div>
+	</div>
+	<div class="featured-categories">
+    	<isslot id="clp-8-featured-tabs" description="clp8 featured tabs" context="global" />
+    </div>
+    <isslot id="clp-8-view-all-cta" description="cta for view all link" context="global" />
+</isdecorate>

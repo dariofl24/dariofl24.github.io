@@ -1,0 +1,1595 @@
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* line 28, ../css/package/sass/login_registration_menu.scss */
+.nonopacity {
+  opacity: 1 !important;
+}
+
+/* line 32, ../css/package/sass/login_registration_menu.scss */
+#ui-datepicker-div {
+  background-color: white;
+  border-style: solid;
+  border-width: 1px 2px 2px 2px;
+  border-color: #cacaca;
+}
+/* line 38, ../css/package/sass/login_registration_menu.scss */
+#ui-datepicker-div .ui-tabs .ui-tabs-nav {
+  margin: 0;
+  padding: .2em .2em 0;
+}
+/* line 40, ../css/package/sass/login_registration_menu.scss */
+#ui-datepicker-div .ui-tabs .ui-tabs-nav li {
+  list-style: none;
+  float: left;
+  position: relative;
+  top: 1px;
+  margin: 0 .2em 1px 0;
+  border-bottom: 0 !important;
+  padding: 0;
+  white-space: nowrap;
+}
+/* line 42, ../css/package/sass/login_registration_menu.scss */
+#ui-datepicker-div .ui-tabs .ui-tabs-nav li.ui-tabs-selected {
+  margin-bottom: 0;
+  padding-bottom: 1px;
+}
+/* line 44, ../css/package/sass/login_registration_menu.scss */
+#ui-datepicker-div .ui-widget-header {
+  border: 1px solid #aaaaaa;
+  background: #cccccc url(images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+  color: #222222;
+  font-weight: bold;
+}
+/* line 46, ../css/package/sass/login_registration_menu.scss */
+#ui-datepicker-div .ui-state-default, #ui-datepicker-div .ui-widget-content .ui-state-default, #ui-datepicker-div .ui-widget-header .ui-state-default {
+  border: 1px solid #d3d3d3;
+  background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+  font-weight: normal;
+  color: #555555;
+}
+/* line 48, ../css/package/sass/login_registration_menu.scss */
+#ui-datepicker-div .ui-state-hover, #ui-datepicker-div .ui-widget-content .ui-state-hover, #ui-datepicker-div .ui-widget-header .ui-state-hover, #ui-datepicker-div .ui-state-focus, #ui-datepicker-div .ui-widget-content .ui-state-focus, #ui-datepicker-div .ui-widget-header .ui-state-focus {
+  border: 1px solid #999999;
+  background: #dadada url(images/ui-bg_glass_75_dadada_1x400.png) 50% 50% repeat-x;
+  font-weight: normal;
+  color: #212121;
+}
+/* line 50, ../css/package/sass/login_registration_menu.scss */
+#ui-datepicker-div .ui-state-active, #ui-datepicker-div .ui-widget-content .ui-state-active, #ui-datepicker-div .ui-widget-header .ui-state-active {
+  border: 1px solid #aaaaaa;
+  background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
+  font-weight: normal;
+  color: #212121;
+}
+/* line 52, ../css/package/sass/login_registration_menu.scss */
+#ui-datepicker-div .ui-corner-all, #ui-datepicker-div .ui-corner-top, #ui-datepicker-div .ui-corner-left, #ui-datepicker-div .ui-corner-tl {
+  -moz-border-radius-topleft: 4px;
+  -webkit-border-top-left-radius: 4px;
+  -khtml-border-top-left-radius: 4px;
+  border-top-left-radius: 4px;
+}
+/* line 54, ../css/package/sass/login_registration_menu.scss */
+#ui-datepicker-div .ui-corner-all, #ui-datepicker-div .ui-corner-top, #ui-datepicker-div .ui-corner-right, #ui-datepicker-div .ui-corner-tr {
+  -moz-border-radius-topright: 4px;
+  -webkit-border-top-right-radius: 4px;
+  -khtml-border-top-right-radius: 4px;
+  border-top-right-radius: 4px;
+}
+/* line 56, ../css/package/sass/login_registration_menu.scss */
+#ui-datepicker-div .ui-corner-all, #ui-datepicker-div .ui-corner-bottom, #ui-datepicker-div .ui-corner-left, #ui-datepicker-div .ui-corner-bl {
+  -moz-border-radius-bottomleft: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  -khtml-border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+/* line 58, ../css/package/sass/login_registration_menu.scss */
+#ui-datepicker-div .ui-corner-all, #ui-datepicker-div .ui-corner-bottom, #ui-datepicker-div .ui-corner-right, #ui-datepicker-div .ui-corner-br {
+  -moz-border-radius-bottomright: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+  -khtml-border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* line 62, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container {
+  position: relative;
+  height: auto;
+  background: #F8F8F8;
+  overflow: hidden;
+}
+/* line 68, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container span.error {
+  font-size: 0.83333em;
+  margin-top: 0.5em;
+  line-height: 1.4em;
+  color: #940000;
+}
+/* line 78, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .input-container.error input, #login-or-register-container .input-container.error textarea {
+  color: #940000;
+  border: 1px solid #940000 !important;
+}
+/* line 85, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container.expanded {
+  height: auto;
+  overflow: hidden;
+}
+/* line 90, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc {
+  max-width: 83.41667em;
+  height: 17.5em;
+  margin: 0 auto;
+  padding-top: 4.16667em;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 50em) {
+  /* line 90, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc {
+    max-width: 64.16667em;
+    height: 25em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 90, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc {
+    margin-top: 0;
+    padding-top: 0;
+    min-height: 38.75em;
+  }
+}
+/* line 108, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc .login-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+/* line 113, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #social-copy-container {
+  display: none;
+  color: #4C4C4C;
+}
+/* line 117, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #social-copy-container h2 {
+  font-size: 1.33333em;
+  font-weight: bold;
+  line-height: 1.25em;
+  color: #000000;
+}
+/* line 124, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #social-copy-container .social-copy {
+  font-size: 90%;
+  font-weight: normal;
+  color: gray;
+  clear: both;
+  display: block;
+}
+/* line 133, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #social-login-container {
+  font-size: 12px;
+  left: 100%;
+  position: absolute;
+  top: 6.66667em;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 133, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #social-login-container {
+    left: 0px;
+    top: 7.5em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 133, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #social-login-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+/* line 149, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #social-login-container .inner {
+  float: left;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 149, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #social-login-container .inner {
+    height: 60px;
+  }
+}
+/* line 159, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #social-login-container .social-login-inner .gigyaLoginParent .title-text {
+  width: 8.33333em;
+  font-size: 1.25em;
+  color: #808080;
+}
+/* line 168, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #social-login-container #gigyaLoginContainer {
+  width: 100% !important;
+  height: 2.08333em !important;
+  position: absolute;
+  overflow: hidden;
+  top: -1em;
+  left: 7.91667em;
+}
+/* line 177, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #social-login-container div[gigid="facebook"] {
+  position: absolute;
+  left: 0px;
+  width: 17px !important;
+  height: 17px !important;
+}
+/* line 184, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #social-login-container div[gigid="facebook"] div[style], #login-or-register-container .lc #social-login-container div[gigid="facebook"] img {
+  width: 17px !important;
+  height: 17px !important;
+  float: left;
+  content: " ";
+  background: url('../images/sprites_header_footer-s951770ae7d.png') 0 -59px no-repeat !important;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 184, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #social-login-container div[gigid="facebook"] div[style], #login-or-register-container .lc #social-login-container div[gigid="facebook"] img {
+    background-image: url('../images/sprites_header_footer@2x-s40c698728f.png') !important;
+    background-position: 0 -59px !important;
+    -webkit-background-size: 142px 141px !important;
+    -moz-background-size: 142px 141px !important;
+    -o-background-size: 142px 141px !important;
+    background-size: 142px 141px !important;
+    background-repeat: no-repeat;
+  }
+}
+/* line 197, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #social-login-container div[gigid="twitter"] {
+  position: absolute;
+  left: 25px;
+  width: 17px !important;
+  height: 17px !important;
+}
+/* line 204, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #social-login-container div[gigid="twitter"] div[style], #login-or-register-container .lc #social-login-container div[gigid="twitter"] img {
+  width: 17px !important;
+  height: 17px !important;
+  float: left;
+  content: " ";
+  background: url('../images/sprites_header_footer-s951770ae7d.png') -17px -59px no-repeat !important;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 204, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #social-login-container div[gigid="twitter"] div[style], #login-or-register-container .lc #social-login-container div[gigid="twitter"] img {
+    background-image: url('../images/sprites_header_footer@2x-s40c698728f.png') !important;
+    background-position: -17px -59px !important;
+    -webkit-background-size: 142px 141px !important;
+    -moz-background-size: 142px 141px !important;
+    -o-background-size: 142px 141px !important;
+    background-size: 142px 141px !important;
+    background-repeat: no-repeat;
+  }
+}
+/* line 219, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container {
+  width: 80.41%;
+  float: left;
+  border-left: none;
+  border-right: 1px solid #bbb;
+  font-size: 12px;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 219, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #login-container {
+    width: 67.6%;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 219, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #login-container {
+    width: 100%;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+  }
+}
+/* line 238, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container .form-row {
+  height: 4em;
+  margin-bottom: 0px;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 238, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #login-container .form-row {
+    height: 5em;
+  }
+}
+/* line 246, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container .form-row.title-text {
+  height: 2.5em;
+}
+/* line 251, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #login-table {
+  padding: 0px 1.66667em;
+  margin: 0 auto;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 251, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #login-container #login-table {
+    padding: 1.66667em;
+  }
+}
+/* line 259, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #login-table .input-container {
+  width: 90%;
+}
+/* line 11, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #login-container #login-table .input-container.error:before {
+  color: #940000;
+}
+/* line 15, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #login-container #login-table .input-container.error:after {
+  color: #940000;
+}
+/* line 19, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #login-container #login-table .input-container:before {
+  content: attr(namelabel);
+  border-color: #959595;
+  color: #808080;
+  text-align: left;
+  text-transform: uppercase;
+  position: absolute;
+  margin-top: -1.5em;
+  font-size: 10px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+/* line 32, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #login-container #login-table .input-container:after {
+  content: attr(errorlabel);
+  color: #808080;
+  font-size: 10px;
+  white-space: nowrap;
+  display: none;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 259, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #login-container #login-table .input-container {
+    width: 100%;
+  }
+}
+/* line 267, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #login-table .input-container input {
+  width: 100%;
+}
+/* line 273, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #login-username {
+  width: 35%;
+  float: left;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 273, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #login-container #login-username {
+    width: 100%;
+  }
+}
+/* line 281, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #login-username .error-form {
+  font-size: 0.83333em;
+}
+/* line 284, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #login-username .error-form .error-line {
+  clear: both;
+}
+/* line 290, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #login-password {
+  width: 35%;
+  float: left;
+  position: relative;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 290, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #login-container #login-password {
+    width: 100%;
+  }
+}
+/* line 300, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #login-cell {
+  width: 30%;
+  float: left;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 300, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #login-container #login-cell {
+    width: 100%;
+    margin-top: 2.08333em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 309, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #login-container #login-cell .form-row {
+    height: auto;
+  }
+}
+/* line 315, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #login-cell input {
+  width: 100%;
+}
+/* line 320, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #forgotpassword {
+  float: left;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 320, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #login-container #forgotpassword {
+    margin-right: 0.83333em;
+    padding-right: 0.83333em;
+    border-right: 1px solid #bbb;
+  }
+}
+/* line 329, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #forgotpassword a {
+  color: gray;
+  font-size: 0.91667em;
+}
+/* line 336, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #remember {
+  width: 30%;
+  float: left;
+  overflow: hidden;
+}
+@media screen and (min-width: 59.9375em) {
+  /* line 336, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #login-container #remember {
+    width: 100%;
+    position: absolute;
+    left: 100%;
+  }
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 347, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #login-container #remember .rememberme {
+    height: 3em;
+  }
+}
+/* line 351, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #remember .rememberme input {
+  float: left;
+}
+/* line 354, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #login-container #remember .rememberme label {
+  float: right;
+  color: gray;
+}
+/* line 362, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container {
+  width: 100%;
+  float: left;
+  color: #808080;
+  border-left: none;
+  font-size: 12px;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 362, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container {
+    border-left: none;
+    border-top: 1px solid #bbb;
+  }
+}
+/* line 374, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container form {
+  margin: 1em 1.66667em 1.66667em;
+}
+@media screen and (min-width: 59.9375em) {
+  /* line 374, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container form {
+    margin: 1em 3.33333em 1.66667em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 374, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container form {
+    margin-top: 1.66667em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 386, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #new-account-table {
+    height: 38em;
+  }
+}
+/* line 392, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container .form-row {
+  height: 6.0em;
+  margin-bottom: 0px;
+}
+/* line 396, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container .form-row.emea.newsletter {
+  height: 4.0em;
+}
+/* line 399, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container .form-row.emea.ageconfirm {
+  height: 3.5em;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 392, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container .form-row {
+    height: 5em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 392, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container .form-row {
+    height: 4.6em;
+  }
+  /* line 408, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container .form-row .password {
+    height: 4em;
+  }
+  /* line 412, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container .form-row.emea.ageconfirm {
+    height: 4.5em;
+  }
+}
+/* line 419, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container .input-container {
+  width: 90%;
+}
+/* line 11, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #register-container .input-container.error:before {
+  color: #940000;
+}
+/* line 15, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #register-container .input-container.error:after {
+  color: #940000;
+}
+/* line 19, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #register-container .input-container:before {
+  content: attr(namelabel);
+  border-color: #959595;
+  color: #808080;
+  text-align: left;
+  text-transform: uppercase;
+  position: absolute;
+  margin-top: -1.5em;
+  font-size: 10px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+/* line 32, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #register-container .input-container:after {
+  content: attr(errorlabel);
+  color: #808080;
+  font-size: 10px;
+  white-space: nowrap;
+  display: none;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 419, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container .input-container {
+    width: 100%;
+  }
+}
+/* line 427, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container .input-container input {
+  width: 100%;
+}
+/* line 433, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container .div-table-row .div-table-cell {
+  float: left;
+}
+/* line 436, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container .div-table-row .div-table-cell input {
+  width: 100%;
+}
+@media screen and (min-width: 59.9375em) {
+  /* line 442, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container .div-table-row.last-row.emea {
+    position: absolute;
+    margin-left: 64%;
+    top: 60%;
+    width: 100%;
+  }
+}
+/* line 451, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container .div-table-caption {
+  width: 66.667%;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 451, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container .div-table-caption {
+    position: relative;
+    top: -3.2em;
+    width: 100%;
+  }
+}
+/* line 460, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-email-cell {
+  width: 35%;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 460, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-email-cell {
+    width: 48%;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 460, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-email-cell {
+    width: 100%;
+    position: relative;
+    top: 0px;
+  }
+}
+/* line 474, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-birthday-cell {
+  width: 31.5%;
+  margin-right: 3.5%;
+  position: relative;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 474, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-birthday-cell {
+    margin-right: 0px;
+    margin-left: 4%;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 474, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-birthday-cell {
+    width: 100%;
+    position: relative;
+    top: 8em;
+    margin: 0px;
+  }
+}
+/* line 491, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-birthday-cell input {
+  visibility: hidden;
+}
+/* line 496, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-birthday-cell .date-select-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media screen and (min-width: 33.3125em) {
+  /* line 496, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-birthday-cell .date-select-box {
+    width: 100%;
+    height: 2.5em;
+    overflow: hidden;
+    background: url('../images/select_arrow.jpg?1472148728') no-repeat right #FFFFFF;
+    border: 1px solid #CACACA;
+  }
+  /* line 204, ../css/package/sass/base/_conv_mixins.scss */
+  #login-or-register-container .lc #register-container #register-birthday-cell .date-select-box.error {
+    border: 1px solid #940000;
+    background: url('../images/select_arrow.jpg?1472148728') no-repeat right #FFFFFF;
+  }
+  /* line 209, ../css/package/sass/base/_conv_mixins.scss */
+  #login-or-register-container .lc #register-container #register-birthday-cell .date-select-box select {
+    width: 100%;
+    height: 100%;
+    -ms-appearance: none;
+    -moz-appearance: window;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    padding: 0.41667em;
+    padding-right: 2.41667em;
+    line-height: 100%;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+    text-indent: 0.01px;
+    text-overflow: "";
+  }
+  /* line 226, ../css/package/sass/base/_conv_mixins.scss */
+  #login-or-register-container .lc #register-container #register-birthday-cell .date-select-box select::-ms-expand {
+    display: none;
+  }
+  /* line 230, ../css/package/sass/base/_conv_mixins.scss */
+  #login-or-register-container .lc #register-container #register-birthday-cell .date-select-box select option[disabled], #login-or-register-container .lc #register-container #register-birthday-cell .date-select-box select option:disabled {
+    color: #D7D7D7 !important;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 237, ../css/package/sass/base/_conv_mixins.scss */
+  #login-or-register-container .lc #register-container #register-birthday-cell .date-select-box select {
+    width: 99%;
+    margin-left: 1%;
+  }
+}
+/* line 504, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-birthday-cell .date-select-box:nth-child(1) {
+  width: 31.33%;
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 504, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-birthday-cell .date-select-box:nth-child(1) {
+    width: 34.33%;
+  }
+}
+/* line 511, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-birthday-cell .date-select-box:nth-child(2) {
+  width: 31.33%;
+  left: 34%;
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 511, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-birthday-cell .date-select-box:nth-child(2) {
+    left: 38%;
+    width: 34.33%;
+  }
+}
+/* line 520, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-birthday-cell .date-select-box:nth-child(3) {
+  width: 31.33%;
+  left: 68%;
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 520, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-birthday-cell .date-select-box:nth-child(3) {
+    left: 74%;
+    width: 43.33%;
+  }
+}
+/* line 531, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-gender-cell {
+  width: 30%;
+  position: relative;
+}
+@media screen and (min-width: 59.9375em) {
+  /* line 536, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-gender-cell.emea {
+    width: 35%;
+  }
+}
+/* line 541, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-gender-cell .input-container:before {
+  left: 0px;
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 531, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-gender-cell {
+    width: 50%;
+    clear: both;
+    position: relative;
+    top: 1.66667em;
+    left: 70%;
+  }
+  /* line 552, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-gender-cell.emea {
+    width: 40%;
+    clear: none;
+    top: 0;
+    left: 0;
+    margin-left: 4%;
+  }
+  /* line 560, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-gender-cell span:nth-child(2) {
+    margin-left: 5%;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 531, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-gender-cell {
+    width: 100%;
+    position: relative;
+    top: 0em;
+    left: 0;
+  }
+  /* line 571, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-gender-cell span:nth-child(2) {
+    margin-left: 13.8%;
+  }
+}
+/* line 576, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-gender-cell span {
+  float: left;
+  margin: 5px 10px 0px 0px;
+}
+/* line 581, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-gender-cell label {
+  float: left;
+  text-transform: uppercase;
+  font-size: 0.83333em;
+}
+/* line 587, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-gender-cell .gender-input:after {
+  content: "" !important;
+}
+/* line 591, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-gender-cell .gender-input {
+  float: left;
+  width: auto;
+}
+/* line 597, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-birdday-cell {
+  width: 25%;
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 597, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-birdday-cell {
+    width: 10%;
+  }
+  /* line 602, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-birdday-cell.emea {
+    width: 38%;
+  }
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 597, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-birdday-cell {
+    margin-left: 4%;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 597, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-birdday-cell {
+    width: 100%;
+    position: relative;
+    top: 6em;
+    margin: 0px;
+  }
+  /* line 617, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-birdday-cell.emea {
+    margin-bottom: 30px;
+    top: 1.5em;
+  }
+}
+/* line 624, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-password-cell {
+  width: 35%;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 624, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-password-cell {
+    width: 48%;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 624, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-password-cell {
+    width: 100%;
+    position: relative;
+    top: -4.58333em;
+  }
+  /* line 636, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-password-cell.emea {
+    top: 0;
+  }
+}
+/* line 642, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-zip-cell, #login-or-register-container .lc #register-container #register-passwordconfirm-cell {
+  width: 35%;
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 642, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-zip-cell, #login-or-register-container .lc #register-container #register-passwordconfirm-cell {
+    width: 15.30%;
+  }
+  /* line 647, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-zip-cell.emea, #login-or-register-container .lc #register-container #register-passwordconfirm-cell.emea {
+    width: 48%;
+  }
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 642, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-zip-cell, #login-or-register-container .lc #register-container #register-passwordconfirm-cell {
+    margin-left: 4%;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 642, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-zip-cell, #login-or-register-container .lc #register-container #register-passwordconfirm-cell {
+    width: 100%;
+    position: relative;
+    top: 6em;
+    margin: 0px;
+  }
+  /* line 662, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-zip-cell.emea, #login-or-register-container .lc #register-container #register-passwordconfirm-cell.emea {
+    top: 1.5em;
+  }
+}
+/* line 668, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #button-cell {
+  width: 30%;
+}
+@media screen and (min-width: 59.9375em) {
+  /* line 671, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #button-cell.emea {
+    position: absolute;
+    left: 70%;
+    top: 5.25em;
+  }
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 668, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #button-cell {
+    width: 48%;
+    clear: both;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 668, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #button-cell {
+    width: 100%;
+    height: 5em;
+    position: relative;
+    top: 7.5em;
+  }
+  /* line 690, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #button-cell .form-row {
+    height: 8em;
+  }
+}
+/* line 695, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #button-cell #register-btn {
+  float: left;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 695, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #button-cell #register-btn {
+    width: 100%;
+    position: relative;
+    z-index: 10;
+  }
+}
+/* line 705, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #button-cell #cancel-registration-btn {
+  width: auto;
+  float: left;
+  margin: 0.75em 0 0 1.25em;
+  color: #808080;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 705, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #button-cell #cancel-registration-btn {
+    margin: 1.33333em 0px 0px 0px;
+    position: absolute;
+    left: 0;
+    top: 6em;
+  }
+}
+/* line 720, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-liveinus-cell {
+  width: 30%;
+}
+/* line 723, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-liveinus-cell label {
+  float: right;
+  margin-left: 2em;
+  position: absolute;
+}
+/* line 728, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-liveinus-cell input {
+  float: left;
+  width: auto;
+}
+/* line 732, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-liveinus-cell .liveinus {
+  overflow: visible;
+}
+/* line 734, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #register-liveinus-cell .liveinus .error {
+  clear: both;
+}
+@media screen and (min-width: 59.9375em) {
+  /* line 720, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-liveinus-cell {
+    margin: -1.25em 5% 0 35%;
+  }
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 720, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-liveinus-cell {
+    position: relative;
+    margin-left: 52%;
+    top: -4.2em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 720, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #register-liveinus-cell {
+    width: 100%;
+    position: relative;
+    top: 0.5em;
+    margin: 0px;
+  }
+}
+/* line 759, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #copy-cell label {
+  float: right;
+  position: absolute;
+  padding-left: 18px;
+  font-size: 1em;
+}
+/* line 766, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #copy-cell input {
+  float: left;
+  width: auto;
+}
+/* line 772, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #copy-cell .form-row.ageconfirm.emea .error {
+  margin-top: 3em;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 772, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell .form-row.ageconfirm.emea .error {
+    margin-top: 15px;
+  }
+}
+/* line 779, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #copy-cell .form-row.ageconfirm.emea .input-checkbox {
+  margin-top: 0;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 779, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell .form-row.ageconfirm.emea .input-checkbox {
+    top: 14px;
+  }
+}
+/* line 786, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container #copy-cell .form-row.ageconfirm.emea label {
+  float: none;
+  margin-top: 0;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 786, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell .form-row.ageconfirm.emea label {
+    top: 14px;
+  }
+}
+@media screen and (min-width: 59.9375em) {
+  /* line 757, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell {
+    margin-top: -1.25em;
+    width: 30%;
+  }
+  /* line 799, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell label {
+    width: 20%;
+  }
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 805, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell.emea {
+    width: 60%;
+    clear: both;
+  }
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 757, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell {
+    width: 34%;
+  }
+  /* line 814, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell .form-row.newsletter.emea {
+    position: relative;
+    margin-top: -1em;
+  }
+  /* line 818, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell .form-row.ageconfirm.emea {
+    position: relative;
+    margin-top: -1em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 757, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell {
+    height: 5px;
+    width: 75%;
+    margin-left: 20%;
+  }
+  /* line 829, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell label {
+    position: relative;
+  }
+  /* line 833, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell input {
+    position: absolute;
+  }
+  /* line 837, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell .form-row.newsletter {
+    border-left: 1px solid #bbb;
+    height: auto;
+    padding-left: 10%;
+    position: relative;
+    margin-top: -1em;
+    top: 6.5em;
+  }
+  /* line 844, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell .form-row.newsletter.emea {
+    top: 9em;
+    left: 2em;
+  }
+  /* line 849, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container #copy-cell .form-row.ageconfirm.emea {
+    border-left: 1px solid #bbb;
+    padding-left: 10%;
+    position: relative;
+    margin-top: -1em;
+    top: 10em;
+  }
+}
+/* line 862, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container.register-with-social #register-password-cell {
+  display: none;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 866, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container.register-with-social #register-birthday-cell {
+    top: 1em;
+  }
+}
+/* line 872, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container.register-with-social #register-gender-cell {
+  top: 5em;
+  left: -22.16667em;
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 872, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container.register-with-social #register-gender-cell {
+    top: 1.66667em;
+    left: 20%;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 872, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container.register-with-social #register-gender-cell {
+    top: 2em;
+    left: 0;
+  }
+}
+/* line 887, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container.register-with-social #button-cell {
+  position: relative;
+  left: 22.16667em;
+  top: -5em;
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 887, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container.register-with-social #button-cell {
+    left: 52%;
+    top: -3.91667em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 887, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container.register-with-social #button-cell {
+    left: 0;
+    top: 7.5em;
+    height: 5em;
+  }
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 904, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container.register-with-social #register-zip-cell {
+    margin-left: 0;
+  }
+}
+/* line 910, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container.register-with-social #copy-cell {
+  width: 25%;
+  float: right;
+  margin-right: 3.33333em;
+  position: relative;
+  top: -5em;
+}
+@media screen and (min-width: 33.3125em) and (max-width: 59.9375em) {
+  /* line 910, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container.register-with-social #copy-cell {
+    left: 22%;
+    float: left;
+    margin: 0;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 910, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #register-container.register-with-social #copy-cell {
+    width: 70%;
+  }
+}
+/* line 928, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #register-container.register-with-social #register-liveinus-cell {
+  margin-left: 0;
+}
+/* line 933, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #create-account-container {
+  width: 19.36%;
+  float: left;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 933, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #create-account-container {
+    width: 30.84%;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 933, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #create-account-container {
+    width: 100%;
+  }
+}
+/* line 945, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #create-account-container #registration-table {
+  padding: 0px 1.66667em;
+  height: auto;
+  width: 100%;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 945, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #create-account-container #registration-table {
+    padding: 1.66667em;
+    width: auto;
+  }
+}
+/* line 956, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #create-account-container .title-text {
+  margin-bottom: 1.44em;
+}
+/* line 962, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #request-password-container {
+  width: 60%;
+  float: left;
+  border-left: 1px solid #bbb;
+  font-size: 12px;
+}
+/* line 968, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #request-password-container.social-disabled {
+  border-left: none;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 962, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #request-password-container {
+    width: 70%;
+  }
+  /* line 975, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #request-password-container .form-row {
+    height: 4em;
+    margin-bottom: 0px;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 962, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #request-password-container {
+    width: 100%;
+    border-top: 1px solid #bbb;
+  }
+  /* line 985, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #request-password-container #request-password-table {
+    margin: 1.66667em;
+  }
+}
+/* line 990, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #request-password-container #request-password-table {
+  margin-left: 1.66667em;
+  margin-right: 1.66667em;
+}
+/* line 996, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #request-password-container .div-table-cell .input-container {
+  margin-bottom: 1.25em;
+}
+/* line 11, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #request-password-container .div-table-cell .input-container.error:before {
+  color: #940000;
+}
+/* line 15, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #request-password-container .div-table-cell .input-container.error:after {
+  color: #940000;
+}
+/* line 19, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #request-password-container .div-table-cell .input-container:before {
+  content: attr(namelabel);
+  border-color: #959595;
+  color: #808080;
+  text-align: left;
+  text-transform: uppercase;
+  position: absolute;
+  margin-top: -1.5em;
+  font-size: 10px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+/* line 32, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #request-password-container .div-table-cell .input-container:after {
+  content: attr(errorlabel);
+  color: #808080;
+  font-size: 10px;
+  white-space: nowrap;
+  display: none;
+}
+/* line 999, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #request-password-container .div-table-cell .input-container input {
+  width: 100%;
+}
+/* line 1005, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #request-password-container .title-text {
+  height: 1.5em;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 1005, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #request-password-container .title-text {
+    height: 2.5em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 1005, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #request-password-container .title-text {
+    height: 3.5em;
+  }
+}
+/* line 1017, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #request-password-container #forgot-pass-email-cell {
+  float: left;
+  width: 48%;
+  margin-right: 4%;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 1017, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #request-password-container #forgot-pass-email-cell {
+    width: 100%;
+  }
+}
+/* line 1027, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #request-password-container #submit-cell {
+  float: left;
+  width: 23%;
+  margin-right: 4%;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 1027, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #request-password-container #submit-cell {
+    width: 100%;
+  }
+}
+/* line 1036, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #request-password-container #submit-cell #request-password-btn {
+  width: 100%;
+  display: inline-block;
+  padding: 0.8em 0 0.7em 0;
+}
+/* line 1043, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #request-password-container #cancel-cell {
+  float: left;
+  width: 21%;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 1043, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #request-password-container #cancel-cell {
+    width: 100%;
+  }
+}
+/* line 1051, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #request-password-container #cancel-cell .form-row {
+  padding-top: 0.675em;
+}
+/* line 1056, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #request-password-container .notification {
+  display: none;
+}
+/* line 1061, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container {
+  width: 60%;
+  float: left;
+  border-left: 1px solid #bbb;
+  font-size: 12px;
+}
+/* line 1067, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container.social-disabled {
+  border-left: none;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 1061, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #reset-password-container {
+    width: 70%;
+  }
+  /* line 1074, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #reset-password-container .form-row {
+    height: 4em;
+    margin-bottom: 0px;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 1061, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #reset-password-container {
+    width: 100%;
+    border-top: 1px solid #bbb;
+  }
+  /* line 1084, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #reset-password-container #reset-password-table {
+    margin: 1.66667em;
+  }
+}
+/* line 1089, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container #reset-password-table {
+  margin-left: 1.66667em;
+  margin-right: 1.66667em;
+}
+/* line 1095, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container .div-table-cell .input-container {
+  margin-bottom: 15px;
+}
+/* line 11, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #reset-password-container .div-table-cell .input-container.error:before {
+  color: #940000;
+}
+/* line 15, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #reset-password-container .div-table-cell .input-container.error:after {
+  color: #940000;
+}
+/* line 19, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #reset-password-container .div-table-cell .input-container:before {
+  content: attr(namelabel);
+  border-color: #959595;
+  color: #808080;
+  text-align: left;
+  text-transform: uppercase;
+  position: absolute;
+  margin-top: -1.5em;
+  font-size: 10px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+/* line 32, ../css/package/sass/base/_conv_mixins.scss */
+#login-or-register-container .lc #reset-password-container .div-table-cell .input-container:after {
+  content: attr(errorlabel);
+  color: #808080;
+  font-size: 10px;
+  white-space: nowrap;
+  display: none;
+}
+/* line 1098, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container .div-table-cell .input-container input {
+  width: 100%;
+}
+/* line 1104, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container .title-text {
+  height: 1.5em;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 1104, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #reset-password-container .title-text {
+    height: 2.5em;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 1104, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #reset-password-container .title-text {
+    height: 3.5em;
+  }
+}
+/* line 1116, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container #password-cell {
+  float: left;
+  width: 24%;
+  margin-right: 4%;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 1116, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #reset-password-container #password-cell {
+    width: 100%;
+  }
+}
+/* line 1126, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container #password-confirm-cell {
+  float: left;
+  width: 24%;
+  margin-right: 4%;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 1126, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #reset-password-container #password-confirm-cell {
+    width: 100%;
+  }
+}
+/* line 1136, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container #submit-cell {
+  float: left;
+  width: 23%;
+  margin-right: 4%;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 1136, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #reset-password-container #submit-cell {
+    width: 100%;
+  }
+}
+/* line 1145, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container #submit-cell #reset-password-btn {
+  width: 100%;
+  display: inline-block;
+  padding: 0.8em 0 0.7em 0;
+}
+/* line 1152, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container #cancel-cell {
+  float: left;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 1152, ../css/package/sass/login_registration_menu.scss */
+  #login-or-register-container .lc #reset-password-container #cancel-cell {
+    width: 100%;
+  }
+}
+/* line 1160, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container .notification {
+  display: none;
+}
+/* line 1164, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #reset-password-container .clear-error-row {
+  clear: both;
+}
+/* line 1176, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #create-account-container .div-table#social-table .div-table-row:first-of-type,
+#login-or-register-container .lc #login-container .div-table#social-table .div-table-row:first-of-type,
+#login-or-register-container .lc #social-login-container .div-table#social-table .div-table-row:first-of-type,
+#login-or-register-container .lc #request-password-container .div-table#social-table .div-table-row:first-of-type,
+#login-or-register-container .lc #reset-password-container .div-table#social-table .div-table-row:first-of-type {
+  margin-bottom: 2.25em;
+}
+/* line 1180, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .lc #create-account-container .div-table .title-text,
+#login-or-register-container .lc #login-container .div-table .title-text,
+#login-or-register-container .lc #social-login-container .div-table .title-text,
+#login-or-register-container .lc #request-password-container .div-table .title-text,
+#login-or-register-container .lc #reset-password-container .div-table .title-text {
+  font-size: 1.33333em;
+  font-weight: bold;
+}
+/* line 1188, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container label {
+  font-weight: normal;
+  text-transform: none;
+  padding-bottom: 0px;
+  line-height: 14px;
+}
+/* line 1195, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .form-row {
+  padding: 0;
+}
+/* line 1200, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .form-row.rememberme label, #login-or-register-container .form-row.liveinus label {
+  margin-left: 1.33333em;
+  position: absolute;
+  width: auto;
+  font-size: 10px;
+  margin-left: 1.8em;
+}
+/* line 1208, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .form-row.rememberme input[type="checkbox"], #login-or-register-container .form-row.liveinus input[type="checkbox"] {
+  padding: 0;
+  height: auto;
+}
+/* line 1213, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .form-row.rememberme span.required-indicator, #login-or-register-container .form-row.liveinus span.required-indicator {
+  display: none;
+}
+/* line 1218, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .form-row .form-caption {
+  display: none;
+}
+/* line 1223, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .form-row-button {
+  width: auto;
+}
+/* line 1227, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .title-text {
+  font-size: larger;
+}
+/* line 1231, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container .hint-text {
+  font-size: smaller;
+}
+/* line 1235, ../css/package/sass/login_registration_menu.scss */
+#login-or-register-container #register-container,
+#login-or-register-container #request-password-container,
+#login-or-register-container #reset-password-container {
+  display: none;
+}

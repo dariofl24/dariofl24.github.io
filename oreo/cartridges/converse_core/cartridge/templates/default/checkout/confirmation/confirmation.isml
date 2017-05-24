@@ -1,0 +1,232 @@
+<isdecorate template="checkout/pt_orderconfirmation">
+    <isscript>
+    	importPackage(dw.system);
+		importPackage( dw.util );
+        importScript("converse_core:constants.ds");
+        importScript("converse_core:util/ViewHelpers.ds");
+        importScript("converse_core:product/ProductUtils.ds");
+        importScript("converse_core:checkout/Utils.ds");
+        importScript("converse_core:product/ProductImageResolver.ds");
+        importScript("converse_core:checkout/AddressHelper.ds");
+        importScript("converse_core:util/LocaleInfo.ds");
+
+        var ProductImageResolver = converse.product.ProductImageResolver;
+        var AddressHelper = new converse.global.AddressHelperFactory().helper();
+
+        var shippingAddressIsDifferent = true;
+        var canSaveAddress = false;
+        var shippingAddress = pdict.Order.getShipments()[0].shippingAddress;
+        if (pdict.CurrentCustomer.authenticated) {
+            for each(var address in pdict.CurrentCustomer.profile.addressBook.addresses) {
+                if (AddressHelper.addressesAreEqual(address, shippingAddress)) {
+                    shippingAddressIsDifferent = false;
+                    break;
+                }
+            }
+            var lim = converse.utils.getCustomerStoredAddressesLimit( Site.current );
+            var maxAddressesNotExceeded = pdict.CurrentCustomer.profile.addressBook.addresses.length < lim;
+            canSaveAddress = pdict.CurrentCustomer.authenticated && maxAddressesNotExceeded && shippingAddressIsDifferent;
+        }
+    </isscript>
+    <isinclude template="util/modules"/>
+    <isinclude template="util/reporting/ReportOrder.isml"/>
+    
+    <div class="checkout-confirmation-header">
+        <h1>${Resource.msg('confirmation.message.ordercomplete','checkout',null)}</h1>
+        <button class="btn-print" value="print"><span class="print-icon"></span>${Resource.msg('confirmation.print','checkout',null)}</button>
+        <p>${Resource.msg('confirmation.message.emailcopy','checkout',null)} <span class="bold">${pdict.Order.customerEmail}</span>.</p>
+    </div>
+
+    <isif condition="${!pdict.CurrentCustomer.authenticated}">
+    <div class="checkout-confirmation-create-account">
+        <h2>${Resource.msg('confirmation.message.trackorder','checkout',null)}</h2>
+        <p>${Resource.msg('confirmation.message.createaccount','checkout',null)}</p>
+        <form action="${URLUtils.httpsContinue()}" method="POST" id="create-account-form" name="${pdict.CurrentForms.orderconfirmation.createaccount.htmlName}">
+            <button id="checkout-create-account-btn"
+                name="${pdict.CurrentForms.orderconfirmation.createaccount.assigncustomer.htmlName}"
+                type="submit"
+                data-customer-email="${pdict.Order.customerEmail}"
+                value="${Resource.msg('confirmation.createaccount','checkout',null)}"
+                class="continue">${Resource.msg('confirmation.createaccount','checkout',null)}</button>
+            <input type="hidden" 
+                name="${pdict.CurrentForms.orderconfirmation.secureKeyHtmlName}" 
+                value="${pdict.CurrentForms.orderconfirmation.secureKeyValue}"/> 
+        </form>
+    </div>
+    </isif>
+
+    <isset name="billingField" value="${pdict.Order.billingAddress}" scope="page"/>
+    <isset name="shippingField" value="${pdict.Order.getShipments()[0].shippingAddress}" scope="page"/>
+    <isset name="paymentField" value="${pdict.Order.paymentInstrument}" scope="page"/>
+
+    <div class="checkout-confirmation-address-info">
+        <div class="shipping column">
+            <h2>${Resource.msg('checkout.header.shippingaddress','checkout',null)}</h2>
+            <ul>
+                <li><isprint value="${shippingField.firstName}" /> <isprint value="${shippingField.lastName}" /></li>
+                <li><isprint value="${shippingField.address1}" /></li>
+                <isif condition="${!empty(shippingField.address2)}">
+                <li><isprint value="${shippingField.address2}" /></li>
+                </isif>
+                <li><isprint value="${AddressHelper.formatAddressForSummary(shippingField.city, shippingField.postalCode, shippingField.stateCode)}" encoding="off" /></li>
+                <li><isprint value="${(empty(shippingField.phone))?'':shippingField.phone}" /></li>
+                <isif condition="${isSite('US') || isSite('GB')}">
+                  <li><isprint value="${shippingField.countryCode}" /></li>
+                <iselse>
+                  <li>${Resource.msg('countries.'+ shippingField.countryCode.value.toLowerCase(), 'forms', null)}</li>
+                </isif>
+
+            </ul>
+            <isif condition="${canSaveAddress}">
+            <form class="address-nickname" method="post" name="nickname" action="${URLUtils.https('Address-Add')}">
+                <input name="${pdict.CurrentForms.profile.address.addressFields.common.firstName.htmlName}" value="<isprint value="${shippingField.firstName}"/>" type="hidden">
+                <input name="${pdict.CurrentForms.profile.address.addressFields.common.lastName.htmlName}" value="<isprint value="${shippingField.lastName}"/>" type="hidden">
+                <input name="${pdict.CurrentForms.profile.address.addressFields.common.address1.htmlName}" value="<isprint value="${shippingField.address1}"/>" type="hidden">
+                <input name="${pdict.CurrentForms.profile.address.addressFields.common.address2.htmlName}" value="<isif condition="${!empty(shippingField.address2)}"><isprint value="${shippingField.address2}"/></isif>" type="hidden">
+                <input name="${pdict.CurrentForms.profile.address.addressFields.common.city.htmlName}" value="<isprint value="${shippingField.city}"/>" type="hidden">
+                <input name="${pdict.CurrentForms.profile.address.addressFields.states.stateCode.htmlName}" value="<isprint value="${shippingField.stateCode}"/>" type="hidden">
+                <input name="${pdict.CurrentForms.profile.address.addressFields.regional.zip.htmlName}" value="<isprint value="${shippingField.postalCode}"/>" type="hidden">
+                <input name="${pdict.CurrentForms.profile.address.addressFields.regional.phone.htmlName}" value="<isprint value="${shippingField.phone}"/>" type="hidden">
+                <input name="${pdict.CurrentForms.profile.address.addressFields.regional.country.htmlName}" value="<isprint value="${shippingField.countryCode.value}"/>" type="hidden">
+                
+                <input name="${pdict.CurrentForms.profile.secureKeyHtmlName}" value="${pdict.CurrentForms.profile.secureKeyValue}" type="hidden">
+                
+                <isinputfield formfield="${pdict.CurrentForms.profile.address.addressid}" type="input" xhtmlclass="address-nickname-input">
+                <button type="submit" class="btn medium-black-btn save-address">${Resource.msg('global.save.lowercase','locale',null)}</button>
+            </form>
+            </isif>
+        </div>
+        <div class="billing column">
+            <h2>${Resource.msg('checkout.header.billingaddress','checkout',null)}</h2>
+            <ul>
+                <li>${billingField.firstName} ${billingField.lastName}</li>
+                <li>${billingField.address1}</li>
+                <isif condition="${!empty(billingField.address2)}">
+                <li>${billingField.address2}</li>
+                </isif>
+                <li><isprint value="${AddressHelper.formatAddressForSummary(billingField.city, billingField.postalCode, billingField.stateCode)}" encoding="off" /><li>
+                <li>${pdict.Order.customerEmail}</li>
+                <isif condition="${!empty(billingField.phone)}">
+                <li>${billingField.phone}</li>
+                </isif>
+                <isif condition="${isSite('US') || isSite('GB')}">
+                  <li>${billingField.countryCode}</li>
+                <iselse>
+                  <li>${Resource.msg('countries.'+ billingField.countryCode.value.toLowerCase(), 'forms', null)}</li>
+                </isif>
+            </ul>
+        </div>
+        <div class="payment column">
+            <h2>${Resource.msg('checkout.header.paymentinformation','checkout',null)}</h2>
+            <ul>
+                <isif condition="${paymentField.paymentMethod === converse.constants.PaymentMethodId.CreditCard}">
+                    <li>${Resource.msg('confirmation.payment.chargedto','checkout',null)} ${paymentField.creditCardType}</li>
+                    <li>${paymentField.maskedCreditCardNumber}</li>
+                    <li>${Resource.msg('confirmation.payment.creditcardexpires','checkout',null)} ${paymentField.creditCardExpirationMonth}/${paymentField.creditCardExpirationYear}</li>
+                <iselseif condition="${paymentField.paymentMethod === converse.constants.PaymentMethodId.Invoice}">
+                    <li class="label"><isprint value="${Resource.msg('shippingreview.chargeto.label','checkout',null)}"/></li>
+                    <li><isprint value="${Resource.msg('billing.invoice','forms',null)}"/></li>
+                <iselse>
+                    <li>${dw.order.PaymentMgr.getPaymentMethod(paymentField.paymentMethod).getName()}</li>
+                </isif>
+            </ul>
+        </div>
+    </div>
+
+    <div class="checkout-confirmation-details">
+        <iscomment>render a box for each shipment</iscomment>
+        <isloop items="${pdict.Order.shipments}" var="shipment" status="shipmentloopstate">
+            <div class="shipment-item">
+	            <h3>${Resource.msg('confirmation.order.label','checkout',null)} <span>${dw.system.Site.current.ID == "converse" ? shipment.custom.journeysOrderID : pdict.Order.orderNo}</span></h3>
+	            <isif condition="${shipment.productLineItems.size() > 0}">
+		            <ul class="cart-item">
+
+		                <iscomment>Shipment items table</iscomment>
+		                <isset name="productType" value="${shipment.custom.productType}" scope="page"/>
+		                <isset name="isDelayed" value="${false}" scope="page"/>
+
+		                <isloop items="${shipment.productLineItems}" var="productLineItem" status="pliloopstate">
+		                    <isset name="product" value="${productLineItem.product}" scope="page"/>
+		                    <isset name="itemStatus" value="${productLineItem.externalLineItemStatus}" scope="page"/>
+
+		                    <iscomment>If at least one productLineitem is delayed all shipment is delayed </iscomment>
+		                    <isif condition="${!isDelayed}">
+		                        <isset name="isDelayed" scope="page" value="${converse.constants.ItemStatus.Delayed.equals(itemStatus)}"/>
+		                    </isif>
+
+		                    <li class="item">
+		                        <div class="product">
+		                            <isset name="mediaFile" value="${ProductImageResolver.getProductLineItemImage(productLineItem, 'lineItemTile', request.httpSecure)}" scope="page"/>
+		                            <a class="thumb-link" href="${ProductUtils.getProductLineItemLink(productLineItem)}" title="${product.name}">
+		                                <img src="${mediaFile.getURL()}" alt="${mediaFile.alt}" title="${mediaFile.title}" />
+		                            </a>
+		                        </div>
+
+		                        <div class="info">
+		                            <iscomment>Display product line and product using module</iscomment>
+		                            <isdisplayliproduct p_productli="${productLineItem}" p_dynamicpricing="${false}" p_hidepromo="${true}"/>
+                                    <div class="shipping-info">
+                                        <div class="attribute">
+                                            <span class="label">${Resource.msg('orderpreview.shippingmethod.label','checkout',null)}</span>
+                                            <span class="value bold">
+                                                <isprint value="${shipment.shippingMethod.displayName}">:
+                                                <isprint value="${shipment.shippingTotalPrice}" style="MONEY_LONG">
+                                                <isif condition="${shipment.shippingMethod.description}">
+                                                    <span class="shipping-description">
+                                                        (<isprint value="${shipment.shippingMethod.description}">)
+                                                    </span>
+                                                </isif>
+                                            </span>
+                                        </div>
+                                    </div>
+		                        </div>
+
+		                    </li>
+		                </isloop>
+
+		            </ul>
+	            </isif>
+            </div>
+        </isloop>
+    </div>
+
+    <isset name="inlineOrderId" value="${pdict.Order.custom.inlineJourneysOrderID}" scope="page"/>
+    <isset name="dyoOrderId" value="${pdict.Order.custom.dyoJourneysOrderID}" scope="page"/>
+
+    <isif condition="${!empty(inlineOrderId)}">
+        <isif condition="${!empty(dyoOrderId)}">
+            <isset name="confirmationOrderId" value="${Resource.msgf('confirmation.message.orderid.inlineanddyo', 'checkout', null, inlineOrderId, dyoOrderId)}" scope="page"/>
+        <iselse>
+            <isset name="confirmationOrderId" value="${Resource.msgf('confirmation.message.orderid.inline', 'checkout', null, inlineOrderId)}" scope="page"/>
+        </isif>
+    <iselseif condition="${!empty(dyoOrderId)}">
+        <isset name="confirmationOrderId" value="${Resource.msgf('confirmation.message.orderid.dyo', 'checkout', null, dyoOrderId)}" scope="page"/>
+    <iselse>
+        <isset name="confirmationOrderId" value="" scope="page"/>
+    </isif>
+
+    <isset name="confirmationShipment" value="${Resource.msg((empty(dyoOrderId) ? 'confirmation.message.shipment.inline' : 'confirmation.message.shipment.dyo'), 'checkout', null)}" scope="page"/>
+    <isset name="confirmationCustomerService" value="${Resource.msgf('confirmation.message.customerservice', 'checkout', null, pdict.Order.customerEmail)}" scope="page"/>
+
+
+    <div class="summary-wrapper">
+	    <h4 class="order-summary-title">${Resource.msg('summary.title','checkout',null)}</h4>
+
+	    <iscomment>render the order totals</iscomment>
+
+	    <isif condition="${pdict.Basket}">
+	        <isset name="Basket" value="${pdict.Basket}" scope="page">
+	    <iselse>
+	        <isset name="Basket" value="${pdict.Order}" scope="page">
+	    </isif>
+
+	    <div class="checkout-order-totals">
+	        <isordertotals p_lineitemctnr="${Basket}" p_showshipmentinfo="${false}" p_shipmenteditable="${false}" p_totallabel="Total:"/>
+	    </div>
+    </div>
+
+
+    <p class="checkout-confirmation-message">${confirmationOrderId} ${confirmationShipment}</p>
+    <p class="checkout-confirmation-message">${confirmationCustomerService}</p>
+
+</isdecorate>

@@ -1,0 +1,70 @@
+
+/**
+ * @input Unit: Object
+ */
+
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("module_test:Framework/Assert.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_exacttarget:command/RetrieveSubscriptionsRequest.ds");
+
+function execute(args: PipelineDictionary) {
+
+    var ET_NS = integration.exacttarget;
+    var COMMAND_NS = ET_NS.command;
+
+    var RetrieveSubscriptionsRequest = COMMAND_NS.RetrieveSubscriptionsRequest;
+
+    var webReference = webreferences.etframework;
+    var EMAIL = "prosto@prosto.com";
+    var CLIENT_ID = 234;
+    var PROPERTIES = ["ListID", "SubscriberKey", "Status"];
+    var OBJECT_TYPE = "ListSubscriber";
+
+    var SimpleOperators = webReference.SimpleOperators;
+
+    function getCommandOptions() {
+       return { 
+            configuration: {
+                clientId: CLIENT_ID
+            },
+            serviceClient: webReference.getDefaultService(),
+            webReference: webReference
+        };
+    }
+
+    function createRetrieveSubscriptionsRequest() {
+        var retieveRequest = new RetrieveSubscriptionsRequest(EMAIL);
+        retieveRequest.initOptions(getCommandOptions());
+        return retieveRequest;
+    }
+
+    args.Unit.describe("ExactTarget Retrieve Subscriptions Request")
+        .test("Retrieve_subscriptions_request_is_built_as_expected", function () {
+            var retieveRequestCmd = createRetrieveSubscriptionsRequest();
+            var retieveRequestMsg = retieveRequestCmd.createRequest();
+            var retieveRequest = retieveRequestMsg.getRetrieveRequest();
+
+            var filter = retieveRequest.getFilter();
+            var properties = retieveRequest.getProperties();
+
+            Assert.areEqual(OBJECT_TYPE, retieveRequest.getObjectType());
+            Assert.areEqual(CLIENT_ID, retieveRequest.getClientIDs()[0].ID);
+            Assert.areEqual("SubscriberKey", filter.getProperty());
+            Assert.areEqual(EMAIL, filter.getValue()[0]);
+            Assert.areEqual(SimpleOperators.equals, filter.getSimpleOperator());
+            
+            Assert.areEqual(PROPERTIES.length, properties.length);
+            for(let i = 0, len = properties.length; i < len; i++) {
+                Assert.areEqual(PROPERTIES[i], properties[i]);
+            }
+        });
+
+    return PIPELET_NEXT;
+}

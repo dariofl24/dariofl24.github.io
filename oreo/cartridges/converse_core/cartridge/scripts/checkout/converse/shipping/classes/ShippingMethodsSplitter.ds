@@ -1,0 +1,73 @@
+importPackage(dw.util);
+importPackage(dw.order);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:checkout/converse/shipping/classes/ShippingMethodsComparator.ds");
+importScript("converse_core:checkout/converse/shipping/classes/ShippingMethodsGroups.ds");
+
+function ShippingMethodsSplitter(self) {
+	self = self || {};
+	
+	function newShippingMethod(method: ShippingMethod) {
+		return {
+			'shippingMethod': method
+		}
+	}
+	
+	self.split = function(methods: Collection) {
+		var regular : ArrayList = new ArrayList();
+		var dyo : ArrayList = new ArrayList();
+		var pgc : ArrayList = new ArrayList();
+		var egc : ArrayList = new ArrayList();
+	
+		for each(var method : ShippingMethod in methods) {
+			if (method.custom.productType.value === converse.constants.ProductType.Regular) {
+				if (method.isOnline()) {
+					regular.add(newShippingMethod(method));
+				}
+			}
+			else if (method.custom.productType.value === converse.constants.ProductType.C1) {
+				if (method.isOnline()) {
+					dyo.add(newShippingMethod(method));
+				}
+			}
+			else if (method.custom.productType.value === converse.constants.ProductType.PhysicalGiftCard) {
+				if (method.isOnline()) {
+					pgc.add(newShippingMethod(method));
+				}
+			}
+			else if (method.custom.productType.value === converse.constants.ProductType.ElectronicGiftCard) {
+				if (method.isOnline()) {
+					egc.add(newShippingMethod(method));
+				}
+			}
+		}
+		
+		var comparator = new ShippingMethodComparator();
+		regular.sort(comparator.compare);
+		dyo.sort(comparator.compare);
+		pgc.sort(comparator.compare);
+		egc.sort(comparator.compare);
+		
+		var result = new ShippingMethodsGroups();
+		if (regular.length !== 0) {
+			result.add(converse.constants.ProductType.Regular, regular);
+		}
+		
+		if (dyo.length !== 0) {
+			result.add(converse.constants.ProductType.C1, dyo);
+		}
+		
+		if (pgc.length !== 0) {
+			result.add(converse.constants.ProductType.PhysicalGiftCard, pgc);
+		}
+		
+		if (egc.length !== 0) {
+			result.add(converse.constants.ProductType.ElectronicGiftCard, egc);
+		}
+		
+		return result;
+	}
+	
+	return self;
+}

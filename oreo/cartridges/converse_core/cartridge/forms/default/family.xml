@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" form-error="family.error">
+    
+    <field formid="employeeid"
+            label="family.employeeid"
+            type="string"
+            mandatory="true"
+            binding="custom.employeeID"/>
+    
+    <field formid="firstname"
+            label="family.firstname"
+            type="string"
+            mandatory="true"
+            binding="custom.firstName"
+            max-length="50"/>
+
+    <field formid="lastname"
+            label="family.lastname"
+            type="string"
+            mandatory="true"
+            binding="custom.lastName"
+            max-length="50"/>
+
+    <field formid="relationship"
+            label="family.relationship"
+            type="integer"
+            mandatory="true"
+            binding="custom.relationship">
+        <options optionid-binding="value" value-binding="value" label-binding="displayValue"/>
+    </field>
+
+    <field formid="email"
+            label="family.email"
+            type="string"
+            mandatory="true"
+            regexp="^[\w\.%-]+@[\w\.-]+\.[\w]{2,6}$"
+            binding="custom.email"
+            max-length="50"
+            parse-error="profile.emailparseerror"
+            value-error="family.profile.valueerror"/>
+
+    <action formid="save" valid-form="true" />
+</form>

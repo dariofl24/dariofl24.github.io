@@ -1,0 +1,15 @@
+@import "_constants";
+@import "_sprites";
+/* wishlist */
+/* ------------------------------------- */
+.pt_wish-list .list-table-header {
+	background:sprite($SPRITEGRAPHICS, icon-double-line-header) repeat-x scroll left top $COMMON_IMPORTANT_COLOR;
+	overflow:hidden;padding:2em;
+	p {
+		color:$COMMON_PRODUCT_TEXT_COLOR;
+		float:right;
+		margin:0;
+		overflow:hidden;
+		width:$COMMON_COL_WIDTH;
+	}
+}

@@ -1,0 +1,30 @@
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* Upgrade Browser Notification */
+/* ------------------------------------- */
+/* line 11, ../css/package/sass/upgrade_browser_notification.scss */
+#upgrade-browser-notification {
+  font-size: 1.5em;
+  padding: 0.83333em 1.33333em;
+  margin: auto;
+  text-align: center;
+  background-color: #FFF28A;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 19, ../css/package/sass/upgrade_browser_notification.scss */
+#upgrade-browser-notification a {
+  color: #996633;
+  text-decoration: underline;
+}
+/* line 24, ../css/package/sass/upgrade_browser_notification.scss */
+#upgrade-browser-notification b {
+  font-weight: bold;
+}

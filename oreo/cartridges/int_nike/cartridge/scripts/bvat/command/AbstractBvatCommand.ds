@@ -1,0 +1,52 @@
+importPackage(dw.system);
+importPackage(dw.crypto);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/command/HttpClientCommand.ds");
+
+(function(){
+    
+    var MAX_VALUE = 2147483647;
+    
+    var AbstractBvatCommand = converse.webservices.command.HttpClientCommand.extend({
+        
+        init: function(action : String, requestObj : Object) {
+            this._super();
+            this.action = action;
+            this.requestObj = requestObj;
+            
+            this.logger = Logger.getLogger("BVAT");
+        },
+        
+        createRequest: function () {
+            var random : SecureRandom = new SecureRandom();
+            return {
+                "x" : random.nextInt(MAX_VALUE),
+                "action" : this.action 
+            };
+        },
+        
+        execute: function(request) {
+            var url = this.getServiceUrl();
+            var parameters = this.encodeParameters(request);
+            
+            this.logger.info("Posting Bvat request with parameters : {0}", parameters);
+
+            var response = this.doPost(url, parameters);
+            
+            this.logger.info("Received Bvat response with HTTPCode - {0}: {1}", this.serviceClient.statusCode, response);
+            
+            return response;
+        },
+        
+        getServiceUrl: function() {
+            return this.configuration.url;
+        }
+    });
+    
+    var ns = Namespace.extendFromString(integration, "nike.bvat.command");
+    Namespace.extend(ns, { AbstractBvatCommand: AbstractBvatCommand });
+    
+})();

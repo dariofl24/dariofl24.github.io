@@ -1,0 +1,64 @@
+/**
+* Export Orders to CSV
+*
+* @input ExportFile : String The export file name
+*
+* @output ErrorMsg : String The error message if any
+*/
+
+importPackage(dw.io);
+importPackage(dw.customer);
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:util/TimeUtils.ds");
+importScript("custom/CsvFileWriter.ds");
+
+var logger : Logger = Logger.getLogger('ExportEmployees');
+var CsvFileWriter = converse.utils.CsvFileWriter;
+var DateFormat = "dd-MMM-yy";
+
+function execute(args : PipelineDictionary) : Number
+{
+    let errorMsg : String = null;
+    
+    try {
+        let employees = dw.customer.CustomerMgr.searchProfiles("email like '*@converse.com' or email like '*@nike.com'", "creationDate asc");
+        if(employees.hasNext()) {
+            writeEmployeesToCsvFile(args.ExportFile, employees);
+        }
+    } catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+    
+    args.ErrorMsg = errorMsg;
+
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function writeEmployeesToCsvFile(csvFileName : String, employees : Iterator) {
+    let csvWriter : CsvFileWriter =  new CsvFileWriter(csvFileName);
+
+    let header = getCsvHeader();
+    csvWriter.writeNext(header);
+
+    while(employees.hasNext()) {
+        let customer = employees.next();
+        csvWriter.writeNext(getRow(customer));
+    }
+
+    csvWriter.close();
+}
+
+function getCsvHeader() : Array {
+    return ["Email Address",
+            "Date Registered"];
+}
+
+function getRow(customer : Profile) : Array {
+    let registeredDate = TimeUtils.formatDate(customer.creationDate, DateFormat);
+    return [customer.email,
+            registeredDate];
+}

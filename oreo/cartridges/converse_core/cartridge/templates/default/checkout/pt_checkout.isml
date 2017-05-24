@@ -1,0 +1,69 @@
+<isscript>
+    var pageContext={title:'Converse Checkout',type:'checkout',ns:'checkout'};
+    var isCheckout = true;
+
+    var step1state = "inactive";
+    var step2state = "inactive";
+    var step3state = "inactive";
+
+    if (checkoutstep === "1") {
+        step1state = "active";
+        pageContext.title = 'Converse Checkout Shipping';
+        pageContext.type ='checkout-shipping';
+    } else if (checkoutstep === "2") {
+        step2state = "active";
+        pageContext.title = 'Converse Checkout Payment';
+        pageContext.type ='checkout-payment';
+    } else if (checkoutstep === "3") {
+        step3state = "active";
+        pageContext.title = 'Converse Checkout Order Review';
+        pageContext.type ='checkout-order-review';
+    }
+</isscript>
+
+<isdecorate template="pt_commonlayout">
+    <div class="pt_checkout">
+        <div id="main" role="main" class="checkout-container clearfix">
+            <div id="primary" class="primary-content">
+                <isinclude template="checkout/components/supportheader" />
+                <div class="checkout-step shipping-info ${step1state}">
+                    <ischeckoutstepheader number="1"
+                        state="${step1state}"
+                        title="${Resource.msg('checkoutprogressindicator.shipping','checkout',null)}"  
+                        fulfilled="${pdict.CurrentForms.singleshipping.fulfilled.value}"
+                        editlink="${URLUtils.https('COShipping-Edit')}"
+                        reviewinfotemplate="checkout/shipping/shippingreviewinfo" />
+
+                    <iscomment>include singleshipping template</iscomment>
+                    <isif condition="${checkoutstep == '1'}"><isreplace/></isif>
+                </div>
+                <div class="checkout-step billing-info ${step2state}">
+                    <ischeckoutstepheader number="2"
+                        state="${step2state}"
+                        fulfilled="${pdict.CurrentForms.billing.fulfilled.value}"
+                        title="${Resource.msg('checkoutprogressindicator.payment','checkout',null)}"
+                        editlink="${URLUtils.https('COBilling-Start')}"
+                        reviewinfotemplate="checkout/billing/billingreviewinfo" />
+
+                    <iscomment>include billing template</iscomment>
+                    <isif condition="${checkoutstep == '2'}"><isreplace/></isif>
+                </div>
+                <div class="checkout-step delivery-info ${step3state}">
+                    <ischeckoutstepheader number="3"
+                        state="${step3state}"
+                        title="${Resource.msg('checkoutprogressindicator.orderpreview','checkout',null)}"
+                        fulfilled="${pdict.CurrentForms.billing.fulfilled.value}" />
+
+                    <iscomment>include summary template</iscomment>
+                    <isif condition="${checkoutstep == '3'}"><isreplace/></isif>
+                </div>
+            </div>
+
+            <div class="checkout-sidebar summary">
+                <isinclude template="checkout/minisummary"/>
+            </div>
+
+        </div>
+    </div>
+    <script src="${URLUtils.staticURL('/js/onload_tooltips.js')}"></script>
+</isdecorate>

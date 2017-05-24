@@ -1,0 +1,83 @@
+*** Settings ***
+Resource        site_declarations.txt
+Library         Selenium2Library
+Resource        logout_definitions.txt
+Resource        login_definitions.txt
+Resource        common_keywords.txt
+
+*** Variables ***
+${I_EMAIL}      //input[@id='dwfrm_profile_customer_email']
+${I_PASSWORD}   //input[@id='dwfrm_profile_login_password']
+${S_SELMONTH}   //select[@id='month']
+${S_SELDAY}     //select[@id='day']
+${S_SELYEAR}    //select[@id='year']
+${R_GENDER}     //input[@value='
+${I_ZIPCODE}    //input[contains(@class, 'zip-input')]
+${I_LIVEINUS}   //input[contains(@id,'livein')]
+${A_SUBMIT}     //div[@id='register-btn']
+${A_CANCEL}     //a[@id='cancel-registration-btn']
+${C_AGECOOKIE}  convage
+${ERRORMESSAGE1}  //*[@id="new-account-table"]/div[4]/div/div
+${ERRORMESSAGEFIELD1}  //span[@class='error']
+
+*** Keywords ***
+Open Browser Converse
+  Open Browser to Converse Site
+  Delete Cookie  ${C_AGECOOKIE}
+
+Register Test Starts
+  Click Login
+  Click Register
+
+Fill Register Data
+  [Arguments]  ${email}  ${password}  ${zipcode}  ${gender}  ${month}  ${day}
+  ...  ${year}
+  Sleep  1
+  Wait Until Page Contains Element  ${I_EMAIL}
+  Input Text  ${I_EMAIL}  ${email}
+  Select From List By Value  ${S_SELMONTH}  ${month}
+  Select From List By Value  ${S_SELDAY}  ${day}
+  Select From List By Value  ${S_SELYEAR}  ${year}
+  Click Element  ${R_GENDER}${gender}']
+  Input Text  ${I_PASSWORD}  ${password}
+  Input Text  ${I_ZIPCODE}  ${zipcode}
+  Run Keyword If  "@{ENV_LOCALE}[${env_id}]"=="US"  Checkbox Should Be Selected  ${I_LIVEINUS}  ELSE  Click Element  ${I_LIVEINUS}
+
+Submit Register Data
+  Click Element  ${A_SUBMIT}
+
+Verify Register
+  [Arguments]  ${expectedUser}  ${cookie}  ${expected}
+  Verify Login  ${expectedUser}  ${cookie}
+  Menu Logout
+  Verify Logout  ${expected}
+
+Verify Register Error Message
+  [Arguments]  ${expected}  ${type}
+  Wait Until Page Contains Element  ${type}
+  Sleep  3
+  ${message} =  Get Text  ${type}
+  Should Contain  ${message}  ${expected}
+
+Register Should Fail When
+  [Arguments]  ${username}  ${password}  ${zipcode}  ${expected}  ${type}  ${gender}=2
+  ...  ${month}=2  ${day}=2  ${year}=2000  ${cookie}=FALSE
+  Fill Register Data  ${username}  ${password}  ${zipcode}  ${gender}  ${month}  ${day}
+  ...  ${year}
+  Submit Register Data
+  Run Keyword If  '${type}'=='errormessage'  Verify Register Error Message  ${expected}  ${ERRORMESSAGE1}  ELSE  Verify Register Error Message
+  ...  ${expected}  ${ERRORMESSAGEFIELD1}
+  Wait Until Page Contains  ${LOGINSIGNUP}
+  Click Element  ${A_CANCEL}
+  Click Login
+  Run Keyword If  '${cookie}'=='TRUE'  Verify Cookie  ${C_AGECOOKIE}
+
+Register Should Pass When
+  [Arguments]  ${username}  ${password}  ${zipcode}  ${expected}  ${gender}  ${month}=2
+  ...  ${day}=2  ${year}=2000  ${cookie}=FALSE
+  ${loginname} =  Get Time  epoch
+  Fill Register Data  del_${loginname}${username}  ${password}  ${zipcode}  ${gender}  ${month}  ${day}
+  ...  ${year}
+  Submit Register Data
+  Sleep  5
+  Verify Register  del_${loginname}${username}  ${cookie}  ${expected}

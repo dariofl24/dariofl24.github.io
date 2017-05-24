@@ -1,0 +1,7 @@
+.idea
+.settings/
+.project
+reports/
+screenshots/
+node_modules/
+

@@ -1,0 +1,91 @@
+/**
+    Social Links (Styling override for Gigya)
+    @param {Container ID} $container-id - Must be ID of the Gigya Social Links
+    @param {Background Color} $bg-color - Background Color of container
+    @param {Icon Color} $icon-color - Color of social icon
+    @param {Button Width} $button-width - Width of each button
+    @param {Button Height} $button-height - Height of each button
+    @param {Button Padding} $button-padding - Right padding after each button
+    @param {Buttons} $buttons - Number of total buttons
+**/
+@mixin social_links(
+    $container-id,
+    $bg-color: $CONVERSE_COLOR_PDP_3,
+    $icon-color: $CONVERSE_COLOR_PDP_1,
+    $button-width: 60px,
+    $button-height: 40px,
+    $button-padding: 1px,
+    $buttons: 5) {
+
+        .share-links {
+            width: ($button-width * $buttons) + ($button-padding * $buttons);
+
+            .gig-button {
+                margin: 0;
+            }
+
+            .gig-share-button {
+                background-color: $bg-color;
+                width: $button-width;
+                height: $button-height;
+                color: $icon-color;
+            }
+
+            $social-list: facebook, twitter, pinterest, googleplus, email;
+            @each $social in $social-list {
+                $i: index($social-list, $social) - 1;
+                #{$container-id}-reaction#{$i}-#{$social}_img {
+
+                    position: absolute !important;
+                    background-image: none !important;
+
+                    &:after {
+                        width: $button-width;
+                        color: $icon-color;
+                        font-size: 16px;
+                        font-family: FontAwesome;
+                        position: absolute;
+                        line-height: $button-height;
+                        text-align: center;
+                    }
+                }
+            }
+
+            #{$container-id}-reaction0-facebook_img:after {
+                content: "\f09a";
+            }
+
+            #{$container-id}-reaction1-twitter_img:after {
+                content: "\f099"
+            }
+
+            #{$container-id}-reaction2-pinterest_img:after {
+                content: "\f0d2";
+            }
+
+            #{$container-id}-reaction3-googleplus_img:after {
+                content: "\f0d5";
+            }
+
+            #{$container-id}-reaction4-email_img:after {
+                content: "\f003";
+            }
+
+            .gig-button-container-facebook > div {
+                @include border-radius(5px 0 0 5px, 5px 0 0 5px);
+            }
+
+            .gig-button-container-email > div {
+                @include border-radius(0 5px 5px 0, 0 5px 5px 0);
+            }
+
+            div.gig-button-container {
+                padding: 0 $button-padding 0 0;
+                margin: 0;
+            }
+
+            .gig-share-bar-container > table {
+                width: 100%;
+            }
+        }
+}

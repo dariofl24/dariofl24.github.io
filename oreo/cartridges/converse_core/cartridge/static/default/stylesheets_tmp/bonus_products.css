@@ -1,0 +1,41 @@
+/* constants file for scss variable values */
+/* bonus products */
+/* ------------------------------------- */
+/* line 5, ../css/package/sass/bonus_products.scss */
+.select-bonus-btn,
+.no-bonus-btn {
+  float: left;
+  margin: 0 5px 0 0;
+}
+
+/* line 11, ../css/package/sass/bonus_products.scss */
+.buttonbar {
+  margin: 11px 0;
+  overflow: hidden;
+  width: 336px;
+}
+
+/* line 18, ../css/package/sass/bonus_products.scss */
+.bonus-product-list .bonus-product-item {
+  border-bottom: 1px solid #E6E5DD;
+  clear: both;
+}
+/* line 23, ../css/package/sass/bonus_products.scss */
+.bonus-product-list .product-name {
+  float: none;
+  margin: 1em 0;
+}
+/* line 28, ../css/package/sass/bonus_products.scss */
+.bonus-product-list .product-add-to-cart button {
+  float: left;
+  margin-top: 24px;
+}
+
+/* line 33, ../css/package/sass/bonus_products.scss */
+.bonus-product-list-footer {
+  clear: both;
+}
+/* line 36, ../css/package/sass/bonus_products.scss */
+.bonus-product-list-footer button {
+  float: right;
+}

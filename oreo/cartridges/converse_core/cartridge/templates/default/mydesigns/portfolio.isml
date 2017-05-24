@@ -1,0 +1,77 @@
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+
+    var pageContext={title:'My Designs', type:'MyDesigns', ns:'accountPortfolio'};
+    var ProductImageResolver = converse.product.ProductImageResolver;
+</isscript>
+<iscache status="off" />
+
+<isdecorate template="pt_commonlayout">
+    <isinclude template="util/modules" />
+    <div id="main-overlay">
+        <div class="pt_portfolio">
+            <isbanners p_dyo=false />
+            <div class="primary-focus bottom-solid-border" id="main-title">
+                    <h1>
+                        <isif condition="${!empty(pdict.LockerItems)}">
+                            ${StringUtils.format(Resource.msg('mydesigns.saveddesignspattern','account',null), pdict.LockerItems.length)}
+                        <iselse>
+                            ${Resource.msg('mydesigns.nosaveddesigns','account',null)}  
+                        </isif>
+                    </h1>
+            </div>
+
+            <div style="display: none">${Resource.msg('mydesigns.date','account',null)} ${dw.util.StringUtils.formatCalendar(dw.system.System.getCalendar(), 'yyyyMMdd_HHmmss')}</div>
+            <div class="account-tab-content primary-focus">
+                <isif condition="${!empty(pdict.LockerItems)}">
+                    <ul id="locker-items-list">
+                        <isloop iterator="${pdict.LockerItems}" alias="item">
+                            <isset name="pdpUrl" value="${URLUtils.http('Product-Show','pid',item.productId,'metricId',item.metricId).toString()}" scope="page" />
+                            <isset name="mediaFile" value="${ProductImageResolver.getLockerItemImage(item, request.httpSecure)}" scope="page"/>
+                            <li id="locker-item-${item.id}" class="bottom-solid-border">
+                                <div class="locker-item">    
+                                    <div class="locker-item-section image-locker">
+                                        <img 
+                                            src="${mediaFile.getURL()}" 
+                                            alt="${mediaFile.alt}"
+                                            title="${mediaFile.title}" 
+                                            data-pdp-url="${pdpUrl}" />
+                                    </div>
+                                    
+                                    <div class="locker-item-section details-locker">
+                                        <div class="locker-item-name">${item.name}</div>
+                                        <div class="locker-item-product">${item.productName}</div>
+                                        <div class="locker-item-price"><isprint value="${item.price}" style="MONEY_LONG"></div>
+                                    </div>
+                                    
+                                    <div class="locker-item-section edit-locker">
+                                        <button 
+                                            type="submit" 
+                                            value="Edit" 
+                                            class="edit-button" 
+                                            data-pdp-url="${pdpUrl}">
+                                            ${Resource.msg('mydesigns.editdesign','account',null)}
+                                        </button>
+                                    </div>
+
+                                    <div class="remove-locker">    
+                                        <button 
+                                            type="submit" 
+                                            value="Remove" 
+                                            class="remove-button button-text"
+                                            data-id="${item.id}">
+                                            <span class="remove-button-icon"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="clearfix"></div>
+                            </li>
+                        </isloop>
+                    </ul>
+                </isif>
+            </div>    
+        </div>
+    </div>
+</isdecorate>

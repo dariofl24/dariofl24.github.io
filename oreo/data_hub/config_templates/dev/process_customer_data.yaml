@@ -1,0 +1,5 @@
+customers_input_file: '/home/converse/customers/customers.csv'
+customer_addresses_input_file: '/home/converse/customers/customer_addresses.csv'
+employees_input_file: '/home/converse/customers/employees.csv'
+employee_relatives_input_file: '/home/converse/customers/employee_relatives.csv'
+output_directory: '/home/demandware/outgoing'

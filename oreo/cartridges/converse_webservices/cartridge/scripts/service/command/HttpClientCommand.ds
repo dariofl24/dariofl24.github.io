@@ -1,0 +1,63 @@
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("service/command/BaseCommand.ds");
+
+(function(){
+    
+    var HttpClientCommand = converse.webservices.command.BaseCommand.extend({
+        
+        doPost: function(url, data) {
+            var username = this.getUsername();
+            var password = this.getPassword();
+            
+            this.setContentType();
+            
+            if (!empty(username) && !empty(password)) {
+                this.serviceClient.open("POST", url, username, password);
+            }
+            else {
+                this.serviceClient.open("POST", url);
+            }
+            
+            this.serviceClient.send(data);
+            
+            return this.serviceClient.getText();
+        },
+        
+        setContentType: function() {
+            this.serviceClient.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        },
+        
+        encodeParameters: function(parameters) {
+            var data = [];
+            for (var parameterKey in parameters) {
+                var parameterValue = parameters[parameterKey];
+                data.push(this.encodeParameterKey(parameterKey) + "=" + this.encodeParameterValue(parameterValue));
+            }            
+            return data.join('&');
+        },
+        
+        encodeParameterKey: function(parameterKey) {
+            return encodeURIComponent(parameterKey);
+        },
+        
+        encodeParameterValue: function(parameterValue) {
+            return empty(parameterValue) ? "" : encodeURIComponent(parameterValue);
+        },
+                
+        hasError: function() : Boolean {
+            return this._super() || this.serviceClient.statusCode != 200;
+        },
+        
+        getErrorMessage: function() : String {
+            return StringUtils.format("An HTTP error occurred with status \"{0} - {1}\": {2}",
+                    this.serviceClient.statusMessage, this.serviceClient.statusCode, this.serviceClient.errorText);
+        }
+    });
+    
+    Namespace.extend(converse.webservices.command, { HttpClientCommand: HttpClientCommand });
+    
+})();

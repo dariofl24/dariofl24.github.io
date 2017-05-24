@@ -1,0 +1,43 @@
+@import "_helper_functions";
+@import "_conv_mixins";
+
+.builder-offline {
+    margin: auto;
+    margin-top: pxtoem(50);
+    width: pxtoem(600);
+    @include mq-medium-cascade() {
+        width: pxtoem(300);
+    }
+
+    h1 {
+        margin: 0;
+        font-size: pxtoem(38);
+        font-weight: bold;
+        text-transform: uppercase;
+        @include mq-medium-cascade() {
+            font-size: pxtoem(22);
+        }
+    }
+
+    p {
+        font-size: pxtoem(16);
+        line-height: 1.5em;
+        @include mq-medium-cascade() {
+            font-size: pxtoem(14);
+        }
+
+        a {
+            text-decoration: underline;
+        }
+    }
+
+    .dont-worry {
+        @extend p;
+        margin-top: pxtoem(10);
+    }
+
+    .head-back {
+        @extend p;
+        margin-top: pxtoem(70);
+    }
+}

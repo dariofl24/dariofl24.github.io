@@ -1,0 +1,77 @@
+<iscomment>This includes global utilities into the pages</iscomment>
+<isinclude template="util/modules"/>
+
+<isset name="basket" value="${pdict.Basket}" scope="page" />
+<isset name="productLineItem" value="${pdict.ProductLineItem}" scope="page" />
+<isset name="product" value="${productLineItem.product}" scope="page" />
+
+<ismerchandiseinfo p_lineitemctnr="${pdict.Basket}" />
+
+<isif condition="${basket && productLineItem}">
+
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:product/ProductUtils.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+    importScript("converse_core:util/ViewHelpers.ds");
+
+    var productSize = ProductUtils.getProductSize(productLineItem);
+    var productColor = product.variant ? ProductUtils.getVariationAttributeValue(product, "color") : "";
+    var productImage = converse.product.ProductImageResolver.getProductLineItemImage(productLineItem, 'lineItemTile', request.httpSecure);
+    var metricID = productLineItem.custom.metricID;
+    var personalization = productLineItem.custom.personalization;
+    var displayCustomManufacturerSKU = productLineItem.custom.displayCustomManufacturerSKU;
+</isscript>
+
+<div id="minicart-panel" >
+    <div class="panel-content">
+        <div class="panel-caption">
+            <h2><a href="${URLUtils.https('Cart-Show')}" class="view-cart-btn">${Resource.msg('minicart.panel.caption', 'checkout', null)}</a></h2>
+            <a class="close-btn" href="#"></a>
+        </div>
+        <div class="product-info">
+            <div class="product-image">
+                <img src="${productImage.getURL()}"></img>
+            </div><!-- This comment removes the space created between two inline-block elements 
+         --><div class="product-details">
+                <div class="product-title">
+                    <h3>${product.name}</h3>
+                    <div class="price">
+                        <isset name="showTieredPrice" value="${true}" scope="page"/>
+                        <isinclude template="product/pdp/components/dynamic_pricing" />
+                    </div>
+                </div>
+                <div class="product-attr">
+                    <isif condition="${!empty(productColor)}">
+                        <span class="color"><isprint value="${productColor}" /></span> /
+                    </isif>
+                    <div class="attribute">
+                        <span class="label">${Resource.msg('minicart.itemno', 'checkout', null)}:</span>
+                        <span class="value">
+                            <isif condition="${!empty(displayCustomManufacturerSKU)}">
+                                <isprint value="${displayCustomManufacturerSKU}"/>
+                            <iselse>
+                                <isprint value="${product.manufacturerSKU}"/>
+                            </isif>
+                        </span>
+                    </div>
+                    <isif condition="${!empty(productSize)}">
+                        <isprint value="${productSize}" />
+                    </isif>
+                </div>
+            </div>
+            <div class="cart-info">
+               <div class="subtotal">
+                    <span>${Resource.msg('minicart.subtotal', 'checkout', null)}  </span>
+                    <strong>
+                        <isprint value="${basket.getAdjustedMerchandizeTotalPrice(false)}" />
+                    </strong>
+                </div>
+                <div class="cart-actions">
+                    <a href="${URLUtils.https('Cart-Show')}" class="button view-cart-btn">${Resource.msg('minicart.viewcart', 'checkout', null)}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</isif>

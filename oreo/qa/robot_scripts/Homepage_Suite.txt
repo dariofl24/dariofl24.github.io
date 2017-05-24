@@ -1,0 +1,47 @@
+*** Settings ***
+Documentation     Test the homepage with basic functionality
+Suite Setup       Open Browser to Converse Site
+Suite Teardown    Close All Browsers
+Force Tags        HomePage    Production    beforeRGA    Regression
+Resource          common.txt
+Resource          site_declarations.txt
+Resource          demandware_configuration_definitions.txt
+
+*** Test Cases ***
+User Opens Empty Cart, verifies Cart's page displays is empty
+    [Tags]    Smoke
+    Open Cart
+    Verify Empty Cart Link Opens Cart Show Page and Empty Cart Message is Displayed
+    Return HomePage
+
+User expands a parent category, Verifies sub-categories container is displayed
+    [Tags]    Smoke
+    Expand and Collapse Categories is Displaying and Hiding Categories Container
+
+User expands and collapses header, verifies header container is displayed
+    [Tags]    Smoke
+    Verify Search Functionality Available in Header
+    Verify Search Header Can be Collapsed
+
+User expands and collapse Login container, verifies container works as expected
+    [Tags]    Smoke
+    Click Login
+    Verify Login Form is Expanded
+    Click Login
+    Verify Login Form is Collapsed
+
+Verifying Infinite Scroll displays more products
+    [Tags]    US    Smoke
+    Verify Infinite Scroll Shows More Products    MEN    1
+
+Navigating Categories Tabs and Back,verifies retrieves product results from Homepage
+    [Tags]    US    Smoke
+    Verify Content Tabs    ${EMPTY}    ${EMPTY}
+
+Verifying "View All" button displays more products by CLP JackPurcel
+    [Tags]    US
+    Verify View All Button    3
+
+Verifying "View All" button displays more products by CLP ChuckTaylor
+    [Tags]    US    Smoke
+    Verify View All Button    1

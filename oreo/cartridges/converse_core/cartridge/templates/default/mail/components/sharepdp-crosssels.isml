@@ -1,0 +1,43 @@
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:product/ProductUtils.ds");
+
+    var crossSellsProducts = ProductUtils.getCrossSellsProducts(product, 2);
+</isscript>
+
+<isif condition="${crossSellsProducts.size() > 0}">
+    <tr>
+        <td colspan="2" height="30px"></td>
+    </tr>
+    <tr>
+        <td height="100px" valign="bottom" colspan="2">
+            <div>
+                <div style="display: inline-block; width: 260px; text-align: right; "><hr style="display: inline-block; width: 50px;" /></div>
+                <div style="display: inline-block; width: 60px; text-align: center;">
+                    <span style="font-family: 'Adobe Garamond Italic', 'Garamond'; font-style: italic; font-size: 20px;">
+                        ${Resource.msg('productdetail.crosssells.captiontop','product','You Might')}
+                    </span>
+                </div>
+                <div style="display: inline-block; width: 260px; text-align: left;"><hr style="display: inline-block; width: 50px;"/></div>
+            </div>
+            
+            <div style="font-family: 'Helvetica'; font-size: 22px; font-weight: bold; text-align: center;">
+                ${Resource.msg('productdetail.crosssells.captionbottom','product','Also Like')}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td width="50%" align="center">
+            <isset name="crosssell1" value="${crossSellsProducts.get(0)}" scope="page"/>
+            <isproducttile product="${crosssell1}" 
+                showswatches="${false}" showpricing="${false}" showpromotion="${false}" showrating="${false}"/>
+        </td>
+        <td width="50%" align="center">
+            <isif condition="${crossSellsProducts.size() == 2}">
+                <isset name="crosssell2" value="${crossSellsProducts.get(1)}" scope="page"/>
+                <isproducttile product="${crosssell2}" 
+                    showswatches="${false}" showpricing="${false}" showpromotion="${false}" showrating="${false}"/>
+            </isif>
+        </td>
+    </tr>
+</isif>

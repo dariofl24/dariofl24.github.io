@@ -1,0 +1,12 @@
+<iscomponent 
+    pipeline="Tealium-FooterInclude" 
+    pid=${empty(pdict.CurrentHttpParameterMap.pid.stringValue) ? null : StringUtils.stringToHtml(pdict.CurrentHttpParameterMap.pid.stringValue)}
+    pagecgid=${empty(pdict.CurrentHttpParameterMap.cgid.stringValue) ? null : StringUtils.stringToHtml(pdict.CurrentHttpParameterMap.cgid.stringValue)}
+    orderno=${pdict.OrderNo}
+    searchterm=${empty(pdict.CurrentHttpParameterMap.q.stringValue) ? null : StringUtils.stringToHtml(pdict.CurrentHttpParameterMap.q.stringValue)} 
+    searchresultscount=${empty(pdict.ProductSearchResult) ? null : pdict.ProductSearchResult.count+''} 
+    contentsearchresultscount=${empty(pdict.ContentSearchResult) ? null : pdict.ContentSearchResult.count+''} 
+    pagetitle=${pdict.CurrentPageMetaData.title} 
+    pagecontexttype=${('pageContext' in this && !empty(pageContext)) ? pageContext.type+'' : null}
+    pagecontexttitle=${('pageContext' in this && !empty(pageContext)) ? pageContext.title+'' : null}
+    />

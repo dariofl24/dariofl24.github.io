@@ -1,0 +1,104 @@
+/**
+* Export Products to CSV
+*
+* @input ExportFile : String The export file name
+*
+* @output ErrorMsg : String The error message if any
+*/
+
+importPackage(dw.io);
+importPackage(dw.order);
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.catalog);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:product/ProductUtils.ds");
+importScript("custom/ProductsExporter.ds");
+
+var logger : Logger = Logger.getLogger('ExportProductInformationToCsv');
+var ProductsExporter = converse.utils.ProductsExporter;
+var PriceResolver = converse.product.PriceResolver;
+let productIds;
+
+function execute(args : PipelineDictionary) : Number
+{
+    let errorMsg : String = null;
+    productIds = new HashSet();
+    
+    try {
+        let products = ProductMgr.queryAllSiteProducts();
+        let exporter = new ProductsExporter(args.ExportFile, getCsvHeader, getCsvRow, shouldExport);
+        
+        exporter.export(products);
+    } catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+    
+    args.ErrorMsg = errorMsg;
+
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function getCsvHeader() {
+    return ["SKU","MasterProductID","ManufacturerSKU","ProductName","Color","Cut","Material","Gender","BrandSegment","Pillar","MerchPlannerCategory","Collection","Price","SalePrice","X Ref Style","DyoVersionProductID"];
+}
+
+function getCsvRow(product) {
+    let sku = getSKU(product);
+    productIds.add(sku);
+
+    let pricing = PriceResolver.getProductPricing(product);
+    let priceStr = PriceResolver.isStandardPriceAvailable(pricing) ? pricing.standardPriceFormatted : '';
+    let price = getPrice(priceStr);
+    let salePriceStr = PriceResolver.isSalesPriceAvailable(pricing) ? pricing.salesPriceFormatted : '';
+    let salePrice = getPrice(salePriceStr);
+    let colorAttr = product.variationModel.getProductVariationAttribute('color');
+    let selectedColor = !empty(colorAttr) ? product.variationModel.getSelectedValue(colorAttr) : "";
+    let colorVal = !empty(selectedColor) ? selectedColor.value : "";
+
+    productName = (empty(product.name) && !empty(product.variationModel.master)) ? product.variationModel.master.name : product.name;
+
+    let row = [
+        sku, // SKU
+        !empty(product.variationModel.master) ? product.variationModel.master.ID : "", // MasterProductID
+        product.manufacturerSKU, // ManufacturerSKU
+        productName, // ProductName
+        colorVal, // Color
+        product.custom.cut.value, // Cut
+        product.custom.material, // Material
+        product.custom.gender.value, // Gender
+        product.custom.brandSegment.value, // BrandSegment
+        product.custom.pillar.value, // Pillar
+        product.custom.merchPlannerCategory, // MerchPlannerCategory
+        "", // Collection
+        price, // Price
+        salePrice, // SalePrice
+        product.custom.GenescoSKU, // X Ref Style
+        product.custom.dyoVersionProductID // DyoVersionProductID
+    ];
+
+
+    return row;
+}
+
+function shouldExport(product) {
+    return !productIds.contains(getSKU(product)) && !product.master;
+}
+
+function getSKU(product) {
+    let productVariantSKU = product.variant ? product.manufacturerSKU : "";
+    let sku = productVariantSKU || product.ID;
+
+    return sku;
+}
+
+function getPrice(priceStr) {
+    var priceArr = priceStr.match(/\d+(\.\d+)?/g);
+    var price = "";
+    if(!empty(priceArr)) {
+        price = priceArr[0];
+    }
+    return price;
+}

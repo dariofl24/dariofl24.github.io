@@ -1,0 +1,72 @@
+/**
+ * @input Unit: Object
+ */
+
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("module_test:Framework/Assert.ds"); 
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_exacttarget:command/UnsubscribeRequest.ds");
+
+function execute(args: PipelineDictionary) {
+
+    var ET_NS = integration.exacttarget;
+    var COMMAND_NS = ET_NS.command;
+
+    var UnsubscribeRequest = COMMAND_NS.UnsubscribeRequest;
+
+    var webReference = webreferences.etframework;
+    var EMAIL = "prosto@prosto.com";
+    var CLIENT_ID = 234;
+    
+    var SubscriberStatus = webReference.SubscriberStatus;
+    var UpdateOptions = webReference.UpdateOptions;
+
+    function getConfiguration() {
+       return {
+           listId: 111,
+           clientId: CLIENT_ID
+       }
+    }
+
+    function getCommandOptions() {
+       return { 
+            configuration: getConfiguration(),
+            serviceClient: webReference.getDefaultService(),
+            webReference: webReference
+        };
+    }
+
+    function createUnsubscribeRequest() {
+        var unsubscribeRequest = new UnsubscribeRequest(EMAIL);
+        unsubscribeRequest.initOptions(getCommandOptions());
+        return unsubscribeRequest;
+    }
+
+    args.Unit.describe("ExactTarget Unsubscribe Request")
+        .test("Unsubscribe_request_is_built_as_expected", function () {
+            var unsubscribeRequest = createUnsubscribeRequest();
+            var request = unsubscribeRequest.createRequest();
+
+            var updateOptions = request.getOptions();
+            var subscriber = request.objects[0];
+            var subscriberLists = subscriber.getLists();
+
+            Assert.areEqual(EMAIL, subscriber.getSubscriberKey());
+            Assert.areEqual(EMAIL, subscriber.getEmailAddress());
+            Assert.areEqual(CLIENT_ID, subscriber.getClient().ID);
+            Assert.areEqual(1, subscriberLists.length);
+            Assert.areEqual(111, subscriberLists[0].getID());
+            Assert.areEqual(SubscriberStatus.Unsubscribed, subscriberLists[0].getStatus());
+
+            Assert.isTrue(updateOptions instanceof UpdateOptions);
+        });
+
+    return PIPELET_NEXT;
+}

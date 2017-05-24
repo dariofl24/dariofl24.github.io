@@ -1,0 +1,1241 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_conv_mixins";
+@import "_media_query";
+@import "compass/css3/box-sizing";
+
+$container_height_desktop: 170;
+$container_height_tablet: 300;
+$container_height_mobile: 500;
+$input_and_button_height: pxtoembase(28, 16);
+
+// Desktop Widths
+$social-width: 10%;
+$login-width: 80.41%;
+$create-width: 19.36%;
+
+// Tablet Widths
+$social-width-tablet: 0%;
+$login-width-tablet: 67.6%;
+$create-width-tablet: 30.84%;
+
+$top-offset-px: 15;
+$top-offset: pxtoem($top-offset-px);
+$mobile-social-login-container-height: 150;
+$mobile-login-container-height: 275;
+$base-font-size: 10px;
+
+.nonopacity {
+	opacity: 1 !important;
+}
+
+#ui-datepicker-div {
+    background-color: white;
+    border-style: solid;
+    border-width: 1px 2px 2px 2px;
+    border-color: #cacaca;
+    
+    .ui-tabs .ui-tabs-nav { margin: 0; padding: .2em .2em 0; }
+
+    .ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
+
+    .ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 1px; }
+
+    .ui-widget-header { border: 1px solid #aaaaaa/*{borderColorHeader}*/; background: #cccccc/*{bgColorHeader}*/ url(images/ui-bg_highlight-soft_75_cccccc_1x100.png)/*{bgImgUrlHeader}*/ 50%/*{bgHeaderXPos}*/ 50%/*{bgHeaderYPos}*/ repeat-x/*{bgHeaderRepeat}*/; color: #222222/*{fcHeader}*/; font-weight: bold; }
+
+    .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #d3d3d3/*{borderColorDefault}*/; background: #e6e6e6/*{bgColorDefault}*/ url(images/ui-bg_glass_75_e6e6e6_1x400.png)/*{bgImgUrlDefault}*/ 50%/*{bgDefaultXPos}*/ 50%/*{bgDefaultYPos}*/ repeat-x/*{bgDefaultRepeat}*/; font-weight: normal/*{fwDefault}*/; color: #555555/*{fcDefault}*/; }
+
+    .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #999999/*{borderColorHover}*/; background: #dadada/*{bgColorHover}*/ url(images/ui-bg_glass_75_dadada_1x400.png)/*{bgImgUrlHover}*/ 50%/*{bgHoverXPos}*/ 50%/*{bgHoverYPos}*/ repeat-x/*{bgHoverRepeat}*/; font-weight: normal/*{fwDefault}*/; color: #212121/*{fcHover}*/; }
+
+    .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: 1px solid #aaaaaa/*{borderColorActive}*/; background: #ffffff/*{bgColorActive}*/ url(images/ui-bg_glass_65_ffffff_1x400.png)/*{bgImgUrlActive}*/ 50%/*{bgActiveXPos}*/ 50%/*{bgActiveYPos}*/ repeat-x/*{bgActiveRepeat}*/; font-weight: normal/*{fwDefault}*/; color: #212121/*{fcActive}*/; }
+
+    .ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl { -moz-border-radius-topleft: 4px/*{cornerRadius}*/; -webkit-border-top-left-radius: 4px/*{cornerRadius}*/; -khtml-border-top-left-radius: 4px/*{cornerRadius}*/; border-top-left-radius: 4px/*{cornerRadius}*/; }
+
+    .ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr { -moz-border-radius-topright: 4px/*{cornerRadius}*/; -webkit-border-top-right-radius: 4px/*{cornerRadius}*/; -khtml-border-top-right-radius: 4px/*{cornerRadius}*/; border-top-right-radius: 4px/*{cornerRadius}*/; }
+
+    .ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl { -moz-border-radius-bottomleft: 4px/*{cornerRadius}*/; -webkit-border-bottom-left-radius: 4px/*{cornerRadius}*/; -khtml-border-bottom-left-radius: 4px/*{cornerRadius}*/; border-bottom-left-radius: 4px/*{cornerRadius}*/; }
+
+    .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br { -moz-border-radius-bottomright: 4px/*{cornerRadius}*/; -webkit-border-bottom-right-radius: 4px/*{cornerRadius}*/; -khtml-border-bottom-right-radius: 4px/*{cornerRadius}*/; border-bottom-right-radius: 4px/*{cornerRadius}*/; }
+    
+}
+
+#login-or-register-container {
+    position: relative;
+    height: auto;
+    background: $COMMON_MENU_BACKGROUND;
+    overflow: hidden;
+
+    span.error {
+        $font-size: 10;
+        font-size: pxtoem($font-size);
+        margin-top: pxtoembase(5, $font-size);
+        line-height: pxtoembase(14, $font-size);
+        color: $CONVERSE_ERROR_COLOR;
+    }
+
+    .input-container {
+        &.error {
+            input, textarea {
+                color: $CONVERSE_ERROR_COLOR;
+                border: 1px solid $CONVERSE_ERROR_COLOR !important;
+            }
+        }
+    }
+
+    &.expanded {
+        height: auto;
+        overflow: hidden;
+    }
+
+    .lc {
+        max-width: pxtoem($HEADER_MAX_WIDTH_LARGE);
+        height: pxtoem(210);
+        margin: 0 auto;
+        padding-top: pxtoem(50);
+        @include box-sizing(border-box);
+
+        @include media-query-lt(pxtoembase($THRESHOLD_MEDIUM_A, $THRESHOLD_BASE_PX)) {
+            max-width: pxtoem($HEADER_MAX_WIDTH_MEDIUM);
+            height: pxtoem($container_height_tablet);
+        }
+
+        @include mq-small() {
+            margin-top: 0;
+            padding-top: 0;
+            min-height: pxtoem(465);
+        }
+
+        .login-title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #social-copy-container {
+            display: none;
+            color: $CONVERSE_COLOR_3;
+
+            h2{
+                font-size: pxtoem(16);
+                font-weight: bold;
+                line-height: pxtoem(15);
+                color: $CONVERSE_COLOR_1;
+            }
+
+            .social-copy{
+                font-size: 90%;
+                font-weight: normal;
+                color: gray;
+                clear: both;
+                display: block;
+            }
+        }
+
+        #social-login-container {
+            font-size: 12px;
+            left: 100%;
+            position: absolute;
+            top: pxtoem(80);
+
+            @include mq-medium-cascade {
+                left: 0px;
+                top: pxtoem(90);
+            }
+
+            @include mq-small {
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            .inner {
+                float: left;
+
+                @include mq-small() {
+                    height: 60px;
+                }
+            }
+
+            .social-login-inner {
+                .gigyaLoginParent {
+                    .title-text {
+                        width: pxtoem(100);
+                        font-size: pxtoem(15);
+                        color: $CONVERSE_COLOR_4;
+                    }
+                }
+            }
+
+            // Gigya Login Styling and overriding some inline styling
+            #gigyaLoginContainer {
+                width: 100% !important;
+                height: pxtoem(25) !important;
+                position: absolute;
+                overflow: hidden;
+                top: pxtoem(-12);
+                left: pxtoem(95);
+            }
+
+            div[gigid="facebook"] {
+                position: absolute;
+                left: 0px;
+                width: 17px !important;
+                height: 17px !important;
+
+                // Override inline gigya generated styling.
+                div[style], img{
+                    width: 17px !important;
+                    height: 17px !important;
+                    float: left;
+                    content: " ";
+                    background: sprite($SPRITEHEADER, "facebook-login") no-repeat !important;
+
+                    @include mq-retina {
+                        @include retina-sprite($SPRITEHEADER_2X, "facebook-login", true);
+                    }
+                }
+            }
+
+            div[gigid="twitter"] {
+                position: absolute;
+                left: 25px;
+                width: 17px !important;
+                height: 17px !important;
+
+                // Override inline gigya generated styling.
+                div[style], img{
+                    width: 17px !important;
+                    height: 17px !important;
+                    float: left;
+                    content: " ";
+                    background: sprite($SPRITEHEADER, "twitter-login") no-repeat !important;
+
+                    @include mq-retina {
+                        @include retina-sprite($SPRITEHEADER_2X, "twitter-login", true);
+                    }
+                }
+            }
+
+        }
+
+        #login-container {
+            width: $login-width;
+            float: left;
+            border-left: none;
+            border-right: 1px solid #bbb;
+            font-size: 12px;
+
+            @include mq-medium-cascade {
+                width: $login-width-tablet;
+            }
+
+            @include mq-small {
+                width: 100%;
+                border-left: none;
+                border-right: none;
+                border-top: 1px solid #bbb;
+                border-bottom: 1px solid #bbb;
+            }
+
+            .form-row {
+                height: 4em;
+                margin-bottom: 0px;
+
+                @include mq-medium-cascade {
+                    height: 5em;
+                }
+
+                &.title-text {
+                    height: 2.5em;
+                }
+            }
+
+            #login-table{
+                padding: 0px pxtoem(20);
+                margin: 0 auto;
+
+                @include mq-small {
+                    padding: pxtoem(20);
+                }
+
+                .input-container {
+                    width: 90%;
+                    @include input_field();
+
+                    @include mq-medium-cascade {
+                        width: 100%;
+                    }
+
+                    input{
+                        width: 100%;
+                    }
+                }
+            }
+
+            #login-username {
+                width: 35%;
+                float: left;
+
+                @include mq-medium-cascade {
+                    width: 100%;
+                }
+
+                .error-form {
+                    font-size: pxtoem(10);
+
+                    .error-line {
+                        clear: both;
+                    }
+                }
+            }
+
+            #login-password{
+                width: 35%;
+                float: left;
+                position: relative;
+
+                @include mq-medium-cascade {
+                    width: 100%;
+                }
+            }
+
+            #login-cell {
+                width: 30%;
+                float: left;
+
+                @include mq-medium-cascade {
+                    width: 100%;
+                    margin-top: pxtoem(25);
+                }
+
+                .form-row {
+                    @include mq-small {
+                        height: auto;
+                    }
+                }
+
+                input {
+                    width: 100%;
+                }
+            }
+
+            #forgotpassword{
+                float: left;
+
+                @include mq-medium-cascade() {
+                    margin-right: pxtoem(10);
+                    padding-right: pxtoem(10);
+                    border-right: 1px solid #bbb;
+                }
+
+                a{
+                    color: gray;
+                    font-size: pxtoem(11);
+                }
+
+            }
+
+            #remember{
+                width: 30%;
+                float: left;
+                overflow: hidden;
+
+                @include mq-large {
+                    width: 100%;
+                    position: absolute;
+                    left: 100%;
+                }
+
+                .rememberme{
+                    @include mq-medium-cascade {
+                        height: 3em;
+                    }
+                    input{
+                        float: left;
+                    }
+                    label{
+                        float: right;
+                        color: gray;
+                    }
+                }
+            }
+        }
+
+        #register-container {
+            width: 100%;
+            float: left;
+            color: $CONVERSE_COLOR_4;
+            border-left: none;
+            font-size: 12px;
+
+            @include mq-small {
+                border-left: none;
+                border-top: 1px solid #bbb;
+            }
+
+            form {
+                margin: pxtoem(12) pxtoem(20) pxtoem(20);
+
+                @include mq-large {
+                    margin: pxtoem(12) pxtoem(40) pxtoem(20);
+                }
+
+                @include mq-small {
+                    margin-top: pxtoem(20);
+                }
+            }
+
+            #new-account-table {
+                @include mq-small() {
+                    height: 38em;
+                }
+            }
+
+            .form-row{
+                height: 6.0em;
+                margin-bottom: 0px;
+                &.emea {
+                    &.newsletter {
+                        height: 4.0em;
+                    }
+                    &.ageconfirm {
+                        height: 3.5em;
+                    }
+                }
+                @include mq-medium-cascade {
+                    height: 5em;
+                }
+                @include mq-small {
+                    height: 4.6em;
+                    .password {
+                        height: 4em;
+                    }
+                    &.emea {
+                        &.ageconfirm {
+                            height: 4.5em;
+                        }
+                    }
+                }
+            }
+
+            .input-container {
+                width: 90%;
+                @include input_field();
+
+                @include mq-medium-cascade {
+                    width: 100%;
+                }
+
+                input{
+                    width: 100%;
+                }
+            }
+
+            .div-table-row{
+                .div-table-cell{
+                    float: left;
+
+                    input{
+                        width: 100%;
+                    }
+                }
+
+                @include mq-large {
+                    &.last-row.emea {
+                        position: absolute;
+                        margin-left: 64%;
+                        top: 60%;
+                        width: 100%
+                    }
+                }
+            }
+
+            .div-table-caption{
+                width: 66.667%;
+                @include mq-small {
+                    position: relative;
+                    top: -3.2em;
+                    width: 100%;
+                }
+            }
+
+            #register-email-cell {
+                width: 35%;
+
+                @include mq-medium-cascade {
+                    width: 48%;
+                }
+
+                @include mq-small {
+                    width: 100%;
+                    position: relative;
+                    top: 0px;
+                }
+            }
+
+            #register-birthday-cell {
+                width: 31.5%;
+                margin-right: 3.5%;
+                position: relative;
+
+                @include mq-medium-cascade {
+                    margin-right: 0px;
+                    margin-left: 4%;
+                }
+
+                @include mq-small {
+                    width: 100%;
+                    position: relative;
+                    top: 8em;
+                    margin: 0px;
+                }
+
+                input {
+                    visibility: hidden;
+                }
+
+
+                .date-select-box {
+                    $width: 100%;
+
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    @include converse-select-box($width:$width);
+
+                    &:nth-child(1){
+                        width: 31.33%;
+                        @include mq-medium() {
+                            width: 34.33%;
+                        }
+                    }
+
+                    &:nth-child(2) {
+                        width: 31.33%;
+                        left: 34%;
+                        @include mq-medium() {
+                            left: 38%;
+                            width: 34.33%;
+                        }
+                    }
+
+                    &:nth-child(3) {
+                        width: 31.33%;
+                        left: 68%;
+                        @include mq-medium() {
+                            left: 74%;
+                            width: 43.33%;
+                        }
+                    }
+                }
+            }
+
+            #register-gender-cell{
+                width: 30%;
+                position: relative;
+
+                @include mq-large {
+                    &.emea {
+                        width: 35%;
+                    }
+                }
+
+                .input-container:before{
+                    left: 0px;
+                }
+
+                @include mq-medium() {
+                    width: 50%;
+                    clear: both;
+                    position: relative;
+                    top: pxtoem(20);
+                    left: 70%;
+
+                    &.emea {
+                        width: 40%;
+                        clear: none;
+                        top: 0;
+                        left: 0;
+                        margin-left: 4%;
+                    }
+
+                    span:nth-child(2) {
+                        margin-left: 5%;
+                    }
+                }
+
+                @include mq-small() {
+                    width: 100%;
+                    position: relative;
+                    top: 0em;
+                    left: 0;
+
+                    span:nth-child(2) {
+                        margin-left: 13.8%;
+                    }
+                }
+
+                span {
+                    float: left;
+                    margin: 5px 10px 0px 0px;
+                }
+
+                label{
+                    float: left;
+                    text-transform: uppercase;
+                    font-size: pxtoem(10);
+                }
+
+                .gender-input:after{
+                    content: "" !important;
+                }
+
+                .gender-input{
+                    float: left;
+                    width: auto;
+                }
+            }
+            
+            #register-birdday-cell{
+                width: 25%;
+
+                @include mq-medium {
+                    width: 10%;
+                    &.emea {
+                        width: 38%;
+                    }
+                }
+
+                @include mq-medium-cascade {
+                    margin-left: 4%;
+                }
+
+                @include mq-small {
+                    width: 100%;
+                    position: relative;
+                    top: 6em;
+                    margin: 0px;
+
+                    &.emea {
+                        margin-bottom: 30px;
+                        top: 1.5em;
+                    }
+                }
+            }
+            
+            #register-password-cell{
+                width: 35%;
+
+                @include mq-medium-cascade {
+                    width: 48%;
+                }
+
+                @include mq-small {
+                    width: 100%;
+                    position: relative;
+                    top: pxtoem(-55);
+
+                    &.emea {
+                        top: 0;
+                    }
+                }
+            }
+
+            #register-zip-cell, #register-passwordconfirm-cell{
+                width: 35%;
+
+                @include mq-medium {
+                    width: 15.30%;
+                    &.emea {
+                        width: 48%;
+                    }
+                }
+
+                @include mq-medium-cascade {
+                    margin-left: 4%;
+                }
+
+                @include mq-small {
+                    width: 100%;
+                    position: relative;
+                    top: 6em;
+                    margin: 0px;
+
+                    &.emea {
+                        top: 1.5em;
+                    }
+                }
+            }
+
+            #button-cell{
+                width: 30%;
+
+                &.emea {
+                    @include mq-large {
+                        position: absolute;
+                        left: 70%;
+                        top: pxtoem(63);
+                    }
+                }
+
+                @include mq-medium-cascade {
+                    width: 48%;
+                    clear: both;
+                }
+
+                @include mq-small() {
+                    width: 100%;
+                    height: 5em;
+                    position: relative;
+                    top: pxtoem(90);
+
+                    .form-row{
+                        height: 8em;
+                    }
+                }
+
+                #register-btn{
+                    float: left;
+
+                    @include mq-small() {
+                        width: 100%;
+                        position: relative;
+                        z-index: 10;
+                    }
+                }
+
+                #cancel-registration-btn{
+                    width: auto;
+                    float: left;
+                    margin: pxtoem(9) 0 0 pxtoem(15);
+                    color: $CONVERSE_COLOR_4;
+
+                    @include mq-small {
+                        margin: pxtoem(16) 0px 0px 0px;
+                        position:absolute;
+                        left: 0;
+                        top: 6em;
+                    }
+                }
+            }
+
+            #register-liveinus-cell {
+                width: 30%;
+
+                label{
+                    float: right;
+                    margin-left: pxtoem(24);
+                    position: absolute;
+                }
+                input{
+                    float: left;
+                    width: auto;
+                }
+                .liveinus{
+                    overflow: visible;
+                    .error{
+                        clear: both;
+                    }
+                }
+
+                @include mq-large {
+                    margin: pxtoem(-15) 5% 0 35%;
+                }
+
+                @include mq-medium-cascade {
+                    position: relative;
+                    margin-left: 52%;
+                    top: -4.2em;
+                }
+
+                @include mq-small {
+                    width: 100%;
+                    position: relative;
+                    top: 0.5em;
+                    margin: 0px;
+                }
+            }
+
+            #copy-cell{
+
+                label {
+                    float: right;
+                    position: absolute;
+                    padding-left: 18px;
+                    font-size: pxtoem(12);
+                }
+
+                input {
+                    float: left;
+                    width: auto;
+                }
+
+                .form-row.ageconfirm.emea {
+                    .error {
+                        margin-top: pxtoem(36);
+                            @include mq-small {
+                                margin-top: 15px;
+                            }
+                    }
+
+                    .input-checkbox {
+                        margin-top: 0;
+                        @include mq-small {
+                            top: 14px;
+                        }
+                    }
+
+                    label {
+                        float: none;
+                        margin-top: 0;
+                        @include mq-small {
+                            top: 14px;
+                        }
+                    }
+                }
+
+                @include mq-large {
+                    margin-top: pxtoem(-15);
+                    width: 30%;
+
+                    label {
+                        width: 20%;
+                    }
+                }
+
+                @include mq-medium {
+                    &.emea {
+                        width: 60%;
+                        clear: both;
+                    }
+                }
+
+                @include mq-medium-cascade {
+                    width: 34%;
+
+                    .form-row.newsletter.emea {
+                        position: relative;
+                        margin-top: -1em;
+                    }
+                    .form-row.ageconfirm.emea {
+                        position: relative;
+                        margin-top: -1em;
+                    }
+                }
+
+                @include mq-small {
+                    height: 5px;
+                    width: 75%;
+                    margin-left: 20%;
+
+                    label {
+                        position: relative;
+                    }
+
+                    input {
+                        position: absolute;
+                    }
+
+                    .form-row.newsletter {
+                        border-left: 1px solid #bbb;
+                        height: auto;
+                        padding-left: 10%;
+                        position: relative;
+                        margin-top: -1em;
+                        top: 6.5em;
+                        &.emea {
+                            top: 9em;
+                            left: 2em;
+                        }
+                    }
+                    .form-row.ageconfirm.emea {
+                        border-left: 1px solid #bbb;
+                        padding-left: 10%;
+                        position: relative;
+                        margin-top: -1em;
+                        top: 10em;
+                    }
+                }
+            }
+
+        }
+
+        #register-container.register-with-social {
+            #register-password-cell{
+                display: none;
+            }
+
+            #register-birthday-cell{
+                @include mq-small() {
+                    top: pxtoem(12);
+                }
+            }
+
+            #register-gender-cell{
+                top: pxtoem(60);
+                left: pxtoem(-266);
+
+                @include mq-medium() {
+                    top: pxtoem(20);
+                    left: 20%;
+                }
+
+                @include mq-small() {
+                    top: pxtoem(24);
+                    left: 0;
+                }
+            }
+
+            #button-cell{
+                position: relative;
+                left: pxtoem(266);
+                top: pxtoem(-60);
+
+                @include mq-medium() {
+                    left: 52%;
+                    top: pxtoem(-47);
+                }
+
+                @include mq-small() {
+                    left: 0;
+                    top: 7.5em;
+                    height: 5em;
+                }
+            }
+
+            #register-zip-cell{
+                @include mq-medium() {
+                    margin-left: 0;
+                }
+            }
+
+            #copy-cell{
+                width: 25%;
+                float: right;
+                margin-right: pxtoem(40);
+                position: relative;
+                top: pxtoem(-60);
+
+                @include mq-medium() {
+                    left: 22%;
+                    float: left;
+                    margin: 0;
+                }
+
+                @include mq-small() {
+                    width: 70%;
+                }
+            }
+
+            #register-liveinus-cell{
+                margin-left: 0;
+            }
+        }
+
+        #create-account-container {
+            width: $create-width;
+            float: left;
+
+            @include mq-medium-cascade {
+                width: $create-width-tablet;
+            }
+
+            @include mq-small {
+                width: 100%;
+            }
+
+            #registration-table{
+                padding: 0px pxtoem(20);
+                height: auto;
+                width: 100%;
+
+                @include mq-small {
+                    padding: pxtoem(20);
+                    width: auto;
+                }
+            }
+
+            .title-text{
+                margin-bottom: 1.44em;
+            }
+
+        }
+
+        #request-password-container {
+            width: 60%;
+            float: left;
+            border-left: 1px solid #bbb;
+            font-size: 12px;
+
+            &.social-disabled {
+                border-left: none;
+            }
+
+            @include mq-medium-cascade {
+                width: 70%;
+
+                .form-row{
+                    height: 4em;
+                    margin-bottom: 0px;
+                }
+            }
+
+            @include mq-small {
+                width: 100%;
+                border-top: 1px solid #bbb;
+
+                #request-password-table{
+                    margin: pxtoem(20);
+                }
+            }
+
+            #request-password-table{
+                margin-left: pxtoem(20);
+                margin-right: pxtoem(20);
+            }
+
+            .div-table-cell{
+                .input-container {
+                    margin-bottom: pxtoem(15);
+                    @include input_field();
+                    input{
+                        width: 100%;
+                    }
+                }
+            }
+
+            .title-text{
+                height: 1.5em;
+
+                @include mq-medium-cascade {
+                    height: 2.5em;
+                }
+
+                @include mq-small {
+                    height: 3.5em;
+                }
+            }
+
+            #forgot-pass-email-cell{
+                float: left;
+                width: 48%;
+                margin-right: 4%;
+
+                @include mq-small {
+                    width: 100%;
+                }
+            }
+
+            #submit-cell{
+                float: left;
+                width: 23%;
+                margin-right: 4%;
+
+                @include mq-small {
+                    width: 100%;
+                }
+
+                #request-password-btn{
+                    width: 100%;
+                    display: inline-block;
+                    padding: 0.8em 0 0.7em 0;
+                }
+            }
+
+            #cancel-cell{
+                float: left;
+                width: 21%;
+
+                @include mq-small {
+                    width: 100%;
+                }
+
+                .form-row {
+                    padding-top: 0.675em;
+                }
+            }
+
+            .notification {
+                display: none;
+            }
+        }
+
+        #reset-password-container {
+            width: 60%;
+            float: left;
+            border-left: 1px solid #bbb;
+            font-size: 12px;
+
+            &.social-disabled {
+                border-left: none;
+            }
+
+            @include mq-medium-cascade {
+                width: 70%;
+
+                .form-row{
+                    height: 4em;
+                    margin-bottom: 0px;
+                }
+            }
+
+            @include mq-small {
+                width: 100%;
+                border-top: 1px solid #bbb;
+
+                #reset-password-table{
+                    margin: pxtoem(20);
+                }
+            }
+
+            #reset-password-table{
+                margin-left: pxtoem(20);
+                margin-right: pxtoem(20);
+            }
+
+            .div-table-cell{
+                .input-container {
+                    margin-bottom: 15px;
+                    @include input_field();
+                    input{
+                        width: 100%;
+                    }
+                }
+            }
+
+            .title-text{
+                height: 1.5em;
+
+                @include mq-medium-cascade {
+                    height: 2.5em;
+                }
+
+                @include mq-small {
+                    height: 3.5em;
+                }
+            }
+
+            #password-cell{
+                float: left;
+                width: 24%;
+                margin-right: 4%;
+
+                @include mq-small {
+                    width: 100%;
+                }
+            }
+
+            #password-confirm-cell{
+                float: left;
+                width: 24%;
+                margin-right: 4%;
+
+                @include mq-small {
+                    width: 100%;
+                }
+            }
+
+            #submit-cell{
+                float: left;
+                width: 23%;
+                margin-right: 4%;
+
+                @include mq-small {
+                    width: 100%;
+                }
+
+                #reset-password-btn{
+                    width: 100%;
+                    display: inline-block;
+                    padding: 0.8em 0 0.7em 0;
+                }
+            }
+
+            #cancel-cell{
+                float: left;
+
+                @include mq-small {
+                    width: 100%;
+                }
+            }
+
+            .notification {
+                display: none;
+            }
+
+            .clear-error-row {
+                clear: both;
+            }
+        }
+
+        #create-account-container,
+        #login-container,
+        #social-login-container,
+        #request-password-container,
+        #reset-password-container {
+            .div-table {
+
+                &#social-table .div-table-row:first-of-type {
+                    margin-bottom: pxtoem(27);
+                }
+
+                .title-text {
+                    font-size: pxtoem(16);
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    label {
+        font-weight: normal;
+        text-transform: none;
+        padding-bottom: 0px;
+        line-height: 14px;
+    }
+
+    .form-row {
+        padding: 0;
+
+        &.rememberme,
+        &.liveinus {
+            label {
+                margin-left: pxtoem(16);
+                position: absolute;
+                width: auto;
+                font-size: $base-font-size;
+                margin-left: pxtoembase(18px, $base-font-size);
+            }
+
+            input[type="checkbox"] {
+                padding: 0;
+                height: auto;
+            }
+
+            span.required-indicator {
+                display: none;
+            }
+        }
+
+        .form-caption {
+            display: none;
+        }
+    }
+
+    .form-row-button {
+        width: auto;
+    }
+
+    .title-text {
+        font-size: larger;
+    }
+
+    .hint-text {
+        font-size: smaller;
+    }
+
+    #register-container,
+    #request-password-container,
+    #reset-password-container
+     {
+        display: none;
+    }
+}

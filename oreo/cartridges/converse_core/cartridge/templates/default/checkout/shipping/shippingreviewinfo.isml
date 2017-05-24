@@ -1,0 +1,53 @@
+<isset name="shipment" value="${pdict.Basket.getDefaultShipment()}" scope="page"/>
+
+<isscript>
+importScript("converse_core:constants.ds");
+importScript("util/ViewHelpers.ds");
+importScript("converse_core:checkout/AddressHelper.ds");
+
+var AddressHelper = new converse.global.AddressHelperFactory().helper();
+</isscript>
+
+<div class="checkout-step-review">
+    <isset name="address" value="${shipment.shippingAddress}" scope="page"/>
+    <isif condition="${!empty(shipment) && shipment.shippingAddress != null}">
+    <ul class="address-details">
+        <li class="label"><isprint value="${Resource.msg('shippingreview.shippingaddress.label','checkout',null)}"/></li>
+        <li><isprint value="${address.firstName}"/> <isprint value="${address.lastName}"/></li>
+        <li><isprint value="${address.address1}"/></li>
+        <isif condition="${!empty(address.address2)}">
+            <li><isprint value="${address.address2}"/></li>
+        </isif>
+        <li><isprint value="${AddressHelper.formatAddressForSummary(address.city, address.postalCode, address.stateCode)}" encoding="off" /></li>
+        <isif condition="${isSite('US') || isSite('GB')}">
+          <li><isprint value="${address.countryCode}"/></li>
+        <iselse>
+          <li><isprint value="${Resource.msg('countries.'+ address.countryCode.value.toLowerCase(), 'forms', null) }"/></li>
+        </isif>
+    </ul>
+    <ul class="method-details">
+        <li class="label"><isprint value="${Resource.msg('shippingreview.shippingmethod.label','checkout',null)}"/></li>
+        <isloop items="${pdict.Basket.shipments}" var="shipment_item" status="shipmentloopstate">
+        <li class="shipping-info">
+            <isprint value="${shipment_item.shippingMethod.displayName}">:
+            <isprint value="${shipment_item.shippingTotalPrice}" style="MONEY_LONG"> 
+            <isif condition="${shipment_item.shippingMethod.description}">
+                <span class="shipping-description">
+                    (<isprint value="${shipment_item.shippingMethod.description}">)
+                </span>
+            </isif>
+        </li>
+        </isloop>
+    </ul>
+    <input id="shipping-first-name" value="<isprint value="${address.firstName}"/>" type="hidden">
+    <input id="shipping-last-name" value="<isprint value="${address.lastName}"/>" type="hidden">
+    <input id="shipping-address1" value="<isprint value="${address.address1}"/>" type="hidden">
+    <input id="shipping-address2" value="<isif condition="${!empty(address.address2)}"><isprint value="${address.address2}"/></isif>" type="hidden">
+    <input id="shipping-city" value="<isprint value="${address.city}"/>" type="hidden">
+    <input id="shipping-state-code" value="<isprint value="${address.stateCode}"/>" type="hidden">
+    <input id="shipping-postal-code" value="<isprint value="${address.postalCode}"/>" type="hidden">
+    <input id="shipping-phone" value="<isprint value="${address.phone}"/>" type="hidden">
+    <input id="shipping-phoneOpt" value="<isprint value="${address.phone}"/>" type="hidden">
+    
+    </isif>
+</div>

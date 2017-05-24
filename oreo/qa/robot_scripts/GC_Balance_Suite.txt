@@ -1,0 +1,36 @@
+*** Settings ***
+Documentation   Check Gift Card Balance and its validations  #This suite needs of valid gift cards on DW
+Suite Teardown  Close All Browsers
+Test Setup      Go To Gift Card Landing Page
+Test Teardown   Close All Browsers
+Force Tags      Balance  Regression  GC  US
+Test Template   Check Gift Card Balance and its validations
+Resource        site_declarations.txt
+Resource        gcbalance_definitions.txt
+
+*** Test Cases ***
+Customer inputs Gift Card Number and PIN to check his balance; system should display balance if information is valid.
+  [Tags]  ShortReg
+  6050516351000000010  629070  ${EMPTY}  ${EMPTY}  true
+
+Customer inputs Gift Card Number to check his balance; system should not display balance and prompt error message related with required fields
+  6050516351000000010  ${EMPTY}  FIELDERROR  Please enter PIN  false
+
+Customer inputs Gift Card PIN to check his balance; system should not display balance and prompt error message related with required fields
+  ${EMPTY}  629070  Please enter your gift card number  FIELDERROR  false
+
+Customer inputs not digits in Gift Card Number to check his balance; system should not display balance and prompt error message "Please enter numbers only for the gift card"
+  605051635100O000010  629070  This value seems to be invalid.  FIELDERROR  false
+
+Customer inputs not digits in PIN to check his balance; system should not display balance and prompt error message "PIN is invalid."
+  6050516351000000010  629170  Always double-check the digits. Make sure your Gift Card number was entered correctly.  TOPMESSAGE  false
+
+Customer has two Gift Cards and mix the Number and PIN to check his balance; system should display an error message
+  6050516351000000010  680149  Always double-check the digits. Make sure your Gift Card number was entered correctly.  TOPMESSAGE  false
+
+Customer enters a valid giftcard number and invalid PIN to check his balance; system should display an error message
+  6050516351000000010  629071  Always double-check the digits. Make sure your Gift Card number was entered correctly.  TOPMESSAGE  false
+
+*** Keywords ***
+Check Gift Card Balance
+  Check Gift Card Balance and its validations

@@ -1,0 +1,33 @@
+/**
+ * This script returns a flag indicating if the current customer is eligible for employee discount 
+ *
+ * @input Customer : dw.customer.Customer The current customer.
+ *
+ * @output IsEligible : Boolean The eligibility flag.
+ * @output ErrorMsg : String The error message if any.
+ */
+importPackage(dw.system);
+importPackage(dw.customer);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:employee/EmployeeUtils.ds");
+
+var logger : Logger = Logger.getLogger('IsEmployeeDiscountEligible');
+
+function execute(args : PipelineDictionary) : Number
+{
+    var isEligible : Boolean = false;
+    var errorMsg : String = null;
+    try {
+        isEligible = converse.employee.EmployeeUtils.isEmployeeDiscountEligible(args.Customer.getProfile());
+    }
+    catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+    
+    args.IsEligible = isEligible;
+    args.ErrorMsg = errorMsg;
+    
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}

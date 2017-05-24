@@ -1,0 +1,27 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+    var HelperFactory = Class.extend({
+        init: function() {
+            this.helpers = {};
+            this.initHelpers();
+        },
+
+        initHelpers: function() {
+            throw "Override 'initHelpers' method in HelperFactory class";
+        },
+
+        helper: function() {
+            var siteID = Site.getCurrent().getID();
+            var helperClass = this.helpers[siteID];
+            return new helperClass();
+        }
+    });
+
+    var ns = Namespace.extendFromString(converse, "common");
+    Namespace.extend(ns, { HelperFactory: HelperFactory });
+})();

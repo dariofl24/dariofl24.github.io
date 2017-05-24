@@ -1,0 +1,112 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_media_query";
+@import "compass/css3/box-sizing";
+
+%arrow-ui-tabs {
+  position: relative;
+  border: 0 none;
+  overflow: visible !important;
+  font-family: "Helvetica","HelveticaNeue","Arial",sans-serif !important;
+  clear: both;
+
+  .ui-tabs-nav {
+    @include mq-small() {
+        font-size:0.7em;
+    }
+    max-width: pxtoem(1000);
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    overflow: visible;
+    border: 1px solid $CONVERSE_COLOR_6;
+    border-width: 1px 0 0 0;
+    transform: translate3d(0, 0, 0) !important;
+    -ms-transform: translate3d(0, 0, 0) !important;
+    -moz-transform: translate3d(0, 0, 0) !important;
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    -o-transform: translate3d(0, 0, 0) !important;
+
+    li {
+      float: left;
+      display: inline-block !important;
+      position: relative;
+      border-bottom: 0;
+      float: none !important;
+      width: auto !important;
+    }
+
+    li a {
+      $font-size: 14;
+      font-size: pxtoem($font-size);
+      font-style: normal;
+      font-weight: bold;
+      text-transform: uppercase;
+      line-height: pxtoembase(28, $font-size);
+      color: $CONVERSE_COLOR_1;
+      display: inline-block;
+      border: 1px solid $CONVERSE_COLOR_12;
+      border-top-width: 0;
+      outline: 0 none;
+      overflow: visible !important;
+      padding: pxtoembase(12, $font-size) pxtoembase(16, $font-size);
+    }
+
+    li.ui-tabs-selected a {
+      border: 1px solid $CONVERSE_COLOR_6;
+      border-width: 0 1px 0px 1px;
+      position: relative;
+      z-index: 1;
+      @include box-sizing(border-box);
+    }
+
+    li.ui-tabs-selected a:after, li.ui-tabs-selected a:before {
+      top: 98%;
+      @include mq-small() {
+        top: 96%;
+      }
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    li.ui-tabs-selected a:after {
+      border-color: rgba(255, 255, 255, 0);
+      border-top-color: $CONVERSE_COLOR_12;
+      border-width: 10px;
+      left: 50%;
+      margin-left: -10px;
+    }
+
+    li.ui-tabs-selected a:before {
+      border-top-color: $CONVERSE_COLOR_6;
+      border-width: 11px;
+      left: 50%;
+      margin-left: -11px;
+    }
+  }
+
+  .ui-tabs-nav:after {
+    position: absolute;
+    width: 100%;
+    content: " ";
+    bottom: 0;
+    left: 0;
+    border-bottom: 1px solid $CONVERSE_COLOR_6;
+  }
+
+  .ui-tabs-panel {
+    display: block;
+    border-width: 0;
+    padding-top:pxtoem(30);
+		width:100%;
+    background: none;
+  }
+
+  .ui-tabs-hide {
+    display: none !important;
+  }
+}

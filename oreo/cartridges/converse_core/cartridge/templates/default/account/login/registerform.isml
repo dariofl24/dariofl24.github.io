@@ -1,0 +1,89 @@
+<!--- TEMPLATENAME: registerform.isml --->
+    <div id="new-account-table" class="div-table">
+        <div class="div-table-row clearfix">
+            <div id="register-email-cell" class="div-table-cell">
+                <div class="input-container" errorlabel=" "
+                     namelabel="${Resource.msg('profile.email.placeholder','forms',null)}">
+                    <isinputfield formfield="${pdict.CurrentForms.profile.customer.email}" type="email"
+                                  label="false"
+                                  xhtmlclass="email-input"
+                                  requiredtext="${Resource.msg('profile.email.missing-error','forms',null)}"
+                                  rowclass="form-row email"/>
+                </div>
+            </div>
+            <div id="register-birthday-cell" class="div-table-cell">
+                <div class="input-container" errorlabel=" "
+                     namelabel="${Resource.msg('profile.birthday.placeholder','forms',null)}">
+                    <isinputfield formfield="${pdict.CurrentForms.profile.customer.birthday}" type="input"
+                                  label="false"
+                                  xhtmlclass="birthday-input date-input-hidden"
+                                  requiredtext="${Resource.msg('profile.birthday.missing-error','forms',null)}"
+                                  rowclass="form-row birthday"/>
+                    <isinclude template="util/inputfield/date.isml">
+                </div>
+            </div>
+            <div id="register-gender-cell" class="div-table-cell">
+                <div class="input-container" errorlabel=" "
+                    namelabel="${Resource.msg('profile.gender','forms',null)}">
+                    <span>
+                        <input type="radio" id="gender-input-male" class="gender-input" name="${pdict.CurrentForms.profile.customer.gender.htmlName}" value="1"/>
+                        <label for="gender-input-male">${Resource.msg('profile.gender.male','forms',null)}</label>
+                    </span>
+                    <span>
+                        <input type="radio" id="gender-input-female" class="gender-input" name="${pdict.CurrentForms.profile.customer.gender.htmlName}" value="2"/>
+                        <label for="gender-input-female">${Resource.msg('profile.gender.female','forms',null)}</label>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="div-table-row clearfix">
+            <div id="register-password-cell" class="div-table-cell">
+                <div class="input-container" errorlabel=" "
+                     namelabel="${Resource.msg('profile.password.placeholder','forms',null)}">
+                    <isinputfield formfield="${pdict.CurrentForms.profile.login.password}" type="password"
+                                  label="false"
+                                  xhtmlclass="password-input"
+                                  requiredtext="${Resource.msg('login.password.missing-error','forms',null)}"
+                                  rowclass="form-row password"/>
+                </div>
+            </div>
+            <div id="register-zip-cell" class="div-table-cell">
+                <div class="input-container" errorlabel=" "
+                     namelabel="${Resource.msg('profile.zip','forms',null)}">
+                    <isinputfield formfield="${pdict.CurrentForms.profile.customer.regional.zip}" type="hidden"
+                                  label="false"
+                                  xhtmlclass="zip-input-hidden"
+                                  requiredtext="${Resource.msg('profile.zip.missing-error','forms',null)}"
+                                  rowclass="form-row zip"/>
+                </div>
+            </div>
+            <div id="button-cell" class="div-table-cell">
+                <div class="form-row form-row-button clearfix">
+                    <div id="register-btn" href="javascript:void(0)" class="button">${Resource.msg('global.submit','locale',null)}</div>
+                    <a id="cancel-registration-btn" href="javascript:void(0)">${Resource.msg('global.cancel','locale',null)}</a>
+                </div>
+            </div>
+        </div>
+        <div class="div-table-row last-row clearfix">
+            <div class="div-table-cell" id="register-liveinus-cell">
+                <isinputfield formfield="${pdict.CurrentForms.profile.customer.regional.liveinus}" type="checkbox"
+                              xhtmlclass="liveinus-input"
+                              rowclass="form-row liveinus"/>
+            </div>
+            <div class="div-table-cell" id="copy-cell">
+                <isset name="newsletterClass" value="${"form-row newsletter "}" scope="page"/>
+                <isinputfield formfield="${pdict.CurrentForms.profile.login.newsletter}" type="checkbox" rowclass="${newsletterClass}"/>
+            </div>
+        </div>
+        <div class="div-table-caption">
+            <div class="error-form" style="display:none;"></div>
+        </div>
+    </div>
+
+    <isinputfield formfield="${pdict.CurrentForms.profile.customer.firstname}" type="hidden" xhtmlclass="firstname-input"/>
+    <isinputfield formfield="${pdict.CurrentForms.profile.customer.lastname}" type="hidden" xhtmlclass="lastname-input"/>
+    <isinputfield formfield="${pdict.CurrentForms.profile.customer.photoURL}" type="hidden" xhtmlclass="photourl-input"/>
+    <isinputfield formfield="${pdict.CurrentForms.profile.customer.thumbnailURL}" type="hidden" xhtmlclass="thumbnailurl-input"/>
+    
+    <input type="hidden" name="${pdict.CurrentForms.profile.register.htmlName}" value="Register"/>
+    <input type="hidden" name="${pdict.CurrentForms.profile.secureKeyHtmlName}" value="${pdict.CurrentForms.profile.secureKeyValue}"/>

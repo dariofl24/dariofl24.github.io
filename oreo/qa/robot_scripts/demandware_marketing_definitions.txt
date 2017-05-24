@@ -1,0 +1,268 @@
+*** Settings ***
+Documentation   To specify configuration prerequisites in the site
+Library         Selenium2Library
+Resource        demandware_configuration_definitions.txt
+
+*** Variables ***
+#Online marketing definitions
+${L_ONLINE_MARKETING}  //a[contains(text(), 'Online Marketing')]
+${L_PROMOTIONS}  //a[contains(text(), 'Promotions')]
+${L_CAMPAIGNS}  //a[contains(text(), 'Campaigns')]
+${L_IMPORTEXPORT}  //a[contains(text(), 'Import & Export')]
+${D_PROMOTION}  //div[@class='x-grid3-cell-inner x-grid3-col-ID']//span[@class='dw-bm-search-hit'][text()='
+${T_SEARCH_P}   x-auto-20-input
+${B_SEARCH_P}   //button[@class='x-btn-text']
+${E_EDIT_P}     //div[@class='x-grid3-cell-inner x-grid3-col-modelCommandMenu']/table//button
+${L_EDIT_P}     //a[contains(text(), 'Edit Promotion')]
+${I_ID_PROMOTION}  PromotionID
+${I_NAME_PROMOTION}  //input[@class='inputfield_en perm_localized']
+${S_ENABLED_PROMOTION}  PromotionEnabled
+${S_SEARCHABLE_PROMOTION}  PromotionSearchable
+${T_PROMOTIONFIELD_TABLE}  //form[@id='PromotionGeneral']//table[@class='accordiontable']
+${I_CALLOUT_PROMOTION}  //tr[@class='accordionsrow'][5]//td[@class='table_detail'][1]//textarea
+${S_EXCLUSIVITY_PROMOTION}  //tr[@class='accordionsrow'][8]//select
+${S_TYPE_PROMOTION}  //tr[@class='accordionsrow'][9]//select
+${P_UPDATE_PROMOTION1}  PromotionUpdateButton
+${S_CLASS_PROMOTION}  PromotionClassSelection
+${S_SUBCLASS_PROMOTION}  ConditionTypeSelection
+${I_BUY}        Row_0_BuyX
+${I_DISCOUNT}   Row_0_Discount
+${I_PERCENTOFF}  Row_0_Type
+${D_QUALIFYING_SET}  //div[@id='qualifyingProductsFieldSet']
+${B_ADD_QUALIFYINGPRODUCTS}  //tr[@id='QualifyingProductSection']//input[@class='button']
+${F_QUALIFIYINGPRODUCTS}  ext-gen672
+${D_QUALIFIERFIELDS}  //div[@id='qualifyingProductsFieldSet']//table[@class='x-grid3-row-table']
+${I_QUALIFIER}  //div[contains(@class,'
+${L_QUALIFIER_OPTION}  //div[contains(@class,'x-combo-list-item')][text()='
+${I_VALUE}      //div[contains(@class,'value')]
+${I_DISPLAY}    //div[@class='x-layer x-editor x-small-editor x-grid-editor']
+${I_VALUEINPUT}  //div[@class='x-form-field-wrap x-trigger-wrap-focus']//input
+${B_SAVEQUALIFIER}  //button[contains(text(),'Save')]
+${B_SET_PAYMENTMETHODS}  //tr[@id='PaymentMethodSection']//input[@class='button']
+${S_FRAMEMESSAGE}  //span[@class='dw-bm-widget-notificationpanel-message']
+${B_NEW_PROMOTION}  //button[contains(text(),'New')]
+${C_ALLMOP_CHECKER}  //div[@id='paymentMethodWindow']//div[@id='paymentMethodWindow_availableWindow']//div[@class='x-grid3-header']//div[@class='x-grid3-hd-inner x-grid3-hd-checker']/div
+${B_ASSIGNMOP}  //button[text()='Assign']
+${B_SAVEMOP}    //div[@id='paymentMethodWindow']//button[text()='Save']
+${I_APPLY_PROMOTION_BUTTON}  Apply
+${DIV_BUTTONS}  //div[@class='x-panel-btns x-panel-btns-right']
+${D_PAYMENTMETHODS_WINDOW}  //div[@id='paymentMethodWindow']
+${D_CAMPAIGN_ITEMS}  //div[@class='x-panel-bwrap']/div/form/div[contains(@class,'x-form-item')]
+${I_ID_CAMPAIGN}  [1]//input
+${S_ENABLED_CAMPAIGN}  [2]//input[@name='enabled']
+${I_DESCRIPTION}  [3]//textarea
+${F_FIELSET_CAMPAIGN}  //fieldset[@class='x-fieldset dw-bm-widget-fieldset x-component']//div[@class='x-form-item']
+${C_NOSTARTDATE_CAMPAIGN}  [1]//input[@type='checkbox']
+${C_NOENDDATE_CAMPAIGN}  [2]//input[@type='checkbox']
+${B_CUSTOMERGROUPS_CAMPAIGN}  [3]//button
+${D_CUSTOMERSELECTION_CAMPAIGN}  //div[@class='x-window dw-bm-widget-objectselectionwindow dw-bm-widget-customergroupsselectionwindow x-component']
+${D_CUSTOMERGROUPCHECKALL_CAMPAIGN}  //div[@class='x-window dw-bm-widget-objectselectionwindow dw-bm-widget-customergroupsselectionwindow x-component']//div[@class='x-window-ml']//div[contains(@class,'x-border-layout-ct')]//div[@class='x-grid3-hd-inner x-grid3-hd-checker x-component']
+#Setup Catalogs
+${A_IMPORTCATALOGS}  //td[contains(text(), 'Manage catalog')]//a[contains(text(),'imports')]
+${I_PAGESIZE_IMAGE}  //img[contains(@class,'x-form-trigger x-form-trigger-arrow')]
+${I_PAGESIZE_100}  //div[contains(@class,'x-combo-list')]//div[contains(@class,'list-item')][contains(text(),'100')]
+${B_ACTIONS_BUTTON}  //button[contains(text(),'Actions')]
+${A_SELECT_VISIBLE}  //a[contains(text(),'Select Visible')]
+${A_DISABLE_ALL}  //a[contains(text(),'Disable Selected')]
+${I_SEARCHTERM_INPUT}  //div[contains(@class,'searchpanel-textfield')]//input
+${B_SEARCHTERM}  //table[contains(@class,'searchbutton')]//button
+${B_ROW_COMMANDBUTTON}  //table[contains(@class,'commandbutton ')]//button
+${S_SEARCHTERMFOUND}  //span[@class='dw-bm-search-hit'][contains(text(),'
+${A_ENABLE_ACTION}  //div[contains(@class,'listgridpanel-modelcommandmenu')]//a[contains(text(),'Enable')]
+${A_EDIT_ACTION}  //div[contains(@class,'listgridpanel-modelcommandmenu')]//a[contains(text(),'Edit')]
+${B_DISABLE_CONFIRMATION}  //div[contains(@class,'x-panel-btns')]//button[contains(text(),'Disable')]
+${B_ENABLE_CONFIRMATION}  //div[contains(@class,'x-panel-btns')]//button[contains(text(),'Enable')]
+#Import File
+${IMPORTS}      //td[contains(text(),'Manage promotion')]//a[contains(text(),'imports')]
+${UPLOAD_FILE}  //a[contains(text(),'Upload')]
+${L_IMPORTEXPORT}  //a[contains(text(),'Import & Export')]
+${IMPORTFILE_FIELD}  //input[@name='File']
+${B_VALIDATEFILE}  ValidateFile
+${B_SELECTMODE}  SelectMode
+${B_UPLOAD}     Upload
+${B_IMPORT}     Import
+#Edit Campaign
+${A_ADD_EXPERIENCE}  //em//button[contains(text(),'Experience')]
+${A_ADD_PROMOTION}  //a[contains(text(),'Add Promotion')]
+${F_SEARCHFIELD}  //div[contains(@class,' dw-bm-widget-searchpanel-textfield x-component')]/input
+${B_SEARCHFIELD}  //table[contains(@class,'dw-bm-widget-searchpanel-searchbutton')]//button
+${S_FOUND}      //div[@class='x-grid3-cell-inner x-grid3-col-ID']//span[contains(text(),'
+${B_APPLY}      //table[contains(@class,'objectselectionpanel-apply')]//button
+${B_APPLY_ALL}  //table[contains(@class,'dw-bm-campaign-editpanel-detailspanel-applybutton')]//button
+#Clear All Imports
+${A_PREVIOUSIMPORTS}  //a[contains(text(),'Select All')]
+${I_DELETEIMPEXJOBS}  ConfirmDeleteImpexJobs
+${I_DELETCONFIRMJOBS}  DeleteImpexJobs
+#STANDARCATALOGS
+${TD_STANDARCATALOG}  //td[contains(text(),'
+${A_STANDARIMPORT}  //a[contains(text(),'imports')]
+#Clear all FILES
+${A_PREVIOUSFILES}  //a[contains(text(),'Select All')]
+${I_DELETEFILES}  confirmDelete
+${I_CONFIRMDELETEFILES}  delete
+
+*** Keywords ***
+Set Up Standard Promotion
+  [Arguments]  ${standard_promotion}  ${standard_campaign}  ${test_Promotion}
+  SetUp Online Marketing  ${standard_campaign}
+  Return to Demandware Homepage
+  Import Test Catalog  ${test_Promotion}  Online Marketing  Manage promotion  ${EMPTY}
+  Assign Test Promotions to Test Campaign  ${standard_Promotion}  ${standard_campaign}
+
+SetUp Online Marketing
+  [Arguments]  ${standard_campaign}
+  Click At Online Marketing
+  Click At Promotions
+  Disable All Visible
+  Return to Demandware Homepage
+  Click At Online Marketing
+  Click At Campaigns
+  Disable All Visible
+  #${campaignfound} =  Run Keyword And Return Status  Activate Test Campaign  ${standard_campaign}
+  #Run Keyword If  '${campaignfound}' == 'False'  Fatal Error  Test Campaign not found, please create.
+
+Activate Test Campaign
+  [Arguments]  ${standard_campaign}
+  Wait Until Page Contains Element  ${I_SEARCHTERM_INPUT}
+  Input Text  ${I_SEARCHTERM_INPUT}  ${standard_campaign}
+  Wait Until Page Contains Element  ${B_SEARCHTERM}
+  Click Element  ${B_SEARCHTERM}
+  Wait Until Page Contains Element  ${S_SEARCHTERMFOUND}${standard_campaign}')]
+  Click Element  ${B_ROW_COMMANDBUTTON}
+  Wait Until Page Contains Element  ${A_ENABLE_ACTION}
+  Click Element  ${A_ENABLE_ACTION}
+  Wait Until Page Contains Element  ${B_ENABLE_CONFIRMATION}
+  Click Element  ${B_ENABLE_CONFIRMATION}
+
+Assign Test Promotions to Test Campaign
+  [Arguments]  ${standard_Promotion}  ${standard_campaign}
+  Return to Demandware Homepage
+  Click At Online Marketing
+  Click At Campaigns
+  Wait Until Page Contains Element  ${I_SEARCHTERM_INPUT}
+  Input Text  ${I_SEARCHTERM_INPUT}  ${standard_campaign}
+  Wait Until Page Contains Element  ${B_SEARCHTERM}
+  Click Element  ${B_SEARCHTERM}
+  Wait Until Page Contains Element  ${S_SEARCHTERMFOUND}${standard_campaign}')]
+  Click Element  ${B_ROW_COMMANDBUTTON}
+  Wait Until Page Contains Element  ${A_EDIT_ACTION}
+  Click Element  ${A_EDIT_ACTION}
+  Wait Until Page Contains Element  ${A_ADD_EXPERIENCE}
+  Click Element  ${A_ADD_EXPERIENCE}
+  Wait Until Page Contains Element  ${A_ADD_PROMOTION}
+  Click Element  ${A_ADD_PROMOTION}
+  Wait Until Page Contains Element  ${F_SEARCHFIELD}
+  Input Text  ${F_SEARCHFIELD}  ${standard_Promotion}
+  Click Element  ${B_SEARCHFIELD}
+  Wait Until Page Contains Element  ${S_FOUND}${standard_Promotion}')]
+  Click Element  ${S_FOUND}${standard_Promotion}')]
+  Click Element  ${B_APPLY}
+  Wait Until Page Contains Element  ${B_APPLY_ALL}
+  Click Element  ${B_APPLY_ALL}
+
+Disable All Visible
+  Wait Until Page Contains Element  ${I_PAGESIZE_IMAGE}
+  Wait Until Page Contains Element  ${B_ACTIONS_BUTTON}
+  Wait Until Keyword Succeeds  2 min  5  Click At Pagination Until Get 100
+  Click Element  ${I_PAGESIZE_100}
+  Click Element  ${B_ACTIONS_BUTTON}
+  Sleep  1
+  Wait Until Page Contains Element  ${A_SELECT_VISIBLE}
+  Click Element  ${A_SELECT_VISIBLE}
+  Wait Until Page Contains Element  ${B_ACTIONS_BUTTON}
+  Click Element  ${B_ACTIONS_BUTTON}
+  Sleep  1
+  Wait Until Page Contains Element  ${A_DISABLE_ALL}
+  Click Element  ${A_DISABLE_ALL}
+  Sleep  5
+  Wait Until Page Contains Element  ${B_DISABLE_CONFIRMATION}
+  Click Element  ${B_DISABLE_CONFIRMATION}
+
+Click At Pagination Until Get 100
+  Click Element  ${I_PAGESIZE_IMAGE}
+  Wait Until Page Contains Element  ${I_PAGESIZE_100}
+
+Click At Campaigns
+  Wait Until Page Contains Element  ${T_INTERNAL_TABLE}${L_OPTIONSCATALOGS}${L_CAMPAIGNS}
+  Click Element  ${T_INTERNAL_TABLE}${L_OPTIONSCATALOGS}${L_CAMPAIGNS}
+
+Click At Promotions
+  Wait Until Page Contains Element  ${T_INTERNAL_TABLE}${L_OPTIONSCATALOGS}${L_PROMOTIONS}
+  Click Element  ${T_INTERNAL_TABLE}${L_OPTIONSCATALOGS}${L_PROMOTIONS}
+
+Click At Online Marketing
+  Wait Until Page Contains Element  ${T_INTERNAL_TABLE}${L_OPTIONSCATALOGS}${L_ONLINE_MARKETING}
+  Click Element  ${T_INTERNAL_TABLE}${L_OPTIONSCATALOGS}${L_ONLINE_MARKETING}
+
+Click At Import Export
+  Wait Until Page Contains Element  ${T_INTERNAL_TABLE}${L_OPTIONSCATALOGS}${L_IMPORTEXPORT}
+  Click Element  ${T_INTERNAL_TABLE}${L_OPTIONSCATALOGS}${L_IMPORTEXPORT}
+
+Click At Upload File
+  Wait Until Page Contains Element  ${UPLOAD_FILE}
+  Click Element  ${UPLOAD_FILE}
+
+Click At Import
+  Wait Until Page Contains Element  ${IMPORTS}
+  Click Element  ${IMPORTS}
+
+Click At Products And Catalogs
+  Wait Until Page Contains Element  ${L_PRODUCTCATALOG}
+  Click Element  ${L_PRODUCTCATALOG}
+
+Click At Import Catalog Link
+  Wait Until Page Contains Element  //button[@name='PromotionImport']
+  Click Element  //button[@name='PromotionImport']
+
+Return To
+  [Arguments]  ${breadcrum}
+  Click Element  //a[@class='breadcrumb'][contains(text(),'${breadcrum}')]
+
+Import Test Catalog
+  [Arguments]  ${file}  ${catalog}  ${importcatalog}  ${not}
+  Wait Until Page Contains Element  ${T_INTERNAL_TABLE}//a[contains(text(),'${catalog}')]
+  Click Element  ${T_INTERNAL_TABLE}//a[contains(text(),'${catalog}')]
+  Click At Import Export
+  Run Keyword and Ignore Error  Clear all Previous Imports
+  Upload File  ${file}
+  Click At Import Catalog Link
+  Import File  ${file}
+
+Clear All Previous Files
+  Wait Until Page Contains Element  ${A_PREVIOUSFILES}  10
+  Click Element  ${A_PREVIOUSFILES}
+  Click Element  ${I_DELETEFILES}
+  Wait Until Page Contains Element  ${I_CONFIRMDELETEFILES}
+  Click Element  ${I_CONFIRMDELETEFILES}
+  Sleep  5
+
+Clear All Previous Imports
+  Wait Until Page Contains Element  ${A_PREVIOUSIMPORTS}  10
+  Click Element  ${A_PREVIOUSIMPORTS}
+  Wait Until Page Contains Element  ${I_DELETEIMPEXJOBS}
+  Click Element  ${I_DELETEIMPEXJOBS}
+  Wait Until Page Contains Element  ${I_DELETCONFIRMJOBS}
+  Click Element  ${I_DELETCONFIRMJOBS}
+  Sleep  5
+
+Upload File
+  [Arguments]  ${filename}
+  ${relativePath} =  Set Variable  ${CURDIR}${/}${filename}
+  Click At Upload File
+  Run Keyword and Ignore Error  Clear All Previous Files
+  Wait Until Page Contains Element  ${IMPORTFILE_FIELD}
+  Choose File  ${IMPORTFILE_FIELD}  ${relativePath}
+  Click Element  ${B_UPLOAD}
+  Sleep  4
+  Return To  Import & Export
+
+Import File
+  [Arguments]  ${filename}
+  Click Element  //input[@type='Radio'][@value='${filename}']
+  Click Button  ${B_VALIDATEFILE}
+  Wait Until Page Contains  Finished XML schema validation.  300
+  Click Button  ${B_SELECTMODE}
+  Wait Until Page Contains  Step 3 of 3.
+  Select Radio Button  ImportMode  MERGE
+  Sleep  2
+  Click Element  ${B_IMPORT}

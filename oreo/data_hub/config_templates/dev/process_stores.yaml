@@ -1,0 +1,8 @@
+US_store_input_file: '/home/converse/stores/DLOCSTYLE.CSV'
+CA_store_input_file: '/home/converse/stores/DLOCSTYLEC.CSV'
+SKATE_store_input_file: '/home/converse/stores/skateboarding_retailers.csv'
+output_directory: '/home/demandware/outgoing'
+notification_recipients: 'confoo-reports-jobs@tacitknowledge.com'
+notification_subject: 'Stores Export Process Finished!'
+notification_message: 'Stores Export Process Finished!'
+notification_from: 'cron@datahub.converse.com'

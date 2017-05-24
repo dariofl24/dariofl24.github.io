@@ -1,0 +1,103 @@
+/**
+* Export Products to CSV
+*
+* @input ExportFile : String The export file name
+*
+* @output ErrorMsg : String The error message if any
+*/
+
+importPackage(dw.io);
+importPackage(dw.order);
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.catalog);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:product/ProductUtils.ds");
+importScript("custom/ProductsExporter.ds");
+importScript("custom/CsvFileWriter.ds");
+
+var CsvFileWriter = converse.utils.CsvFileWriter;
+var logger : Logger = Logger.getLogger('ExportProductInformationToSitecatalyst');
+var ProductsExporter = converse.utils.ProductsExporter;
+var PriceResolver = converse.product.PriceResolver;
+let productIds;
+
+function execute(args : PipelineDictionary) : Number
+{
+    let errorMsg : String = null;
+    productIds = new HashSet();
+    
+    try {
+        let products = ProductMgr.queryAllSiteProducts();
+        let exporter = new ProductsExporter(args.ExportFile, getCsvHeader, getCsvRow, shouldExport);
+        
+        exporter.export(products, '\t', false,getFirstDefaultRow(), getSecondDefaultRow(), getThirdDefaultRow());
+    } catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+    
+    args.ErrorMsg = errorMsg;
+
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function getFirstDefaultRow() {
+    return ["## SC", "SiteCatalyst SAINT Import File", "v:2.1"];
+}
+function getSecondDefaultRow() {
+    return ["## SC", "'## SC' indicates a SiteCatalyst pre-process header. Please do not remove these lines."];
+}
+function getThirdDefaultRow() {
+    return ["## SC", "D:2015-02-05 13:15:51", "A:2648113:51"];
+}
+function getCsvHeader() {
+    return ["Key","MasterProductID","ProductName","Color","Cut","Gender","BrandSegment","Pillar","MerchPlannerCategory","Story","SubPillar","Concept","SubConcept","BusinessUnit","Customize","InlineCustomize","SubGender","NavCollection"];
+}
+
+function getCsvRow(product) {
+    let sku = getSKU(product);
+    productIds.add(sku);
+
+    let colorAttr = product.variationModel.getProductVariationAttribute('color');
+    let selectedColor = !empty(colorAttr) ? product.variationModel.getSelectedValue(colorAttr) : "";
+    let colorVal = !empty(selectedColor) ? selectedColor.value : "";
+
+    productName = (empty(product.name) && !empty(product.variationModel.master)) ? product.variationModel.master.name : product.name;
+
+    let row = [
+        sku, // Key
+        !empty(product.variationModel.master) ? product.variationModel.master.ID : "", // MasterProductID
+        productName, // ProductName
+        colorVal, // Color
+        product.custom.cut.value, // Cut
+        product.custom.gender.value, // Gender
+        product.custom.brandSegment.value, // BrandSegment
+        product.custom.pillar.value, // Pillar
+        product.custom.merchPlannerCategory, // MerchPlannerCategory
+        'Accessories'.equalsIgnoreCase(product.custom.pillar)|| 'Apparel'.equalsIgnoreCase(product.custom.pillar.value) ? product.custom.merchPlannerCategory : product.custom.collection, // Story
+        product.custom.core ? 'Core' : 'Fashion', // SubPillar
+        'create'.equalsIgnoreCase(product.custom.merchPlannerCategory) ? 'Blank Canvas' : 'Inline', // Concept
+        'Kids'.equalsIgnoreCase(product.custom.gender) ? 'Kids': product.custom.brandSegment, // SubConcept
+        "", // BusinessUnit
+        "", // Customize
+        "", // InlineCustomize
+        "", // SubGender
+        ""  // NavCollection
+    ];
+
+
+    return row;
+}
+
+function shouldExport(product) {
+    return !productIds.contains(getSKU(product)) && !product.master && product.online;
+}
+
+function getSKU(product) {
+    let productVariantSKU = product.variant ? product.manufacturerSKU : "";
+    let sku = productVariantSKU || product.ID;
+
+    return sku;
+}

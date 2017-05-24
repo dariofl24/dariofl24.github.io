@@ -1,0 +1,60 @@
+importPackage(dw.system);
+
+importScript("module_test:Framework/Objects.ds");
+importScript("module_test:Framework/RunModes.ds");
+
+function Unit(runMode) {
+    this.runMode = runMode;
+    this.suites = new Array();
+    this.result = new TestResult();
+}
+
+/**
+ * Available run mode definitions.
+ */
+Unit.RunSuites = new ExecuteSuitesRunMode();
+
+Unit.Sites     = {};
+Unit.Sites.US  = 'converse';
+Unit.Sites.DE  = 'converse-de';
+Unit.Sites.GB  = 'converse-gb';
+
+Unit.Sites.All = [Unit.Sites.US, Unit.Sites.DE, Unit.Sites.GB];
+Unit.Sites.EU = [Unit.Sites.DE, Unit.Sites.GB];
+
+Unit.prototype.describe = function(suitename) {
+    let suite = new Suite({name: suitename});
+    this.runMode.onSuite(this, suite);
+
+    let unit = this;
+    let testBuilder = {
+        test: function(testname, runCallback) {
+            let test = new Test({name: testname}, runCallback, true);
+            unit.runMode.onTest(this, suite, test, Unit.Sites.All);
+            
+            return testBuilder;
+        },
+        localized_test: function(testname, sites, runCallback) {
+            let test = new Test({name: testname}, runCallback, true);
+            unit.runMode.onTest(this, suite, test, sites);
+            
+            return testBuilder;
+        },
+        disabled_test: function(testname, runCallback) {
+            let test = new Test({name: testname}, runCallback, false);
+            unit.runMode.onTest(this, suite, test, Unit.Sites.All);
+
+            return testBuilder;
+        }
+    };
+
+    return testBuilder;
+};
+
+Unit.prototype.getSuites = function () {
+    return this.suites;
+}
+
+Unit.prototype.getResult = function () {
+    return this.result;
+}

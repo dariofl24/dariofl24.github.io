@@ -1,0 +1,19 @@
+<iscache type="relative" hour="24" varyby="price_promotion" />
+<isinclude template="util/modules" />
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("util/ViewHelpers.ds");
+    importScript("converse_core:catalog/CategoryUtils.ds");
+    var CategoryUtils = converse.catalog.CategoryUtils;
+    var topLevelCategory = getTopLevelCategory();
+	var mobileNavTopCategories = getSubcategoriesInMenuForTopLevelCategory(topLevelCategory);
+	var mobileNavMenuID = 'lightweightnav';
+</isscript>
+
+<div id="${mobileNavMenuID}">
+		<ul id="mobile-menu-list">
+      		<isloop items="${mobileNavTopCategories}" var="topCat">
+      			<ismobilemenusubcategories p_subcategory="${topCat}" p_menu_id="${mobileNavMenuID}"/>
+        	</isloop>
+		</ul>
+</div>

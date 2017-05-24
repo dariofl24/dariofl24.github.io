@@ -1,0 +1,23 @@
+/**
+* Create a dummy product to be added to the cart instead of
+* the customizable product. Adding this new dummy product
+* will create a new product line item in the cart.
+*
+* Later the dummy product will be replaced with the real one.
+* 
+* @output DummyProduct : dw.catalog.Product Dummy product 
+*/
+
+importPackage(dw.catalog);
+importPackage(dw.system);
+
+function execute(args:PipelineDictionary) : Number
+{
+	var product:Product = ProductMgr.getProduct('dummy-product');
+	if (product == null) {
+		return PIPELET_ERROR;
+	}
+	
+	args.DummyProduct = product;
+   	return PIPELET_NEXT;
+}

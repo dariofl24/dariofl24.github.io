@@ -1,0 +1,13 @@
+<isdecorate template="pt_commonlayout">
+
+    <isinclude template="util/modules" />
+    <div id="main-overlay" class="no-top-margin">
+        <div class="pt_storefront">
+            <isbanners p_dyo=false />
+            <div id="account-container-to-activate" style="display:none">${pdict.FormContainer != null ? pdict.FormContainer : ""}</div>
+            <div id="main" role="main">
+                <isreplace/>
+            </div>
+        </div>
+    </div>
+</isdecorate>

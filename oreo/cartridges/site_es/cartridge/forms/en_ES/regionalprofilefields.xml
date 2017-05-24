@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+    <field formid="zip"
+           label="profile.zip"
+           type="string"
+           mandatory="true"
+           min-length="5" 
+           max-length="5" 
+           regexp="^([1-9]{2}|[0-9][1-9]|[1-9][0-9])[0-9]{3}$"
+           binding="custom.postalCode"
+           parse-error="profile.zipparseerror"
+           missing-error="profile.zip.missing-error"
+           value-error="profile.ziperror"/>
+    <field formid="liveinus"
+            label="profile.local"
+            type="boolean"
+            mandatory="false"
+            binding="custom.isDomestic"
+            default-value="true"/>
+</form>

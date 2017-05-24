@@ -1,0 +1,103 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+
+    var SUCCESS_STATUS : String = "success",
+        FAILURE_STATUS : String = "failure",
+        SERVICE_UNAVAILABLE_MESSAGE : String = "Verification service unavailable";
+
+    var AbstractBvatResponse = Class.extend({
+        
+        init: function(response : String) {
+            this.response = new XML(response);
+            this.processResponse();
+        },
+        
+        processResponse: function() {
+            this._setStatus();
+            this._setExceptions();
+        },
+        
+        _setStatus: function() {
+            this.status = this.response.child("status").valueOf().toString();
+        },
+        
+        _setExceptions: function() {
+            this.exceptions = [];
+            
+            let exceptionsNode : XML = this.response.child("exceptions");
+            if (exceptionsNode) {
+                let errorNodes : XML = exceptionsNode.children();
+                if (errorNodes) {
+                    for (let i = 0; i < errorNodes.length(); i++) {
+                        let errorNode : XML = errorNodes[i];
+                        if (errorNode.children().length() > 0) {
+                            let error = this._getException(errorNode); 
+                            this.exceptions.push(error);
+                        }
+                    }
+                }
+            }
+        },
+        
+        _getException: function(errorNode : XML) : Object {
+            return { 
+                "property" : errorNode.child("property").valueOf().toString(),
+                "errorCode" : errorNode.child("errorcode").valueOf().toString(),
+                "message" : errorNode.child("message").valueOf().toString() 
+            };
+        },
+        
+        getStatus: function() : String {
+            return this.status;
+        },
+        
+        getExceptions: function() : Array {
+            return this.exceptions;
+        },
+        
+        hasExceptions: function() : Boolean {
+            return !empty(this.getExceptions());
+        },
+        
+        getExceptionsAsString: function() : String {
+            if (this.hasExceptions()) {
+                return this.getExceptions().map(function(value) {
+                    return JSON.stringify(value);
+                }).join(", ");
+            }
+            
+            return "";
+        },
+        
+        hasExceptionWithMessage: function(message : String) : Boolean {
+            if (this.hasExceptions()) {
+                return this.getExceptions().some(function(value, index, arr) { 
+                    return value.message === message; 
+                });
+            }
+            
+            return false;
+        },
+        
+        isSuccess: function() : Boolean {
+            return SUCCESS_STATUS === this.getStatus();
+        },
+        
+        isFailure: function() : Boolean {
+            return FAILURE_STATUS === this.getStatus();
+        },
+        
+        isServiceUnavailable: function() : Boolean {
+            return this.isFailure() && this.hasExceptionWithMessage(SERVICE_UNAVAILABLE_MESSAGE);
+        }
+    });
+
+    var ns = Namespace.extendFromString(integration, "nike.bvat.objects");
+    Namespace.extend(ns, { AbstractBvatResponse: AbstractBvatResponse });
+
+})();

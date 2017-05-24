@@ -1,0 +1,71 @@
+/* constants file for scss variable values */
+/* jQuery Ui */
+/* ------------------------------------- */
+/* line 6, ../css/package/sass/jquery_ui.scss */
+.ui-widget-overlay {
+  opacity: 0.4;
+}
+
+/* line 10, ../css/package/sass/jquery_ui.scss */
+.ui-dialog {
+  background: none repeat scroll 0 0 #FFFFFF;
+}
+
+/* line 11, ../css/package/sass/jquery_ui.scss */
+.ui-dialog .ui-widget-header {
+  background: none repeat scroll 0 0 #F3F3F3;
+  border: 0 none;
+  border-radius: 0 0 0 0;
+  height: 23px;
+  text-transform: uppercase;
+}
+
+/* line 12, ../css/package/sass/jquery_ui.scss */
+.ui-dialog .ui-dialog-title {
+  font-weight: bold;
+}
+
+/* line 13, ../css/package/sass/jquery_ui.scss */
+.ui-dialog .ui-icon-closethick {
+  background-position: left top;
+  height: 32px;
+  width: 32px;
+}
+
+/* line 19, ../css/package/sass/jquery_ui.scss */
+.ui-dialog .ui-dialog-titlebar-close {
+  border: 0 none;
+  border-radius: 0 0 0 0;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  right: 0;
+  top: 0;
+  width: 32px;
+}
+
+/* line 20, ../css/package/sass/jquery_ui.scss */
+.ui-dialog .ui-dialog-titlebar-close span {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 21, ../css/package/sass/jquery_ui.scss */
+.ui-dialog h1, .ui-dialog h2 {
+  font-family: Georgia;
+  font-size: 1.8em;
+  font-style: italic;
+  font-weight: 400;
+  margin: 5px 158px 5px 0;
+}
+
+/* line 22, ../css/package/sass/jquery_ui.scss */
+.ui-dialog .dialog-required {
+  display: block;
+  text-align: right;
+}
+
+/* line 23, ../css/package/sass/jquery_ui.scss */
+.ui-accordion .ui-accordion-content {
+  padding: 0;
+}

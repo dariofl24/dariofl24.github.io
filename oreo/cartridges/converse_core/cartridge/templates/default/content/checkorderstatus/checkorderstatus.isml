@@ -1,0 +1,19 @@
+<isinclude template="content/pagecontext" />
+
+<isdecorate template="content/pt_navbarcontent">
+    <isinclude template="util/modules"/>
+    <span id="content-marker">check_order_status</span>
+
+    <div class="check-order-status">
+        <div class="section-title">${Resource.msg('checkorderstatus.heading','customerservice',null)}</div>
+        <isif condition="${pdict.CurrentCustomer.isAuthenticated()}">
+            <h2 class="view-my-orders">
+                <a class="button" href="${URLUtils.https('Order-History')}">
+                    ${Resource.msg('checkorderstatus.viewmyorders','customerservice',null)}
+                </a>
+            </h2>
+        <iselse/>
+            <isinclude url="${URLUtils.http('CustomerService-CheckOrderStatus')}"/>
+        </isif>
+    </div>
+</isdecorate>

@@ -1,0 +1,42 @@
+/**
+ * This script returns employee relative based on email
+ *
+ * @input EmployeeCustomerNo : String The employee customer number.
+ * @input RelativeEmail : String The employee's relative email.
+ *
+ * @output Relative : dw.object.CustomObject The employee relative.
+ * @output ErrorMsg : String The error message if any.
+ */
+importPackage(dw.system);
+importPackage(dw.object);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:employee/EmployeeUtils.ds");
+
+var logger : Logger = Logger.getLogger('GetEmployeeRelativeByEmail');
+
+function execute(args : PipelineDictionary) : Number
+{
+    var employeeCustomerNo : String = args.EmployeeCustomerNo,
+        relativeEmail : String = args.RelativeEmail;
+        
+    if (empty(employeeCustomerNo) || empty(relativeEmail)) {
+        return PIPELET_ERROR;
+    }
+    
+    var relative : CustomObject = null;
+    var errorMsg : String = null;
+    try {
+        relative = converse.employee.EmployeeUtils.getRelativeByEmailAndEmployeeCustomerNo(relativeEmail, employeeCustomerNo);
+    }
+    catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+    
+    args.Relative = relative;
+    args.ErrorMsg = errorMsg;
+    
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}

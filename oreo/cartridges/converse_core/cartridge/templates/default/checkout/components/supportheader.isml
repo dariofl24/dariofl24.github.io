@@ -1,0 +1,13 @@
+<section class="support clearfix">
+    <div class="call-info">
+        <h2>${Resource.msg('global.checkout','locale',null)}</h2>
+        <p class="message hide-mobile">${Resource.msg('checkout.call', 'checkout', null)} <span class="support-number">${Resource.msg('contactus.shopping.call', 'customerservice', null)}</span> ${Resource.msg('checkout.call.message', 'checkout', null)}</p>
+        <p class="message mobile-only">${Resource.msg('checkout.call', 'checkout', null)} <span class="support-number">${Resource.msg('contactus.shopping.call', 'customerservice', null)}</span><br>${Resource.msg('checkout.call.message', 'checkout', null)}</p>
+    </div>
+    <isif condition="${!pdict.CurrentCustomer.authenticated}">
+        <p class="login-faster-checkout">
+            <span class="user-icon"></span>
+            <span>${Resource.msg('checkout.login', 'checkout', null)}</span>
+        </p>
+    </isif>
+</section>

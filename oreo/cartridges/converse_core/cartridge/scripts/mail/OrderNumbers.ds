@@ -1,0 +1,18 @@
+/**
+ *
+ *    @input Order : dw.order.Order An order to fetch order numbers from.
+ *    @output OrderNumbers : String Order numbers.
+ *
+ */
+
+importPackage( dw.system );
+
+importScript("converse_core:checkout/Utils.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+	// combine with and?
+   args.OrderNumbers = args.Order.orderNo;
+
+   return PIPELET_NEXT;
+}

@@ -1,0 +1,7 @@
+<iscomment>
+    Here is where all site-specific global js resources are to be included in the EMEA localized cartridges.
+    This template is just a stub, which should be overriden by a template with the same name in each cartridge when needed.
+    This would allow to fine-tune what resources get loaded for each specific site. 
+    Such tempalate would typically include app.emea.js plus some site-specific scripts. 
+</iscomment>
+<script src="${URLUtils.staticURL('/js/app.emea.js')}"></script>

@@ -1,0 +1,17 @@
+*** Settings ***
+Documentation   Checks Rubbertracks Page
+Suite Setup     Open Browser to Converse Site
+Suite Teardown  Close All Browsers
+Test Setup      Go To Rubbertracks Page
+Force Tags      Rubbertracks  Regression  US
+Resource        site_declarations.txt
+Resource        rubbertracks_definitions.txt
+
+*** Test Cases ***
+General Rubbertracks Element Validations
+  [Tags]  ShortReg  beforeRGA
+  Rubbertracks Page Validations
+
+Verifies Mandatory Messages and sending RT Form
+  Verifies Mandatory Messages by Number
+  Filling Rubbertracks Data

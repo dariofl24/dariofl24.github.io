@@ -1,0 +1,48 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_ups:objects/AbstractUPSResponse.ds");
+
+(function() {
+    
+    var UPS_OBJ_NS = integration.ups.objects;
+    
+    var AcceptResponse = UPS_OBJ_NS.AbstractUPSResponse.extend({
+        
+        init: function(responseText : String) {
+            this._super(responseText);
+            this.initPrintLabel();
+            this.initTrackingNumber();
+        },
+        
+        initPrintLabel: function() {
+            this.printLabel = this.responseXML['ShipmentResults']['PackageResults']['LabelImage']['GraphicImage'].toString();
+        },
+        
+        initTrackingNumber: function() {
+            this.trackingNumber = this.responseXML['ShipmentResults']['PackageResults']['TrackingNumber'].toString();
+        },
+        
+        getPrintLabel: function() : String {
+            return this.printLabel;
+        },
+        
+        getTrackingNumber: function() : String {
+            return this.trackingNumber;
+        },
+        
+        createResult: function() : Object {
+            var result = this._super();
+            result.printLabel = this.getPrintLabel();
+            result.trackingNumber = this.getTrackingNumber();
+            
+            return result;
+        }
+        
+    }); 
+    
+    Namespace.extend(UPS_OBJ_NS, { AcceptResponse: AcceptResponse });
+        
+})();

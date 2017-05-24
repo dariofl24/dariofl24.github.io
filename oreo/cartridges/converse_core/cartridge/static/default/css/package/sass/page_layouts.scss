@@ -1,0 +1,184 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_sprites";
+@import "_media_query";
+@import "compass/css3/opacity";
+@import "compass/utilities/general/clearfix";
+
+/* page layouts */
+/* ------------------------------------- */
+
+#main {
+	position: relative;
+}
+
+#mobile-menu {
+    top: 0;
+    display: block;
+    width: pxtoem($MOBILE_MENU_WIDTH);
+    float: left;
+    position: relative;
+    background-color: $COMMON_MENU_BACKGROUND;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#wrapper {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 0px solid #FFFFFF;
+	margin: auto;
+	min-height: 100%;
+    left: 0px;
+    width: 100%;
+    overflow: hidden;
+    -webkit-transition: left 400ms;
+    -moz-transition: left 400ms;
+    -o-transition: left 400ms;
+    transition: left 400ms;
+
+    &.position-absolute {
+        position: absolute;
+    }
+
+    .catcher-in-the-rye {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        height: 100%;
+        width: 100%;
+        z-index: 2000;
+    }
+
+    &.position-fixed {
+        position: fixed;
+    }
+
+    &.menu-expanded {
+        left: pxtoem($MOBILE_MENU_WIDTH);
+    }
+
+    #main-overlay {
+        margin-top: pxtoem($COMMON_HEADER_HEIGHT + $CONTENT_TOP_MARGIN);
+        //padding-bottom: pxtoem($COMMON_HEADER_FOOTER_HEIGHT + 10);
+
+        &.pdp {
+            padding-bottom: 0;
+
+            @include mq-medium-pdp-cascade {
+                margin-top: 0;
+            }
+        }
+
+        &.no-top-margin {
+            margin-top: pxtoem($COMMON_HEADER_HEIGHT);
+
+            @include mq-medium-cascade {
+                margin-top: 0;
+            }
+        }
+
+        @include mq-medium-cascade {
+            margin-top: 0;
+        }
+    }
+
+    #overlay-area {
+    	$opacity: 0.8;
+        display: none;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background: $CONVERSE_COLOR_1;
+        z-index: 9999;
+        @include opacity($opacity);
+    }
+}
+
+#threshold-detection {
+    display: none;
+
+    @media screen and (max-width:pxtoembase($THRESHOLD_XLARGE,$THRESHOLD_BASE_PX)){
+        width: $THRESHOLD_XLARGE + px;
+    }
+
+    @media screen and (max-width:pxtoembase($THRESHOLD_LARGE,$THRESHOLD_BASE_PX)){
+        width: $THRESHOLD_LARGE + px;
+    }
+
+    @media screen and (max-width:pxtoembase($THRESHOLD_MEDIUM_A,$THRESHOLD_BASE_PX)){
+        width: $THRESHOLD_MEDIUM_A + px !important;
+    }
+
+    @media screen and (max-width:pxtoembase($THRESHOLD_MEDIUM,$THRESHOLD_BASE_PX)){
+        width: $THRESHOLD_MEDIUM + px !important;
+    }
+
+}
+
+#main-title{
+    padding-bottom: 0.2em;
+    @include clearfix;
+
+    @include mq-small {
+        padding-bottom: 1.2em;
+        text-align: center;
+    }
+}
+
+#main-title > h1{
+    font-size: 2.35em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    float: left;
+}
+
+.primary-focus, .converse-tabs.standard-content-container {
+	max-width: pxtoem($CONTENT_MAX_WIDTH_LARGE);
+	margin: 0px auto;
+
+	@include mq-medium-cascade {
+		max-width: pxtoem($CONTENT_MAX_WIDTH_MEDIUM);
+	}
+	@include mq-medium-a-cascade {
+		padding: pxtoem(20);
+	}
+	@include mq-small {
+		padding: 0;
+	}
+
+	.primary-content {
+		border:0 none;
+		float:left;
+		margin:0;
+		width:100%;
+
+		h1 {
+			font-size: pxtoem(38);
+			font-weight: bold;
+
+			@include mq-medium-cascade {
+				text-align: center;
+			}
+		}
+
+		@include mq-medium-a-cascade {
+			width: 98%;
+		}
+	}
+
+	#secondary {
+		background: $COMMON_HIGHLIGHT_COLOR;
+		float: right;
+		width: 25%;
+
+		@include mq-small() {
+			width: 100%;
+			float: none;
+		}
+	}
+}
+.full-width .primary-content{
+    border: 0 none;
+    width: 100%;
+}

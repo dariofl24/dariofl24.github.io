@@ -1,0 +1,26 @@
+<isif condition="${pdict.CurrentHttpParameterMap.redirect.booleanValue}">
+    <isredirect location="${URLUtils.http('Home-Show')}"/>
+</isif>
+
+<iscache type="relative" hour="24"/>
+<isstatus value="404">
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>${Resource.msg('redirecterror.title','error',null)}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Robots" content="noindex, nofollow" />
+    <link rel="stylesheet" type="text/css" href="/waroot/style.css">
+</head>
+
+<body>
+    <div id="container">
+        <h1><isprint value="${Resource.msg('redirecterror.message.main','error',null)}" encoding="off"/></h1>
+        <p class="dont-worry"><isprint value="${Resource.msg('redirecterror.message.secondary','error',null)}" encoding="off"/></p>
+        <p class="head-back"><isprint value="${Resource.msgf('redirecterror.message.headback','error',null,  dw.web.URLUtils.http('Home-Show'))}" encoding="off"/></p>
+    </div>
+    <!-- TEALIUM FOOTER CODE -->
+    <isinclude template="tealium/tealium_footer_code"/>
+</body>
+</html>

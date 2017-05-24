@@ -1,0 +1,129 @@
+/**
+ * @input Unit: Object
+ */
+ 
+importPackage(dw.value)
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("module_test:Framework/Unit.ds"); 
+importScript("module_test:Framework/Assert.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_builder:utils/BuilderUtils.ds");
+
+function execute(args: PipelineDictionary) : Number {
+    let BUILDER = integration.builder;
+    let UTILS = BUILDER.utils;
+    
+     args.Unit.describe("BuilderUtils")
+    .test("BuilderUrlUtils.extractPidFromUrl where url contains pid", function() {
+           let result = UTILS.BuilderUtils.extractPidFromUrl("http://dev09.store.converse.demandware.net/on/demandware.store/Sites-converse-Site/default/Product-Show?pid=127201C&enableBuilder=true");
+            
+            Assert.isTrue( result == "127201C", "pid exists into the URL an it was not extracted successfully" );
+    })
+    .test("BuilderUrlUtils.extractPidFromUrl where url contains pid as the last parm of the url", function() {
+            let result = UTILS.BuilderUtils.extractPidFromUrl("http://dev09.store.converse.demandware.net/on/demandware.store/Sites-converse-Site/default/Product-Show?enableBuilder=true&pid=127201C");
+            
+            Assert.isTrue( result == "127201C", "pid exists into the URL an it was not extracted successfully" );
+    })
+    .test("BuilderUrlUtils.extractPidFromUrl where url does not contain pid", function() {
+            let result = UTILS.BuilderUtils.extractPidFromUrl("http://dev09.store.converse.demandware.net/on/demandware.store/Sites-converse-Site/default/Product-Show?enableBuilder=true");
+            
+            Assert.isTrue( empty(result), "pid should not exist into the URL" );
+    })
+    .test("BuilderUrlUtils.getHTMLBuilderFrameUtilsUrl is properly generated", function() {
+            let getConfigurationOriginal = UTILS.BuilderUtils.getConfiguration;
+            let getDomainOriginal = UTILS.BuilderUtils.getDomain;
+            
+            UTILS.BuilderUtils.getConfiguration = function()
+            {
+                return {
+                    "nikeidDomain" : "nikeid.nike.com",
+                    "htmlbuilder_frameUtilUrlPattern" : "http://{0}/custom-builder/builder/FrameUtil.js?client=converse&referrer={1}"
+                };
+            };
+            
+            UTILS.BuilderUtils.getDomain = function()
+            {
+                return "converse.com";
+            };
+            
+            
+            let result = UTILS.BuilderUtils.getHTMLBuilderFrameUtilsUrl();
+            Assert.isTrue( result == "http://nikeid.nike.com/custom-builder/builder/FrameUtil.js?client=converse&referrer=converse.com", "FrameUtilsUrl was not properly generated." );
+        
+            UTILS.BuilderUtils.getConfiguration = getConfigurationOriginal;
+            UTILS.BuilderUtils.getDomain = getDomainOriginal;
+    })
+    .test("BuilderUrlUtils.getHTMLBuilderIFrameUrl is properly generated", function() {
+            let getConfigurationOriginal = UTILS.BuilderUtils.getConfiguration;
+            let getDomainOriginal = UTILS.BuilderUtils.getDomain;
+            
+            UTILS.BuilderUtils.getConfiguration = function()
+            {
+                return {
+                    "nikeidDomain" : "nikeid.nike.com",
+                    "htmlbuilder_iframeUrlPattern" : "http://{0}/custom-builder/builder/product.html?referrer={1}&client=converse&country={2}&lang_locale={3}&pathName={4}&mid={5}&debug=true"
+                };
+            };
+            
+            UTILS.BuilderUtils.getDomain = function()
+            {
+                return "converse.com";
+            };
+            
+            let result2 = UTILS.BuilderUtils.getHTMLBuilderIFrameUrl("123456","54321","en_DE");
+            Assert.isTrue( result2 == "http://nikeid.nike.com/custom-builder/builder/product.html?referrer=converse.com&client=converse&country=DE&lang_locale=en_DE&pathName=123456&mid=54321&debug=true", "iFrameUrl was not properly generated with parameterized locale." + result2 );
+            
+            UTILS.BuilderUtils.getConfiguration = getConfigurationOriginal;
+            UTILS.BuilderUtils.getDomain = getDomainOriginal;
+    })
+    .test("BuilderUrlUtils.getPosterServiceUrl is properly generated", function() {
+            let getConfigurationOriginal = UTILS.BuilderUtils.getConfiguration;
+            let getDomainOriginal = UTILS.BuilderUtils.getDomain;
+            
+            UTILS.BuilderUtils.getConfiguration = function()
+            {
+                return {
+                    "nikeidDomain" : "nikeid.nike.com",
+                    "posterServiceUri" : "/poster/service?"
+                };
+            };
+            
+            let result = UTILS.BuilderUtils.getPosterServiceUrl("size=1920,1200");
+            Assert.isTrue( result == "//nikeid.nike.com/poster/service?size=1920,1200", "Poster service URL was not properly generated." + result );
+         
+            UTILS.BuilderUtils.getConfiguration = getConfigurationOriginal;
+            UTILS.BuilderUtils.getDomain = getDomainOriginal;
+    })
+    .test("BuilderUrlUtils.getBuilderLocaleByLocale is properly mapped", function() {
+            
+            Assert.areEqual( "de_DE",  UTILS.BuilderUtils.getBuilderLocaleByLocale("de_DE"));
+            Assert.areEqual( "en_GB",  UTILS.BuilderUtils.getBuilderLocaleByLocale("en_GB"));
+            Assert.areEqual( "en_GB",  UTILS.BuilderUtils.getBuilderLocaleByLocale("en_FI"));
+            Assert.areEqual( "en_GB",  UTILS.BuilderUtils.getBuilderLocaleByLocale("en_IE"));
+            Assert.areEqual( "en_GB",  UTILS.BuilderUtils.getBuilderLocaleByLocale("en_DK"));
+         
+    })
+    .test("BuilderUrlUtils.getBuilderCountryByLocale is properly mapped", function() {
+            
+            Assert.areEqual( "DE",  UTILS.BuilderUtils.getBuilderCountryByLocale("de_DE"));
+            Assert.areEqual( "GB",  UTILS.BuilderUtils.getBuilderCountryByLocale("en_GB"));
+            Assert.areEqual( "FI",  UTILS.BuilderUtils.getBuilderCountryByLocale("en_FI"));
+            Assert.areEqual( "IE",  UTILS.BuilderUtils.getBuilderCountryByLocale("en_IE"));
+            Assert.areEqual( "DK",  UTILS.BuilderUtils.getBuilderCountryByLocale("en_DK"));
+            Assert.areEqual( "ES",  UTILS.BuilderUtils.getBuilderCountryByLocale("es_PT"));
+            Assert.areEqual( "ES",  UTILS.BuilderUtils.getBuilderCountryByLocale("en_PT"));
+            Assert.areEqual( "DE",  UTILS.BuilderUtils.getBuilderCountryByLocale("en_AT"));
+            Assert.areEqual( "DE",  UTILS.BuilderUtils.getBuilderCountryByLocale("de_AT"));
+            Assert.areEqual( "FR",  UTILS.BuilderUtils.getBuilderCountryByLocale("en_LU"));
+            Assert.areEqual( "FR",  UTILS.BuilderUtils.getBuilderCountryByLocale("fr_LU"));
+         
+    });
+
+    return PIPELET_NEXT;
+}

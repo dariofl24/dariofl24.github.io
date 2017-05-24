@@ -1,0 +1,80 @@
+@import "_constants";
+@import "_helper_functions";
+@import "compass/css3/opacity";
+@import "compass/css3/transform";
+
+%tooltip {
+	outline: none;
+
+	&:before {
+		content:attr(tooltip);
+		color:$CONVERSE_COLOR_5;
+		height: auto;
+		min-height: 5.2em;
+		background:$CONVERSE_COLOR_12;
+		border:1px solid $CONVERSE_COLOR_5;
+		float: left;
+		margin-top: -2em;
+		margin-left: 2.6em;
+		min-width: 22em;
+		overflow: hidden;
+		@include opacity(0);
+		visibility:hidden;
+		line-height: 1.3em;
+		padding: 0 .8em 0 .8em;
+		text-align:left;
+		
+		@include mq-small() {
+			margin-top: 2.6em;
+			width: auto;
+			display: block;
+			left: 0px;
+			position: absolute;
+			padding: .8em;
+		}
+	}
+
+	&:after {
+		@include rotate(-45deg);
+		content:" ";
+		background:$CONVERSE_COLOR_12;
+		border-top:1px solid $CONVERSE_COLOR_5;
+		border-left:1px solid $CONVERSE_COLOR_5;
+		height: 1.2em;
+		width: 1.2em;
+		float: left;
+		margin-top: -3.4em;
+		margin-left: 2em;
+		@include opacity(0);
+		visibility:hidden;
+
+		@include mq-small() {
+			@include rotate(45deg);
+			margin-top: 1.3em;
+			margin-left:0;
+		}
+	}
+	
+	&:hover:after, &:hover:before, &:focus:after, &:focus:before  {
+		visibility:visible;
+		@include opacity(1);
+	}
+}
+
+@mixin question-tooltip($color:$CONVERSE_COLOR_5) {
+	@include badge_background($color, 1.5em);
+	color:$CONVERSE_COLOR_12;
+	cursor:pointer;
+	float: right;
+	margin-top: -.7em;
+	@extend %tooltip;
+	span {
+		margin-top: -2.5em;
+		float: right;
+		margin-right: .5em;
+		
+		@include mq-small() {
+			margin-top: .7em;
+		}
+	}
+}

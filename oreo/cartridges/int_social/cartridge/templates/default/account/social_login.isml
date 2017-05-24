@@ -1,0 +1,25 @@
+<iscomment>
+    Contains the login module template
+</iscomment>
+
+<isset name="sitePrefs" value="${dw.system.Site.current.preferences.custom}" scope="page"/>
+<script type="text/javascript" src="${URLUtils.staticURL('/js/Social.Gigya.Login.js')}"></script>
+<script type="text/javascript">
+    new Social.Gigya.Login('${!empty(pdict.moduleid)?pdict.moduleid:''}');
+</script>
+<div class="gigyaLoginParent">
+    <div class="title-text">${Resource.msg('global.account.login.with', 'locale', null)}</div>
+    <div id="divGigyaLoginParams${(!empty(pdict.moduleid)?pdict.moduleid:'')}">
+        <input type="hidden" id="txtGigyaLoginHeight" value="${!empty(pdict.height)?pdict.height:''}" />
+        <input type="hidden" id="txtGigyaLoginWidth" value="${!empty(pdict.width)?pdict.width:''}" />
+        <input type="hidden" id="txtGigyaLoginButtonStyle" value="${!empty(pdict.buttonstyle)?pdict.buttonstyle:sitePrefs.gigya_loginButtonStyle}" />
+        <input type="hidden" id="txtGigyaLoginButtonSize" value="${!empty(pdict.buttonsize)?pdict.buttonsize:sitePrefs.gigya_loginButtonSize}" />
+        <input type="hidden" id="txtGigyaLoginShowHeader" value="${!empty(pdict.showheader)?pdict.showheader:''}" />
+        <input type="hidden" id="txtGigyaLoginShowTerms" value="${!empty(pdict.showterms)?pdict.showterms:sitePrefs.gigya_loginShowTerms}" />
+        <input type="hidden" id="txtGigyaActive" value="${sitePrefs.gigya_socialsignon}" />
+        <input type="hidden" id="txtGigyaLoggedIn" value="${pdict.CurrentSession.custom.loggedInWithGigya}" />
+        <input type="hidden" id="txtGigyaLoginProviders" value="${!empty(pdict.providers)?pdict.providers:sitePrefs.gigya_loginProviders.join(',')}" />
+        <input type="hidden" id="txtGigyaLoginContainer" value="${!empty(pdict.container)?pdict.container:''}" />
+    </div>
+    <div id="gigyaLoginContainer${(!empty(pdict.moduleid)?pdict.moduleid:'')}">${Resource.msg('gigya.login.loadingText','gigya','')}</div>
+</div>

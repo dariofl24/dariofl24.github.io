@@ -1,0 +1,11 @@
+*** Settings ***
+Documentation   Verifies PDP Page base attributes and behavior
+Test Teardown   Close All Browsers
+Force Tags      Regression  ShortReg  beforeRGA  US  Production
+Resource        common.txt
+Resource        site_declarations.txt
+Resource        pdp_declarations.txt
+
+*** Test Cases ***
+Verify PDP Swatches and Sizes
+  Select an Specific Product and Navigate to PDP Page

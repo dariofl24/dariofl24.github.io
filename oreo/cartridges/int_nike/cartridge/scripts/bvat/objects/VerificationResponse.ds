@@ -1,0 +1,29 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("int_nike:bvat/objects/AbstractBvatResponse.ds");
+
+(function() {
+
+    var NS = integration.nike.bvat.objects; 
+    
+    var VerificationResponse = NS.AbstractBvatResponse.extend({
+        
+        processResponse: function() {
+            this._super();
+            this._setBvatID();
+        },
+        
+        _setBvatID: function() {
+            this.bvatID = this.response.child("id").valueOf().toString();
+        },
+        
+        getBvatID: function() : String {
+            return this.bvatID;
+        }
+    });
+
+    Namespace.extend(NS, { VerificationResponse: VerificationResponse });
+
+})();

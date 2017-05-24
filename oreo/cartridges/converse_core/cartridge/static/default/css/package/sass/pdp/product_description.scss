@@ -1,0 +1,108 @@
+@import "_constants";
+@import "_media_query";
+@import "compass/css3/border-radius";
+
+.pdp-main {
+    .product-description {
+        text-align: center;
+        font-family: $CONVERSE_FONT_FAMILY_PDP;
+        padding-bottom: pxtoem(105);
+        border-bottom: pxtoem(1) solid $CONVERSE_COLOR_PDP_2;
+
+        .product-promo {
+            background-color: $CONVERSE_COLOR_PDP_1;
+            width: 100%;
+
+            p {
+                color: $CONVERSE_COLOR_12;
+                font-size: pxtoem(17);
+                text-align: center;
+                padding-top: pxtoem(20);
+                padding-bottom: pxtoem(20);
+
+                .item {
+                    text-decoration: underline;
+                }
+
+                .promo {
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+            }
+        }
+
+        header {
+            max-width: 70%;
+            margin: 0 auto;
+
+            h1 {
+                font-size: pxtoem(30);
+                font-weight: 800;
+                line-height: 1.333;
+                margin-top: pxtoem(50);
+            }
+        }
+
+        p {
+            font-size: pxtoem(16);
+            line-height: 2.125;
+            padding-top: pxtoem(20);
+            margin: 0 auto;
+            max-width: 70%;
+
+            &.aside {
+                font-size: pxtoem(12);
+                line-height: 1.83;
+                max-width: pxtoem(450);
+                color: $CONVERSE_COLOR_PDP_1;
+
+                &.materials {
+                    font-weight: bold;
+                    letter-spacing: pxtoem(0.5);
+                    word-spacing: pxtoem(3);
+
+                    span {
+                        &:after {
+                            content: " / ";
+                        }
+
+                        &:last-child:after {
+                            content: "";
+                        }
+                    }
+                }
+            }
+        }
+
+        .divider {
+            width: pxtoem(50);
+            height: 0;
+            margin: pxtoem(18) auto 0;
+            border-bottom: 1px solid $CONVERSE_COLOR_PDP_2;
+        }
+
+        .divider-wide {
+            width: auto;
+            height: 0;
+            margin: pxtoem(18) auto 0;
+            border-bottom: 1px solid $CONVERSE_COLOR_PDP_2;
+        }
+
+        img {
+            margin-top: pxtoem(16);
+            width: pxtoem(65);
+        }
+
+        @include mq-large-pdp {
+            padding-left: pxtoem(380);
+        }
+    }
+
+    .pdp-content-asset {
+        border-bottom: pxtoem(1) solid $CONVERSE_COLOR_PDP_2;
+
+        @include mq-large-pdp {
+            padding-left: pxtoem(380);
+        }
+    }
+}

@@ -1,0 +1,33 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_conv_mixins";
+@import "_media_query";
+@import "_sprites";
+@import "compass/css3/opacity";
+
+#hero-slot, .hero-slot {
+
+    div.hero-slideshow-small-container {
+        display: none;
+
+        @include mq-small() {
+            display: block;
+        }
+        
+        div.bx-pager.bx-default-pager{
+        	position: relative;
+            top: -50px;
+        }
+        
+        div.bx-wrapper{
+        	margin-bottom: 0px;
+        	height: 100%;
+        	
+        	.bx-controls{
+        		height: 0px;
+        	}
+        	
+        }
+        
+    }
+}

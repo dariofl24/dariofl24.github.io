@@ -1,0 +1,20 @@
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:util/LocaleInfo.ds");
+importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+
+function isPickUpPointEnabled(currentRequest : dw.system.Request) : Boolean {
+	
+	var currentCountry = converse.utils.getCurrentCountryCode(currentRequest);
+	
+	if(currentCountry == 'AT' || currentCountry == 'LU'){
+		return false;
+	}
+	
+	var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+	var isPickupPointEnabled = FeatureToggleService.isFeatureEnabled("pickup-point");
+	
+	return isPickupPointEnabled;
+}

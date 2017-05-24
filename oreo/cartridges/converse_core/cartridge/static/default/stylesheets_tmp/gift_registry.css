@@ -1,0 +1,130 @@
+/* constants file for scss variable values */
+/* gift registry */
+/* ------------------------------------- */
+/* line 6, ../css/package/sass/gift_registry.scss */
+.pt_gift-registry .create-new-registry {
+  margin: 1em 0;
+}
+
+/* line 7, ../css/package/sass/gift_registry.scss */
+.pt_gift-registry .create-new-registry button {
+  float: left;
+  margin-right: 2em;
+}
+
+/* line 8, ../css/package/sass/gift_registry.scss */
+.pt_gift-registry .create-new-registry p {
+  font-family: Gorgia;
+  font-size: 1.3em;
+  font-style: italic;
+  margin: 0;
+  padding: 0.5em 2em;
+}
+
+/* line 9, ../css/package/sass/gift_registry.scss */
+.pt_gift-registry .add-gift-cert {
+  border: 1px solid #F5F5F1;
+  margin-bottom: -1px;
+  overflow: auto;
+  padding: 10px;
+}
+
+/* line 10, ../css/package/sass/gift_registry.scss */
+.pt_gift-registry .add-gift-cert button {
+  background: url('../images/banners/banner-gift-cert.gif?1472148727') no-repeat scroll left top transparent;
+  border: 0 none;
+  float: left;
+  height: 80px;
+  text-indent: -999em;
+  width: 433px;
+}
+
+/* line 11, ../css/package/sass/gift_registry.scss */
+.pt_gift-registry .add-gift-cert p {
+  color: #808080;
+  float: right;
+  font-style: italic;
+  line-height: 1.5em;
+  width: 40%;
+}
+
+/* line 12, ../css/package/sass/gift_registry.scss */
+.pt_gift-registry .list-table-header {
+  background: url('../images/sprites_site_graphic-s175b47e9fb.png') 0 -57px repeat-x scroll left top #F5F5F1;
+  overflow: hidden;
+  padding: 2em;
+}
+
+/* line 17, ../css/package/sass/gift_registry.scss */
+.pt_gift-registry .hdr-options {
+  width: 5%;
+}
+
+/* line 18, ../css/package/sass/gift_registry.scss */
+.page-content-tab-navigaton button {
+  background: none repeat scroll 0 0 #D9D9D9;
+  border-color: #F5F5F1;
+  border-width: 1px;
+  color: #808080;
+  font-family: Georgia,serif;
+  font-size: 1.1em;
+  font-style: italic;
+  font-weight: 400;
+  margin: 0 0 -1px;
+}
+
+/* line 19, ../css/package/sass/gift_registry.scss */
+.page-content-tab-navigaton button.selected {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border-bottom: 1px solid #FFFFFF;
+}
+
+/* line 20, ../css/package/sass/gift_registry.scss */
+.page-content-tab-wrapper {
+  border: 1px solid #F5F5F1;
+  padding: 5px;
+}
+
+/* line 21, ../css/package/sass/gift_registry.scss */
+.gift-reg-purchases .item-purchased-by dd {
+  float: left;
+  font-weight: bold;
+  margin: 0 1em 0 0;
+  position: relative;
+  width: auto;
+}
+
+/* line 22, ../css/package/sass/gift_registry.scss */
+.gift-reg-purchases .item-purchased-by dt {
+  clear: both;
+  float: left;
+  margin: 0 1em 0 0;
+  position: relative;
+  width: auto;
+}
+
+/* line 23, ../css/package/sass/gift_registry.scss */
+.gift-reg-purchases .quantity-purchased {
+  color: #990000;
+}
+
+/* line 24, ../css/package/sass/gift_registry.scss */
+.gift-registry-advanced {
+  clear: both;
+}
+
+/* line 25, ../css/package/sass/gift_registry.scss */
+.gift-registry-advanced .toggle-content {
+  overflow: hidden;
+  padding: 10px;
+}
+
+/* line 26, ../css/package/sass/gift_registry.scss */
+.gift-registry-advanced .event-month {
+  clear: both;
+}
+
+/* line 27, ../css/package/sass/gift_registry.scss */
+.gift-registry-advanced .event-city {
+  clear: both;
+}

@@ -1,0 +1,3 @@
+<isdecorate template="components/brandsegments/pt_singlebrandsegment">
+    <isinclude template="components/brandsegments/categorylandingpages/page13/singletout1"/>  
+</isdecorate>

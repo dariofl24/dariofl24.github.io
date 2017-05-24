@@ -1,0 +1,36 @@
+/*
+ * @input Customer: dw.customer.Customer
+ * @input Address: dw.customer.CustomerAddress
+ */
+importPackage(dw.system);
+
+function execute(args: PipelineDictionary) : Number
+{
+	let customer = args.Customer;
+	let removedAddress = args.Address;
+	let addressBook: dw.customer.AddressBook = customer.profile.addressBook;
+	let currentPreferredAddress = addressBook.getPreferredAddress();
+	
+	if (currentPreferredAddress != null && currentPreferredAddress.ID == removedAddress.ID) {
+		let addresses = addressBook.addresses;
+		if (addresses.length < 2) {
+			return PIPELET_NEXT;
+		}
+	
+		let preferedAddress = null;
+		for each(let address in addresses) {
+			if (address.ID == removedAddress.ID) {
+				continue;
+			}
+	
+			preferedAddress = address;
+			break;
+		}
+	
+		if (preferedAddress != null) {
+			addressBook.setPreferredAddress(preferedAddress);
+		}
+	}
+	
+	return PIPELET_NEXT;
+}

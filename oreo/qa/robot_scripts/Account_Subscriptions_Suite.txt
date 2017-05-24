@@ -1,0 +1,24 @@
+*** Settings ***
+Documentation   Verifies Account Subscriptions functionality
+Suite Setup     Open My Profile
+Suite Teardown  Close All Browsers
+Force Tags      AccountSettings  Regression  Production
+Resource        account_settings_definitions.txt
+
+*** Test Cases ***
+As a customer I can subscribe to all channels
+  Click Subscriptions
+  Select All Subscriptions
+
+As a customer I can subscribe to All News from Converse
+  Click Subscriptions
+  Test Specific Subscriptions  1  2  3
+
+As a customer I can subscribe to Retail Updates
+  [Tags]  ShortReg
+  Click Subscriptions
+  Test Specific Subscriptions  2  1  3
+
+As a customer I can subscribe to Outlet Updates
+  Click Subscriptions
+  Test Specific Subscriptions  3  1  2

@@ -1,0 +1,46 @@
+importPackage(dw.system);
+importPackage(dw.util);
+importScript("converse_core:constants.ds");
+
+var Utils = function(){}
+
+Utils.addCustomSetOfStringValue = function(object : Object, customAttributeName: String, value : String) {
+    var valueArr : Array;
+    if (customAttributeName in object.custom) {
+        valueArr = object.custom[customAttributeName];
+        if (valueArr.indexOf(value) < 0) {
+            valueArr = valueArr.concat(value);
+        }
+    }
+    else {
+        valueArr = new Array(value);
+    }
+    
+    object.custom[customAttributeName] = valueArr;
+};
+
+Utils.isProductionOrStagingSystem = function(  ) {
+    
+    
+    if( dw.system.System.getInstanceType() === dw.system.System.PRODUCTION_SYSTEM 
+        && dw.system.System.getInstanceType() != dw.system.System.STAGING )
+    {
+        return true;  
+    }
+    
+    return false;
+};
+
+Utils.normalizeOrderId = function( orderId : String ) {
+	
+	var normalizedOrderId = orderId;
+	
+    if( !Utils.isProductionOrStagingSystem() && !empty(orderId) )
+    {
+        var pad = converse.constants.OrderSequenceNumberPattern.Sandbox;
+        normalizedOrderId = pad.substring(0, pad.length - orderId.length) + orderId    	
+    }
+        
+    return normalizedOrderId;
+};
+

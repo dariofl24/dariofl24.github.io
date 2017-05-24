@@ -1,0 +1,94 @@
+<isscript>
+    importScript("util/ViewHelpers.ds");
+</isscript>
+
+<isif condition="${empty(pdict.VariantToDisplay)}">
+    <isset name="PriceProduct" value="${pdict.Product}" scope="page"/>
+<iselse>
+    <isset name="PriceProduct" value="${pdict.VariantToDisplay}" scope="page"/>
+</isif>
+
+<isset name="PriceModel" value="${PriceProduct.getPriceModel()}" scope="page"/>
+
+<isinclude template="product/components/standardprice"/>
+
+<isset name="PriceTable" value="${PriceModel.getPriceTable()}" scope="page"/>
+<isset name="SalesPrice" value="${PriceModel.getPrice()}" scope="page"/>
+<isset name="BasePriceQuantity" value="${PriceModel.getBasePriceQuantity()}" scope="page"/>
+<isset name="ShowStandardPrice" value="${StandardPrice.available && SalesPrice.available && StandardPrice.compareTo(SalesPrice) == 1}" scope="page"/>
+<isset name="currencyCode" value="${dw.system.Site.getCurrent().currencyCode}" scope="page"/>
+
+<isset name="promos" value="${dw.campaign.PromotionMgr.activeCustomerPromotions.getProductPromotions(PriceProduct)}" scope="page"/>
+<isset name="PromotionalPrice" value="${dw.value.Money.NOT_AVAILABLE}" scope="page"/>
+<isset name="isPromoPrice" value="${false}" scope="page"/>
+
+<isif condition="${! empty(promos)}">
+    <isloop items="${promos}" var="promo">
+        <isif condition="${promo.getPromotionClass() != null && promo.getPromotionClass().equals(dw.campaign.Promotion.PROMOTION_CLASS_PRODUCT)}">
+            <isif condition="${empty(pdict.p_productli)}">
+                <isset name="PromotionalPrice" value="${promo.getPromotionalPrice(PriceProduct)}" scope="page"/>
+            <iselse>
+                <isset name="lineItem" value="${pdict.p_productli}" scope="page" />
+                <isset name="PromotionalPriceForItem" value="${productLineItem.getAdjustedPrice()}" scope="page"/>
+                <isset name="PromotionalPrice" value="${PromotionalPriceForItem.divide(lineItem.getQuantityValue())}" scope="page"/>
+            </isif>
+        </isif>
+        <isbreak/>
+    </isloop>
+    <isif condition="${PromotionalPrice.available && SalesPrice.compareTo(PromotionalPrice) != 0}">
+        <isset name="ShowStandardPrice" value="${true}" scope="page"/>
+        <isset name="StandardPrice" value="${SalesPrice}" scope="page"/>
+        <isset name="SalesPrice" value="${PromotionalPrice}" scope="page"/>
+        <isset name="isPromoPrice" value="${true}" scope="page"/>
+    </isif>
+</isif>
+    
+<div class="product-price">
+    <isif condition="${ShowStandardPrice}">
+        <span class="price-sales strike"><isif condition="${StandardPrice.valueOrNull != null && StandardPrice.valueOrNull > 0}"><isprint value="${StandardPrice}" /><iselse>${Resource.msg('pricing.noprice','product',null)}</isif></span>
+        <span class="price-sales red"><isif condition="${(SalesPrice.valueOrNull != null && SalesPrice.valueOrNull > 0) || isPromoPrice}"><isprint value="${SalesPrice}" /><iselse>${Resource.msg('pricing.noprice','product',null)}</isif></span>
+    <iselse>
+        <span class="price-sales"><isif condition="${(SalesPrice.valueOrNull != null && SalesPrice.valueOrNull > 0) || isPromoPrice}"><isprint value="${SalesPrice}" /><iselse>${Resource.msg('pricing.noprice','product',null)}</isif></span>
+    </isif>
+    <isif condition="${isSite('DE') && !empty(pdict.p_productli)}">
+        <div class="tax-info">
+	        <span class="tax-label">${Resource.msg('orderpreview.tax','checkout',null)}</span>
+		    <span class="tax"><isprint value="${pdict.p_productli.getTax()}"/></span>
+	    </div>
+    </isif>
+
+    <isset name="displayPrice" value="${(SalesPrice.valueOrNull != null && SalesPrice.valueOrNull > 0) ? SalesPrice : new dw.value.Money(0, currencyCode)}" scope="pdict"/> 
+
+    <isif condition="${typeof showTieredPrice !== 'undefined' && showTieredPrice == true}">
+        <isset name="scaledPriceTagOpened" value="${false}" scope="page"/>
+
+        <isloop iterator="${PriceTable.getQuantities()}" var="Quantity" status="pricingloopstatus">
+            <isif condition="${Quantity.compareTo(BasePriceQuantity) != 0}">
+                <isif condition="${pricingloopstatus.getIndex() == 1}">
+                    <isset name="scaledPriceTagOpened" value="${true}" scope="page"/>
+                    <div class="price-tiered">
+                        <isif condition="${PriceTable.getPercentage(Quantity) > 0}">
+                            ${Resource.msg('pricing.payless','product',null)}
+                        <iselse>
+                            ${Resource.msg('pricing.paymore','product',null)}
+                        </isif>
+                </isif>
+
+                <isset name="NextQuantity" value="${PriceTable.getNextQuantity(Quantity)}" scope="page"/>   
+            <div class="price-tiered-values">
+                    <isif condition="${NextQuantity != null}">
+                        <isprint value="${Quantity}" formatter="#"/><isif condition="${Quantity != NextQuantity.getValue()-1}"><span class="divider">${Resource.msg('global.symbol.dash','global',null)}</span><isprint value="${NextQuantity.getValue()-1}" formatter="#"/></isif> ${Resource.msg('pricing.items','product',null)}                     
+                    <iselse>
+                        <isprint value="${Quantity}" formatter="#"/> ${Resource.msg('pricing.more','product',null)}                     
+                    </isif>
+                    <isprint value="${PriceTable.getPrice(Quantity)}"/>
+                    (<isif condition="${ShowStandardPrice}"><isprint value="${PriceTable.getPrice(Quantity).percentLessThan(StandardPrice)}" formatter="#"/><iselse><isprint value="${PriceTable.getPercentage(Quantity)}" formatter="#"></isif>${Resource.msg('pricing.off','product',null)})
+                </div>
+            </isif>
+        </isloop>
+        <iscomment> make sure, we close our tags, if opened </iscomment>
+        <isif condition="${scaledPriceTagOpened}">          
+            </div>
+        </isif>
+    </isif>
+</div>

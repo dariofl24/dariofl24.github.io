@@ -1,0 +1,168 @@
+/**
+* Import NikeOMS requests
+*
+* @input ImportFile : dw.io.File The file to import
+*
+* @output ErrorMsg : String The error message if any
+*/
+importPackage(dw.io);
+importPackage(dw.object);
+importPackage(dw.order);
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:util/ViewHelpers.ds");
+importScript("custom/libCsvHelper.ds");
+importScript("custom/libUtils.ds");
+
+var logger : Logger = Logger.getLogger('NikeOMSRequestsImport');
+
+function execute(args : PipelineDictionary) : Number
+{
+    var importFile : File = args.ImportFile;
+
+    var errorMsg : String = null;
+    try {
+        importRecords(importFile);
+    }
+    catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+
+    args.ErrorMsg = errorMsg;
+
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function importRecords(importFile : File) {
+    var propertyToColumnMap : Map = getPropertyToColumnMap();
+    var stateNameToIDMap : Map = getStateNameToIDMap();
+
+    var csvHelper = new CsvHelper({ failOnMissingColumn : true });
+
+    csvHelper.streamCsvFile(importFile,
+                            0,
+                            function(headerLine : Array, line : Array, index : Number, isHeader : Boolean) {
+                                if (isHeader) return;
+
+                                var record = csvHelper.lineToObject(headerLine, line, propertyToColumnMap);
+                                prepareRecord(record, stateNameToIDMap);
+                                importRecord(record);
+                            });
+}
+
+function getPropertyToColumnMap() : Map {
+    var map : Map = new HashMap();
+    map.put("packageID", "package_id");
+    map.put("carrierID", "carrier_id");
+    map.put("orderID", "order_id");
+    map.put("shipGroupID", "ship_group_id");
+    map.put("oldState", "item_old_state");
+    map.put("newState", "item_new_state");
+    map.put("timestamp", "item_timestamp");
+
+    return map;
+}
+
+function getStateNameToIDMap() : Map {
+    var map : Map = new HashMap();
+
+    var iter : SeekableIterator = null;
+    try {
+        iter = CustomObjectMgr.getAllCustomObjects("NikeOrderState");
+        while (iter.hasNext()) {
+            var state : CustomObject = iter.next();
+            map.put(state.custom.name, state.custom.ID);
+        }
+    }
+    finally {
+        if (iter) {
+            iter.close();
+        }
+    }
+
+    return map;
+}
+
+function getMetricID(shipGroupID : String) : String {
+    let result = shipGroupID;
+    let index = shipGroupID.indexOf('_');
+
+    if (index !== -1) {
+        result = shipGroupID.substring(0, index);
+    }
+
+    return result;
+}
+
+function prepareRecord(record : Object, stateNameToIDMap : Map) {
+    record.metricID = getMetricID(record.shipGroupID);
+    record.oldStateID = stateNameToIDMap.get(record.oldState);
+    record.newStateID = stateNameToIDMap.get(record.newState);
+
+    delete record.shipGroupID;
+    delete record.oldState;
+    delete record.newState;
+}
+
+function importRecord(record : Object) : Boolean {
+    var order : Order;
+    var idType, query;
+
+    var normalizedOrderID = Utils.normalizeOrderId( record.orderID );
+    
+    if (isSite('US')) {
+    	idType = "DYO INVOICE";
+		order = OrderMgr.queryOrder("custom.dyoInvoiceNumber = {0}", normalizedOrderID);
+    } else {
+        idType = "ORDER";
+        try{
+            order = OrderMgr.queryOrder("orderNo = {0}", normalizedOrderID);
+        }catch(e)
+        {
+            logger.error(StringUtils.format("Issues querying the Order with number{0}. Error: {1}", normalizedOrderID, e );
+            return false;
+        }
+    }
+    
+	if (empty(order)) {
+		logger.debug(StringUtils.format("No order found on {2} site for {0} number: {1}", idType, normalizedOrderID, Site.getCurrent().getID()));
+		return false;
+	}
+	
+    var productLineItem : ProductLineItem = findProductLineItemForMetricID(order, record.metricID);
+
+    if (empty(productLineItem)) {
+        logger.error(StringUtils.format("No product line item found for invoice number: {0} and metric ID: {1}", normalizedOrderID, record.metricID));
+        return false;
+    }
+    else {
+        var status : String = JSON.stringify(record);
+        Utils.addCustomSetOfStringValue(productLineItem, 'nikeLineItemStatus', status);
+
+        if (!empty(record.packageID)) {
+            productLineItem.custom.itemTrackingNumber = record.packageID;
+        }
+
+        productLineItem.custom.updatedStatus = record.newStateID;
+        order.custom.updated = true;
+
+        return true;
+    }
+}
+
+function findProductLineItemForMetricID(order : Order, metricID : String) : ProductLineItem {
+    if (empty(order) || empty(metricID)) return null;
+
+    for each (let shipment : Shipment in order.getShipments()) {
+        for each (let productLineItem : ProductLineItem in shipment.getProductLineItems()) {
+            if (productLineItem.custom.metricID === metricID) {
+                return productLineItem;
+            }
+        }
+    }
+
+    return null;
+}
+

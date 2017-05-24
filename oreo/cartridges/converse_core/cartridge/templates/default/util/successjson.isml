@@ -1,0 +1,11 @@
+<iscontent type="application/json" charset="UTF-8" compact="true"/>
+<isdecorate template="util/jsonresponse">
+    <isscript>
+        var o = { success:true }
+        if (!empty(pdict.Result)) {
+            o.result = pdict.Result;
+        }
+        var ojson = JSON.stringify(o);
+    </isscript>
+    <isprint value="${ojson}" encoding="off"/>
+</isdecorate>

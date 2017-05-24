@@ -1,0 +1,29 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_nike:bvat/command/AbstractBvatCommand.ds");
+
+(function(){
+    
+    var IsAccessibleCommand = integration.nike.bvat.command.AbstractBvatCommand.extend({
+        
+        init: function(requestObj) {
+            this._super("isAccessible", requestObj);
+        },
+        
+        createRequest: function () {
+            var request = this._super();
+            
+            request.id = this.requestObj.bvatID;
+            
+            return request;
+        }
+        
+    });
+    
+    var ns = Namespace.extendFromString(integration, "nike.bvat.command");
+    Namespace.extend(ns, { IsAccessibleCommand: IsAccessibleCommand });
+    
+})();

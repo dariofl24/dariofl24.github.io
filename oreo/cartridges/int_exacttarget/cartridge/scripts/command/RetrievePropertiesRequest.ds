@@ -1,0 +1,48 @@
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_exacttarget:command/AbstractRetrieveRequest.ds");
+importScript("int_exacttarget:objects/RetrieveRequestBuilder.ds");
+importScript("int_exacttarget:objects/RetrievePropertiesResponse.ds");
+
+(function() {
+
+    var ET_NS = integration.exacttarget;
+    var COMMAND_NS = ET_NS.command;
+    var OBJ_NS = ET_NS.objects;
+    
+    var AbstractRetrieveRequest = COMMAND_NS.AbstractRetrieveRequest;
+    var RetrieveRequestBuilder = OBJ_NS.RetrieveRequestBuilder;
+    var RetrievePropertiesResponse = OBJ_NS.RetrievePropertiesResponse;
+    
+    var FILTER_PROPERTY = "EmailAddress";
+    
+    var RetrievePropertiesRequest = AbstractRetrieveRequest.extend({
+        init: function(email: String, properties: Array) {
+            this._super(email);
+            this.properties = properties;
+        },
+
+        createRetrieveRequest: function() {
+            var requestBuilder = new RetrieveRequestBuilder(this.webReference);
+            var objectType : String = StringUtils.format("DataExtensionObject[{0}]", this.configuration.dataObjectName);
+
+            return requestBuilder
+                .setObjectType(objectType)
+                .setProperties(this.properties)
+                .createSimpleFilterPart(FILTER_PROPERTY, this.email, this.webReference.SimpleOperators.equals)
+                .build();
+        },
+
+        handleResponse: function(response) {
+            this.logErrorIfAvailable(response);
+            this.response = new RetrievePropertiesResponse(response);
+        }
+    });
+
+    Namespace.extend(COMMAND_NS, { RetrievePropertiesRequest: RetrievePropertiesRequest });
+
+})();

@@ -1,0 +1,63 @@
+importPackage(dw.system);
+importPackage(dw.value);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/command/HttpClientCommand.ds");
+
+(function() {
+    
+    var Persist = converse.webservices.command.HttpClientCommand.extend({
+        
+        init: function(buildData) {
+            this.buildData = buildData;
+            this.logger = Logger.getLogger("PERSIST");
+        },
+        
+        getEndpoint: function() : String {
+            return this.configuration.url;
+        },
+        
+        createRequest: function() {
+            return this.buildData;
+        },
+        
+        setContentType: function() {
+            this.serviceClient.setRequestHeader("Content-Type", "application/json");
+        },
+        
+        execute: function(request) {
+            let endpoint : String = this.getEndpoint();
+
+            this.logger.info("Sending persist request: {0}", request);
+
+            let response = this.doPost(endpoint, request);
+            
+            this.logger.info("Received persist response: {0}", response);
+            
+            return response;
+        },
+
+        handleResponse: function(response) {
+            this._super(response);
+            this.responseObject = JSON.parse( response );
+        },
+        
+        hasError: function() : Boolean {
+            return this._super();
+        }
+    });
+    
+    
+    Namespace.extend(integration, { 
+        nike: {
+            v4persistbuild: {
+                command: {
+                    Persist: Persist
+                }
+            }
+        }
+    });
+    
+})();

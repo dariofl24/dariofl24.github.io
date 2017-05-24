@@ -1,0 +1,721 @@
+@import url(https://fonts.googleapis.com/css?family=Arvo:400,700);
+@media screen and (min-width: 1024px) {
+  /* line 32, ../css/package/sass/html_desktop_builder.scss */
+  body {
+    background-color: #FFFFFF;
+  }
+
+  /* line 36, ../css/package/sass/html_desktop_builder.scss */
+  .fullscreen-loader,
+  .notification.overlay.add-cart {
+    display: none !important;
+  }
+
+  /* line 41, ../css/package/sass/html_desktop_builder.scss */
+  .watermark-logo {
+    display: none;
+  }
+
+  /* line 45, ../css/package/sass/html_desktop_builder.scss */
+  .notification {
+    z-index: 102;
+  }
+
+  /* line 49, ../css/package/sass/html_desktop_builder.scss */
+  .btn-common {
+    color: #FFFFFF;
+    background-color: #000000;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  /* line 58, ../css/package/sass/html_desktop_builder.scss */
+  .btn-common.copy-link {
+    display: none;
+  }
+
+  /* line 63, ../css/package/sass/html_desktop_builder.scss */
+  #palette {
+    width: 250px;
+    height: 443px !important;
+    margin-left: 30px;
+    top: 16px;
+    left: 29px;
+    border: none;
+  }
+  /* line 71, ../css/package/sass/html_desktop_builder.scss */
+  #palette .share-container {
+    display: none !important;
+  }
+  /* line 75, ../css/package/sass/html_desktop_builder.scss */
+  #palette .palette-header {
+    display: none;
+    height: 44px;
+    padding: 0 !important;
+    border: 1px solid #D1D1D1 !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: center;
+  }
+  /* line 84, ../css/package/sass/html_desktop_builder.scss */
+  #palette .palette-header .header {
+    border: none !important;
+  }
+  /* line 89, ../css/package/sass/html_desktop_builder.scss */
+  #palette .inner-wrapper {
+    height: 399px !important;
+    margin-bottom: 16px;
+  }
+  /* line 93, ../css/package/sass/html_desktop_builder.scss */
+  #palette .inner-wrapper .components {
+    height: 399px !important;
+    border: 1px solid #D1D1D1;
+    border-right: 1px solid #D1D1D1;
+    border-bottom: 1px solid #D1D1D1;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    overflow-y: visible;
+  }
+  /* line 103, ../css/package/sass/html_desktop_builder.scss */
+  #palette .inner-wrapper .components .header {
+    width: 250px;
+    height: 43px;
+    padding: 0;
+    border-color: #D1D1D1;
+    font-family: "Arvo", serif;
+    font-weight: bold;
+    line-height: 43px;
+    text-align: center;
+  }
+  /* line 116, ../css/package/sass/html_desktop_builder.scss */
+  #palette .cart {
+    position: static;
+    width: auto;
+    padding: 0 !important;
+  }
+  /* line 121, ../css/package/sass/html_desktop_builder.scss */
+  #palette .cart .btn-common {
+    font-family: "Arvo", serif;
+    font-size: 15px;
+    font-weight: normal;
+    text-transform: capitalize;
+  }
+  /* line 128, ../css/package/sass/html_desktop_builder.scss */
+  #palette .cart .addCart {
+    border: none;
+  }
+  /* line 132, ../css/package/sass/html_desktop_builder.scss */
+  #palette .cart .addWishlist {
+    width: 100%;
+    line-height: 28px !important;
+    color: #000000 !important;
+    font-family: "Arvo", serif;
+    font-size: 13px !important;
+    display: inline-block;
+    margin: 20px 0 0 0px;
+    text-align: center;
+    text-transform: lowercase;
+    font-weight: bold;
+  }
+  /* line 145, ../css/package/sass/html_desktop_builder.scss */
+  #palette .cart .addWishlist:first-letter {
+    text-transform: uppercase;
+  }
+  /* line 149, ../css/package/sass/html_desktop_builder.scss */
+  #palette .cart .addWishlist:after {
+    content: "" !important;
+    background: url('../images/sprites_html_builder-s26184ef8df.png') 0 -20px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    line-height: 28px;
+    vertical-align: middle;
+    margin-left: 8px;
+    height: 26px;
+    width: 26px;
+  }
+  /* line 162, ../css/package/sass/html_desktop_builder.scss */
+  #palette .font-image.LTITEM144001 {
+    background-image: url("http://render.nikeid.com/is/image/nikeid?layer=0&size=300,35&crop=0,0,300,1&anchor=0,0&layer=1&anchor=0,0&bgc=ffffff&text={\\fonttbl{\\f0 MonotypeCorsiva;}}{\\colortbl ;\\red0\\green0\\blue0;}\\f0\\fs35\\cf1 Monotype Corsiva&pos=0,0&fmt=png-alpha&wid=300&hei=35") !important;
+  }
+  /* line 166, ../css/package/sass/html_desktop_builder.scss */
+  #palette .font-image.LTITEM143001 {
+    background-image: url("http://render.nikeid.com/is/image/nikeid?layer=0&size=300,35&crop=0,0,300,1&anchor=0,0&layer=1&anchor=0,0&bgc=ffffff&text={\\fonttbl{\\f0%20Arial;}}{\\colortbl%20;\\red0\\green0\\blue0;}\\f0\\fs35\\cf1%20Arial&pos=0,0&fmt=png-alpha&wid=300&hei=35") !important;
+  }
+
+  /* line 172, ../css/package/sass/html_desktop_builder.scss */
+  .addtocart-error .mc-nav ol li a:not(.complete):before {
+    color: #BF0F07;
+  }
+
+  /* line 177, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav {
+    width: 29px;
+    height: 356px;
+    overflow: visible;
+    top: 43px;
+    left: -28px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top: 1px solid #D1D1D1;
+    border-bottom: 1px solid #D1D1D1;
+    border-left: 1px solid #D1D1D1;
+  }
+  /* line 189, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol {
+    width: 100%;
+  }
+  /* line 192, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li a {
+    background-color: #E9E9E9;
+    border-right: 1px solid #D1D1D1;
+    border-bottom: 1px solid #D1D1D1;
+  }
+  /* line 198, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li a:hover .content {
+    display: block;
+    width: 120px;
+    padding: 7px 10px;
+    margin-top: -21px;
+    margin-left: 35px;
+    text-transform: none;
+    font-size: 12px;
+    background: #333333;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    color: #FFFFFF;
+    position: absolute;
+    z-index: 98;
+  }
+  /* line 213, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li a:hover .content:before {
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid rgba(0, 0, 0, 0.8);
+    content: "";
+    bottom: 7px;
+    left: -6px;
+    position: absolute;
+    z-index: 99;
+  }
+  /* line 226, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li a:before {
+    content: "\25CF" !important;
+  }
+  /* line 230, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li a.active {
+    border-right: none;
+    background-color: #FFFFFF !important;
+  }
+  /* line 234, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li a.active:before {
+    color: #999999;
+  }
+  /* line 239, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li a.active:hover .content {
+    margin-top: -21px;
+  }
+  /* line 245, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li a.complete {
+    background-color: #E9E9E9;
+  }
+  /* line 248, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li a.complete:before {
+    background: url(../images/tick.png) no-repeat center center;
+    content: "\2713" !important;
+    color: transparent;
+  }
+  /* line 255, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li a.complete:hover:after {
+    background: url(../images/tick.png) no-repeat center center;
+    content: "\2713" !important;
+    color: transparent;
+  }
+  /* line 261, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li a.complete:hover .content {
+    margin-top: -4px;
+  }
+  /* line 267, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li a .index {
+    display: none;
+    font-size: 12px;
+    color: #B2B2B2;
+  }
+  /* line 274, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav ol li:last-child a {
+    border-bottom: none;
+  }
+
+  /* line 280, ../css/package/sass/html_desktop_builder.scss */
+  #renderer {
+    width: 100%;
+    margin: 0 !important;
+  }
+  /* line 284, ../css/package/sass/html_desktop_builder.scss */
+  #renderer .renderer-shadow {
+    display: none;
+  }
+
+  /* line 289, ../css/package/sass/html_desktop_builder.scss */
+  .controls {
+    padding-right: 0;
+  }
+
+  /* line 293, ../css/package/sass/html_desktop_builder.scss */
+  .question h4 {
+    width: 100%;
+    color: #666666;
+    font-size: 11px;
+    font-weight: normal;
+    text-align: center;
+  }
+
+  /* line 301, ../css/package/sass/html_desktop_builder.scss */
+  .chip-question .answers li {
+    overflow: visible;
+  }
+
+  /* line 305, ../css/package/sass/html_desktop_builder.scss */
+  .answers label {
+    position: relative;
+    background-size: 75px;
+  }
+
+  /* line 310, ../css/package/sass/html_desktop_builder.scss */
+  #alternative-views {
+    display: none;
+    position: absolute;
+    top: initial;
+    left: initial;
+    bottom: 131px;
+    right: calc(50% - 230px);
+  }
+  /* line 319, ../css/package/sass/html_desktop_builder.scss */
+  #alternative-views .alt-view:before {
+    content: "" !important;
+    background-repeat: no-repeat;
+    display: block;
+    background: url('../images/sprites_html_builder-s26184ef8df.png') -26px -46px;
+    height: 18px;
+    width: 18px;
+  }
+  /* line 327, ../css/package/sass/html_desktop_builder.scss */
+  #alternative-views .alt-view .productImg {
+    display: none;
+  }
+
+  /* line 333, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* line 338, ../css/package/sass/html_desktop_builder.scss */
+  .radio-question,
+  .vertical-list-question,
+  .text-input-question,
+  .horizontal-list-question,
+  .chip-question,
+  .dropdown-question select {
+    width: 100%;
+  }
+
+  /* line 352, ../css/package/sass/html_desktop_builder.scss */
+  .dropdown-question .answers,
+  .radio-question .answers,
+  .vertical-list-question .answers,
+  .text-input-question .answers,
+  .horizontal-list-question .answers {
+    width: 180px;
+  }
+
+  /* line 357, ../css/package/sass/html_desktop_builder.scss */
+  .radio-question .answers > li,
+  .horizontal-list-question .answers > li {
+    display: inline-block;
+    width: 85px;
+    float: left;
+  }
+
+  /* line 364, ../css/package/sass/html_desktop_builder.scss */
+  .vertical-list-question .answers > li,
+  .text-input-question .answers > li {
+    display: inline-block;
+    width: 180px;
+  }
+
+  /* line 370, ../css/package/sass/html_desktop_builder.scss */
+  .radio-question .answers > li:first-child,
+  .horizontal-list-question .answers > li:first-child {
+    margin-right: 10px;
+  }
+
+  /* line 375, ../css/package/sass/html_desktop_builder.scss */
+  .radio-question .answers > li > label,
+  .vertical-list-question .answers > li > label,
+  .horizontal-list-question .answers > li > label,
+  .text-input-question .answers > li > label > input {
+    color: #828282;
+    border: 2px solid #CCCCCC !important;
+    border-radius: 5px;
+    font-size: 12px;
+    background-color: #FFFFFF;
+    text-transform: uppercase;
+  }
+
+  /* line 387, ../css/package/sass/html_desktop_builder.scss */
+  .radio-question .answers > li > label.selected,
+  .vertical-list-question .answers > li > label.selected,
+  .horizontal-list-question .answers > li > label.selected {
+    color: #000000;
+    border-color: #000000 !important;
+  }
+
+  /* line 396, ../css/package/sass/html_desktop_builder.scss */
+  .question.sz ul.answers li {
+    margin: -1px 0 0 -1px;
+  }
+  /* line 399, ../css/package/sass/html_desktop_builder.scss */
+  .question.sz ul.answers li label {
+    width: 58px;
+    height: 58px;
+  }
+
+  /* line 410, ../css/package/sass/html_desktop_builder.scss */
+  .question.genpid ul.answers li input {
+    text-transform: initial;
+  }
+
+  /* line 417, ../css/package/sass/html_desktop_builder.scss */
+  ol.questions,
+  li.question,
+  .questions > .answers {
+    overflow: visible;
+  }
+
+  /* line 423, ../css/package/sass/html_desktop_builder.scss */
+  .answers {
+    width: 180px;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  /* line 429, ../css/package/sass/html_desktop_builder.scss */
+  .icon-btns > .btn {
+    display: inline-block;
+  }
+  /* line 431, ../css/package/sass/html_desktop_builder.scss */
+  .icon-btns > .btn:focus {
+    outline: 0;
+    border: none;
+  }
+
+  /* line 437, ../css/package/sass/html_desktop_builder.scss */
+  .chip {
+    width: 38.9px;
+    height: 39px;
+    margin: 0 8px 8px 0;
+  }
+  /* line 443, ../css/package/sass/html_desktop_builder.scss */
+  .chip:hover .labelText {
+    display: block;
+    margin-top: -50px;
+    margin-left: -30px;
+  }
+  /* line 448, ../css/package/sass/html_desktop_builder.scss */
+  .chip:hover .labelText:before {
+    border: solid;
+    border-color: #333333 transparent;
+    border-width: 6px 6px 0 6px;
+    content: "";
+    bottom: -6px;
+    left: 42%;
+    position: absolute;
+    z-index: 99;
+  }
+  /* line 462, ../css/package/sass/html_desktop_builder.scss */
+  .chip.selected .checkmark {
+    margin: 14px 0 0 3px;
+  }
+  /* line 464, ../css/package/sass/html_desktop_builder.scss */
+  .chip.selected .checkmark:before {
+    color: transparent;
+    background: url("../images/tick_white.png") no-repeat 0 0;
+  }
+  /* line 471, ../css/package/sass/html_desktop_builder.scss */
+  .chip > .labelText {
+    width: 100px;
+    margin-top: -40px;
+    padding: 7px 10px;
+    text-transform: none;
+    font-size: 12px;
+    background: #333333;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    color: #FFFFFF;
+    position: absolute;
+    z-index: 98;
+  }
+
+  /* line 486, ../css/package/sass/html_desktop_builder.scss */
+  ul.answers li:nth-child(4n+4) .chip {
+    margin-right: 0;
+  }
+
+  /* line 490, ../css/package/sass/html_desktop_builder.scss */
+  .renderer-zoom .renderer .zoom-close {
+    font-size: 26px;
+    right: 50px;
+  }
+
+  /* line 495, ../css/package/sass/html_desktop_builder.scss */
+  .important-info {
+    text-align: center;
+  }
+
+  /* line 500, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .secondary-btns {
+    overflow: hidden;
+    margin-top: 57px;
+  }
+  /* line 506, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .btn:before {
+    content: "" !important;
+    background-repeat: no-repeat;
+    display: block;
+  }
+  /* line 513, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .rotatePrev:before {
+    background: url('../images/sprites_html_builder-s26184ef8df.png') -21px 0;
+    height: 20px;
+    width: 17px;
+  }
+  /* line 518, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .rotateNext:before {
+    background: url('../images/sprites_html_builder-s26184ef8df.png') -38px 0;
+    height: 20px;
+    width: 17px;
+  }
+  /* line 523, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .renderer-zoom-in:before {
+    background: url('../images/sprites_html_builder-s26184ef8df.png') -26px -20px;
+    height: 20px;
+    width: 21px;
+  }
+  /* line 528, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .renderer-zoom-out:before {
+    background: url('../images/sprites_html_builder-s26184ef8df.png') 0 0;
+    height: 20px;
+    width: 21px;
+  }
+  /* line 533, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container {
+    position: absolute;
+    top: 79px;
+    z-index: 101;
+  }
+  /* line 538, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share {
+    padding: 0;
+    margin: 0;
+    background: none;
+    line-height: 28px !important;
+    color: #000000 !important;
+    font-family: "Arvo", serif;
+    font-size: 13px !important;
+  }
+  /* line 548, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share:before {
+    content: "" !important;
+  }
+  /* line 552, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share:after {
+    content: "" !important;
+    background: url('../images/sprites_html_builder-s26184ef8df.png') 0 -46px;
+    background-repeat: no-repeat;
+    display: block;
+    float: right;
+    line-height: 28px;
+    margin-left: 8px;
+    margin-top: 2px;
+    height: 26px;
+    width: 26px;
+  }
+  /* line 565, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .btn.share:focus {
+    outline: 0;
+  }
+  /* line 570, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options.active {
+    left: 100% !important;
+    width: 250px;
+    padding-top: 0;
+    height: 31px;
+    background-color: transparent;
+    overflow: hidden;
+    padding-left: 18px;
+  }
+  /* line 579, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options .option {
+    background-repeat: no-repeat !important;
+    border: none;
+  }
+  /* line 582, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options .option:before {
+    content: none;
+  }
+  /* line 585, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options .option:hover {
+    background-repeat: no-repeat !important;
+  }
+  /* line 588, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options .option.share-facebook {
+    background: url('../images/sprites_icon_image-sdddaae8f4d.png') 0 -774px;
+  }
+  /* line 590, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options .option.share-facebook:hover {
+    background: url('../images/sprites_icon_image-sdddaae8f4d.png') 0 -741px;
+  }
+  /* line 594, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options .option.share-twitter {
+    background: url('../images/sprites_icon_image-sdddaae8f4d.png') 0 -1326px;
+  }
+  /* line 596, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options .option.share-twitter:hover {
+    background: url('../images/sprites_icon_image-sdddaae8f4d.png') 0 -1293px;
+  }
+  /* line 600, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options .option.share-pinterest {
+    background: url('../images/sprites_icon_image-sdddaae8f4d.png') 0 -947px;
+  }
+  /* line 602, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options .option.share-pinterest:hover {
+    background: url('../images/sprites_icon_image-sdddaae8f4d.png') 0 -980px;
+  }
+  /* line 606, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options .option.share-email {
+    background: url('../images/sprites_icon_image-sdddaae8f4d.png') 0 -634px;
+  }
+  /* line 608, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options .option.share-email:hover {
+    background: url('../images/sprites_icon_image-sdddaae8f4d.png') 0 -597px;
+  }
+  /* line 612, ../css/package/sass/html_desktop_builder.scss */
+  #rendererControls .share-container .share-options .option.share-myspace {
+    display: none;
+  }
+
+  /* line 620, ../css/package/sass/html_desktop_builder.scss */
+  .snapshot-container {
+    display: none !important;
+    position: absolute;
+    top: 20px;
+    margin-left: 32px;
+  }
+  /* line 626, ../css/package/sass/html_desktop_builder.scss */
+  .snapshot-container .take-snapshot {
+    margin: 0;
+    padding: 0;
+  }
+  /* line 630, ../css/package/sass/html_desktop_builder.scss */
+  .snapshot-container .take-snapshot:before {
+    background: url('../images/sprites_html_builder-s26184ef8df.png') 0 -72px;
+    height: 64px;
+    width: 64px;
+  }
+  /* line 636, ../css/package/sass/html_desktop_builder.scss */
+  .snapshot-container .compare-snapshot {
+    margin: 0;
+    padding: 0;
+    border: 2px solid #666666;
+    border-radius: 5px;
+  }
+  /* line 642, ../css/package/sass/html_desktop_builder.scss */
+  .snapshot-container .compare-snapshot .label {
+    display: none;
+  }
+
+  /* line 648, ../css/package/sass/html_desktop_builder.scss */
+  .alternate-pictures-icon {
+    width: 18px;
+    height: 18px;
+    background-position: -5px -5px;
+  }
+
+  /* line 654, ../css/package/sass/html_desktop_builder.scss */
+  .mcomponent {
+    overflow: visible;
+  }
+  /* line 656, ../css/package/sass/html_desktop_builder.scss */
+  .mcomponent select {
+    font-family: "Arvo", serif;
+    font-size: 12px;
+  }
+
+  /* line 662, ../css/package/sass/html_desktop_builder.scss */
+  .tooltip {
+    display: none !important;
+  }
+  /* line 664, ../css/package/sass/html_desktop_builder.scss */
+  .tooltip.error-tooltip {
+    left: 0 !important;
+    width: 30px !important;
+    height: 30px !important;
+  }
+  /* line 670, ../css/package/sass/html_desktop_builder.scss */
+  .tooltip .content-tooltip {
+    display: none;
+  }
+  /* line 674, ../css/package/sass/html_desktop_builder.scss */
+  .tooltip .triangle-tooltip {
+    display: none;
+  }
+}
+/* line 680, ../css/package/sass/html_desktop_builder.scss */
+#container.complete .addCart {
+  background-color: #BF0F07;
+}
+
+/* line 684, ../css/package/sass/html_desktop_builder.scss */
+.fullscreen-loader .graphic {
+  background: url("http://converse.com/on/demandware.static/Sites-converse-gb-Site/-/-/html_builder/images/builder/loader.gif") center center no-repeat;
+}
+
+@media screen and (max-width: 1023px) {
+  /* line 689, ../css/package/sass/html_desktop_builder.scss */
+  .mc-nav.active {
+    margin-top: 47px;
+  }
+}
+/* iScroll Scrollbar Styling */
+/* line 695, ../css/package/sass/html_desktop_builder.scss */
+.iScrollVerticalScrollbar {
+  position: absolute;
+  z-index: 100;
+  width: 8px;
+  bottom: 7px;
+  top: 2px;
+  right: 1px;
+}
+/* line 703, ../css/package/sass/html_desktop_builder.scss */
+.iScrollVerticalScrollbar > div {
+  position: absolute;
+  right: 0;
+  width: 4px;
+  z-index: 100;
+  background: #D1D1D1;
+  border-radius: 5px;
+}
+
+/* CEMEA-268 Remove Share Options except Email.
+*/
+/* line 716, ../css/package/sass/html_desktop_builder.scss */
+.share-options .option {
+  display: none;
+}
+/* line 719, ../css/package/sass/html_desktop_builder.scss */
+.share-options .option.share-email {
+  display: inline-block;
+}

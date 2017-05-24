@@ -1,0 +1,5 @@
+<div id="termsAndConditionsPopup" class="mfp-hide">
+    <div class="container">
+        <iscontentasset aid="privacy-and-terms" />
+    </div>
+</div>

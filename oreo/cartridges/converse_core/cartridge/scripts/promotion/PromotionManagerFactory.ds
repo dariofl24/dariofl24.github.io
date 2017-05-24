@@ -1,0 +1,21 @@
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage( dw.order );
+importPackage( dw.campaign );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+    let PromotionManagerFactory = {
+        getPromotionManager: function() : DiscountPlan {
+            return PromotionMgr;
+        }
+    };
+    
+    Namespace.extend(converse, {
+        promotion: {
+            PromotionManagerFactory : PromotionManagerFactory
+        }
+    });
+})();

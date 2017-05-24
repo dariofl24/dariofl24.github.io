@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+    <!-- form providing field for balance check --> 
+    <group formid="balance">
+        <field formid="cardnumber" 
+        		label="giftcard.cardnumber.label" 
+        		type="string" 
+        		regexp="^\d+$" 
+        		mandatory="true" 
+        		parse-error="giftcard.cardnumber.parseerror" 
+        		missing-error="giftcard.cardnumber.required"
+        		value-error="giftcard.cardnumber.invalid" />
+        		
+        <field formid="pin" 
+        		label="giftcard.pin.label" 
+        		type="string"
+        		regexp="^\d+$" 
+        		mandatory="false" 
+        		parse-error="giftcard.pin.invalid" 
+        		missing-error="giftcard.pin.required"
+        		value-error="giftcard.pin.invalid"  />
+        
+		<action formid="check" valid-form="true"/>
+    </group>
+
+    <!-- form providing fields for balance check and redemption (used by checkout billing page) --> 
+    <group formid="redemption">
+        <field formid="amount" label="forms.giftcert.019" type="number" 
+            mandatory="false" 
+            description="forms.giftcert.020"
+            binding="amount"
+            missing-error="forms.giftcert.021"
+            value-error="forms.giftcert.022"/>
+        <field formid="number" label="forms.giftcert.023" type="string" 
+            mandatory="true" 
+            binding="number"
+            description="forms.giftcert.024"
+            missing-error="forms.giftcert.025"
+            value-error="forms.giftcert.026"/>
+    </group>
+
+    <action formid="redeem" valid-form="true"/>
+</form>

@@ -1,0 +1,39 @@
+*** Settings ***
+Documentation     Sets up all required data from demandware
+Suite Setup       Open Demandware
+Suite Teardown    Close All Browsers
+Test Setup        Return to Demandware Homepage
+Force Tags        Setting-Up
+Resource          demandware_configuration_definitions.txt
+Resource          demandware_marketing_definitions.txt
+
+*** Variables ***
+# Shipping Methods: 6 for email_delivery, 7 for mail_delivery and 5 for ups_expedited
+@{egcShippingMethods}    6
+${egc_typeofproduct}    electronicgc (Electronic GC)
+@{pgcShippingMethods}    7
+${pgc_typeofproduct}    physicalgc (Physical GC)
+${regular_typeofproduct}    regular (Regular Products)
+@{dyoShippingMethods}    5
+${dyo_typeofproduct}    dyo (DYO Products)
+
+*** Test Cases ***
+Setting up shipping to Electronic Gift Cards
+    [Tags]    GC    US
+    Setting Up Shipping Methods    ${egc_typeofproduct}    @{egcShippingMethods}
+
+Setting up shipping methods to Physical Gift Cards
+    [Tags]    GC    US
+    Setting Up Shipping Methods    ${pgc_typeofproduct}    @{pgcShippingMethods}
+
+Setting up shipping methods to Regular Products
+    [Tags]    GC    ShippingBilling    US
+    Setting Up Shipping Methods    ${regular_typeofproduct}    @{regularShippingMethods}
+
+Setting up shipping methods to DYO
+    [Tags]    GC
+    Setting Up Shipping Methods    ${dyo_typeofproduct}    @{dyoShippingMethods}
+
+Setting up product inventory
+    [Tags]    Checkout    ShortReg    US
+    Set Allocation For Product    ${id_Inlineproduct}_${InlineSize}    50    06/30/2020    10

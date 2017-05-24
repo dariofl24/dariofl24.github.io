@@ -1,0 +1,186 @@
+importPackage(dw.system);
+importPackage(dw.order);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:util/TimeUtils.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:product/ProductUtils.ds");
+
+importScript( "SigmaConstants.ds" );
+importScript( "SigmaUtils.ds" );
+importScript( "tax/command/GetTaxes.ds" );
+
+(function(){
+    
+    var sigmaNS = integration.sigma;
+    var sigmaObjectNS = sigmaNS.tax.objects;
+    var SigmaConstants = sigmaNS.SigmaConstants;
+    var SigmaUtils = sigmaNS.SigmaUtils;
+    var Constants = converse.constants;
+
+    var AbstractRequestHelper = Class.extend({
+        init: function(serviceClient, shipmentSummary: ShipmentSummary, billingAddressSummary: OrderAddressSummary) {
+            this.shipmentSummary = shipmentSummary;
+            this.billingAddressSummary = billingAddressSummary;
+            this.soapServiceClient = serviceClient;
+        },
+        
+        setGenericData: function(sigmaOrder) {
+            sigmaOrder.setOrderType(SigmaConstants.SigmaDefaultOrderType);
+            sigmaOrder.setDateOrdered(TimeUtils.formatDate(System.getCalendar().getTime(), SigmaConstants.DateFormat));
+            sigmaOrder.setSourceCode(this.getSourceCode());
+            sigmaOrder.setShipChargeAmount(this.shipmentSummary.getShippingNetAmount().value);
+            sigmaOrder.setTotalAmount(this.shipmentSummary.getNetAmount().value);
+            sigmaOrder.setNetAmount(0);
+            sigmaOrder.setTaxAmount(0);
+            sigmaOrder.setShippingCode(this.shipmentSummary.getShippingMethod().getSigmaShippingMethodID());
+        },
+        
+        setAddressData: function(sigmaOrder) {
+            var shippingAddress: OrderAddressSummary = this.shipmentSummary.getShippingAddress();
+            
+            if(shippingAddress) {
+                sigmaOrder.setShipChargeType(SigmaConstants.StandardShippingChargeType);
+                sigmaOrder.setPhoneNumber(shippingAddress.getPhone());
+            }
+
+            if(this.billingAddressSummary) {
+                sigmaOrder.setPhoneNumber(sigmaOrder.phoneNumber || this.billingAddressSummary.getPhone());
+            }
+
+            sigmaOrder.setShipToAddress(this.getAddress(shippingAddress));
+            sigmaOrder.setBillToAddress(this.getAddress(this.billingAddressSummary));
+        },
+        
+        setItemsData: function(sigmaOrder) {
+            var orderedItems = [];
+
+            for each(var item : ItemSummary in this.shipmentSummary.getItemSummaryList()) {
+                if(item.shouldNotParticipateInTaxCalculation()) {
+                    continue;
+                }
+                
+                var orderedItem = new this.soapServiceClient.OrderedItem();
+                orderedItem.setProductNumber(SigmaUtils.getProductNumber(item));
+                orderedItem.setOrderQuantity(item.getQuantity());
+                orderedItem.setUnitPrice(item.getUnitPrice().getValue());
+                
+                this.setItemAdditionalData(orderedItem, item);
+
+                orderedItems.push(orderedItem);
+            }
+
+            sigmaOrder.setOrderedItems(orderedItems);
+        },
+        
+        getAddress: function(address: OrderAddressSummary) {
+            if(!address) {
+                return null;
+            }
+            
+            var sigmaAddress = new this.soapServiceClient.Address();
+            sigmaAddress.setFirstName(address.getFirstName());
+            sigmaAddress.setLastName(address.getLastName());
+            sigmaAddress.setCity(address.getCity());
+            sigmaAddress.setState(address.getState());
+            sigmaAddress.setZipCode(address.getPostalCode());
+
+            var addressTokens = address.getAddress1().split(SigmaConstants.Spacer);
+            if(addressTokens.length > 0) {
+                sigmaAddress.setStreetNumber(addressTokens[0]);
+                sigmaAddress.setStreetName(addressTokens[addressTokens.length - 1]);
+            }
+
+            return sigmaAddress;
+        },
+        
+        getSourceCode: function() {
+            throw new Error("Request helper must implement 'getSourceCode' method.");
+        },
+        
+        getCompanyNumber: function() {
+            throw new Error("Request helper must implement 'getCompanyNumber' method.");
+        },
+        
+        setItemAdditionalData: function(sigmaItem, item: ItemSummary) {
+            throw new Error("Request helper must implement 'setItemAdditionalData' method.");
+        },
+        
+        build: function() {
+            var sigmaOrder = new this.soapServiceClient.Order();
+            
+            this.setGenericData(sigmaOrder);
+            this.setAddressData(sigmaOrder);
+            this.setItemsData(sigmaOrder);
+            
+            return [ this.shipmentSummary.getUUID(), this.getCompanyNumber(), sigmaOrder, SigmaConstants.DefaultTransactionOrderType ];
+        }
+    });
+
+    var DefaultOrderRequestHelper = AbstractRequestHelper.extend({
+        getSourceCode: function() {
+            return SigmaConstants.DefaultConverseOrderCode;
+        },
+        
+        getCompanyNumber: function() {
+            return SigmaConstants.ConverseCompanyNumber;
+        },
+        
+        setItemAdditionalData: function(sigmaItem, item: ItemSummary) {
+            if (item.isGiftCard()) {
+                sigmaItem.setAddiInfos(SigmaConstants.GiftCardItemAdditionalInfos);
+            }
+        }
+    });
+    
+    var DYOOrderRequestHelper = AbstractRequestHelper.extend({
+        getSourceCode: function() {
+            return SigmaConstants.DefaultConverseOneOrderCode;
+        },
+        
+        getCompanyNumber: function() {
+            return SigmaConstants.ConverseOneCompanyNumber;
+        },
+        
+        setItemAdditionalData: function(sigmaItem, item: ItemSummary) {
+            sigmaItem.addiInfos = [ item.getMetricID() ];
+        }
+    });
+
+    var RequestHelperFactory = {
+        
+        getHelper: function(serviceClient, shipmentSummary: ShipmentSummary, billingAddressSummary: OrderAddressSummary) {
+            var orderType = this.indentifySigmaOrderType(shipmentSummary);
+            switch(orderType) {
+                case SigmaConstants.OrderType.Default:
+                    return new DefaultOrderRequestHelper(serviceClient, shipmentSummary, billingAddressSummary);
+                case SigmaConstants.OrderType.DYO:
+                    return new DYOOrderRequestHelper(serviceClient, shipmentSummary, billingAddressSummary);
+                default:
+                    throw new Error(StringUtils.format("Unknown sigma order type - {0}!", orderType));
+            }
+        },
+        
+        indentifySigmaOrderType: function(shipmentSummary: ShipmentSummary) {
+            var sigmaOrderType;
+            
+            if (shipmentSummary.getProductType() === Constants.ProductType.C1) {
+                sigmaOrderType = SigmaConstants.OrderType.DYO;
+            } else {
+                sigmaOrderType = SigmaConstants.OrderType.Default;
+            }
+            
+            return sigmaOrderType;
+        }
+    };
+
+    var ns = Namespace.extendFromString(integration, "sigma.tax.objects");
+    Namespace.extend(ns, {
+        RequestHelperFactory: RequestHelperFactory,
+        DefaultOrderRequestHelper: DefaultOrderRequestHelper,
+        DYOOrderRequestHelper: DYOOrderRequestHelper
+    });
+    
+})();

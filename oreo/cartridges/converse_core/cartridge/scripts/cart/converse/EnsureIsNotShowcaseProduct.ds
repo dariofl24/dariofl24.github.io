@@ -1,0 +1,19 @@
+/**
+*   @input Product : dw.catalog.Product
+*/
+importPackage(dw.system);
+importPackage(dw.catalog);
+
+importScript("constants.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+	let product : Product = args.Product;
+	let productType = product.custom.productType;
+	
+	if (productType.value === converse.constants.ProductType.Showcase) {
+		return PIPELET_ERROR;
+	}
+	
+   	return PIPELET_NEXT;
+}

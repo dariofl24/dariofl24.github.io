@@ -1,0 +1,17 @@
+development:
+  adapter: postgresql
+  port: 5432
+  database: converse_data_hub
+  pool: 10
+
+test:
+  adapter: postgresql
+  port: 5432
+  database: converse_data_hub
+  pool: 10
+
+production:
+  adapter: postgresql
+  port: 5432
+  database: converse_data_hub
+  pool: 10

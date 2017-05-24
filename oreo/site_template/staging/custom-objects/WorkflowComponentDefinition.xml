@@ -1,0 +1,2076 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-objects xmlns="http://www.demandware.com/xml/impex/customobject/2006-10-31">
+    <custom-object type-id="WorkflowComponentDefinition" object-id="CleanUpFiles">
+        <object-attribute attribute-id="action">GeneralImport-CleanUpFiles</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Cleanup old files</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FilePattern",&#13;
+        "name":"File name pattern (Default is \".*\")",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"DirectoriesToPurge",&#13;
+        "name":"Directories to purge",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"DirectoriesToArchive",&#13;
+        "name":"Directories to archive",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"DaysToKeep",&#13;
+        "name":"Number of days to keep old files",&#13;
+        "type":"int",&#13;
+        "mandatory":true&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Clone-CatalogFiles">
+        <object-attribute attribute-id="action">CustomProcessing-CloneCatalogFiles</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Clones the catalog file to replicate product order changes across the EMA sites</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+            {&#13;
+                "id":"SourcePath",&#13;
+                "name":"Source Path for the directory where the source catalog is located (relative to /IMPEX)",&#13;
+                "type":"string",&#13;
+                "mandatory":true&#13;
+            },&#13;
+            {&#13;
+                "id":"SourceCatalogNamePattern",&#13;
+                "name":"Source XML File name pattern",&#13;
+                "type":"string",&#13;
+                "mandatory":true&#13;
+            },&#13;
+            {&#13;
+                "id":"TargetPath",&#13;
+                "name":"Target path for the generated catalogs (defaults to Source Path)",&#13;
+                "type":"string",&#13;
+                "mandatory":false&#13;
+            },&#13;
+            {&#13;
+                "id":"ResultFilesPostfix",&#13;
+                "name":"Result Catalog Files Postfix",&#13;
+                "type":"string",&#13;
+                "mandatory":true&#13;
+            },&#13;
+            {&#13;
+                "id":"Converse_BE",&#13;
+                "name":"Converse BE",&#13;
+                "type":"boolean",&#13;
+                "mandatory":false&#13;
+            },&#13;
+            {&#13;
+                "id":"Converse_DE",&#13;
+                "name":"Converse DE",&#13;
+                "type":"boolean",&#13;
+                "mandatory":false&#13;
+            },&#13;
+            {&#13;
+                "id":"Converse_ES",&#13;
+                "name":"Converse ES",&#13;
+                "type":"boolean",&#13;
+                "mandatory":false&#13;
+            },&#13;
+            {&#13;
+                "id":"Converse_FR",&#13;
+                "name":"Converse FR",&#13;
+                "type":"boolean",&#13;
+                "mandatory":false&#13;
+            },&#13;
+            {&#13;
+                "id":"Converse_GB",&#13;
+                "name":"Converse UK",&#13;
+                "type":"boolean",&#13;
+                "mandatory":false&#13;
+            },&#13;
+            {&#13;
+                "id":"Converse_IT",&#13;
+                "name":"Converse IT",&#13;
+                "type":"boolean",&#13;
+                "mandatory":false&#13;
+            },&#13;
+            {&#13;
+                "id":"Converse_NL",&#13;
+                "name":"Converse NL",&#13;
+                "type":"boolean",&#13;
+                "mandatory":false&#13;
+            },&#13;
+            {&#13;
+                "id":"Converse_EU",&#13;
+                "name":"Converse EU",&#13;
+                "type":"boolean",&#13;
+                "mandatory":false&#13;
+            }&#13;
+        ]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="DateCondition">
+        <object-attribute attribute-id="action">GeneralComponent-DateCondition</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">You can define a date which must be before or after the current time (the time of execution) to continue. If before is chosen			and the current time is after the defined date, the component will			exit with an error. If after is chosen and the date is not reached			yet, the component is suspended until it is reached.</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"date",&#13;
+        "name":"Date",&#13;
+        "type":"date",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"mode",&#13;
+        "name":"Mode",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "NOW_BEFORE_X",&#13;
+            "NOW_AFTER_X"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="DateTimeCondition">
+        <object-attribute attribute-id="action">GeneralComponent-DateTimeCondition</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">You can define a date with time which must be before or after the current time (the time of execution) to continue. If before			is chosen and the current time is after the defined value, the			component will exit with an error. If after is chosen and the time is			not reached yet, the component is suspended until it is reached.</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"datetime",&#13;
+        "name":"Date and time",&#13;
+        "type":"datetime",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"mode",&#13;
+        "name":"Mode",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "NOW_BEFORE_X",&#13;
+            "NOW_AFTER_X"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Delete From FTP">
+        <object-attribute attribute-id="action">GeneralTransfer-DeleteFromFtp</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Deletes files from an FTP-Location</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"HostURL",&#13;
+        "name":"Host URL",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"UserID",&#13;
+        "name":"User Name",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"Password",&#13;
+        "name":"Password",&#13;
+        "type":"password",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"SecureFtp",&#13;
+        "name":"Type of FTP connection",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "FTP",&#13;
+            "SFTP"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FilePattern",&#13;
+        "name":"Input File pattern to search in local folder(default is \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"SourceFolder",&#13;
+        "name":"Source Folder",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-Catalog">
+        <object-attribute attribute-id="action">CustomExport-Catalog</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports a Catalog</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"CatalogID",&#13;
+        "name":"CatalogID",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"ExportCategories",&#13;
+        "name":"Export Categories",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"ExportCategoryAssignments",&#13;
+        "name":"Export Category Assignment",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"ExportProductOptions",&#13;
+        "name":"Export Product Options",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"ExportProducts",&#13;
+        "name":"Export Products",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"ExportRecommendations",&#13;
+        "name":"Export Recommendations",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"ExportVariationAttributes",&#13;
+        "name":"Export Variation Attributes",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-Coupons">
+        <object-attribute attribute-id="action">CustomExport-CouponFeed</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export Coupons</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileName",&#13;
+        "name":"File name",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-Customers">
+        <object-attribute attribute-id="action">ExportCustomers-Start</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export Customers</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-DeletedCustomers">
+        <object-attribute attribute-id="action">CustomExport-DeletedCustomers</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports deleted customers</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-EmployeeExport">
+        <object-attribute attribute-id="action">CustomExport-EmployeeExport</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports customers with converse or nike email</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-EmployeeOrders">
+        <object-attribute attribute-id="action">CustomExport-EmployeeOrders</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports orders that were placed by users eligible for EMEA employe discount</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"DaysToExport",&#13;
+        "name":"Number of days back from today to export orders. Minimum valid value is 1",&#13;
+        "type":"int",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-Goldenfeeds">
+        <object-attribute attribute-id="action">CustomExport-Goldenfeeds</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export Goldenfeeds</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+                {&#13;
+                    "id":"FileDirectoryPath",&#13;
+                    "name":"File directory path (relative to /IMPEX/src)",&#13;
+                    "type":"string",&#13;
+                    "mandatory":true&#13;
+                },&#13;
+                {&#13;
+                    "id":"FileNamePrefix",&#13;
+                    "name":"File name prefix",&#13;
+                    "type":"string",&#13;
+                    "mandatory":true&#13;
+                },&#13;
+                {&#13;
+                    "id":"OverwriteExportFile",&#13;
+                    "name":"Overwrite export file",&#13;
+                    "type":"boolean",&#13;
+                    "mandatory":false&#13;
+                }&#13;
+            ]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-MerchandiserFeed">
+        <object-attribute attribute-id="action">CustomExport-MerchandiserFeed</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export Merchandiser Feed</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileName",&#13;
+        "name":"File name",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-Monetate">
+        <object-attribute attribute-id="action">CustomExport-MonetateExport</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export Monetate</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileName",&#13;
+        "name":"File name",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-OrderOnDemand">
+        <object-attribute attribute-id="action">CustomExport-OrderOnDemand</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports the orders on demand to CSV format</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"DateFrom",&#13;
+        "name":"Date From",&#13;
+        "type":"date",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"DateTo",&#13;
+        "name":"DateTo",&#13;
+        "type":"date",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-OrdersDaily">
+        <object-attribute attribute-id="action">CustomExport-OrderDaily</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports the orders daily to CSV format</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-OrdersDailyEMEA">
+        <object-attribute attribute-id="action">CustomExport-OrderDailyEMEA</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports the orders daily to CSV format</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"MoveOldFiles",&#13;
+        "name":"Move old files to archive",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-Performics">
+        <object-attribute attribute-id="action">CustomExport-Performics</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export Performics</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileName",&#13;
+        "name":"File name",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-PerformicsEMEA">
+        <object-attribute attribute-id="action">CustomExport-PerformicsEMEA</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export-PerformicsEMEA</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePostFix",&#13;
+        "name":"File name post fix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-Pricebook">
+        <object-attribute attribute-id="action">CustomExport-PriceBook</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports a price book</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"PriceBookID",&#13;
+        "name":"Price Book ID",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-ProductInfoToSiteCatalyst">
+        <object-attribute attribute-id="action">CustomExport-ProductInformationSiteCatalyst</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export Product Info To Site Catalyst</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-ProductInformationReport">
+        <object-attribute attribute-id="action">CustomExport-ProductInformationReport</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export Product Information Report</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-Products">
+        <object-attribute attribute-id="action">CustomExport-Product</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Export Products</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Export-RubberTracksRegistrations">
+        <object-attribute attribute-id="action">CustomExport-RubberTracksRegistrations</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Exports customers who have RubberTracks registra</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"OverwriteExportFile",&#13;
+        "name":"Overwrite export file",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="GenescoInventoryFeedPreProcess">
+        <object-attribute attribute-id="action">CustomImport-InventoryPreProcessUS</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Process Genesco Inventory CSV file and create DW Inventory XML</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"fileName",&#13;
+        "name":"File name (CSV)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"inventoryFileName",&#13;
+        "name":"Inventory XML File Name",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "DELETE",&#13;
+            "KEEP",&#13;
+            "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "-",&#13;
+            "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-ActiveDataFeed">
+        <object-attribute attribute-id="action">CustomImport-ActiveData</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Imports the products active data feeds for the storefront</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"ActiveDataFilePattern",&#13;
+        "name":"Active data file name pattern (for example  \".*\\.csv$\" (*.csv))",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "DELETE",&#13;
+            "KEEP",&#13;
+            "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "-",&#13;
+            "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files (default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-Catalog">
+        <object-attribute attribute-id="action">CustomImport-Catalog</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Imports the categorization of the products for the			storefront</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"CatalogFilePattern",&#13;
+        "name":"Catalog file name pattern ((for example \"^[\\w\\-]{1,}\\.xml$\"(*.xml)))",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"ImportMode",&#13;
+        "name":"Import Mode",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "MERGE",&#13;
+            "REPLACE",&#13;
+            "UPDATE",&#13;
+            "DELETE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"ImportConfiguration",&#13;
+        "name":"Additional Import Configuration (a JSON-Structure for exp. {\"importAttributeDefinitions\":false}",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"RebuildIndexes",&#13;
+        "name":"Rebuild search indexes (product, suggest, synonym)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "DELETE",&#13;
+            "KEEP",&#13;
+            "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "-",&#13;
+            "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-Content">
+        <object-attribute attribute-id="action">CustomImport-Content</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"inputPrefix",&#13;
+        "name":"Input Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "-",&#13;
+            "IMPEX"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"inputFolder",&#13;
+        "name":"Input Folder with Slots XML's",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"filePattern",&#13;
+        "name":"Input File pattern (for example \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"importMode",&#13;
+        "name":"Import Mode",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "MERGE",&#13;
+            "REPLACE",&#13;
+            "UPDATE",&#13;
+            "DELETE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive fodler",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "DELETE",&#13;
+            "KEEP",&#13;
+            "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "-",&#13;
+            "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-CreateDYOPerpetualInventory">
+        <object-attribute attribute-id="action">CustomImport-EMEAPerpetualInventory</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"inventoryFileName",&#13;
+        "name":"Inventory file name pattern (for example \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"InventoryFilePattern",&#13;
+        "name":"Inventory file name pattern (for example \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"ImportMode",&#13;
+        "name":"Import Mode",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "MERGE",&#13;
+             "REPLACE",&#13;
+             "UPDATE",&#13;
+             "DELETE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "DELETE",&#13;
+             "KEEP",&#13;
+             "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "-",&#13;
+             "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-CustomObjects">
+        <object-attribute attribute-id="action">CustomImport-CustomObjects</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Import custom objects</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"CustomObjectsFilePattern",&#13;
+        "name":"Custom objects file name pattern (for example \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"ImportMode",&#13;
+        "name":"Import Mode",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "MERGE",&#13;
+            "REPLACE",&#13;
+            "UPDATE",&#13;
+            "DELETE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "DELETE",&#13;
+            "KEEP",&#13;
+            "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "-",&#13;
+            "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-Customers">
+        <object-attribute attribute-id="action">CustomImport-Customers</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Import customers</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"CustomersFilePattern",&#13;
+        "name":"Customers file name pattern (for example \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"ImportMode",&#13;
+        "name":"Import Mode",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "MERGE",&#13;
+            "REPLACE",&#13;
+            "UPDATE",&#13;
+            "DELETE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "DELETE",&#13;
+            "KEEP",&#13;
+            "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "-",&#13;
+            "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-EmployeeRecords">
+        <object-attribute attribute-id="action">CustomImport-NikeVerifyEmployees</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Imports employee data from Nike to update eligibility status for EMEA employee discount</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"fileNamePattern",&#13;
+        "name":"Nike employee file name pattern ((for example \"^[\\w\\-]{1,}\\.csv))",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "DELETE",&#13;
+            "KEEP",&#13;
+            "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "-",&#13;
+            "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-Inventory">
+        <object-attribute attribute-id="action">CustomImport-Inventory</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Imports the inventory of the products for the storefront</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"InventoryFilePattern",&#13;
+        "name":"Inventory file name pattern (for example \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"ImportMode",&#13;
+        "name":"Import Mode",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "MERGE",&#13;
+             "REPLACE",&#13;
+             "UPDATE",&#13;
+             "DELETE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "DELETE",&#13;
+             "KEEP",&#13;
+             "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "-",&#13;
+             "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-NikeOMSRequests">
+        <object-attribute attribute-id="action">CustomImport-NikeOMSRequests</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Imports Nike OMS statuses</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"fileName",&#13;
+        "name":"File name (CSV)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "DELETE",&#13;
+            "KEEP",&#13;
+            "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "-",&#13;
+            "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-OrderTracking">
+        <object-attribute attribute-id="action">CustomImport-OrderTracking</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Imports integration specific order IDs and shipment tracking info</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"fileName",&#13;
+        "name":"File name (CSV)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"importType",&#13;
+        "name":"Import Type",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "Inline",&#13;
+            "DYO"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "DELETE",&#13;
+            "KEEP",&#13;
+            "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "-",&#13;
+            "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-OrderTrackingArvato">
+        <object-attribute attribute-id="action">CustomImport-OrderTrackingArvato</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Imports Order Status and Shipment Tracking info from Arvato</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"fileName",&#13;
+        "name":"File name (XML)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"importType",&#13;
+        "name":"Import Type",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "Inline",&#13;
+            "DYO"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "DELETE",&#13;
+            "KEEP",&#13;
+            "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "-",&#13;
+            "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-Slots">
+        <object-attribute attribute-id="action">CustomImport-Slots</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"inputPrefix",&#13;
+        "name":"Input Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "-",&#13;
+             "IMPEX"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"inputFolder",&#13;
+        "name":"Input Folder with Slots XML's",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"filePattern",&#13;
+        "name":"Input File pattern (for example \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"importMode",&#13;
+        "name":"Import Mode",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "MERGE",&#13;
+             "REPLACE",&#13;
+             "UPDATE",&#13;
+             "DELETE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "DELETE",&#13;
+             "KEEP",&#13;
+             "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "-",&#13;
+             "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-Stores">
+        <object-attribute attribute-id="action">CustomImport-Stores</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Import stores</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+     {&#13;
+        "id":"StoresFilePattern",&#13;
+        "name":"Stores file name pattern (for example \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"ImportMode",&#13;
+        "name":"Import Mode",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "MERGE",&#13;
+            "REPLACE",&#13;
+            "UPDATE",&#13;
+            "DELETE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "DELETE",&#13;
+            "KEEP",&#13;
+            "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "-",&#13;
+            "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Import-pricebook">
+        <object-attribute attribute-id="action">CustomImport-Prices</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Imports the prices of the products for the storefront</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"PricebookFilePattern",&#13;
+        "name":"Price book file name pattern (for example \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"ImportMode",&#13;
+        "name":"Import Mode",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "MERGE",&#13;
+             "REPLACE",&#13;
+             "UPDATE",&#13;
+             "DELETE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFiles",&#13;
+        "name":"Put processed files into archive folder",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "DELETE",&#13;
+             "KEEP",&#13;
+             "MOVE_TO_ARCHIVE"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"archivePrefix",&#13;
+        "name":"Archive Folder Prefix",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+             "-",&#13;
+             "IMPEX"&#13;
+        ],&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"archiveFolder",&#13;
+        "name":"Archive folder for processed files(default ./archive relative to Input Folder)",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Processing-DYOEmailProcessing">
+        <object-attribute attribute-id="action">CustomProcessing-ProcessEmails</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Process the DYO items and preparing the items for sending</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Processing-DYOSendEmails">
+        <object-attribute attribute-id="action">CustomProcessing-SendEmails</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Sending emails for DYO item status changes</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Processing-ReportOfflineWithInventory">
+        <object-attribute attribute-id="action">CustomProcessing-ReportOfflineWithInventory</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Sends report for produtcs that are offline with inventory</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    }
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Processing-ReportOnlineWithoutInventory">
+        <object-attribute attribute-id="action">CustomProcessing-ReportOnlineWithoutInventory</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Sends report for produtcs that are online with no inventory</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"FileDirectoryPath",&#13;
+        "name":"File directory path (relative to /IMPEX/src)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FileNamePrefix",&#13;
+        "name":"File name prefix",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    }
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Processing-SetAllRefinementSizes">
+        <object-attribute attribute-id="action">CustomProcessing-SetAllRefinementSizes</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Set All Refinement Sizes</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"Overwrite",&#13;
+        "name":"Overwrite refinement sizes",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Rebuild indexes">
+        <object-attribute attribute-id="action">GeneralComponent-RebuildIndexes</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Rebuilds the indexes that are configured</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"ProductIndexes",&#13;
+        "name":"Rebuild product related search indexes(product, suggest, synonym)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"AvailabilityIndex",&#13;
+        "name":"Rebuild availability search indexes",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"ContentIndex",&#13;
+        "name":"Rebuild content search indexes",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="RebuildActiveDataIndex">
+        <object-attribute attribute-id="action">GeneralComponent-RebuildActiveDataIndex</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Rebuilds the Active-Data indexes</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"Asynchronous",&#13;
+        "name":"Asynchronous Indexer-Mode ('False' for Synchronous Index-Mode)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"FullRebuild",&#13;
+        "name":"Full Index-Rebuild ('False' for Incremental Index-Rebuild)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"RebuildAllSites",&#13;
+        "name":"Index-Rebuild for All Sites ('False' to Rebuild the Indexes only on the Current Site)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="RebuildContentSearchIndex">
+        <object-attribute attribute-id="action">GeneralComponent-RebuildContentSearchIndex</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Rebuilds the Content-Search indexes</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"Asynchronous",&#13;
+        "name":"Asynchronous Indexer-Mode ('False' for Synchronous Index-Mode)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"FullRebuild",&#13;
+        "name":"Full Index-Rebuild ('False' for Incremental Index-Rebuild)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"RebuildAllSites",&#13;
+        "name":"Index-Rebuild for All Sites ('False' to Rebuild the Indexes only on the Current Site)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="RebuildProductAvailabilityIndex">
+        <object-attribute attribute-id="action">GeneralComponent-RebuildProductAvailabilityIndex</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Rebuilds the Product-Availability indexes</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"Asynchronous",&#13;
+        "name":"Asynchronous Indexer-Mode ('False' for Synchronous Index-Mode)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"FullRebuild",&#13;
+        "name":"Full Index-Rebuild ('False' for Incremental Index-Rebuild)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"RebuildAllSites",&#13;
+        "name":"Index-Rebuild for All Sites ('False' to Rebuild the Indexes only on the Current Site)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="RebuildProductSearchIndex">
+        <object-attribute attribute-id="action">GeneralComponent-RebuildProductSearchIndex</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Rebuilds the Product-Search indexes</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"Asynchronous",&#13;
+        "name":"Asynchronous Indexer-Mode ('False' for Synchronous Index-Mode)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"FullRebuild",&#13;
+        "name":"Full Index-Rebuild ('False' for Incremental Index-Rebuild)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"RebuildAllSites",&#13;
+        "name":"Index-Rebuild for All Sites ('False' to Rebuild the Indexes only on the Current Site)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="RebuildSearchRedirectIndex">
+        <object-attribute attribute-id="action">GeneralComponent-RebuildSearchRedirectIndex</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Rebuilds the Search-Redirect indexes</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"Asynchronous",&#13;
+        "name":"Asynchronous Indexer-Mode ('False' for Synchronous Index-Mode)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"FullRebuild",&#13;
+        "name":"Full Index-Rebuild ('False' for Incremental Index-Rebuild)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"RebuildAllSites",&#13;
+        "name":"Index-Rebuild for All Sites ('False' to Rebuild the Indexes only on the Current Site)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="RebuildSuggestIndex">
+        <object-attribute attribute-id="action">GeneralComponent-RebuildSuggestIndex</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Rebuilds the Suggestion indexes</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"Asynchronous",&#13;
+        "name":"Asynchronous Indexer-Mode ('False' for Synchronous Index-Mode)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"FullRebuild",&#13;
+        "name":"Full Index-Rebuild ('False' for Incremental Index-Rebuild)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"RebuildAllSites",&#13;
+        "name":"Index-Rebuild for All Sites ('False' to Rebuild the Indexes only on the Current Site)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="RebuildSynonymIndex">
+        <object-attribute attribute-id="action">GeneralComponent-RebuildSynonymIndex</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Rebuilds the Synonym indexes</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"Asynchronous",&#13;
+        "name":"Asynchronous Indexer-Mode ('False' for Synchronous Index-Mode)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"FullRebuild",&#13;
+        "name":"Full Index-Rebuild ('False' for Incremental Index-Rebuild)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"RebuildAllSites",&#13;
+        "name":"Index-Rebuild for All Sites ('False' to Rebuild the Indexes only on the Current Site)",&#13;
+        "type":"boolean",&#13;
+        "mandatory":false&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="TimeCondition">
+        <object-attribute attribute-id="action">GeneralComponent-TimeCondition</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">You can define a time which must be before or after the			current time (the time of execution) to continue. If before is chosen			and the current time is after the defined time, the component will			exit with an error. If after is chosen and the time is not reached			yet, the component is suspended until it is reached. Important note:			Do not define times near the day change, e.g. 23.59 (for after) or			00.01 (for before), this can lead to never ending workflows! Better			is something like 23.00, but this also depends on the number of DW			jobs for executing the workflows.</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"time",&#13;
+        "name":"Time",&#13;
+        "type":"time",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"mode",&#13;
+        "name":"Mode",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "NOW_BEFORE_X",&#13;
+            "NOW_AFTER_X"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Transfer From FTP">
+        <object-attribute attribute-id="action">GeneralTransfer-FromFtp</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Transfer files from a FTP-Location</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"HostURL",&#13;
+        "name":"Host URL",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"UserID",&#13;
+        "name":"User Name",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"Password",&#13;
+        "name":"Password",&#13;
+        "type":"password",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"SecureFtp",&#13;
+        "name":"Type of FTP connection",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "FTP",&#13;
+            "SFTP"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FilePattern",&#13;
+        "name":"Input File pattern to search in local folder(default is \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"SourceFolder",&#13;
+        "name":"Source Folder",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"TargetFolder",&#13;
+        "name":"Local folder in which files will be placed, relative to /IMPEX (Example: src/upload/catalog)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"DeleteFile",&#13;
+        "name":"When file is downloaded, delete or keep it?",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "Delete",&#13;
+            "Keep on server"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Transfer From WebDAV">
+        <object-attribute attribute-id="action">GeneralTransfer-FromWebDAV</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Transfer files from a WebDAV-Location</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"HostURL",&#13;
+        "name":"Host URL",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"UserID",&#13;
+        "name":"User Name",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"Password",&#13;
+        "name":"Password",&#13;
+        "type":"password",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FilePattern",&#13;
+        "name":"Input File pattern to search in local folder(default is \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"SourceFolder",&#13;
+        "name":"Source Folder",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"TargetFolder",&#13;
+        "name":"Local folder in which files will be placed",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"DeleteFile",&#13;
+        "name":"When file is downloaded, delete or keep it?",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "Delete",&#13;
+            "Keep on server"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Transfer To FTP">
+        <object-attribute attribute-id="action">GeneralTransfer-ToFtp</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Transfer files into ftp server</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"HostURL",&#13;
+        "name":"Host URL",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"Port",&#13;
+        "name":"Port",&#13;
+        "type":"int",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"UserID",&#13;
+        "name":"User Name",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"Password",&#13;
+        "name":"Password",&#13;
+        "type":"password",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"SecureFtp",&#13;
+        "name":"Type of FTP connection",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "FTP",&#13;
+            "SFTP"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FilePattern",&#13;
+        "name":"Input File pattern to search in local folder(default is \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"SourceFolder",&#13;
+        "name":"Local folder with files",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"TargetFolder",&#13;
+        "name":"Remote folder of FTP Server",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"ArchiveFile",&#13;
+        "name":"When file is uploaded,move it to archive folder?",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "Keep",&#13;
+            "Move to archive"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Transfer To WebDAV">
+        <object-attribute attribute-id="action">GeneralTransfer-ToWebDAV</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Transfer files into WebDAV server</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"HostURL",&#13;
+        "name":"Host URL",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"UserID",&#13;
+        "name":"User Name",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"Password",&#13;
+        "name":"Password",&#13;
+        "type":"password",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"FilePattern",&#13;
+        "name":"Input File pattern to search in local folder(default is \"^[\\w\\-]{1,}\\.xml$\"(*.xml))",&#13;
+        "type":"string",&#13;
+        "mandatory":false&#13;
+    },&#13;
+    {&#13;
+        "id":"SourceFolder",&#13;
+        "name":"Local folder with files",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"TargetFolder",&#13;
+        "name":"Remote folder of WebDAV Server",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"ArchiveFile",&#13;
+        "name":"When file is uploaded,move it to archive folder?",&#13;
+        "type":"enum",&#13;
+        "enumValues":[&#13;
+            "Keep",&#13;
+            "Move to archive"&#13;
+        ],&#13;
+        "mandatory":true&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Unzip">
+        <object-attribute attribute-id="action">FileUtils-Unzip</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">unzips imported zip files</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"SourceFolder",&#13;
+        "name":"Source Folder -- in which to find the zip, relative to /IMPEX (Example: src/upload/catalog)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    },&#13;
+    {&#13;
+        "id":"ZipFileName",&#13;
+        "name":"Zip File Name (Example: masterCatalog.zip)",&#13;
+        "type":"string",&#13;
+        "mandatory":true&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="WorkflowComponentDefinition" object-id="Workflow-CleanUp">
+        <object-attribute attribute-id="action">Workflow-CleanUp</object-attribute>
+        <object-attribute attribute-id="description" xml:lang="x-default">Removes old custom objects created through the integration framework.</object-attribute>
+        <object-attribute attribute-id="parameters">[&#13;
+    {&#13;
+        "id":"workflowMaximumObjectAgeBeforeDeletion",&#13;
+        "name":"Maximum age of integration framework object before deletion",&#13;
+        "type":"int",&#13;
+        "mandatory":true&#13;
+    }&#13;
+]</object-attribute>
+    </custom-object>
+
+</custom-objects>

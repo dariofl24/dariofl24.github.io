@@ -1,0 +1,62 @@
+importPackage( dw.system );
+importPackage( dw.util );
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/command/HttpClientCommand.ds");
+importScript("int_nike:customization/objects/AddItemToLockerRequest.ds");
+importScript("int_nike:customization/objects/AddItemToLockerResponse.ds");
+
+(function(){
+    var AddItemToLockerRequest = integration.nike.customization.AddItemToLockerRequest;
+    var AddItemToLockerResponse = integration.nike.customization.AddItemToLockerResponse;
+
+    var AddItemToLocker = converse.webservices.command.HttpClientCommand.extend({
+        
+        init: function(userEmail : String, userDefinedName : String, metricId : String, returnUrl : String) {
+            this.userEmail = userEmail;
+            this.userDefinedName = userDefinedName;
+            this.metricId = metricId;
+            this.returnUrl = returnUrl;
+            this.logger = Logger.getLogger("CUSTOMIZATION");
+        },
+        
+        createRequest: function () {
+            this.requestObject = new AddItemToLockerRequest(
+                this.userEmail,
+                this.userDefinedName,
+                this.metricId,
+                this.returnUrl
+            );
+            
+            return this.requestObject;
+        },
+        
+        getServiceUrl : function () {
+            return this.configuration.nikeidDomain + this.configuration.addItemToLockerUri;
+        },
+        
+        execute: function(request) {
+            let url = this.getServiceUrl();
+            let parameters = request.getParameters(); 
+
+            this.logger.info("Adding item to locker={0} from Nike", parameters);
+
+            let response = this.doPost(url, this.encodeParameters(parameters));
+            
+            this.logger.info("Response got from Nike for ={0}", parameters);
+            
+            return response;
+        },
+        
+        handleResponse: function(response) {
+            this.responseObject = new AddItemToLockerResponse( this.serviceClient.statusCode, response);
+        },
+        
+        handleFailure: function(exception) {
+            this.responseObject = new AddItemToLockerResponse( this.serviceClient.statusCode, exception);
+        }
+    });
+    
+    var ns = Namespace.extendFromString(integration, "nike.customization.command");
+    Namespace.extend(ns, { AddItemToLocker: AddItemToLocker });
+})();

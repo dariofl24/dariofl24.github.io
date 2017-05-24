@@ -1,0 +1,17 @@
+/* login pages */
+/* ------------------------------------- */
+/* constants file for scss variable values */
+/* line 5, ../css/package/sass/login_pages.scss */
+.login-box {
+  background: none repeat scroll 0 0 #EFEEE8;
+  margin: 0 0 2em;
+}
+/* line 9, ../css/package/sass/login_pages.scss */
+.login-box h3 {
+  margin: 0;
+}
+
+/* line 14, ../css/package/sass/login_pages.scss */
+.login-box-content {
+  padding: 0.5em 1.5em;
+}

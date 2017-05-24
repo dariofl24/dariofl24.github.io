@@ -1,0 +1,23 @@
+---
+:archive_dir: /home/demandware/outgoing_archive/arvato
+:archive_max: 50
+:delimiter: "|"
+:fn_pattern: "*.xml"
+:garbage_can: /var/opt/garbage_can
+:in_dir: /home/arvato/drop_off
+:integration: Arvato
+:metadata_filename: metadata.txt
+:mkdirs:
+    - :archive_dir
+    - :out_dirs
+    - :work_dir
+:notification:
+    :to_addrs: 
+         - confoo-reports-jobs@lists.tacitknowledge.com
+:out_dirs: 
+    - /home/demandware/outgoing/arvato
+    - /home/demandware/staging/arvato
+:schema_associations:
+    ^Inventory_[\w{}-]*\.xml$: inventory.xsd
+:schema_dir: /home/demandware/schemas
+:work_dir: /var/tmp/arvato

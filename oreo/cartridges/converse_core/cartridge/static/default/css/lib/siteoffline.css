@@ -1,0 +1,23 @@
+body {
+    background-color: #1F1F1F;
+}
+#container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.imgcontainer {
+    max-width: 100%;
+    width: 955px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.imgcontainer img {
+    max-width: 100%;
+    height: auto;
+}

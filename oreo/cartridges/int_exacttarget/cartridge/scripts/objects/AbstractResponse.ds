@@ -1,0 +1,30 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_exacttarget:ExactTargetConstants.ds");
+
+(function() {
+    
+    var ET_NS = integration.exacttarget;
+    
+    var ExactTargetConstants = ET_NS.ExactTargetConstants;
+    var Status = ExactTargetConstants.Status;
+
+    var AbstractResponse = Class.extend({
+        init: function(response: Object) {
+            this.response = response;
+        },
+
+        isStatusSuccess: function() {
+            var status = this.response.getOverallStatus();
+            return status && status === Status.OK;
+        }
+    });
+
+    var ns = Namespace.extendFromString(ET_NS, "objects");
+    Namespace.extend(ns, { AbstractResponse: AbstractResponse });
+
+})();

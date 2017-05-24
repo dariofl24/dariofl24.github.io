@@ -1,0 +1,28 @@
+<isscript>
+    importScript("constants.ds");
+</isscript>
+
+<isdecorate template="account/pt_family">
+<isinclude template="util/modules"/>
+
+<div class="family-content">
+    <div class="header">
+        <div class="hc">
+            <div class="hc-content">
+                <h1 class="title">${Resource.msg('family.myfamily','family',null)}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="hc">
+        <div class="description hc-content">
+            <p>${Resource.msg('family.myfamily.details','family',null)}</p>
+        </div>
+    </div>
+    <div id="family-members-container" class="hc">
+        <isinclude template="account/myfamily/familymemberslist"/>
+    </div>
+    <div id="add-family-member-container" class="hc">
+        <isinclude template="account/myfamily/addfamilymemberform"/>
+    </div>
+</div>
+</isdecorate>

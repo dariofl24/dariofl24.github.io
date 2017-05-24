@@ -1,0 +1,131 @@
+importPackage(dw.value)
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function(){
+    
+    var MockPopulateShipment = Class.extend({
+        
+        init : function (shippingAddress){
+            this.shippingAddress = shippingAddress;
+        },
+        
+        getShippingAddress : function(){
+            return this.shippingAddress;
+        }
+    });
+    
+    var MockPopulateOrderAddress = Class.extend({
+        
+        init : function(){
+        },
+        
+        getFirstName : function() : String{
+            return this.firstName;
+        },
+        
+        setFirstName : function(firstName : String){
+            this.firstName = firstName;
+        },
+        
+        getLastName : function() {
+            return this.lastName;
+        },
+        
+        setLastName : function(lastName : String){
+            this.lastName = lastName;
+        },
+        
+        getAddress1 : function() : String{
+            return this.address1;
+        },
+        
+        setAddress1 : function(address1 : String){
+            this.address1 = address1;
+        },
+        
+        getAddress2 : function() : String{
+            return this.address2;
+        },
+        
+        setAddress2 : function(address2 : String) : String{
+            this.address2 = address2;
+        },
+        
+        getCity : function() : String{
+            return this.city;
+        },
+        
+        setCity : function(city : String) {
+            this.city = city;
+        },
+        
+        getStateCode : function() : String{
+            return this.stateCode;
+        },
+        
+        setStateCode : function(stateCode : String) {
+            this.stateCode = stateCode;
+        },
+        
+        getCountryCode : function() : String{
+            return this.countryCode;
+        },
+        
+        setCountryCode : function(countryCode :String) :String {
+            this.countryCode = countryCode;
+        },
+        
+        getPostalCode : function() : String{
+            return this.postalCode;
+        },
+        
+        setPostalCode : function(postalCode : String){
+            this.postalCode = postalCode;
+        },
+        
+        getPhone : function() : String{
+            return this.phone;
+        },
+        
+        setPhone : function(phone : String){
+            this.phone = phone;
+        }
+    });
+            
+    var MockPopulateBasket = Class.extend({
+        
+        init : function( shipmentList : Collection, billingAddress : MockPopulateOrderAddress){
+            this.shipmentList = shipmentList;
+            this.billingAddress = billingAddress;
+            this.customerEmail = "";
+        },
+        
+        getShipments : function() : Collection{
+            return this.shipmentList;
+        },
+        
+        getBillingAddress : function() : MockPopulateOrderAddress{
+            return this.billingAddress;
+        },
+        
+        setCustomerEmail : function(email){
+            this.customerEmail = email;
+        },
+        getCustomerEmail : function(){
+            return this.customerEmail;
+        }
+    });
+    
+    Namespace.extend(converse, {
+        test: {
+            mocks: {
+                MockPopulateBasket: MockPopulateBasket,
+                MockPopulateShipment: MockPopulateShipment,
+                MockPopulateOrderAddress: MockPopulateOrderAddress
+            }
+        }
+    }); 
+})();

@@ -1,0 +1,39 @@
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage( dw.catalog );
+importScript("constants.ds");
+
+function whichGenderRefined(searchresult) {
+    if (searchresult.isRefinedByAttributeValue('gender', 'Men')) {
+        return 'M';
+    } else if (searchresult.isRefinedByAttributeValue('gender', 'Women')) {
+        return 'W';
+    } else if (searchresult.isRefinedByAttributeValue('gender', 'Kids')) {
+        return 'K';
+    } else {
+        return false;
+    }
+}
+
+function filterSizeRefinementsByGender(allRefinementValues : Collection, searchresult : ProductSearchModel) {
+
+    var gender : String = whichGenderRefined(searchresult);
+    var refinements : Iterator = allRefinementValues.iterator();
+    var newRefinements : Collection = new ArrayList;
+    newRefinements.addAll(allRefinementValues);
+    
+    while (refinements.hasNext()) {
+        let refinement = refinements.next();
+        
+        if (gender === 'K') {
+            if (!empty(refinement.presentationID) && refinement.displayValue.charAt(0) === 'M' || refinement.displayValue.charAt(0) === 'W') {
+                newRefinements.remove(refinement);
+            }
+        } else if (!empty(refinement.presentationID) && refinement.displayValue.charAt(0) != gender) {
+            newRefinements.remove(refinement);
+        }
+    }
+    
+    return newRefinements;
+
+}

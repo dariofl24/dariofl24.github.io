@@ -1,0 +1,30 @@
+/**
+ * @input Basket: dw.order.Basket 
+ * @input Order: dw.order.Order 
+ * @output CentinelLookupResult: Object
+ * @output CentinelAuthenticated: Boolean
+ */
+
+importPackage( dw.system );
+importPackage( dw.order );
+
+importScript( "converse_core:constants.ds" );
+
+function execute( args : PipelineDictionary ) : Number
+{
+    var paymentInstruments : dw.util.Collection;
+
+    if(args.Order){
+        paymentInstruments = args.Order.getPaymentInstruments(converse.constants.PaymentMethodId.PayPal);
+    } else {
+        paymentInstruments = args.Basket.getPaymentInstruments(converse.constants.PaymentMethodId.PayPal);	
+    }
+
+    if (paymentInstruments.length > 0) {
+        var paymentInstrument = paymentInstruments[0];
+        args.CentinelLookupResult = JSON.parse(paymentInstrument.custom.centinelLookupResult);
+        args.CentinelAuthenticated = paymentInstrument.custom.authenticated;
+    }
+
+    return PIPELET_NEXT;
+}

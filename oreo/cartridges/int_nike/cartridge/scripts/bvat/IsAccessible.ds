@@ -1,0 +1,25 @@
+/**
+ * This script calls Nike service to check accessibility state of the user.
+ *
+ * @input Employee : dw.customer.Profile The employee.
+ *
+ * @output IsAccessible : Boolean The flag indicating employee's accessibility state.
+ * @output ErrorMsg : String The error message in case of a call failure.
+ */
+importPackage(dw.system);
+importPackage(dw.customer);
+
+importScript("converse_core:constants.ds");
+importScript("int_nike:bvat/EmployeeVerificationService.ds");
+
+function execute(args : PipelineDictionary) : Number
+{
+    var service = new integration.nike.bvat.EmployeeVerificationService();
+    
+    var result = service.isAccessible(args.Employee.custom.employeeBvatID, args.Employee.custom.employeeActive);
+    
+    args.IsAccessible = result.isAccessible;
+    args.ErrorMsg = result.errorMsg;
+
+    return result.isAccessible ? PIPELET_NEXT : PIPELET_ERROR;
+}

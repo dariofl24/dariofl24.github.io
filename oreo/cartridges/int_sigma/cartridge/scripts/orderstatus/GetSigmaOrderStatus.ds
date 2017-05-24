@@ -1,0 +1,36 @@
+/**
+ * @input  Order : dw.order.Order
+ *
+ * @output OrderStatus : Object The object containing "inline" and "dyo" shipment statuses.
+ * @output ErrorMsg : String The error message if any.
+ */
+importPackage(dw.system);
+importPackage(dw.order);
+
+importScript("converse_core:constants.ds");
+
+importScript("orderstatus/services/SigmaOrderStatusService.ds");
+
+var logger : Logger = Logger.getLogger('SigmaOrderStatus');
+
+function execute(args : PipelineDictionary) : Number
+{
+    var order : Order = args.Order;
+
+    var orderStatus = null;
+    var errorMsg : String = null;
+    try {
+        let SigmaOrderStatusService = integration.sigma.orderstatus.SigmaOrderStatusService;
+
+        orderStatus = SigmaOrderStatusService.getOrderStatus(order);
+    }
+    catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+
+    args.OrderStatus = orderStatus;
+    args.ErrorMsg = errorMsg;
+
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}

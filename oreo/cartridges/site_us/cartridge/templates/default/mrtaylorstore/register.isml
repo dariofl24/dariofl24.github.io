@@ -1,0 +1,183 @@
+<isscript>
+    var HtmlHeadTemplates = HtmlHeadTemplates || [];
+    HtmlHeadTemplates.push("mrtaylorstore/onload_mrtaylor_head");
+</isscript>
+
+<isdecorate template="content/home/pt_storefront">
+    <isinclude template="util/modules"/>
+
+    <div id="mr-taylor-header" class="page-header">
+        <h1>${Resource.msg('mrtaylorstore.signup','mrtaylorstore',null)}</h1>
+    </div>
+    
+    <div id="mr-taylor-container" class="clearfix">
+        <isfirstformgrouperror form="${pdict.CurrentForms.mrtaylorstore}"/>
+        
+        <h2><iscontentasset aid="mrtaylorstore-signup-details"/></h2>
+
+        <div id="mr-taylor-left-container">
+            <isif condition="${pdict.IsRegistered}">
+                <p>${Resource.msg('mrtaylorstore.employee.registered','mrtaylorstore',null)}</p>
+            <iselse>
+                <p>${Resource.msg('mrtaylorstore.employee.unregistered','mrtaylorstore',null)}</p>
+                <p>${Resource.msg('mrtaylorstore.moreinfo','mrtaylorstore',null)}</p>
+            </isif>
+        </div>
+
+        <form 
+            id="register-employee-form" 
+            name="${pdict.CurrentForms.mrtaylorstore.htmlName}" 
+            action="${URLUtils.httpsContinue()}" 
+            method="post" 
+            data-validate="parsley"
+            autocomplete="off">
+            
+            <isinputfield formfield="${pdict.CurrentForms.mrtaylorstore.customer.email}" type="hidden"/>
+            
+            <div id="password-cell" class="form-row">
+                <ispinputfield 
+                    trigger="keyup"
+                    rowclass="form-column-full" 
+                    formfield="${pdict.CurrentForms.mrtaylorstore.login.password}" 
+                    required_message="${Resource.msg('login.password.missing-error','forms',null)}"
+                    type="password" 
+                    labelkey="${pdict.IsRegistered ? 'label.currentpassword' : 'label.createpassword'}"/>
+            </div>
+            
+            <isif condition="${pdict.IsRegistered}">
+                <div class="form-row">
+            	   <a id="forgot-password" href="${'#'}" title="${Resource.msg('logininclude.forgotpassword','account',null)}">
+                        ${Resource.msg('logininclude.forgotpassword','account',null)}
+                    </a>
+                </div> 
+            </isif>
+            
+            <div id="firstname-cell" class="form-row">
+                <ispinputfield 
+                    trigger="keyup"
+                    rowclass="form-column-full" 
+                    formfield="${pdict.CurrentForms.mrtaylorstore.customer.firstname}" 
+                    required_message="${Resource.msg('mrtaylorstore.firstname.missing-error','forms',null)}"
+                    type="input" />
+            </div>
+            <div id="lastname-cell" class="form-row">
+                <ispinputfield 
+                    trigger="keyup"
+                    rowclass="form-column-full" 
+                    formfield="${pdict.CurrentForms.mrtaylorstore.customer.lastname}" 
+                    required_message="${Resource.msg('mrtaylorstore.lastname.missing-error','forms',null)}"
+                    type="input"/>
+            </div>
+            
+            <isif condition="${!pdict.IsRegistered}">
+                <div id="birthday-cell" class="form-row">
+                    <div class="input-container clearfix">
+                        <iscomment>
+                            TODO: adding force-validation to make sure DOB field is validated by parsley, for any other fields usign parsley validation
+                            the invisible fields will be skipped. This is to ensure we don't brake any other pages.
+                        </iscomment>
+                        <ispinputfield 
+                            xhtmlclass="force-validation date-input-hidden"
+                            rowclass="form-column-full"
+                            formfield="${pdict.CurrentForms.mrtaylorstore.customer.birthday}"
+                            required_message="${Resource.msg('employee.birthday.missing-error','forms',null)}"
+                            type="input"/>
+                        <isinclude template="util/inputfield/date.isml">
+                    </div>
+                </div>
+            </isif>
+            
+            <div id="zip-cell" class="form-row">
+                <ispinputfield
+                    trigger="keyup"
+                    rowclass="form-column-full" 
+                    formfield="${pdict.CurrentForms.mrtaylorstore.customer.regional.zip}" 
+                    required_message="${Resource.msg('employee.zip.missing-error','forms',null)}"
+                    regexp_message="${Resource.msg('profile.ziperror','forms',null)}"
+                    type="input"/>
+            </div>
+
+            <isif condition="${!pdict.IsRegistered}">
+
+                <div id="gender-cell" class="form-row">
+                    <isset name="genderField" value="${pdict.CurrentForms.mrtaylorstore.customer.gender}" scope="page"/>
+                    <label><isprint value="${Resource.msg('profile.gender','forms',null)}"/></label>
+                    <span>
+                        <input type="radio" id="gender-input-male" class="gender-input" name="${genderField.htmlName}" value="1" <isif condition="${genderField.value == 1}">checked="checked"</isif>/>
+                        <label for="gender-input-male">${Resource.msg('profile.gender.male','forms',null)}</label>
+                    </span>
+                    <span>
+                        <input type="radio" id="gender-input-female" class="gender-input" name="${genderField.htmlName}" value="2" <isif condition="${genderField.value == 2}">checked="checked"</isif>/>
+                        <label for="gender-input-female">${Resource.msg('profile.gender.female','forms',null)}</label>
+                    </span>
+                </div>
+
+            </isif>
+                
+            <div id="employeeid-cell" class="form-row">
+                <ispinputfield 
+                    trigger="keyup"
+                    rowclass="form-column-full" 
+                    formfield="${pdict.CurrentForms.mrtaylorstore.customer.employeeid}" 
+                    required_message="${Resource.msg('employee.id.missing-error','forms',null)}"
+                    regexp_message="${Resource.msg('employee.idparseerror','forms',null)}"
+                    input_type="digits" 
+                    type="input" />
+            </div>
+            <div id="last4ssn-cell" class="form-row">
+                <ispinputfield 
+                    trigger="keyup"
+                    rowclass="form-column-full" 
+                    formfield="${pdict.CurrentForms.mrtaylorstore.customer.ssn}" 
+                    required_message="${Resource.msg('employee.ssn.missing-error','forms',null)}"
+                    regexp_message="${Resource.msg('employee.ssnparseerror','forms',null)}"
+                    input_type="digits" 
+                    type="input" />
+            </div>
+
+            <div id="terms-cell" class="form-row">
+                <div class="required">
+                    <label for="${pdict.CurrentForms.mrtaylorstore.customer.terms.htmlName}">
+                        ${Resource.msg('mrtaylorstore.message.agree','mrtaylorstore',null)}
+                        
+                        <a href="${URLUtils.url('MrTaylorStore-TermsAndConditions')}" target="_blank">
+                            ${Resource.msg('mrtaylorstore.message.termsandconditions','mrtaylorstore',null)}
+                        </a>
+                    </label>
+                    <ispinputfield 
+                        label="false"
+                        formfield="${pdict.CurrentForms.mrtaylorstore.customer.terms}"
+                        required_message="${Resource.msg('mrtaylorstore.terms.missing-error','forms',null)}" 
+                        type="checkbox"/>
+                </div>    
+            </div>
+            
+            <div class="form-row button-row">
+                <div class="button-column">
+                    <button id="register-btn" type="submit" name="${pdict.CurrentForms.mrtaylorstore.register.htmlName}" value="${Resource.msg('global.continue','locale',null)}">${Resource.msg('global.continue','locale',null)}</button>
+                    <button id="cancel-btn" class="cancel" type="submit" name="${pdict.CurrentForms.mrtaylorstore.cancel.htmlName}" value="${Resource.msg('global.cancel','locale',null)}">${Resource.msg('global.cancel','locale',null)}</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-column-full">
+                    <label>
+                        <div>${Resource.msg('mrtaylorstore.addfamilylater','mrtaylorstore',null)}</div>
+                        <br/>
+                        <div>
+                            ${Resource.msg('mrtaylorstore.message.faq.part1','mrtaylorstore',null)}
+                            
+                            <a href="${URLUtils.url('MrTaylorStore-FAQ')}" target="_blank">
+                                ${Resource.msg('mrtaylorstore.message.faq.part2','mrtaylorstore',null)}    
+                            </a>
+                            
+                            ${Resource.msg('mrtaylorstore.message.faq.part3','mrtaylorstore',null)}
+                         </div>
+                    </label>
+                </div>
+            </div>
+
+            <input type="hidden" name="${pdict.CurrentForms.mrtaylorstore.secureKeyHtmlName}" value="${pdict.CurrentForms.mrtaylorstore.secureKeyValue}"/>
+        </form>
+    </div>
+    
+</isdecorate>

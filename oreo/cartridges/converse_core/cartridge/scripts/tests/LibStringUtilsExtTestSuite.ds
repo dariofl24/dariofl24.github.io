@@ -1,0 +1,46 @@
+/**
+ * @input Unit: Object
+ */
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:common/libStringUtilsExt.ds");
+
+function execute(args : PipelineDictionary) : Number {
+
+    args.Unit.describe("Lib String Utils Ext Test Suite")
+        .test("tokenize_undefined_returns_empty_array", function () {
+            Assert.isEmpty(StringUtilsExt.tokenize(undefined));
+        })
+        .test("tokenize_nonalphanumeric_only_returns_empty_array", function () {
+            Assert.isEmpty(StringUtilsExt.tokenize(" : ; . , "));
+        })
+        .test("tokenize_one_token_returns_one_element", function () {
+            var result = StringUtilsExt.tokenize("oneWord");
+
+            Assert.isTrue(!empty(result));
+            Assert.isTrue(result.length == 1);
+
+            Assert.isTrue(result[0] === "oneWord");
+        })
+        .test("tokenize_one_token_with_separators_returns_one_element", function () {
+            var result = StringUtilsExt.tokenize("  oneWord; ");
+
+            Assert.isTrue(!empty(result));
+            Assert.isTrue(result.length == 1);
+
+            Assert.isTrue(result[0] === "oneWord");
+        })
+        .test("tokenize_return_many_tokens_from_string", function () {
+            var result = StringUtilsExt.tokenize("First. Second2; third ");
+
+            Assert.isTrue(!empty(result));
+            Assert.isTrue(result.length == 3);
+
+            Assert.isTrue(result[0] === "First");
+            Assert.isTrue(result[1] === "Second2");
+            Assert.isTrue(result[2] === "third");
+        });
+
+    return PIPELET_NEXT;
+}

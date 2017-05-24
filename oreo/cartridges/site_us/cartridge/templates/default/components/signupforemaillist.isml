@@ -1,0 +1,93 @@
+<isinclude template="util/modules"/>
+
+<isscript>
+    importPackage(dw.web);
+    importPackage(dw.system);
+
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:common/libNamespace.ds");
+    importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+
+    var deviceType = pdict.CurrentSession.custom.device;
+    var isMobileDevice = deviceType === 'mobile' || deviceType === 'tablet';
+    var emailDialogHasBeenShown = !empty(request.httpCookies.emailDialogHasBeenShown);
+    var featureEnabled = converse.featuretoggle.FeatureToggleService.isFeatureEnabled('acquire-new-email-address');
+
+    var emailDialogShow = !emailDialogHasBeenShown && !isMobileDevice && featureEnabled && !pdict.CurrentHttpParameterMap.doNotShowSubscribeMsgFlag.booleanValue;
+
+    if (emailDialogShow) {
+        var cookie = new Cookie('emailDialogHasBeenShown', 'true');
+        cookie.setMaxAge(365 * 24 * 3600);
+        cookie.setPath('/');
+        
+        response.addHttpCookie(cookie);
+    }
+</isscript>
+
+<div id="new-email-addresses-container">
+    <div class="close-button"></div>
+
+    <div class="acquire-new-email-address-copy">
+        <iscontentasset aid="acquire-new-email-address-copy"/>
+    </div>
+
+    <div id="new-email-addresses-form-container">
+        <form
+            action="${URLUtils.https('Subscriptions-SignupForEmailListProcess')}"
+            autocomplete="off"
+            id="new-email-addresses-form"
+            method="post"
+            name="${pdict.CurrentForms.newemailaddress.htmlName}"
+            data-validate="parsley"
+            class="suppress">
+
+            <div class="form-row">
+                <ispinputfield
+                    rowclass="form-column-left"
+                    formfield="${pdict.CurrentForms.newemailaddress.email}"
+                    required_message="${Resource.msg('newemailaddress.email.missing-error','forms',null)}"
+                    regexp_message="${Resource.msg('newemailaddress.emailparseerror','forms',null)}"
+                    value1="${Resource.msg('newemailaddress.email.invalid','forms',null)}"
+                    attribute1="data-type-email-message"
+                    maxlength_message="${Resource.msg('newemailaddress.email.maxlength-error','forms',null)}"
+                    type="email"/>
+
+                <ispinputfield
+                    rowclass="form-column-right date-input"
+                    formfield="${pdict.CurrentForms.newemailaddress.birthday}"
+                    required_message="${Resource.msg('newemailaddress.birthday.missing-error','forms',null)}"
+                    regexp="[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}" 
+                    type="pdate"/>
+            </div>
+
+            <div class="form-row error-form"></div>
+
+            <div class="form-row button-row">
+                <div class="button-column">
+                    <button type="submit">
+                        ${Resource.msg('global.submit','locale',null)}
+                    </button>
+                </div>
+            </div>
+
+            <input  class="offered-promotion"
+                    type="hidden"
+                    name="${pdict.CurrentForms.newemailaddress.promotion.htmlName}" />
+
+            <input  type="hidden"
+                    name="${pdict.CurrentForms.newemailaddress.register.htmlName}"
+                    value="Register"/>
+
+            <input  type="hidden"
+                    name="${pdict.CurrentForms.newemailaddress.secureKeyHtmlName}"
+                    value="${pdict.CurrentForms.newemailaddress.secureKeyValue}"/>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        emailDialogShow = <isprint value="${emailDialogShow}" encoding="off"/>
+        app.newEmailAddresses.init();
+    });
+</script>

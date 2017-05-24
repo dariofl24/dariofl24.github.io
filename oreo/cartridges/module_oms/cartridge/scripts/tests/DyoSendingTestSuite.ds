@@ -1,0 +1,445 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("module_oms:processing/DyoSending.ds");
+importScript("module_test:Framework/Assert.ds"); 
+importScript("converse_core:common/libLang.ds");
+
+function execute(args : PipelineDictionary) : Number {
+    let constants = converse.constants;
+
+    let now : Date = new Date();
+    let oneDayAhead = Lang.addDays(now, 1);
+    let twoDaysAgo = Lang.addDays(now, -2);
+    
+    let configuration = {
+        ItemSendingThresholdInHours : 23,
+        EmailFilter : []
+    };
+
+    let DyoSending = new converse.oms.DyoSending(configuration, now);
+
+    DyoSending.getDYOItems = function(order) : Array {
+        return order.items;
+    };
+
+    args.Unit.describe("DYO Sending Suite")
+        .test("Send Email for one item in order", function () {
+            let orders = [
+                {
+                    orderNo : "o1",
+                    custom : { readyToSendEmail : true },
+                    items : [{ 
+                                custom : 
+                                { 
+                                    metricID : "m1", 
+                                    orderInProductionEmailOn : now, 
+                                    orderInProductionEmailWasSent : false
+                                }
+                            }]
+                },
+                {
+                    orderNo : "o2",
+                    custom : { readyToSendEmail : true },
+                    items : [{ 
+                                custom : 
+                                { 
+                                    metricID : "m2", 
+                                    orderInProductionEmailOn : now,
+                                    orderInProductionEmailWasSent : true,
+                                    preparingForShipmentEmailOn : now, 
+                                    preparingForShipmentEmailWasSent : false
+                                }
+                            }]
+                }];
+
+            let result = DyoSending.process(orders);
+
+            Assert.areEqual(2, result.length, "resulting array should have 2 elements");
+
+            Assert.areEqual("o1", result[0].order.orderNo, "Order id for element 0 should be o1");
+            Assert.isFalse(orders[0].custom.readyToSendEmail, "Ready to send email flag for order 0 should be false");
+            Assert.areEqual("m1", result[0].items[0].custom.metricID, "Metric id for element 0, item 0 should be m1");
+            Assert.isTrue(orders[0].items[0].custom.orderInProductionEmailWasSent, "orderInProductionEmailWasSent flag for order 0, item 0 should be true");
+            Assert.areEqual(constants.DyoEmailType.OrderInProduction, result[0].emailType, "Email type for element 0 should be OrderInProduction");
+
+            Assert.areEqual("o2", result[1].order.orderNo, "Order id for element 1 should be o2");
+            Assert.isFalse(orders[1].custom.readyToSendEmail, "Ready to send email flag for order 1 should be false");
+            Assert.areEqual("m2", result[1].items[0].custom.metricID, "Metric id for element 1, item 0 should be m2");
+            Assert.isTrue(orders[1].items[0].custom.preparingForShipmentEmailWasSent, "preparingForShipmentEmailWasSent flag for order 1, item 0 should be true");
+            Assert.areEqual(constants.DyoEmailType.PreparingForShipment, result[1].emailType, "Email type for element 1 should be PreparingForShipment");
+        })
+        .test("Send Email for several items in order, in the same state", function () {
+            let orders = [
+                {
+                    orderNo : "o1",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false
+                            }
+                        },
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m2", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false
+                            }
+                        }]
+                }];
+
+            let result = DyoSending.process(orders);
+
+            Assert.areEqual(1, result.length, "resulting array should have 1 element");
+            Assert.isFalse(orders[0].custom.readyToSendEmail, "Ready to send email flag for order 0 should be false");
+
+            Assert.areEqual("o1", result[0].order.orderNo, "Order id for element 0 should be o1");
+            Assert.areEqual("m1", result[0].items[0].custom.metricID, "Metric id for element 0, item 0 should be m1");
+            Assert.isTrue(orders[0].items[0].custom.orderInProductionEmailWasSent, "orderInProductionEmailWasSent flag for order 0, item 0 should be true");
+            Assert.areEqual("m2", result[0].items[1].custom.metricID, "Metric id for element 0, item 1 should be m2");
+            Assert.isTrue(orders[0].items[1].custom.orderInProductionEmailWasSent, "orderInProductionEmailWasSent flag for order 0, item 1 should be true");
+            Assert.areEqual(constants.DyoEmailType.OrderInProduction, result[0].emailType, "Email type for element 0 should be OrderInProduction");
+        })
+        .test("Send Email for several items in order, in different state", function () {
+            let orders = [
+                {
+                    orderNo : "o1",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false
+                            }
+                        },
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m2", 
+                                orderInProductionEmailOn : twoDaysAgo, 
+                                orderInProductionEmailWasSent : true,
+                                preparingForShipmentEmailOn : now, 
+                                preparingForShipmentEmailWasSent : false
+                            }
+                        }]
+                }];
+
+            let result = DyoSending.process(orders);
+
+            Assert.areEqual(2, result.length, "resulting array should have 2 elements");
+            Assert.isFalse(orders[0].custom.readyToSendEmail, "Ready to send email flag for order 0 should be false");
+
+            Assert.areEqual("o1", result[0].order.orderNo, "Order id for element 0 should be o1");
+            Assert.areEqual("m1", result[0].items[0].custom.metricID, "Metric id for element 0, item 0 should be m1");
+            Assert.isTrue(orders[0].items[0].custom.orderInProductionEmailWasSent, "orderInProductionEmailWasSent flag for order 0, item 0 should be true");
+            Assert.areEqual(constants.DyoEmailType.OrderInProduction, result[0].emailType, "Email type for element 0 should be OrderInProduction");
+
+            Assert.areEqual("o1", result[1].order.orderNo, "Order id for element 1 should be o1");
+            Assert.areEqual("m2", result[1].items[0].custom.metricID, "Metric id for element 1, item 0 should be m2");
+            Assert.isTrue(orders[0].items[1].custom.preparingForShipmentEmailWasSent, "preparingForShipmentEmailWasSent flag for order 0, item 1 should be true");
+            Assert.areEqual(constants.DyoEmailType.PreparingForShipment, result[1].emailType, "Email type for element 1 should be PreparingForShipment");
+        })
+        .test("Ignore if item of same type was sent recently", function () {
+            let orders = [ 
+                {
+                    orderNo : "o1",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : true
+                            }
+                        },
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m2", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false
+                            }
+                        }]
+                }];
+
+            let result = DyoSending.process(orders);
+
+            Assert.isEmpty(result, "Result should be empty");   
+            Assert.isTrue(orders[0].custom.readyToSendEmail, "Ready to send email flag for order 0 should be true");
+
+            Assert.isTrue(orders[0].items[0].custom.orderInProductionEmailWasSent, "orderInProductionEmailWasSent flag for order 0, item 0 should be true");
+            Assert.isFalse(orders[0].items[1].custom.orderInProductionEmailWasSent, "orderInProductionEmailWasSent flag for order 0, item 1 should be false");            
+        })
+        .test("Ignore if not ready to send by datetime", function () {
+            let orders = [
+                {
+                    orderNo : "o1",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : oneDayAhead, 
+                                orderInProductionEmailWasSent : false
+                            }
+                        }]
+                }];
+
+            let result = DyoSending.process(orders);
+
+            Assert.isEmpty(result, "Result should be empty");   
+            Assert.isTrue(orders[0].custom.readyToSendEmail, "Ready to send email flag for order 0 should be true");
+            Assert.isFalse(orders[0].items[0].custom.orderInProductionEmailWasSent, "orderInProductionEmailWasSent flag for order 0, item 0 should be false");            
+        })
+        .test("Ignore if item was already sent (orderInProduction only)", function () {
+            let orders = [
+                {
+                    orderNo : "o1",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : true
+                            }
+                        }]
+                }];
+
+            let result = DyoSending.process(orders);
+
+            Assert.isEmpty(result, "Result should be empty");   
+            Assert.isFalse(orders[0].custom.readyToSendEmail, "Ready to send email flag for order 0 should be false");
+        })
+        .test("Ignore if item was already sent (completely)", function () {
+            let orders = [
+                {
+                    orderNo : "o1",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : true,
+                                preparingForShipmentEmailOn : now, 
+                                preparingForShipmentEmailWasSent : true
+                            }
+                        }]
+                }];
+
+            let result = DyoSending.process(orders);
+
+            Assert.isEmpty(result, "Result should be empty");   
+            Assert.isFalse(orders[0].custom.readyToSendEmail, "Ready to send email flag for order 0 should be false");
+        })
+        .test("ReadyToSend remains true if one of items was ignored", function () {
+            let orders = [ 
+                {
+                    orderNo : "o1",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : oneDayAhead, 
+                                orderInProductionEmailWasSent : false
+                            }
+                        },
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m2", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false
+                            }
+                        }]
+                }];
+
+            let result = DyoSending.process(orders);
+
+            Assert.areEqual(1, result.length, "resulting array should have 1 element");
+            Assert.isTrue(orders[0].custom.readyToSendEmail, "Ready to send email flag for order 0 should be true");
+
+            Assert.areEqual("o1", result[0].order.orderNo, "Order id for element 0 should be o1");
+            Assert.areEqual("m2", result[0].items[0].custom.metricID, "Metric id for element 0, item 0 should be m2");
+
+            Assert.isFalse(orders[0].items[0].custom.orderInProductionEmailWasSent, "orderInProductionEmailWasSent flag for order 0, item 0 should be false");            
+            Assert.isTrue(orders[0].items[1].custom.orderInProductionEmailWasSent, "orderInProductionEmailWasSent flag for order 0, item 1 should be true");
+        })
+        .test("All tracking numbers available if they are different", function () {
+            let orders = [
+                {
+                    orderNo : "o1",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false,
+                                itemTrackingNumber : "m0tr"
+                            }
+                        },
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m2", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false,
+                                itemTrackingNumber : "m0tr"
+                            }
+                        },
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m3", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false,
+                                itemTrackingNumber : "m2tr"
+                            }
+                        }]
+                }];
+
+            let result = DyoSending.process(orders);
+
+            Assert.areEqual(3, result[0].tracking.length, "tracking array should have 3 elements");
+            Assert.areEqual("m0tr", result[0].tracking[0], "First tracking number should be m0tr");
+            Assert.areEqual("m0tr", result[0].tracking[1], "Second tracking number should be m0tr");
+            Assert.areEqual("m2tr", result[0].tracking[2], "Third tracking number should be m2tr");
+        })
+        .test("One tracking number available if all are the same", function () {
+            let orders = [
+                {
+                    orderNo : "o1",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false,
+                                itemTrackingNumber : "tr"
+                            }
+                        },
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m2", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false,
+                                itemTrackingNumber : "tr"
+                            }
+                        }]
+                }];
+
+            let result = DyoSending.process(orders);
+
+            Assert.areEqual(1, result[0].tracking.length, "tracking array should have one element");
+            Assert.areEqual("tr", result[0].tracking[0], "First tracking number should be tr");
+        })
+        .test("Pass any email if filter is empty", function () {
+            let orders = [
+                {
+                    customerEmail: "test@tst.com",
+                    orderNo : "o1",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false,
+                            }
+                        }]
+                }];
+    
+            let configuration = {ItemSendingThresholdInHours : 23, EmailFilter : []};
+            let DyoSendingSpecial = new converse.oms.DyoSending(configuration, now);
+            DyoSendingSpecial.getDYOItems = function(order) : Array {return order.items;};
+
+            let result = DyoSendingSpecial.process(orders);
+
+            Assert.areEqual(1, result.length, "resulting array should have one element");
+            Assert.areEqual("test@tst.com", result[0].order.customerEmail, "Email from order 0 should be test@tst.com");
+        })
+        .test("Pass only emails from filter if filter is not empty", function () {
+            let orders = [
+                {
+                    customerEmail: "test1@tst.com",
+                    orderNo : "o1",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false,
+                            }
+                        }]
+                },
+                {
+                    customerEmail: "test2@tst.com",
+                    orderNo : "o2",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false,
+                            }
+                        }]
+                },
+                {
+                    customerEmail: "test3@tst.com",
+                    orderNo : "o3",
+                    custom : { readyToSendEmail : true },
+                    items : [
+                        { 
+                            custom : 
+                            { 
+                                metricID : "m1", 
+                                orderInProductionEmailOn : now, 
+                                orderInProductionEmailWasSent : false,
+                            }
+                        }]
+                }];
+    
+            let EmailFilter = ["test1@tst.com", "test3@tst.com"];
+
+            let configuration = {ItemSendingThresholdInHours : 23, EmailFilter : EmailFilter};
+            let DyoSendingSpecial = new converse.oms.DyoSending(configuration, now);
+            DyoSendingSpecial.getDYOItems = function(order) : Array {return order.items;};
+
+            let result = DyoSendingSpecial.process(orders);
+
+            Assert.areEqual(2, result.length, "resulting array should have 2 elements");
+            Assert.areEqual("test1@tst.com", result[0].order.customerEmail, "Email from order 0 should be test1@tst.com");
+            Assert.areEqual("test3@tst.com", result[1].order.customerEmail, "Email from order 1 should be test3@tst.com");
+        });
+
+   return PIPELET_NEXT;
+}
+

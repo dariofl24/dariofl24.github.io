@@ -1,0 +1,217 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:cart/CartUtils.ds");
+importScript("converse_core:constants.ds");
+
+function execute(args : PipelineDictionary) : Number {
+    let ProductType = converse.constants.ProductType;
+
+    var PriceAdjustmentMock = Class.extend({
+        init: function() {
+            this.taxRate = 0;
+        },
+
+        updateTax: function(taxRate) {
+            this.taxRate = taxRate;
+        }
+    });
+
+    var BasketMock = Class.extend({
+        init: function() {
+            this.priceAdjustments = new ArrayList();
+            this.shippingPriceAdjustments = new ArrayList();
+            this.shipments = new ArrayList();
+            this.allProductLineItems = new ArrayList();
+        },
+
+        getPriceAdjustments: function() {
+            return this.priceAdjustments;
+        },
+
+        getShippingPriceAdjustments: function() {
+            return this.shippingPriceAdjustments;
+        },
+
+        getMerchandizeTotalGrossPrice: function() {
+            return { value: 42 };
+        },
+
+        getMerchandizeTotalNetPrice: function() {
+            return { value: 40 };
+        },
+
+        setShipments: function(shipments : ArrayList) {
+            this.shipments = shipments;
+        },
+
+        getAllProductLineItems: function() {
+            return this.allProductLineItems;
+        }
+    });
+
+    let createShipment = function(type) : Object{
+        return { custom: { productType : type }};
+    };
+
+    let createProductLineItem = function(uuid : String, productType : String, dateCreated : Date) : Object {
+        return {
+            UUID: uuid,
+            product: {
+                custom: {
+                    productType: {
+                        value: productType
+                    }
+                }
+            },
+            getCreationDate: function() {
+                return dateCreated;
+            },
+            manufacturerSKU: uuid
+        };
+    };
+
+    args.Unit.describe("CartUtils Test Suite")
+        .test("Tax rate is set to zero for basket price adjustments to not interfere with Sigma Tax calculation", function () {
+            var basket = new BasketMock();
+            var priceAdjustment = new PriceAdjustmentMock();
+            basket.priceAdjustments.push(priceAdjustment);
+
+            CartUtils.updateTaxesForBasketPriceAdjustments(basket);
+
+            Assert.areEqual(0, basket.getPriceAdjustments()[0].taxRate);
+        })
+        .test("Tax rate is set to zero for basket shipping price adjustments to not interfere with Sigma Tax calculation", function () {
+            var basket = new BasketMock();
+            var shippingPriceAdjustment = new PriceAdjustmentMock();
+            basket.shippingPriceAdjustments.push(shippingPriceAdjustment);
+
+            CartUtils.updateTaxesForBasketPriceAdjustments(basket);
+
+            Assert.areEqual(0, basket.getShippingPriceAdjustments()[0].taxRate);
+        })
+        .test("Validate basket emptiness check works as expected", function () {
+            var nullBasket = null;
+            Assert.isTrue(CartUtils.empty(nullBasket));
+
+            var emptyBasket = { productLineItems: [] };
+            Assert.isTrue(CartUtils.empty(emptyBasket));
+
+            var notEmptyBasket = { productLineItems: [ {} ] };
+            Assert.isFalse(CartUtils.empty(notEmptyBasket));
+            Assert.isTrue(CartUtils.notEmpty(notEmptyBasket));
+        })
+        .test("Correct list of shipment types present in the basket is returned", function () {
+            let basketMock = new BasketMock();
+            let shipmentTypes : SortedSet;
+
+            basketMock.setShipments(new ArrayList({ custom: { productType : ProductType.Regular }}))
+            shipmentTypes = CartUtils.getGenescoShipmentTypes(basketMock);
+            Assert.areEqual(1, shipmentTypes.length, "incorrect number of shipment types returned");
+            Assert.isTrue(1, shipmentTypes.contains(ProductType.Regular), "regular shipment type expected in the list");
+
+            basketMock.setShipments(new ArrayList({ custom: { productType : ProductType.C1 }}))
+            shipmentTypes = CartUtils.getGenescoShipmentTypes(basketMock);
+            Assert.areEqual(1, shipmentTypes.length, "incorrect number of shipment types returned");
+            Assert.isTrue(1, shipmentTypes.contains(ProductType.C1), "dyo shipment type expected in the list");
+
+            basketMock.setShipments(new ArrayList(createShipment(ProductType.C1), createShipment(ProductType.Regular), createShipment(ProductType.PhysicalGiftCard), createShipment(ProductType.ElectronicGiftCard)))
+            shipmentTypes = CartUtils.getGenescoShipmentTypes(basketMock);
+            Assert.areEqual(2, shipmentTypes.length, "incorrect number of shipment types returned");
+            Assert.isTrue(shipmentTypes.contains(ProductType.C1) && shipmentTypes.contains(ProductType.Regular), "regular and dyo shipment types expected in the list");
+        })
+        .test("The most recently added product line item is correctly returned for a basket and product type", function () {
+            let basketMock = new BasketMock();
+            let LAST_DYO_UUID = "2";
+            let LAST_REGULAR_UUID = "4";
+
+            basketMock.allProductLineItems.add(createProductLineItem("1", ProductType.C1, new Date(111222333)));
+            basketMock.allProductLineItems.add(createProductLineItem("2", ProductType.C1, new Date(111222339)));
+            basketMock.allProductLineItems.add(createProductLineItem("3", ProductType.C1, new Date(111222335)));
+
+            basketMock.allProductLineItems.add(createProductLineItem("4", ProductType.Regular, new Date(111222353)));
+            basketMock.allProductLineItems.add(createProductLineItem("5", ProductType.Regular, new Date(111222349)));
+
+            let lastDYOLineItem = CartUtils.getLastAddedProductLineItem(basketMock, ProductType.C1);
+            let lastRegularLineItem = CartUtils.getLastAddedProductLineItem(basketMock, ProductType.Regular);
+
+            Assert.areEqual(LAST_DYO_UUID, lastDYOLineItem.UUID , "Different DYO product line item expected");
+            Assert.areEqual(LAST_REGULAR_UUID, lastRegularLineItem.UUID, "Different Regular product line item expected");
+        })
+        .test("The most recently added product line item is correctly returned for a basket in case product type not provided", function () {
+            let basketMock = new BasketMock();
+            let LAST_UUID = "4";
+
+            basketMock.allProductLineItems.add(createProductLineItem("1", ProductType.C1, new Date(111222333)));
+            basketMock.allProductLineItems.add(createProductLineItem("2", ProductType.C1, new Date(111222339)));
+            basketMock.allProductLineItems.add(createProductLineItem("3", ProductType.C1, new Date(111222335)));
+
+            basketMock.allProductLineItems.add(createProductLineItem("4", ProductType.Regular, new Date(111222353)));
+            basketMock.allProductLineItems.add(createProductLineItem("5", ProductType.Regular, new Date(111222345)));
+
+            let anyLastLineItem = CartUtils.getLastAddedProductLineItem(basketMock);
+
+            Assert.areEqual(LAST_UUID, anyLastLineItem.UUID , "Different product line item expected");
+        })
+        .test("Should return false if there are no regular items", function () {
+            let basketMock = new BasketMock();
+
+            basketMock.setShipments(new ArrayList(
+                { custom: { productType : ProductType.C1 }},
+                { custom: { productType : ProductType.PhysicalGiftCard }}
+            ));
+
+            let hasRegularItems = CartUtils.hasRegularItems(basketMock);
+
+            Assert.isFalse(hasRegularItems, "It seems that basket has no regular items");
+        })
+        .test("Should return true if there is at least one regular item", function () {
+            let basketMock = new BasketMock();
+
+             basketMock.setShipments(new ArrayList(
+                { custom: { productType : ProductType.Regular }},
+                { custom: { productType : ProductType.C1 }},
+                { custom: { productType : ProductType.PhysicalGiftCard }}
+            ));
+
+            let hasRegularItems = CartUtils.hasRegularItems(basketMock);
+
+            Assert.isTrue(hasRegularItems, "It seems that basket has NO regular items");
+        })
+        .test("Correct list of product's SKU present in the basket is returned", function () {
+            let basketMock = new BasketMock();
+
+            basketMock.allProductLineItems.add(createProductLineItem("1", ProductType.C1, new Date(111222333)));
+            basketMock.allProductLineItems.add(createProductLineItem("2", ProductType.C1, new Date(111222339)));
+            basketMock.allProductLineItems.add(createProductLineItem("3", ProductType.C1, new Date(111222335)));
+
+            basketMock.allProductLineItems.add(createProductLineItem("4", ProductType.Regular, new Date(111222353)));
+            basketMock.allProductLineItems.add(createProductLineItem("5", ProductType.Regular, new Date(111222349)));
+
+            let productSKUList : List = CartUtils.getCartProductSKU(basketMock);
+
+            Assert.areEqual(5, productSKUList.length);
+            Assert.areEqual("1", productSKUList[0]);
+            Assert.areEqual("2", productSKUList[1]);
+            Assert.areEqual("3", productSKUList[2]);
+            Assert.areEqual("4", productSKUList[3]);
+            Assert.areEqual("5", productSKUList[4]);
+        })
+        .test("Empty list is returned when there are no products present in the basket ", function () {
+            let basketMock = new BasketMock();
+
+            let productSKUList : List = CartUtils.getCartProductSKU(basketMock);
+
+            Assert.areEqual(0, productSKUList.length);
+        });;
+
+    return PIPELET_NEXT;
+};

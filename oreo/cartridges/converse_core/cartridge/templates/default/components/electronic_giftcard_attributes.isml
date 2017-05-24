@@ -1,0 +1,15 @@
+<!--- TEMPLATENAME: electronic_giftcard_attributes.isml --->
+<iscomment>electronic gift card</iscomment>
+
+<isset name="p_lineItem" value="${pdict.p_lineitem}" scope="page"/>
+
+<isif condition="${p_lineItem.product.custom.productType == 'electronicgc'}">
+	<div id="giftcard-name">
+		<span class="label">${Resource.msg('global.giftcardName','locale',null)}:</span>
+		<span class="value"><isprint value="${p_lineItem.custom.giftcardName}"/></span>
+	</div>
+	<div id="giftcard-email">
+		<span class="label">${Resource.msg('global.giftcardEmail','locale',null)}:</span>
+		<span class="value"><isprint value="${p_lineItem.custom.giftcardEmail}"/></span>
+	</div>
+</isif>

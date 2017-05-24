@@ -1,0 +1,78 @@
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+    var CardinalConstants = {
+        Messages: {
+            CommunicationErrorNo : '9040',
+            CommunicationErrorDesc : 'Communication Error'
+        },
+        
+        DataFields: {
+            ErrorNo : "ErrorNo",
+            ErrorDesc : "ErrorDesc",
+            StatusCode : 'StatusCode',
+            ReasonCode : 'ReasonCode',
+            ReasonDesc : 'ReasonDesc',
+            OrderId : "OrderId",
+            TransactionId : 'TransactionId',
+            ACSUrl : 'ACSUrl',
+            Payload : 'Payload',
+            Enrolled : 'Enrolled',
+            PAResStatus : 'PAResStatus',
+            SignatureVerification : 'SignatureVerification',
+            ProcessorUserStatus : 'ProcessorUserStatus',
+            ProcessorUserFirstName : 'ProcessorUserFirstName',
+            ProcessorUserLastName : 'ProcessorUserLastName',
+            ProcessorUserEmail : 'ProcessorUserEmail',
+            OverrideAddress : "OverrideAddress",
+            ForceAddress : "ForceAddress",
+            ProcessorShippingFullName : 'ProcessorShippingFullName',
+            ProcessorShippingAddress1 : 'ProcessorShippingAddress1',
+            ProcessorShippingAddress2 : 'ProcessorShippingAddress2',
+            ProcessorShippingCity : 'ProcessorShippingCity',
+            ProcessorShippingState : 'ProcessorShippingState',
+            ProcessorShippingPostalCode : 'ProcessorShippingPostalCode',
+            ProcessorShippingCountryCode : 'ProcessorShippingCountryCode',
+            ProcessorBillingFullName : 'ProcessorBillingFullName',
+            ProcessorBillingAddress1 : 'ProcessorBillingAddress1',
+            ProcessorBillingAddress2 : 'ProcessorBillingAddress2',
+            ProcessorBillingCity : 'ProcessorBillingCity',
+            ProcessorBillingState : 'ProcessorBillingState',
+            ProcessorBillingPostalCode : 'ProcessorBillingPostalCode',
+            ProcessorBillingCountryCode : 'ProcessorBillingCountryCode',
+            ProcessorBillingPhone : 'ProcessorBillingPhone',
+            ShippingMethod : 'ShippingMethod'
+        },
+        
+        StatusCode: {
+            Approved : "Y",
+            Error : "E",
+            Pending : "P",
+            Unavailable : "U"
+        },
+        
+        PaymentStatus: {
+            Available : "Y",
+            Unavailable : "U"
+        },
+        
+        TransactionStatus: {
+            Success : "Y",
+            Canceled : "X",
+            Error : "E"
+        },
+        
+        MessageType: {
+            Lookup: "cmpi_lookup",
+            Authenticate: "cmpi_authenticate",
+            Order: "cmpi_order",
+            Void: "cmpi_void"
+        },
+        
+        OrderDiscountItemIdentifier: "Order Discount"
+    };
+    
+    var ns = Namespace.extendFromString(integration, "cardinal.constants");
+    Namespace.extend(ns, { CardinalConstants : CardinalConstants });
+})();

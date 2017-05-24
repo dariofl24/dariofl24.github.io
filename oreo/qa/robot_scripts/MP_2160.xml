@@ -1,0 +1,2121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="http://www.demandware.com/xml/impex/catalog/2006-10-31" catalog-id="masterCatalog_Converse">
+    <header>
+        <image-settings>
+            <internal-location base-path="/"/>
+            <view-types>
+                <view-type>hi-res</view-type>
+                <view-type>large</view-type>
+                <view-type>medium</view-type>
+                <view-type>small</view-type>
+                <view-type>swatch</view-type>
+            </view-types>
+            <variation-attribute-id>color</variation-attribute-id>
+            <alt-pattern>${productname}</alt-pattern>
+            <title-pattern>${productname}</title-pattern>
+        </image-settings>
+    </header>
+
+    <category category-id="root">
+        <online-flag>true</online-flag>
+        <position>0.0</position>
+        <template/>
+        <page-attributes/>
+    </category>
+
+    <category category-id="imported-products-category">
+        <display-name xml:lang="x-default">Imported Products</display-name>
+        <online-flag>true</online-flag>
+        <parent>root</parent>
+        <position>0.0</position>
+        <template/>
+        <page-attributes/>
+    </category>
+
+    <product product-id="MP_2160">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1</min-order-quantity>
+        <step-quantity>1</step-quantity>
+        <display-name xml:lang="x-default">Chuck Taylor Hollis Thinsulate Boot</display-name>
+        <online-flag>true</online-flag>
+        <available-flag>true</available-flag>
+        <searchable-flag>true</searchable-flag>
+        <images>
+            <image-group view-type="hi-res">
+                <image path="images/products/140163C/140163C_standard.png"/>
+                <image path="images/products/140163C/140163C_shot1.png"/>
+                <image path="images/products/140163C/140163C_shot2.png"/>
+                <image path="images/products/140163C/140163C_shot3.png"/>
+                <image path="images/products/140163C/140163C_shot4.png"/>
+                <image path="images/products/140163C/140163C_shot5.png"/>
+                <image path="images/products/140163C/140163C_shot6.png"/>
+                <image path="images/products/140163C/140163C_shot7.png"/>
+                <image path="images/products/140163C/140163C_shot8.png"/>
+            </image-group>
+            <image-group view-type="hi-res" variation-value="chocolate">
+                <image path="images/products/140163C/140163C_standard.png"/>
+                <image path="images/products/140163C/140163C_shot1.png"/>
+                <image path="images/products/140163C/140163C_shot2.png"/>
+                <image path="images/products/140163C/140163C_shot3.png"/>
+                <image path="images/products/140163C/140163C_shot4.png"/>
+                <image path="images/products/140163C/140163C_shot5.png"/>
+                <image path="images/products/140163C/140163C_shot6.png"/>
+                <image path="images/products/140163C/140163C_shot7.png"/>
+                <image path="images/products/140163C/140163C_shot8.png"/>
+            </image-group>
+        </images>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="brandSegment">all-star</custom-attribute>
+            <custom-attribute attribute-id="core">false</custom-attribute>
+            <custom-attribute attribute-id="cut">Hi</custom-attribute>
+            <custom-attribute attribute-id="gender">men</custom-attribute>
+            <custom-attribute attribute-id="material">Leather</custom-attribute>
+            <custom-attribute attribute-id="merchPlannerCategory">Chuck  Taylor- Extensions</custom-attribute>
+            <custom-attribute attribute-id="pillar">Sneakers</custom-attribute>
+            <custom-attribute attribute-id="productType">regular</custom-attribute>
+            <custom-attribute attribute-id="sizeChart">chuck</custom-attribute>
+            <custom-attribute attribute-id="sizeChartMessaging">Runs a half-size large</custom-attribute>
+        </custom-attributes>
+        <variations>
+            <attributes>
+                <variation-attribute attribute-id="color" variation-attribute-id="color">
+                    <variation-attribute-values>
+                        <variation-attribute-value value="charcoal">
+                            <display-value xml:lang="x-default">Charcoal</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="chocolate">
+                            <display-value xml:lang="x-default">Chocolate</display-value>
+                        </variation-attribute-value>
+                    </variation-attribute-values>
+                </variation-attribute>
+                <variation-attribute attribute-id="size" variation-attribute-id="size">
+                    <variation-attribute-values>
+                        <variation-attribute-value value="030">
+                            <display-value xml:lang="x-default">Men 3 / Women 5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="035">
+                            <display-value xml:lang="x-default">Men 3.5 / Women 5.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="040">
+                            <display-value xml:lang="x-default">Men 4 / Women 6</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="045">
+                            <display-value xml:lang="x-default">Men 4.5 / Women 6.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="050">
+                            <display-value xml:lang="x-default">Men 5 / Women 7</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="055">
+                            <display-value xml:lang="x-default">Men 5.5 / Women 7.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="060">
+                            <display-value xml:lang="x-default">Men 6 / Women 8</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="065">
+                            <display-value xml:lang="x-default">Men 6.5 / Women 8.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="070">
+                            <display-value xml:lang="x-default">Men 7 / Women 9</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="075">
+                            <display-value xml:lang="x-default">Men 7.5 / Women 9.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="080">
+                            <display-value xml:lang="x-default">Men 8 / Women 10</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="085">
+                            <display-value xml:lang="x-default">Men 8.5 / Women 10.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="090">
+                            <display-value xml:lang="x-default">Men 9 / Women 11</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="095">
+                            <display-value xml:lang="x-default">Men 9.5 / Women 11.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="100">
+                            <display-value xml:lang="x-default">Men 10 / Women 12</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="105">
+                            <display-value xml:lang="x-default">Men 10.5 / Women 12.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="110">
+                            <display-value xml:lang="x-default">Men 11 / Women 13</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="115">
+                            <display-value xml:lang="x-default">Men 11.5 / Women 13.5</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="120">
+                            <display-value xml:lang="x-default">Men 12 / Women 14</display-value>
+                        </variation-attribute-value>
+                        <variation-attribute-value value="130">
+                            <display-value xml:lang="x-default">Men 13 / Women 15</display-value>
+                        </variation-attribute-value>
+                    </variation-attribute-values>
+                </variation-attribute>
+            </attributes>
+            <variants>
+                <variant product-id="140163C_030"/>
+                <variant product-id="140163C_035"/>
+                <variant product-id="140163C_040"/>
+                <variant product-id="140163C_045"/>
+                <variant product-id="140163C_050"/>
+                <variant product-id="140163C_055"/>
+                <variant product-id="140163C_060"/>
+                <variant product-id="140163C_065"/>
+                <variant product-id="140163C_070"/>
+                <variant product-id="140163C_075"/>
+                <variant product-id="140163C_080"/>
+                <variant product-id="140163C_085"/>
+                <variant product-id="140163C_090"/>
+                <variant product-id="140163C_095"/>
+                <variant product-id="140163C_100"/>
+                <variant product-id="140163C_105"/>
+                <variant product-id="140163C_110"/>
+                <variant product-id="140163C_115"/>
+                <variant product-id="140163C_120"/>
+                <variant product-id="140163C_130"/>
+            </variants>
+        </variations>
+        <classification-category catalog-id="siteCatalog_Converse_US">MEN - Sneakers</classification-category>
+    </product>
+
+    <category-assignment category-id="imported-products-category" product-id="121085">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="121085a">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="121085b">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="127200C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="127200Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="127200Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="127201C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="127201Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="127201Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="129030C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="129030Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="129030Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135520C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135520Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135520Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135521C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135521Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135521Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135522C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135522Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135522Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135524C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135524Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135524Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135525C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135525Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135525Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135527C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135527Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135527Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135528C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135528Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135528Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135529C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135529Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135529Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135532C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135532Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135532Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135533C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135536C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135536Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135536Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135537C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135537Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135537Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135774C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135774Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="135774Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="137570C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="138613C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="138613Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="138613Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="140785C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="140785Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="140785Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="140785Cc">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="140785Cd">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="140785Ce">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="140785Cf">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="140785Cg">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="140785Ch">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="140785Ci">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="141802C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="141802Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="141802Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="143003C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="144136C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="144137C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="144138C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="144139C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="24680F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="335528C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="335528Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="335528Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="335529C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="335529Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="335529Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="335532C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="335532Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="335532Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="535518C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="535518Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="535518Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="540786C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="540786Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="540786Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="540786Cc">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="540786Cd">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="540786Ce">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="540786Cf">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="540786Cg">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="540786Ch">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="540786Ci">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="544135C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="633177C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="633177Ca">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="633177Cb">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="7/8">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP0015331C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP0015343C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP0015359C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP0015399C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP002456C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP01501312">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP02531C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP03173C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP03189C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP03190C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP03212C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP03384C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP03405C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP03414C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP03423C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP03541C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP0355319C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP03565C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP03568C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP03572C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04654C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04720C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04726C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04730C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04738C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04740C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04741C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04759C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04798C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04809C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04810C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04817C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04829C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04834C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP04996C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05081C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05089C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05148C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05159C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05188C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05219C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05234C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05258C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05265C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05315C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05317C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05318C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05320C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05323C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05331C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05334C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05336C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05342C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05343C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05346C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05347C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05349C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05353C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05354C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05355C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05359C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05361C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05367C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05371C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05372C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05380C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05384C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05395C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05396C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05399C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05416C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05783C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05785C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05831C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05833C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05836C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05839C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05841C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05845C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05846C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05847C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05850C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05867C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05868C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05870C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05872C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05873C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05889C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05891C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05892C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05893C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05896C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05900C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP05909C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06066C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06068C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06071C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06075C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06082C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06083C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06084C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06085C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06087C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06088C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06089C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06355C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP06357C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP07012C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP07981C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP09525C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP09526C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP09538C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP09539C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP09540C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP09561C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP09562C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP09563C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP113981">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP1154676C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP117164">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP117329">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP117344">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP1177339F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP119104F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP120821F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP121767">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP122135F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP122182">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP1234716C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP127220F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP127349F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP128986C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP12988C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP131866C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP131955C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP1324733C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP132853C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP132855C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP132864C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP132869C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP133075C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP135179C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP135300F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP135611F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP135914C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP136112C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP136510C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP136600F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP136601F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP136707C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP136862C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP136947C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP137000C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP137001C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP137371C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP137372C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP137373C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP137374C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP137397C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139672C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139683C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139686C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139687C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139700C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139715C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139716C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139717C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139718C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139721C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139722C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139750C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139750F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139760C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139763F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139831C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139834C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139884C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139966C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139967C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139985C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP139989C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140027C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140028C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140032C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140033C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140096C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140098C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140124C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140125C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140199C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140200C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140201C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140693C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140694C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140696C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140697C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140756C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140757C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140758C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140759C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140760C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140761C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140762C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140763C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140764C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140765C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP140766C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP1411390C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141272C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141391C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141392C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141405C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141406C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141714C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141715C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141716C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141717C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141718C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141719C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141720C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141828C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141829C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141870C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141871C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141872C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141873C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP141969C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP142037C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP142047C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP142069F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP142070F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP142080F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP143160F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP1501312">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP15400C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP188102">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP1881508">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP2409">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP3045371C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP3310647C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP336635F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP3366410C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP337359F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP337734C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP340239F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP340245F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP3865785C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP4057055C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP4611115C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP4814100C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP519203F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP522242F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP5237001C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP5237035C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP525936C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP525937C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP5274611C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP527924C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP529654C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP532135C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP532139C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP532210C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP5340472C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP537074C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP537119C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP537124F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP537125F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP537127F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540223F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540224F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540228F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540232C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540239F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540252F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540256C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540261C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540268C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540271C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540274C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540275C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540276F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540278F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540283F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540319C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540330F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540362C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540363F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540369C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540371C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540377F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540421F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540433C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP540698C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP5648024C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP5652024C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP5656035C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP5658358C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP5660002C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP6065100C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP6065440C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP6067002C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP614985F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP619294F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP624668F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP626767F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP631069C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP631096C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP636379C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP636636F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP637248C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP637265C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP637331F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP637771C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640462F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640469F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640471F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640472F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640486C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640486F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640491F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640496F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640508F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640509F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640510F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640511F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640522F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640523C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640524F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640527C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640539F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640540F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640541F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640542C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640544F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640546C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640550F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640558C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640562C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640563C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640564C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640565C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640575F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP640732C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP641390F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP641391F">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP641870C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMP641872C">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPH1733100">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA41065">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA458002">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA458020">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA458305">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA458740">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA459002">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA459020">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA459433">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA477002">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA477305">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA514002">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA514850">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA551000">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA551020">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA551400">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA551620">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA575000">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA575620">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA576020">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSA576305">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSG40817">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSN704000">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="FMPSN704620">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="GiftCard">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_1238">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_1250">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_1367">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_14001">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_14002">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_1405">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_1420">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_1432">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_1459">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_147">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_148">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_148A">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+    <category-assignment category-id="imported-products-category" product-id="MP_2160">
+        <primary-flag>true</primary-flag>
+    </category-assignment>
+
+</catalog>

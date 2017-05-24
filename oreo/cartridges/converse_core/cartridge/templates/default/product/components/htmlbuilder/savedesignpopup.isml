@@ -1,0 +1,23 @@
+<div>
+    <h2>${Resource.msg('htmlbuilder.savepanel.title','product',null)}</h2>
+
+    <div class="form-container">
+        <img class="dyo-shoe-image" src="">
+
+        <form class="save-design-form" data-validate="parsley">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>${Resource.msg('htmlbuilder.savepanel.inputlabel','product',null)}</label>
+                    <input type="text" data-trigger="keyup" data-required="true" data-required-message="${Resource.msg('htmlbuilder.savepanel.inputdatarequired','product',null)}" data-maxlength="30">
+                    <div class="message-placeholder">
+                        <div class="field-caption">${Resource.msg('htmlbuilder.savepanel.inputdescription','product',null)}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-row">
+                <button class="button save-design">${Resource.msg('htmlbuilder.savepanel.savebutton','product',null)}</button>
+            </div>
+        </form>
+    </div>
+</div>

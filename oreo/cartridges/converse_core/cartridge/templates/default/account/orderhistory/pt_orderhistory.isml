@@ -1,0 +1,53 @@
+<isscript>
+    var pageContext={title:'Order History', type:'OrderHistory', ns:'account'};
+</isscript>
+<isdecorate template="pt_commonlayout">
+    <isinclude template="util/modules" />
+    <div id="main-overlay">
+        <div class="pt_order">
+            <isbanners p_dyo=false />
+            <div id="main" role="main" class="page-content clearfix">
+
+                <div id="order-history-title">
+                    <h1 id="order-history-label">${Resource.msg('orders.orderhistory','account',null)}</h1>
+                </div>
+
+                <div class="primary-focus clearfix">
+                    <div id="primary" class="order-history-primary">
+                        <isreplace/>
+                    </div>
+
+                    <div id="secondary" class="order-history-sidebar">
+                        <div class="order-history-sidebar-inner">
+                            <isif condition="${!empty(pdict.Order)}">
+                                <h4 class="order-summary-title">${Resource.msg('orders.summary','account',null)}</h4>
+                                <div class="order-history-order-totals">
+                                    <isordertotals p_lineitemctnr="${pdict.Order}" p_showshipmentinfo="${false}" p_shipmenteditable="${false}" p_totallabel="${Resource.msg('global.ordertotal','locale',null)}"/>                     
+                                </div>
+                            <iselse>
+                                <div class="info">
+                                    <h4 class="title">${Resource.msg('orders.notavailable', 'account', null)}</h4>
+                                    <p>${Resource.msg('orders.notavailableMessage','account',null)}</p>
+                                </div>
+                            </isif>
+
+                            <div class="info">
+                                <h4 class="title">${Resource.msg('orders.returns', 'account', null)}</h4>
+                                <p>${Resource.msg('orders.returnMessage','account',null)}</p>
+                                </br>
+                                <isif condition="${!pdict.CurrentCustomer.authenticated}">
+                                    <p>${Resource.msg('orders.registerMessage','account',null)} <a href="#register">${Resource.msg('global.here','locale',null)}</a>.</p>
+                                </isif>
+                                </br>
+                                <p><a href="${URLUtils.url('Page-Show', 'cid', 'Your Order-Returns-FAQ')}" alt="${Resource.msg('orders.viewReturnMessage','account',null)}">${Resource.msg('orders.viewReturnMessage','account',null)}</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div><!-- /main -->
+        </div>
+    </div>
+<isinclude template="account/orderhistory/pt_orderhistory_jssources"/>
+</isdecorate>

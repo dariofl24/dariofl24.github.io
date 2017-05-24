@@ -1,0 +1,25 @@
+@import "_constants";
+@import "_conv_mixins";
+@import "_sprites";
+
+%double-arrow-selectbox {
+	$sprite: select_arrow_24;
+	$width: pxtoem(18);
+	$height: pxtoem(23);
+	border-color:$COMMON_SECONDARY_IMPACT_COLOR;
+	border-style:solid;
+	border-width:pxtoem(1);
+	padding:pxtoem(5);
+	height: 1.1em;
+
+	&::after {
+		width: $width;
+		height: $height;
+		position:relative;
+		float:right;
+		top:pxtoem(-5);
+		background: sprite($SPRITEICONS, $sprite) no-repeat white;
+		content: ' ';
+	}
+	margin-left:pxtoem(5);
+}

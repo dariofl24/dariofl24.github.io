@@ -1,0 +1,69 @@
+importPackage( dw.system );
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+importScript("int_nike:NikeConstants.ds");
+
+(function() {
+    var Constants = integration.nike.constants;
+    
+    var XmlObject = Class.extend({
+        init: function(rootElement : XML) {
+            this.xml = rootElement;
+        },
+        
+        getXMLString: function() {
+            return this.getXML().toXMLString();
+        },
+        
+        getXML: function() {
+            return this.xml;
+        }
+    });
+    
+    var NikeCart = XmlObject.extend({
+        init: function(totalItems : Number) {
+            this._super(<cart/>);
+            this.xml.@itemsAdded = 0;
+            this.xml.@totalItems = totalItems;
+        },
+        
+        addSuccessItem: function(item : NikeItem) {
+            this.addItem(item, Constants.Status.Success);
+            this.xml.@itemsAdded = Number(this.xml.@itemsAdded) + 1;
+        },
+        
+        addFailureItem: function(item : NikeItem) {
+            this.addItem(item, Constants.Status.Failure);
+        },
+
+        addDuplicateItem: function(item : NikeItem) {
+            this.addItem(item, Constants.Status.Duplicate);
+        },
+        
+        addItem: function(item : NikeItem, status : String) {
+            item.getXML().@status = status;
+            this.xml.appendChild(item.getXML());
+        }
+    });
+    
+    var NikeItem = XmlObject.extend({
+        init: function(args : Object) {
+            this._super(<item/>);
+            
+            for (let field in args) {
+                this.xml.@[field] = args[field];
+            }
+        }
+    });
+    
+    Namespace.extend(integration, {
+        nike: {
+            customization: {
+                NikeCart : NikeCart,
+                NikeItem : NikeItem
+            }
+        }
+    });
+})();

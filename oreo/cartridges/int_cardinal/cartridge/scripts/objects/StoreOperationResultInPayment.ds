@@ -1,0 +1,26 @@
+/**
+ * @input Success: Boolean Indicates whether or not any errors have happened while processing the request using this particular payment instrument
+ * @input PaymentType: String
+ * @input Basket: dw.order.Basket
+ * @input Order: dw.order.Order  
+ */
+
+importPackage( dw.system );
+importPackage( dw.order );
+
+importScript( "converse_core:constants.ds" );
+
+function execute( args : PipelineDictionary ) : Number
+{
+    var paymentInstrument : OrderPaymentInstrument;
+    
+    if(args.Order){
+	 paymentInstrument = args.Order.getPaymentInstruments(args.PaymentType)[0];
+	} else {
+	 paymentInstrument = args.Basket.getPaymentInstruments(args.PaymentType)[0];
+	}
+    
+    paymentInstrument.custom.processingFailed = !args.Success;
+
+    return PIPELET_NEXT;
+}

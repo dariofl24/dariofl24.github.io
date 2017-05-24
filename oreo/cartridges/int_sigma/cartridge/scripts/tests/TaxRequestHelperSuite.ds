@@ -1,0 +1,153 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("module_test:Framework/Assert.ds"); 
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:cart/objects/BasketSummary.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+importScript("int_sigma:tax/objects/RequestHelpers.ds");
+importScript("SigmaSoapServices.ds");
+importScript("SigmaConstants.ds");
+
+function execute(args : PipelineDictionary) : Number {
+    var SIGMA_OBJ = integration.sigma.tax.objects;
+    var CART_OBJ = cart.objects;
+    var CONSTANTS = converse.constants;
+    var SigmaConstants = integration.sigma.SigmaConstants;
+    var SigmaTaxSoapService = integration.sigma.SigmaTaxSoapService;
+    
+    var REQUEST_ARRAY_LENGHT = 4;
+    var SHIPMENT_UUID = "qw21qw12qw12";
+    var BASE_AMOUNT : Money = new Money("1.0", converse.constants.CurrencyCode);
+    
+    var getShipmentSummary = function() {
+        var shipmentSummary = new CART_OBJ.ShipmentSummary();
+        shipmentSummary.setShippingNetAmount(BASE_AMOUNT);
+        shipmentSummary.setNetAmount(BASE_AMOUNT.multiply(4));
+        shipmentSummary.setShippingMethod({ getSigmaShippingMethodID: function() { return ""; } });
+        
+        var shippingAddress = new CART_OBJ.OrderAddressSummary();
+        shippingAddress.setFirstName("Jora");
+        shippingAddress.setLastName("Shtangentzirkuli");
+        shippingAddress.setAddress1("400 LexingtonAve");
+        shippingAddress.setCity("New York");
+        shippingAddress.setState("NY");
+        shippingAddress.setCountry("US");
+        shippingAddress.setPostalCode("10001");
+        shippingAddress.setPhone("123-899-4561");
+        
+        shipmentSummary.setUUID(SHIPMENT_UUID);
+        shipmentSummary.setShippingAddress(shippingAddress);
+        
+        return shipmentSummary;
+    };
+    
+    var getBillingAddressSummary = function() {
+        var billingAddressSummary = new CART_OBJ.OrderAddressSummary();
+        billingAddressSummary.setFirstName("Misha");
+        billingAddressSummary.setLastName("Cardan");
+        billingAddressSummary.setAddress1("56 OakAve");
+        billingAddressSummary.setCity("Boston");
+        billingAddressSummary.setState("MA");
+        billingAddressSummary.setCountry("US");
+        billingAddressSummary.setPostalCode("34444");
+        billingAddressSummary.setPhone("723-899-4561");
+        
+        return billingAddressSummary;
+    };
+    
+    var mockNonTemplateMethods = function(requestHelper) {
+        requestHelper.setGenericData = function(sigmaOrder) { sigmaOrder.setGenericDataMethodRan = true; };
+        requestHelper.setAddressData = function(sigmaOrder) { sigmaOrder.setAddressDataMethodRan = true; };
+        requestHelper.setItemsData = function(sigmaOrder) { sigmaOrder.setItemsDataMethodRan = true; };
+    };
+    
+    var SigmaTaxSoapServiceMock = SigmaTaxSoapService.extend({
+        initConfiguration: function() {
+            return { "sigmatax.fakepref": "fakevalue"};
+        }
+    });
+    
+    var getSoapClientServiceMock = function() {
+        return { Order: function() {} };
+    };
+
+    args.Unit.describe("Sigma Tax Request Helper Suite")
+        .test("Command factory returns correct request helper considering shipmenttype and promotion availability", function () {
+            var shipmentSummary = new CART_OBJ.ShipmentSummary();
+            
+            shipmentSummary.setProductType(CONSTANTS.ProductType.C1);
+            shipmentSummary.setPriceAdjustments(List.EMPTY_LIST);
+            
+            var dyoRequestHelper = SIGMA_OBJ.RequestHelperFactory.getHelper(null, shipmentSummary, null);
+            Assert.isTrue(dyoRequestHelper instanceof SIGMA_OBJ.DYOOrderRequestHelper, "Should return DYO request helper for C1 shipment");
+            
+            shipmentSummary.setProductType(CONSTANTS.ProductType.Regular);
+            var defaultRequestHelper = SIGMA_OBJ.RequestHelperFactory.getHelper(null, shipmentSummary, null);
+            Assert.isTrue(defaultRequestHelper instanceof SIGMA_OBJ.DefaultOrderRequestHelper, "Should return Default request helper for Regular shipment");
+        })
+        .test("Default_request_helper_build_works_as_expected", function () {
+            var shipmentSummary = getShipmentSummary();
+            var soapClientServiceMock = getSoapClientServiceMock();
+            
+            var dyoRequestHelper = new SIGMA_OBJ.DefaultOrderRequestHelper(soapClientServiceMock, shipmentSummary, null);
+            mockNonTemplateMethods(dyoRequestHelper);
+            
+            var request = dyoRequestHelper.build();
+            
+            var resultSigmaOrder = request[2];
+            
+            Assert.isTrue(resultSigmaOrder.setGenericDataMethodRan, "build template method should have ran setGenericData");
+            Assert.isTrue(resultSigmaOrder.setAddressDataMethodRan, "build template method should have ran setAddressData");
+            Assert.isTrue(resultSigmaOrder.setItemsDataMethodRan, "build template method should have ran setItemsData");
+            
+            Assert.areEqual(REQUEST_ARRAY_LENGHT, request.length, "the legth of the request is incorrect");
+            
+            Assert.areEqual(request[0], SHIPMENT_UUID, "invalid transaction id set for request");
+            Assert.areEqual(request[1], SigmaConstants.ConverseCompanyNumber, "invalid converse company number set for request");
+            Assert.areEqual(request[3], SigmaConstants.DefaultTransactionOrderType);
+        })
+        .test("Default_request_helper_setAddressData", function () {
+            var shipmentSummary = getShipmentSummary();
+            var shippingAddressSummary = shipmentSummary.getShippingAddress();
+            var billingAddressSummary = getBillingAddressSummary();
+            var service = new SigmaTaxSoapServiceMock();
+            var sigmaOrder = new service.webReference.Order();
+            
+            var dyoRequestHelper = new SIGMA_OBJ.DefaultOrderRequestHelper(service.webReference, shipmentSummary, billingAddressSummary);
+            
+            dyoRequestHelper.setAddressData(sigmaOrder);
+            
+            var sigmaShipToAddress = sigmaOrder.getShipToAddress();
+            var sigmaBillToAddress = sigmaOrder.getBillToAddress();
+            
+            Assert.areEqual(shippingAddressSummary.getFirstName(), sigmaShipToAddress.getFirstName(), "'FirstName' does not match!");
+            Assert.areEqual(shippingAddressSummary.getLastName(), sigmaShipToAddress.getLastName(), "'LastName' does not match!");
+            Assert.areEqual("400", sigmaShipToAddress.getStreetNumber(), "'StreetNumber' does not match!");
+            Assert.areEqual("LexingtonAve", sigmaShipToAddress.getStreetName(), "'StreetName' does not match!");
+            Assert.areEqual(shippingAddressSummary.getCity(), sigmaShipToAddress.getCity(), "'City' does not match!");
+            Assert.areEqual(shippingAddressSummary.getState(), sigmaShipToAddress.getState(), "'State' does not match!");  
+            Assert.areEqual(shippingAddressSummary.getPostalCode(), sigmaShipToAddress.getZipCode(), "'ZipCode' does not match!"); 
+            
+            Assert.areEqual(billingAddressSummary.getFirstName(), sigmaBillToAddress.getFirstName(), "'FirstName' does not match!");
+            Assert.areEqual(billingAddressSummary.getLastName(), sigmaBillToAddress.getLastName(), "'LastName' does not match!");
+            Assert.areEqual("56", sigmaBillToAddress.getStreetNumber(), "'StreetNumber' does not match!");
+            Assert.areEqual("OakAve", sigmaBillToAddress.getStreetName(), "'StreetName' does not match!");
+            Assert.areEqual(billingAddressSummary.getCity(), sigmaBillToAddress.getCity(), "'City' does not match!");
+            Assert.areEqual(billingAddressSummary.getState(), sigmaBillToAddress.getState(), "'State' does not match!");  
+            Assert.areEqual(billingAddressSummary.getPostalCode(), sigmaBillToAddress.getZipCode(), "'ZipCode' does not match!"); 
+            
+            Assert.areEqual(SigmaConstants.StandardShippingChargeType, sigmaOrder.getShipChargeType())
+            Assert.areEqual(shippingAddressSummary.getPhone(), sigmaOrder.getPhoneNumber());
+        });
+
+    return PIPELET_NEXT;
+};

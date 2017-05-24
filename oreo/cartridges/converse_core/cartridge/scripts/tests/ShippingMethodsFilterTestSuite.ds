@@ -1,0 +1,96 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:checkout/converse/shipping/classes/ShippingMethodsFilter.ds");
+importScript("module_test:Framework/Assert.ds"); 
+
+function execute(args : PipelineDictionary) : Number {
+    let filter = new ShippingMethodsFilter();
+
+    args.Unit.describe("Shipping Methods Filter Suite")
+        .test("Should match different combinations of PO boxes", function () {
+            let address = { address1: "PO 123" };
+            
+            Assert.isTrue(filter.isPOBoxAddress(address), address.address1 + " should match PO box rules");
+
+            address.address1 = "P O 123";
+            Assert.isTrue(filter.isPOBoxAddress(address), address.address1 + " should match PO box rules");
+            
+            address.address1 = "P.O. 123";
+            Assert.isTrue(filter.isPOBoxAddress(address), address.address1 + " should match PO box rules");
+            
+            address.address1 = "P. O. 123";
+            Assert.isTrue(filter.isPOBoxAddress(address), address.address1 + " should match PO box rules");
+            
+            address.address1 = "PO box 123";
+            Assert.isTrue(filter.isPOBoxAddress(address), address.address1 + " should match PO box rules");
+            
+            address.address1 = "P.O. box 123";
+            Assert.isTrue(filter.isPOBoxAddress(address), address.address1 + " should match PO box rules");
+
+            address.address1 = "P O box 123";
+            Assert.isTrue(filter.isPOBoxAddress(address), address.address1 + " should match PO box rules");
+
+            address.address1 = "P. O. box 123";
+            Assert.isTrue(filter.isPOBoxAddress(address), address.address1 + " should match PO box rules");
+        })
+        .test("Should match different combinations of APO, DPO, FPO boxes", function () {
+            let address = { city: "APO" };
+
+            Assert.isTrue(filter.isAPOFPOAddress(address), address.city + " should match A/D/FPO box rules");
+
+            address.city = "A P O";
+            Assert.isTrue(filter.isAPOFPOAddress(address), address.city + " should match A/D/FPO box rules");
+
+            address.city = "DPO";
+            Assert.isTrue(filter.isAPOFPOAddress(address), address.city + " should match A/D/FPO box rules");            
+
+            address.city = "D P O";
+            Assert.isTrue(filter.isAPOFPOAddress(address), address.city + " should match A/D/FPO box rules");            
+
+            address.city = "FPO";
+            Assert.isTrue(filter.isAPOFPOAddress(address), address.city + " should match A/D/FPO box rules");            
+
+            address.city = "F P O";
+            Assert.isTrue(filter.isAPOFPOAddress(address), address.city + " should match A/D/FPO box rules");            
+        })
+        .test("AddressRestrictions should parse correctly with different combinations of PO boxes", function () {
+            let address = { address1: "", address2: "" };
+
+            addressRestrictions = filter.addressRestrictions(null);
+            Assert.isFalse(addressRestrictions.poBoxRestricted);
+            Assert.isFalse(addressRestrictions.address1);
+            Assert.isFalse(addressRestrictions.address2);
+
+            addressRestrictions = filter.addressRestrictions(address);
+            Assert.isFalse(addressRestrictions.poBoxRestricted);
+            Assert.isFalse(addressRestrictions.address1);
+            Assert.isFalse(addressRestrictions.address2);
+
+            address.address1 = "PO 123";
+            address.address2 = "";
+            addressRestrictions = filter.addressRestrictions(address);
+            Assert.isTrue(addressRestrictions.poBoxRestricted);
+            Assert.isTrue(addressRestrictions.address1);
+            Assert.isFalse(addressRestrictions.address2);
+
+            address.address1 = "";
+            address.address2 = "PO 123";
+            addressRestrictions = filter.addressRestrictions(address);
+            Assert.isTrue(addressRestrictions.poBoxRestricted);
+            Assert.isFalse(addressRestrictions.address1);
+            Assert.isTrue(addressRestrictions.address2);
+
+            address.address1 = "P";
+            address.address2 = "O 123";
+            addressRestrictions = filter.addressRestrictions(address);
+            Assert.isTrue(addressRestrictions.poBoxRestricted);
+            Assert.isTrue(addressRestrictions.address1);
+            Assert.isTrue(addressRestrictions.address2);
+        });
+
+   return PIPELET_NEXT;
+}

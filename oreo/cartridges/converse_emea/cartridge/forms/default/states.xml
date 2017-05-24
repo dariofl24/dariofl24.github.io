@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+    
+    <field  formid="stateCode" 
+            label="forms.customeraddress.state.label"
+            type="string"
+            mandatory="false"
+            binding="stateCode" 
+            missing-error="forms.customeraddress.state.missing-error"
+            value-error="forms.address.field.invalid">
+        <options>
+            <option optionid=""     label="forms.select"        value=""/>
+        </options>
+    </field>
+</form>

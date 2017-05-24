@@ -1,0 +1,14 @@
+<isscript>
+    var pageContext={title:'My Family',type:'myfamily',ns:'family'};
+</isscript>
+<isdecorate template="pt_commonlayout">
+	<isinclude template="util/modules" />
+    <div id="main-overlay">
+        <div class="pt_family">
+            <isbanners p_dyo=false />
+            <div id="main" role="main" class="clearfix">
+                <isreplace/>
+            </div>
+        </div>
+    </div>
+</isdecorate>

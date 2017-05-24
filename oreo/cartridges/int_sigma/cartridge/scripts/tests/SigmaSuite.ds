@@ -1,0 +1,115 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("module_test:Framework/Assert.ds"); 
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:cart/objects/BasketSummary.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+importScript("int_sigma:SigmaUtils.ds");
+
+function execute(args : PipelineDictionary) : Number {
+    let CART_OBJ = cart.objects;
+    let CONSTANTS = converse.constants;
+    let SigmaUtils = integration.sigma.SigmaUtils;
+
+    args.Unit.describe("Sigma Utils Suite")
+        .test("Sigma product number generation for giftcard products", function () {
+            let itemSummary = new CART_OBJ.ItemSummary();
+            itemSummary.setProductType(CONSTANTS.ProductType.PhysicalGiftCard);
+            itemSummary.setManufacturerSKU("gc100");
+            
+            let sigmaProductNumber = SigmaUtils.getProductNumber(itemSummary);
+            Assert.areEqual("gc100               ", sigmaProductNumber, "Sigma product number incorrectly generated for PGC");
+            
+            itemSummary.setProductType(CONSTANTS.ProductType.ElectronicGiftCard);
+            itemSummary.setManufacturerSKU("egc50");
+            sigmaProductNumber = SigmaUtils.getProductNumber(itemSummary);
+            Assert.areEqual("egc50               ", sigmaProductNumber, "Sigma product number incorrectly generated for EGC");
+        })
+        .test("Sigma product number generation for regular (except accessories and outfit)", function () {
+            let itemSummary = new CART_OBJ.ItemSummary();
+            itemSummary.setProductType(CONSTANTS.ProductType.Regular);
+            itemSummary.setManufacturerSKU("M9160");
+            itemSummary.setSize("030");
+            itemSummary.setPillar(CONSTANTS.Pillar.Sneakers);
+            
+            let sigmaProductNumber = SigmaUtils.getProductNumber(itemSummary);
+            Assert.areEqual("M9160    M     030  ", sigmaProductNumber, "Sigma product number incorrectly generated for regular products");
+        })
+        .test("Sigma product number generation for DYO products", function () {
+            let itemSummary = new CART_OBJ.ItemSummary();
+            itemSummary.setProductType(CONSTANTS.ProductType.Regular);
+            itemSummary.setManufacturerSKU("135522C");
+            itemSummary.setSize("125");
+            itemSummary.setPillar(CONSTANTS.Pillar.Sneakers);
+            
+            let sigmaProductNumber = SigmaUtils.getProductNumber(itemSummary);
+            Assert.areEqual("135522C  M     125  ", sigmaProductNumber, "Sigma product number incorrectly generated for DYO products");
+        })
+        .test("Sigma product number generation for one sized items", function () {
+            let itemSummary = new CART_OBJ.ItemSummary();
+            itemSummary.setProductType(CONSTANTS.ProductType.Regular);
+            itemSummary.setManufacturerSKU("L234");
+            itemSummary.setSize("One Size");
+            itemSummary.setPillar(CONSTANTS.Pillar.Accessories);
+            
+            let sigmaProductNumber = SigmaUtils.getProductNumber(itemSummary);
+            Assert.areEqual("L234                ", sigmaProductNumber, "Sigma product number incorrectly generated for one sized products, i.e. accessories");
+        })
+        .test("Sigma product number generation for outfit items", function () {
+            let itemSummary = new CART_OBJ.ItemSummary();
+            itemSummary.setProductType(CONSTANTS.ProductType.Regular);
+            itemSummary.setManufacturerSKU("R2342");
+            itemSummary.setSize("XL");
+            itemSummary.setPillar(CONSTANTS.Pillar.Apparel);
+            
+            let sigmaProductNumber = SigmaUtils.getProductNumber(itemSummary);
+            Assert.areEqual("R2342          XL   ", sigmaProductNumber, "Sigma product number incorrectly generated for outfit products");
+        })
+        .test("Sigma product number generation for stretch fit hats", function () {
+            let itemSummary = new CART_OBJ.ItemSummary();
+            itemSummary.setProductType(CONSTANTS.ProductType.Regular);
+            itemSummary.setManufacturerSKU("SA575000");
+            itemSummary.setPillar(CONSTANTS.Pillar.Accessories);
+            
+            itemSummary.setSize("S-M");
+            let sigmaProductNumber = SigmaUtils.getProductNumber(itemSummary);
+            Assert.areEqual("SA575000       S-M  ", sigmaProductNumber, "Sigma product number incorrectly generated for stretch fit hats");
+            
+            itemSummary.setSize("M-L");
+            sigmaProductNumber = SigmaUtils.getProductNumber(itemSummary);
+            Assert.areEqual("SA575000       M-L  ", sigmaProductNumber, "Sigma product number incorrectly generated for stretch fit hats");
+            
+            itemSummary.setSize("L-XL");
+            sigmaProductNumber = SigmaUtils.getProductNumber(itemSummary);
+            Assert.areEqual("SA575000       L-XL ", sigmaProductNumber, "Sigma product number incorrectly generated for stretch fit hats");
+            
+            itemSummary.setSize("L-X");
+            sigmaProductNumber = SigmaUtils.getProductNumber(itemSummary);
+            Assert.areEqual("SA575000       L-X  ", sigmaProductNumber, "Sigma product number incorrectly generated for stretch fit hats");
+        })
+        .test("Sigma order file doesn't output S size", function () {
+        	let itemSummary = new CART_OBJ.ItemSummary();
+        	itemSummary.setProductType(CONSTANTS.ProductType.Regular);
+            itemSummary.setManufacturerSKU("R2342");
+            itemSummary.setPillar(CONSTANTS.Pillar.Apparel);
+            
+            itemSummary.setSize("S");
+            let sigmaProductInfo = SigmaUtils.getSigmaProductInfo(itemSummary);
+            Assert.areEqual("SM", sigmaProductInfo.size, "Size incorrectly set for small apparel products");
+            
+            itemSummary.setSize("SM");
+             sigmaProductInfo = SigmaUtils.getSigmaProductInfo(itemSummary);
+            Assert.areEqual("SM", sigmaProductInfo.size, "Size incorrectly set for small apparel product");
+        });
+
+    return PIPELET_NEXT;
+}

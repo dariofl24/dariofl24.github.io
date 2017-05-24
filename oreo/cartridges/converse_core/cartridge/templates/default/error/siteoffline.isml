@@ -1,0 +1,14 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title><isprint value="${Resource.msg('siteoffline.header','error',null)}" /></title>
+    <link rel="stylesheet" type="text/css" href="${URLUtils.staticURL('/css/lib/siteoffline.css')}"/>
+</head>
+<body>
+    <div id="container">
+        <div class="imgcontainer">
+            <img src="${URLUtils.staticURL('/images/siteoffline.jpg')}" />
+        </div>
+    </div>
+</body>
+</html>

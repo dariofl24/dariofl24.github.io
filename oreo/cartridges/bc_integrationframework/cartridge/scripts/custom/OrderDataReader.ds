@@ -1,0 +1,28 @@
+importPackage(dw.io);
+importPackage(dw.system);
+importPackage(dw.campaign);
+importPackage(dw.order)
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:product/ProductUtils.ds");
+
+(function() {
+
+    let OrderDataReader = Class.extend({
+        init : function(promotionCoderResolver) {
+            this.promotionCodeResolver = promotionCoderResolver;
+        },
+        
+        getShipDate : function(item) {
+            let availability = ProductUtils.getAvailability(item.product, item.quantityValue);
+            return availability.inStockDate;
+        }
+
+    });
+
+    var ns = Namespace.extendFromString(converse, "utils");
+    Namespace.extend(ns, { OrderDataReader : OrderDataReader });
+})();

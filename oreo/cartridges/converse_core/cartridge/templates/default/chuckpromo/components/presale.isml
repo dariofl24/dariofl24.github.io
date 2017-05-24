@@ -1,0 +1,88 @@
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+
+    var ProductImageResolver = converse.product.ProductImageResolver;
+
+    var productImage = ProductImageResolver.getProductImage(pdict.VariantToDisplay, 'hi-res', 0);
+    var cutActive = pdict.VariantToDisplay.custom.cut;
+    var productImageURL = productImage ? productImage.getAbsURL() : "";
+    var highTopClass = pdict.ProductToDisplayInfo ? " " : "unavailable";
+    var lowTopClass = pdict.ProductToDisplayInfoLow ? " " : "unavailable";
+</isscript>
+<isset name="productInfo" value="${pdict.ProductToDisplayInfo}" scope="page" />
+<isset name="productInfoLow" value="${pdict.ProductToDisplayInfoLow}" scope="page" />
+<isset name="isChuckInStock" value="${productInfo.availability.isAvailable || productInfoLow.availability.isAvailable}" scope="page" />
+
+<div id="chuck-promo">
+    <input type="hidden" id="isChuckInStock" value="${isChuckInStock}" />
+    <div style="display:none" id="share-pdp-info">
+	    <span class="productId">${pdict.VariantToDisplay.ID}</span>
+	    <span class="productSKU">${productInfo.manufacturerSKU}</span>
+	    <span class="productColor">${productInfo.selectedColorAttribute.value}</span>
+	    <span class="productUrl">${productInfo.productURL}</span>
+	    <span class="productImageUrl">${productImageURL}</span>
+	    <span class="productName">${pdict.VariantToDisplay.name}</span>
+	</div>
+    <div class="container">
+
+        <img class="sp-product-logo-mobile" src="${URLUtils.staticURL('/images/chuck-teaser/chuckII-logo.png')}" />
+        <div class="sp-product-image-container">
+            <isinclude template="product/pdp/components/productimages"/>
+        </div>
+        <div class="sp-product">
+            <div class="sp-product-wrapper">
+                <img class="sp-product-logo" src="${URLUtils.staticURL('/images/chuck-teaser/chuckII-logo.png')}" />
+                <isif condition="${isChuckInStock}">
+                    <p class="product-properties">
+                        <span class="product-color"><isprint value="${productInfo.selectedColorAttribute.value}" /></span>
+                        <span class="product-manufacturer"><isprint value="${productInfo.manufacturerSKU}"/></span>
+                    </p>
+                    <isinclude template="product/pdp/components/pricing"/>
+                <iselse>
+                    <div class="sp-product-availability">
+                        <p>${Resource.msg('chuckpromo.presale.soldout', 'chuckpromo', null)}</p>
+                    </div>
+                </isif>
+
+                <div class="sp-product-variations">
+                    <div class="sp-product-selection">
+                        <ul class="sneaker-type">
+                            <li data-sp-product-url="${URLUtils.url('Product-Show','pid', productInfo.ID)}" class="${highTopClass} sp-choose-type high-top <isif condition="${cutActive == 'Hi'}">active</isif>"><span>${Resource.msg('chuckpromo.cut.hi', 'chuckpromo', null)}</span></li>
+                            <li data-sp-product-url="${URLUtils.url('Product-Show','pid', productInfoLow.ID)}" class="${lowTopClass} sp-choose-type low-top <isif condition="${cutActive == 'Low'}">active</isif>"><span>${Resource.msg('chuckpromo.cut.low', 'chuckpromo', null)}</span></li>
+                        </ul>
+                    </div>
+                    <isinclude template="product/pdp/components/variations"/>
+                </div>
+
+                <isif condition="${isChuckInStock}">
+                    <isif condition="${productInfo.availability.isAvailable}">
+                        <isinclude template="chuckpromo/components/sections/presale_form" />
+                    </isif>
+                    <div class="sp-soldout-message <isif condition="${productInfo.availability.isAvailable}">hide</isif>">${Resource.msg('chuckpromo.presale.soldout.backsoon', 'chuckpromo', null)}</div>
+                <iselse>
+                    <div class="sp-email-message">
+                        <p>${Resource.msg('chuckpromo.presale.emailteaser', 'chuckpromo', null)}</p>
+                    </div>
+                    <div class="sp-product-detail">
+                        <a href="#chuck-two-teaser-popup" id="chuck-two-sign-up-button" class="signup">
+                            ${Resource.msg('chuckpromo.presale.emailsignup', 'chuckpromo', null)}
+                        </a>
+                    </div>
+                </isif>
+
+                <div id="chuck-promo-social-links" class="share-links">
+                    <isproductoptions context="pdp"/>
+                </div>
+            </div>
+        </div>
+        <div id="update-images" style="display:none">
+            <isinclude template="product/pdp/components/productimages"/>
+        </div>
+    </div>
+</div>
+
+<isif condition="${!isChuckInStock}">
+    <isinclude template="chuckteaser/emailmodal" />
+    <script src="${URLUtils.staticURL('/js/onload_chuckteaser.js')}"></script>
+</isif>

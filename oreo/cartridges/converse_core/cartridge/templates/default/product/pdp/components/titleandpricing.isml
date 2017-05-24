@@ -1,0 +1,34 @@
+
+<isscript>    	
+    importScript("converse_core:util/ViewHelpers.ds");        
+    var designers = ["Chuck Taylor", "Jack Purcell", "Design Your Own"];    
+    var designer_and_product : String = pdict.product_name;
+    var result_split = ViewHelpers.splitStringByPrefix(designers, designer_and_product);     
+    if (result_split != null) {
+        var product_name_multiline : String = result_split.prefix + '<br/>' + result_split.remainder;
+    }
+</isscript>
+
+<isset name="showPrice" value="${false}" scope="page"/>
+
+<isif condition="${!empty(pdict.show_price)}">
+    <isset name="showPrice" value="${pdict.show_price}" scope="page"/>
+</isif>
+
+
+<div class="product-title ${pdict.context}">
+    <isif condition="${product_name_multiline}">
+        <h1 class="product-name multi-line">
+            <isprint value="${product_name_multiline}" encoding="off" />
+        </h1>
+    </isif>
+    <h1 class="product-name single-line" itemprop="name">
+        <isprint value="${designer_and_product}"/>
+
+    </h1>
+
+    <isset name="showTieredPrice" value="${true}" scope="page"/>
+    <isif condition="${showPrice}">
+        <isinclude template="product/pdp/components/pricing"/>
+    </isif>
+</div>

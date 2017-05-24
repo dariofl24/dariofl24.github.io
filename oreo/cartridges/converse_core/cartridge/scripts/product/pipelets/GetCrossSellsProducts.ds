@@ -1,0 +1,27 @@
+/**
+* Retrieves the specified number of cross sells products
+*
+* @input Product : dw.catalog.Product The product being viewed
+* @input MaxRecs : Number The maximum number of returned cross sells
+
+* @output CrossSellsProducts : dw.util.Collection A list of cross sells products 
+*/
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage (dw.catalog );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("converse_core:product/ProductUtils.ds");
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+    var product: Product = pdict.Product;
+    var maxRecs: Number = pdict.MaxRecs;
+
+    pdict.CrossSellsProducts = ProductUtils.getCrossSellsProducts(product, maxRecs);
+
+    return PIPELET_NEXT;
+}

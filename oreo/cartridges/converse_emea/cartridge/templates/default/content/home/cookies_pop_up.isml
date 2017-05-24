@@ -1,0 +1,25 @@
+<!--- TEMPLATENAME: cookies_pop_up.isml --->
+<div class="popUp-Cookies cookie-popUp-view">
+    <div class="popup-container">
+        <h1>${Resource.msg('cookiePopUp.mainTitle','cookiepopup',null)}</h1>
+        
+        <div>
+            <p class="popUp-paragraph">${Resource.msg('cookiePopUp.mainView.message','cookiepopup',null)}</p>
+        </div>
+        
+        <h2 class="popUp-paragraph">${Resource.msg('cookiePopUp.mainView.question','cookiepopup',null)}</h2>
+        
+        <p class="footer-mobile">${Resource.msg('cookiePopUp.footer.message','cookiepopup',null)}</p>
+    </div>
+
+    <form>
+        <button type="button" class="button accept-button">${Resource.msg('cookiePopUp.button.accept','cookiepopup',null)}</button>
+        <button type="button" class="button-alternative more-info-button">${Resource.msg('cookiePopUp.button.moreInfo','cookiepopup',null)}</button>
+    </form>
+
+    <hr />
+
+    <div class="popUp-footer">
+        <p class="footer">${Resource.msg('cookiePopUp.footer.message','cookiepopup',null)}</p>
+    </div>
+</div>

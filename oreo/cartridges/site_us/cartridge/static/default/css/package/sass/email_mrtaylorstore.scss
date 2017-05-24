@@ -1,0 +1,52 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_conv_mixins";
+
+$common-bottom-padding: 60px;
+
+%base-email-content-body {
+    font-size: 16px;
+    padding: 20px 20px $common-bottom-padding 20px;
+
+    .log-in {
+        padding-top: $common-bottom-padding;
+        text-align: center;
+
+        a {
+            @include conv_button_style(#000, #FFF, 20);
+            padding: 15px 70px;
+        }
+    }
+}
+
+.all-star-collection {
+    padding-bottom: $common-bottom-padding;
+
+    td {
+        text-align: center;
+    }
+
+    img {
+        width: 150px;
+        height: 150px;
+        padding-right: 10px;
+    }
+}
+
+.family-invite {
+    .family-invite-body {
+        @extend %base-email-content-body;
+    }
+}
+
+.family-invite-accepted {
+    .family-invite-accepted-body {
+        @extend %base-email-content-body;
+    }
+}
+
+.employee-regsitration {
+    .employee-regsitration-body {
+        @extend %base-email-content-body;
+    }
+}

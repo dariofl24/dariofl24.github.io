@@ -1,0 +1,310 @@
+importPackage(dw.svc);
+importPackage(dw.net);
+importPackage(dw.io);
+importPackage(dw.ws);
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.order);
+importPackage(dw.web);
+importScript("CreditCheckConfig.ds");
+
+importScript("converse_core:cart/CartUtils.ds");
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libStringUtilsExt.ds");
+
+  var logger = Logger.getLogger("CreditCheckServiceInit");
+  logger.info("CreditCheck service registry");
+  
+  var CONFIG = integration.creditcheck.config;
+
+  ServiceRegistry.configure("CreditCheckService.riskCheck", {
+
+    initServiceClient: function() {
+        logger.info("CreditCheck initServiceClient");
+        logger.info("CreditCheck Schema to use = " + CONFIG.getSchema() );
+        this.webreference = webreferences2[ CONFIG.getSchema() ];
+        //Get the default service.
+        return this.webreference.getDefaultService();
+    },
+
+    createRequest : function(svc: SOAPService, args : Object) : Object {	
+        var riskCheckRequest = createRiskCheckRequest(this.webreference, args);
+        return riskCheckRequest;
+    },
+
+    execute: function(svc:SOAPService, riskCheck:Object) {
+        logger.info("making creditcheck call {0}", riskCheck);
+        var response = svc.serviceClient.riskCheck(riskCheck);      
+        logger.info("response from creditcheck resultCode --"+ response.getResultCode());
+        logger.info("response from creditcheck basketId --"+ response.basketId);
+        return response;
+    },
+
+    parseResponse : function(service: SOAPService, response : Object) : Object {
+        var responseWrapper = {};
+
+        //the trim is only needed b/c CreditCheckService returns empty trailing spaces in the code, which should really be addressed on their end
+        responseWrapper.code = StringUtilsExt.trim(response.getResultCode());
+        responseWrapper.message = response.getResultMessage();
+        responseWrapper.customervalidated=response.getCustomer().isValidated();
+        var paymentMethods = response.paymentMethods;
+        if (paymentMethods) {
+            var paymentMethod = paymentMethods.paymentMethod;
+            responseWrapper.creditAllowed = false;
+            logger.info("before paymentMethods loop --"+ paymentMethod);
+            for (i = 0; i < paymentMethod.length; i++) {
+                logger.info("payment type -- "+ paymentMethod[i].type);
+                    if (paymentMethod[i].type == CONFIG.getInvoiceOptionCode()){
+                        logger.info("payment type allowed -- "+ paymentMethod[i].value);
+                        if (paymentMethod[i].value == true){
+                            responseWrapper.creditAllowed = true;
+                            return responseWrapper;
+                        }
+                    }
+                }
+            }
+
+        return responseWrapper;
+    },
+
+     mockCall : function(service : SOAPService, request : Object) : Object {
+        logger.info("Risk Check Mock");
+        var responseMockObject = new this.webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.RiskCheckResult();
+        responseMockObject.setResultCode("0");
+
+        var paymentMethods =  new this.webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.RiskCheckResult.PaymentMethods();
+        var paymentMethod =  new this.webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.RiskCheckResult.PaymentMethods.PaymentMethod();
+        var customer = new this.webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.RiskCheckResult.Customer();
+
+        paymentMethod.setType(CONFIG.getInvoiceOptionCode());
+        paymentMethod.setValue(true);
+
+        paymentMethods.getPaymentMethod().add(paymentMethod);
+        responseMockObject.setPaymentMethods(paymentMethods);
+        responseMockObject.setCustomer(customer);
+        
+        return responseMockObject;
+    }
+
+  });
+    
+    
+    ServiceRegistry.configure("CreditCheckService.confirmOrders", {
+    
+        initServiceClient: function() {
+            logger.info("confirmOrders initServiceClient");
+            logger.info("CreditCheck Schema to use = " + CONFIG.getSchema() );
+            this.webreference = webreferences2[ CONFIG.getSchema() ];
+            //Get the default service.
+            return this.webreference.getDefaultService();
+        },
+
+        createRequest : function(svc: SOAPService, params : Object) : Object {
+        	logger.info("createRequest for confirmOrders with params: ", params);
+            var confrimOrderRequest = createConfirmOrderRequest(this.webreference, params);
+            return confrimOrderRequest;
+        },
+
+        execute: function(svc:SOAPService, confrimOrderRequest : Object) {
+            logger.info("making confirmOrders call {0}", confrimOrderRequest);
+            var response = svc.serviceClient.confirmOrders(confrimOrderRequest);
+
+            logger.info("response from confirmOrders  --"+ response.getResultCode());
+            logger.info("response from confirmOrders  --"+ response.getResultMessage());
+
+            return response;
+        },
+        
+        parseResponse : function(service: SOAPService, response : Object) : Object {
+            var responseWrapper = {};
+            //the trim is only needed b/c CreditCheckService returns empty trailing spaces in the code, which should really be addressed on their end
+            responseWrapper.code = StringUtilsExt.trim(response.getResultCode());
+            responseWrapper.basketId = response.getBasketId();
+            responseWrapper.message = response.getResultMessage();
+            return responseWrapper;
+      },
+
+        mockCall : function(service : SOAPService, request : Object) : Object {
+            logger.info("Confirm Order Mock");
+
+            var responseMockObject = new this.webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.ConfirmOrderResult();
+            responseMockObject.setResultCode("0");
+            responseMockObject.setBasketId("815");
+        
+            return responseMockObject;
+      }
+
+  });
+
+
+     function createRiskCheckRequest(webreference, args) {
+          logger.info("CreditCheck createRiskCheckRequest begin --- ");
+          var riskCheckRequest = new webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.RiskCheckRequest();
+          var creditCheckBasket =  new webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.RiskCheckRequest.Basket();
+          var creditCheckCustomer =  new webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.RiskCheckRequest.Customer();
+          var creditCheckShippingAddress =  new webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.RiskCheckRequest.ShippingAddress();
+          riskCheckRequest.setBasket(creditCheckBasket);
+          riskCheckRequest.setCustomer(creditCheckCustomer);
+          
+          if (empty(args)) {
+            logger.debug("RiskCheck called without any arguments");
+            return riskCheckRequest;
+          }
+          if (!args.billingSameAsShipping === true) {//only set shipping address if it is different from billing
+              riskCheckRequest.setShippingAddress(creditCheckShippingAddress);
+          }
+          var basket : Basket = args.Basket;
+          var billingAddress : OrderAddress = basket.getBillingAddress();
+          var shippingAddress : OrderAddress = basket.getDefaultShipment().getShippingAddress();
+
+    	 //create basket object and populate values
+          creditCheckBasket.setBasketId(basket.getUUID());
+
+          var merchandizeTotal : dw.value.Money = basket.getAdjustedMerchandizeTotalPrice(true);
+          var shippingTotal : dw.value.Money = basket.getAdjustedShippingTotalPrice();
+          var basketTotal : Money = merchandizeTotal.add(shippingTotal);
+          
+          creditCheckBasket.setBasketAmount(basketTotal.getDecimalValue());
+          creditCheckBasket.setCurrency(basket.getCurrencyCode());
+          creditCheckBasket.setBasketValidity(CONFIG.getBasketValidity());
+          
+          //create customer object and populate values
+          creditCheckCustomer.setCustomerNo(getCustomerNumber(basket));
+          creditCheckCustomer.setFirstname(billingAddress.getFirstName());
+          creditCheckCustomer.setLastname(billingAddress.getLastName());
+          creditCheckCustomer.setStreet(billingAddress.getAddress1());
+          if (!empty(billingAddress.getAddress2())) {
+              creditCheckCustomer.setAdressextension(billingAddress.getAddress2().substring(0, CONFIG.getAddressExtensionLenght()));
+          }
+          creditCheckCustomer.setPostCode(billingAddress.getPostalCode());
+          creditCheckCustomer.setCity(billingAddress.getCity());
+          creditCheckCustomer.setCountry(billingAddress.getCountryCode());
+          
+          creditCheckCustomer.setEmail(basket.getCustomerEmail());
+          creditCheckCustomer.setTelNo(billingAddress.getPhone());
+
+     	  //create shipping address object and populate values
+          creditCheckShippingAddress.setShippingFirstname(shippingAddress.getFirstName());
+          creditCheckShippingAddress.setShippingLastname(shippingAddress.getLastName());
+          creditCheckShippingAddress.setShippingStreet(shippingAddress.getAddress1());
+          if (!empty(shippingAddress.getAddress2())) {
+              creditCheckShippingAddress.setShippingAdressextension(shippingAddress.getAddress2().substring(0, CONFIG.getAddressExtensionLenght()));
+          }
+          creditCheckShippingAddress.setShippingPostCode(shippingAddress.getPostalCode());
+          creditCheckShippingAddress.setShippingCity(shippingAddress.getCity());
+          creditCheckShippingAddress.setShippingCountry(shippingAddress.getCountryCode());
+          creditCheckShippingAddress.setShippingEmail(basket.getCustomerEmail());
+          creditCheckShippingAddress.setShippingTelNo(shippingAddress.getPhone());
+
+	      //create riskcheck object, populate values, set basket, customer and shipping address
+	      riskCheckRequest.setBusinessId(CONFIG.getBusinessId());
+	      riskCheckRequest.setDistributionChannel(CONFIG.getDistributionChannel());
+	      riskCheckRequest.setOperationalUnit(CONFIG.getOperationalUnit());
+	      riskCheckRequest.setSalesOrganisation(CONFIG.getSalesOrganisation());
+	      
+	      logger.info("CreditCheck createRiskCheckRequest end --- ");
+	      
+	      return riskCheckRequest;
+    }
+    
+    function getCustomerNumber(basket : dw.order.Basket) {
+    	if (basket.getCustomer().isAnonymous()) {
+            return basket.getCustomer().getID().substring(0, 20);//customer ID limit is 20 chars, not likely to change, therefore just hardcoded. TOD0: move to constants?
+        } else {
+            return basket.getCustomer().getProfile().getCustomerNo();
+    	}
+    }
+    
+    function createConfirmOrderRequest(webreference, args){
+        logger.info("CreditCheck createConfirmOrderRequest begin --- ");
+        //create confrimOrderRequest object
+        var confrimOrderRequest = new webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.ConfirmOrderRequest();
+        confrimOrderRequest.setBusinessId(CONFIG.getBusinessId());
+        
+        if (empty(args)) {
+            logger.debug("ConfirmOrderRequest called without any arguments");
+            return confrimOrderRequest;
+        }
+
+        var basketId = args.BasketId;
+        var orderNo = args.OrderNo;
+
+        //create basket object and populate values
+        var confirmOrderBasket = new webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.ConfirmOrderRequest.Basket();
+        confirmOrderBasket.setPaymentMethod(CONFIG.getInvoiceOptionCode());
+        confirmOrderBasket.setBasketId(basketId);
+        confirmOrderBasket.setOrderNo(orderNo);
+        
+        confrimOrderRequest.setBasket(confirmOrderBasket);
+
+        logger.info("CreditCheck CreateConfirmOrderRequest end --- ");
+        return confrimOrderRequest;
+    }
+    
+    function createMockRiskCheckRequest(webreference) {
+    	logger.info("CreditCheck ccreateMockRequest begin --- ");
+    	 //create basket object and populate values
+	      var basket =  new webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.RiskCheckRequest.Basket();
+	      basket.setBasketId("0815");
+	      basket.setBasketAmount(100);
+	      basket.setCurrency("EUR");
+	      basket.setBasketValidity(CONFIG.getBasketValidity());
+	      
+	      //create customer object and populate values
+	      var customer =  new webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.RiskCheckRequest.Customer();
+	      customer.setCustomerNo("012345");
+	      customer.setFirstname("Dagobert");
+	      customer.setLastname("Duck");
+	      customer.setStreet("Goldstrasse");
+	      customer.setPostCode("12345");
+	      customer.setCity("Entenhausen");
+	      customer.setCountry("DE");
+	      customer.setEmail("dagobert.duck@duck.org");
+	      customer.setTelNo("333-333-3333");
+
+	 	  //create shipping address object and populate values
+	      var shippingAddress =  new webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.RiskCheckRequest.ShippingAddress();
+	      shippingAddress.setShippingFirstname("Test");
+	      shippingAddress.setShippingLastname("User");
+	      shippingAddress.setShippingStreet("Tauentzienstrasse 21");
+	      shippingAddress.setShippingPostCode("10789");
+	      shippingAddress.setShippingCity("Berlin");
+	      shippingAddress.setShippingCountry("DE");
+	      shippingAddress.setShippingEmail("testuser@gmail.com");
+	      shippingAddress.setShippingTelNo("333-333-3333");
+
+	      //create riskcheck object, populate values, set basket, customer and shipping address
+	      var riskCheck = new webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.RiskCheckRequest();
+	      riskCheck.setBusinessId(CONFIG.getBusinessId());
+	      riskCheck.setDistributionChannel(CONFIG.getDistributionChannel());
+	      riskCheck.setOperationalUnit(CONFIG.getOperationalUnit());
+	      riskCheck.setSalesOrganisation(CONFIG.getSalesOrganisation());
+	      riskCheck.setBasket(basket);
+	      riskCheck.setCustomer(customer);
+	      riskCheck.setShippingAddress(shippingAddress);
+	      
+	      logger.info("CreditCheck ccreateMockRequest end --- ");
+	      
+	      return riskCheck;
+    }
+
+
+      function createMockConfirmOrderRequest(webreference){
+    	logger.info("CreditCheck createMockConfirmOrderRequest begin --- ");
+    	  //create basket object and populate values
+	      var basket =  new webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.ConfirmOrderRequest.Basket();
+	      basket.setBasketId("815");
+	      basket.setOrderNo(100);
+	      basket.setPaymentMethod("EUR");	      
+
+	      //create confrimOrder object, populate values, set basket
+	      var confrimOrder = new webreference.com.arvato.z_arvato_ls_ecom.shop.paymentcontrol.ConfirmOrderRequest();
+	      confrimOrder.setBusinessId(CONFIG.getBusinessId());
+	      confrimOrder.setBasket(basket);
+	      logger.info("CreditCheck createMockConfirmOrderRequest end --- ");
+	      
+	      return confrimOrder;
+    }
+	 
+

@@ -1,0 +1,43 @@
+importPackage(dw.util);
+importPackage(dw.web);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+
+    var ID = {
+        OFFICIAL: "official",
+        OUTLET: "outlet",
+        OTHER: "other",
+        SKATE: "skate"
+    };
+    
+    var FilterDefinition = Class.extend({
+        init: function(id, name) {
+            this.id = id;
+            this.name = name;
+        }
+    });
+
+    var definitions = new ArrayList();
+    for (let key : String in ID) {
+        let id : String = ID[key],
+            name : String = Resource.msg('storelocator.filters.' + id, 'storelocator', null);
+            
+        definitions.add1(new FilterDefinition(id, name));
+    }
+    
+    Namespace.extend(converse, {
+        storelocator: {
+            Filters: {
+                ID: ID,
+                getDefinitions: function() {
+                    return definitions;
+                }
+            }
+        }
+    });
+
+})();

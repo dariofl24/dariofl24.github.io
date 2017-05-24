@@ -1,0 +1,22 @@
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:mail/MailConfig.ds");
+
+(function() {
+    
+    function configureMail() : Object {
+        return new converse.mail.MailConfig();
+    }
+    
+    Namespace.extend(converse, { 
+        mail: {
+            MailUtils: {
+                configureMail: configureMail
+            }
+        }
+    });
+
+})();

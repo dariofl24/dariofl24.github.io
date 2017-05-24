@@ -1,0 +1,107 @@
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage( dw.order );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/HelperFactory.ds");
+importScript("converse_core:common/libStringUtilsExt.ds");
+
+(function () {
+    let AbstractPriceHelper = Class.extend({
+        setItemParameters : function(parameters, itemInfo) : Number {
+            let currentItemIndex : Number = itemInfo.itemIndex;
+            
+            parameters[StringUtilsExt.suffix("Item_Name_", currentItemIndex)] = itemInfo.name;
+            parameters[StringUtilsExt.suffix("Item_Desc_", currentItemIndex)] = itemInfo.description;
+            this.setItemPriceParameter(parameters, itemInfo, currentItemIndex);
+            parameters[StringUtilsExt.suffix("Item_Quantity_", currentItemIndex)] = itemInfo.quantity;
+            parameters[StringUtilsExt.suffix("Item_SKU_", currentItemIndex)] = itemInfo.sku;
+            parameters[StringUtilsExt.suffix("Item_Group_", currentItemIndex)] = itemInfo.group;
+            
+            return currentItemIndex + 1;
+        },
+
+        setItemPriceParameter: function(parameters, itemInfo, currentItemIndex) {
+            throw "Please use localised version of 'AbstractItemHelper'.";
+        },
+
+        setOrderTaxAmountParameters: function(parameters : dw.util.HashMap, basket: Object) {
+            throw "Please use localised version of 'AbstractItemHelper'.";
+        },
+
+        setOrderShippingAmmount: function(parameters : dw.util.HashMap, basket: Object) {
+            throw "Please use localised version of 'AbstractItemHelper'.";
+        },
+
+        setShipmentTaxAmountParameters: function(parameters : dw.util.HashMap, shipmentIndex, shipment: Object) {
+            throw "Please use localised version of 'AbstractItemHelper'.";
+        },
+
+        setShipmentShippingAmountParameters: function(parameters : dw.util.HashMap, shipmentIndex, shipment: Object) {
+            throw "Please use localised version of 'AbstractItemHelper'.";
+        },
+
+        getPriceInCents : function(price : Money) {
+            return price.multiply("100");
+        }
+    });
+
+    let USPriceHelper = AbstractPriceHelper.extend({
+        setItemPriceParameter: function(parameters, itemInfo, currentItemIndex) {
+            parameters[StringUtilsExt.suffix("Item_Price_", currentItemIndex)] = itemInfo.price;
+        },
+
+        setOrderTaxAmountParameters: function(parameters : dw.util.HashMap, basket: Object) {
+            parameters["TaxAmount"] = this.getPriceInCents(basket.getTaxAmount());
+        },
+
+        setOrderShippingAmmount: function(parameters : dw.util.HashMap, basket: Object) {
+            parameters["ShippingAmount"] = this.getPriceInCents(basket.getShippingNetAmount());
+        },
+
+        setShipmentTaxAmountParameters: function(parameters : dw.util.HashMap, shipmentIndex, shipment: Object) {
+            parameters[StringUtilsExt.suffix("TaxAmount_", shipmentIndex)] = this.getPriceInCents(shipment.getTaxAmount());
+        },
+
+        setShipmentShippingAmountParameters: function(parameters : dw.util.HashMap, shipmentIndex, shipment: Object) {
+            parameters[StringUtilsExt.suffix("ShippingAmount_", shipmentIndex)] = this.getPriceInCents(shipment.getShippingNetAmount());
+        }
+    });
+
+    let GBPriceHelper = AbstractPriceHelper.extend({
+        setItemPriceParameter: function(parameters, itemInfo, currentItemIndex) {
+            parameters[StringUtilsExt.suffix("Item_Price_", currentItemIndex)] = itemInfo.grossPrice;
+        },
+
+        setOrderTaxAmountParameters: function(parameters : dw.util.HashMap, basket: Object) {
+        },
+
+        setOrderShippingAmmount: function(parameters : dw.util.HashMap, basket: Object) {
+            parameters["ShippingAmount"] = this.getPriceInCents(basket.getShippingGrossAmount());
+        },
+
+        setShipmentTaxAmountParameters: function(parameters : dw.util.HashMap, shipment: Object) {
+        },
+
+        setShipmentShippingAmountParameters: function(parameters : dw.util.HashMap, shipmentIndex, shipment: Object) {
+            parameters[StringUtilsExt.suffix("ShippingAmount_", shipmentIndex)] = this.getPriceInCents(shipment.getShippingGrossAmount());
+        }
+    });
+
+    let PriceHelperFactory = converse.common.HelperFactory.extend({
+        initHelpers: function() {
+            this.helpers[converse.constants.SiteID.US] = USPriceHelper;
+            this.helpers[converse.constants.SiteID.GB] = GBPriceHelper;
+        }
+    });
+
+    Namespace.extend(integration, { 
+        cardinal: { 
+            objects: {
+                PriceHelperFactory: PriceHelperFactory
+            }
+        }
+    });
+})();

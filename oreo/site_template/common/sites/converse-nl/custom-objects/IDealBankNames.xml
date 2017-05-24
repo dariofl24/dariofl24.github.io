@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-objects xmlns="http://www.demandware.com/xml/impex/customobject/2006-10-31">
+    <custom-object type-id="IDealBankNames" object-id="ABN_AMRO">
+        <object-attribute attribute-id="description">ABN_AMRO</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="IDealBankNames" object-id="ASN Bank">
+        <object-attribute attribute-id="description">ASN Bank</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="IDealBankNames" object-id="ING">
+        <object-attribute attribute-id="description">ING</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="IDealBankNames" object-id="Knab">
+        <object-attribute attribute-id="description">Knab</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="IDealBankNames" object-id="Rabobank">
+        <object-attribute attribute-id="description">Rabobank</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="IDealBankNames" object-id="RegioBank">
+        <object-attribute attribute-id="description">RegioBank</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="IDealBankNames" object-id="SNS Bank">
+        <object-attribute attribute-id="description">SNS Bank</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="IDealBankNames" object-id="Triodos Bank">
+        <object-attribute attribute-id="description">Triodos Bank</object-attribute>
+    </custom-object>
+
+    <custom-object type-id="IDealBankNames" object-id="Van Lanschot Bankiers">
+        <object-attribute attribute-id="description">Van Lanschot Bankiers</object-attribute>
+    </custom-object>
+    
+    <custom-object type-id="IDealBankNames" object-id="BUNQ">
+        <object-attribute attribute-id="description">BUNQ</object-attribute>
+    </custom-object>
+
+</custom-objects>

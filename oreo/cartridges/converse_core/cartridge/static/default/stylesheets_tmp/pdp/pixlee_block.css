@@ -1,0 +1,32 @@
+/* constants file for scss variable values */
+/* line 3, ../../css/package/sass/pdp/pixlee_block.scss */
+.pixleeInstaBlock {
+  position: relative;
+  background: #000000;
+  padding: 60px 0 90px;
+}
+/* line 8, ../../css/package/sass/pdp/pixlee_block.scss */
+.pixleeInstaBlock *, .pixleeInstaBlock *:before, .pixleeInstaBlock *:after {
+  box-sizing: border-box;
+}
+/* line 12, ../../css/package/sass/pdp/pixlee_block.scss */
+.pixleeInstaBlock:before, .pixleeInstaBlock:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+/* line 18, ../../css/package/sass/pdp/pixlee_block.scss */
+.pixleeInstaBlock:after {
+  clear: both;
+}
+/* line 22, ../../css/package/sass/pdp/pixlee_block.scss */
+.pixleeInstaBlock h2 {
+  font: pxtoem(12) "Arvo", serif;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #606060;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: pxtoem(18);
+}

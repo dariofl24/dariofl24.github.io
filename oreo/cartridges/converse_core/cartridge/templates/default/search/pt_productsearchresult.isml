@@ -1,0 +1,15 @@
+<isscript>
+    var pageContext = { type:'search', ns:'search' };
+
+    var HtmlHeadTemplates = HtmlHeadTemplates || [];
+    HtmlHeadTemplates.push("search/pt_productsearchresult_head");
+</isscript>
+<isdecorate template="pt_commonlayout">
+	<isinclude template="util/modules" />
+    <div id="main-overlay">
+    	<div class="pt_product-search-result">
+            <isbanners p_dyo=false />
+        	<isreplace/>
+    	</div>
+    </div>
+</isdecorate>

@@ -1,0 +1,9 @@
+<span data-no='<isprint value=${pdict.radiodisplaytextoff} formatter="#,#00" />'></span>
+<input  type="radio" 
+				data-display-txt='<isprint value=${pdict.radiolabeltext} formatter= "#,#00"/>'
+				name="${pdict.radioname}" 
+				id="input-${pdict.radioid}" 
+				value="${pdict.radioid}"/>
+<span data-yes='<isprint value=${pdict.radiodisplaytexton} formatter= "#,#00"/>'></span>
+<label for="input-${pdict.radioid}" ><isprint value=${pdict.radiolabeltext} formatter= "#,#00"/></label>
+

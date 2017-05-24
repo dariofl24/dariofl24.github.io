@@ -1,0 +1,35 @@
+importPackage(dw.system);
+importPackage(dw.svc);
+importPackage(dw.net);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("pickuppoint/SearchResultConverter.ds");
+importScript("int_pickuppoint:objects/PickupPointSearchResult.ds");
+
+var logger = Logger.getLogger("HermesServiceInit");
+logger.info("Hermes service registry");
+
+var PickupPointSearchResult = integration.pickuppoint.objects.PickupPointSearchResult;
+var SearchResultConverter = integration.pickuppoint.SearchResultConverter;
+
+ServiceRegistry.configure("HermesService.findParcelShopsByLocation", {
+    createRequest: function(svc : HTTPService, params) : Object {
+        svc.setRequestMethod("GET");
+        svc.addParam("postCode", params.postCode);
+    },
+
+    parseResponse: function(service : HTTPService, serviceClient : HTTPClient) {
+        var statusCode : String = serviceClient.statusCode;
+        
+        if (statusCode != 200) {
+            logger.error(StringUtils.format("An HTTP error occurred with status \"{0} - {1}\": {2}",
+                serviceClient.statusMessage, serviceClient.statusCode, serviceClient.errorText));
+            
+            return new PickupPointSearchResult(false, "Unable to fetch pickup points.");
+        }
+        
+        return SearchResultConverter.from(serviceClient.getText());
+    }
+});

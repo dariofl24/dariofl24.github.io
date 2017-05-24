@@ -1,0 +1,24 @@
+/*
+* @input CentinelAuthenticateResult : Object
+* @input Basket : dw.order.Basket
+* @output Basket : dw.order.Basket
+*/
+
+importPackage ( dw.system );
+importPackage ( dw.order);
+importPackage ( dw.util );
+
+importScript("converse_core:constants.ds");
+importScript("CentinelResponseTransformer.ds");
+importScript("int_cardinal:objects/PopulateAddressInformationHelper.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+	var addressHelper = integration.cardinal.objects.PopulateAddressInformationHelper;
+	var authenticateResult = args.CentinelAuthenticateResult;
+	
+	addressHelper.setShippingAddressToBasket(args.Basket, authenticateResult);
+	addressHelper.setBillingAddressToBasket(args.Basket, authenticateResult);
+
+    return PIPELET_NEXT;
+}

@@ -1,0 +1,65 @@
+/**
+ * converse.content.ParameterizedTemplate module's "compile" method allows named parameters
+ * to be replaced with corresponding parameter values coming from provided binding object.
+ * As an input compile method gets a message with named placeholders and an object
+ * which should contain property names same as placeholder names
+ *
+ * Below is an uasge example:
+ *
+ * Inputs:
+ *      message: "Hello {{FirstName}} {{LastName}}!"
+ *      params: { FirstName: "Foo", LastName: "Bar" }
+ *
+ * Output (String):
+ *      "Hello Foo Bar!"
+ */
+
+importPackage(dw.system);
+importPackage(dw.content);
+importPackage(dw.object);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libLang.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libHandlebars.ds");
+
+(function(){
+
+    function ref(obj: Object, str: String) : Object {
+        var propertyNames: Array = str.split(".");
+        for (let i = 0, len = propertyNames.length; i < len; i++) {
+            let propertyName: String = propertyNames[i];
+            obj = obj[propertyName];
+            if (typeof obj === "undefined") {
+                return null;
+            }
+        }
+        return obj;
+    }
+
+    function compile(message: String, params: Object): String {
+        if (params && typeof params === "object") {
+            message = message.replace(/{{([^}]+)}}/g, function($0, $1) {
+                return ref(params, $1) || "";
+            });
+        }
+        return message;
+    }
+
+    function compile2(message: String, params: Object): String {
+        var template = Handlebars.compile(message);
+
+        return template(params);
+    }
+
+    Namespace.extend(converse, { 
+        content: {
+            ParameterizedTemplate: {
+                compile: compile,
+                compile2: compile2
+            }
+        }
+    });
+
+})();

@@ -1,0 +1,19 @@
+*** Settings ***
+Documentation   Verifies Basic promotions functionality
+Test Teardown   Close All Browsers
+Force Tags      Promotions  Regression  US
+Resource        promotions_declarations.txt  #Resource  demandware_marketing_definitions.txt
+
+*** Variables ***
+${standard_shippingpromotion}  test shipping promotion robot
+${standard_campaign}  Robot Test Campaign
+${test_ShippingPromotion}  testShippingPromotion.xml
+${PDescription}  Test discount for automated testing
+
+*** Test Cases ***
+User Navigates to Homepage, Verifies predefined promotion is displayed
+  Verify Promotion Set Is Displayed  ${standard_shippingpromotion}  ${standard_campaign}  ${test_ShippingPromotion}  ${PDescription}
+
+User Proceeds to Checkout and verifies a shipping promotion is correctly applied
+  Verify Promotion Is Applied In Checkout  ${standard_shippingpromotion}  ${PDescription}
+  Run Keyword If  '@{ENV_TYPE}[${env_id}]'!='production'  Click at Submit Order and Verifies Retrieves Message

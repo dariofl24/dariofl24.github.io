@@ -1,0 +1,32 @@
+importPackage(dw.campaign);
+importPackage(dw.customer);
+importPackage(dw.system);
+importPackage(dw.value);
+importPackage(dw.util);
+importPackage(dw.web);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:product/ProductUtils.ds");
+
+function ProductWithSalesPriceFilter(){ };
+
+ProductWithSalesPriceFilter.filter = function(product: Product) : Product {
+        	
+    let productToUse = product;
+	
+	if( !productToUse)
+	{
+		return productToUse;
+	}
+	
+	let pricing = ProductUtils.getPricing( productToUse );
+	if( pricing.standard > pricing.sale )
+	{
+		return productToUse;
+	}
+	
+	return null;
+}
+

@@ -1,0 +1,17 @@
+<!--- TEMPLATENAME: idealPayment_pop_up.isml --->
+<div class="popUp-idealPayment idealPayment-popUp-view">
+    <div class="popup-container">
+        <h1>${Resource.msg('forms.ideal.payment.popup.header', 'forms', null)}</h1>
+        
+        <div>
+            <p class="popUp-paragraph">${Resource.msg('forms.ideal.payment.popup.body', 'forms', null)}</p>
+        </div>
+    </div>
+
+    <form  action="${URLUtils.https('COSummary-Submit')}" method="post" class="submit-order">
+        <button type="submit" name="submit" class="button-large continue-idealPayment">${Resource.msg('global.continue', 'locale', null)}</button>
+    </form>
+
+    <hr />
+
+</div>

@@ -1,0 +1,146 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:product/ProductImageResolver.ds");
+
+importScript("module_test:Library/JSMockito.ds");
+
+function execute(args : PipelineDictionary) : Number {
+
+    let ProductType = converse.constants.ProductType;
+    let ProductImageResolver = converse.product.ProductImageResolver;
+
+    let DYO_IMAGE_URL = "dyo_image_url";
+    let ITEM_PRODUCTNAME = "productName";
+
+    function createImage(url: String, alt: String, title: String) {
+        return {
+            getURL: function() {
+                return url || "PRODUCT_URL";
+            },
+            getAlt: function() {
+                return alt || "PRODUCT_ALT";
+            },
+            getTitle: function() {
+                return title || "PRODUCT_TITLE";
+            }
+        };
+    }
+
+    function createProduct(productType) {
+        return {
+            custom: {
+                productType: {
+                    value: productType
+                }
+            }
+        };
+    };
+
+    function createRegularProductLineItem(product, productName) {
+        return { product: product, productName: productName };
+    };
+
+    function createDYOProductLineItem(product, productName, dyoImageUrl) {
+        let lineItem = createRegularProductLineItem(product, productName);
+        lineItem.custom = { dyoImageUrl: dyoImageUrl };
+
+        return lineItem;
+    };
+
+    function createPhysicalGiftCardProductLineItem() {
+        let productMock = createProduct(ProductType.PhysicalGiftCard);
+        productMock.getImages = function() {
+            return [
+                createImage("guftcard_url1", "Converse", "Converse Sleeve"),
+                createImage("guftcard_url2", "Gift", "Gift Sleeve"),
+                createImage("guftcard_url3", "Custom", "Custom Sleeve")
+            ];
+        };
+        return createRegularProductLineItem(productMock, "Converse.com $125 Gift Card");
+    }
+
+    function mockProductImageFactory() {
+        var productImageFactory = Mockito.mock({
+            createProductImage: function() { /* * * */ }
+        });
+
+        Mockito.when(productImageFactory)
+            .createProductImage(Mockito.anything())
+            .thenReturn(createImage());
+
+        return productImageFactory;
+    }
+
+    function inject(module, name, dep) {
+        var mockFunc = Mockito.mockFunction();
+        Mockito.when(mockFunc)().thenReturn(dep);
+        module[name] = mockFunc;
+    }
+
+    args.Unit.describe("ProductImageResolver Test Suite")
+        .test("Product image info is correctly fetched for DYO ProductLineItem", function () {
+            var dyoProductMock = createProduct(ProductType.C1);
+            var imageInfo = ProductImageResolver.getProductLineItemImage(createDYOProductLineItem(dyoProductMock, ITEM_PRODUCTNAME, DYO_IMAGE_URL));
+
+            Assert.areEqual(DYO_IMAGE_URL, imageInfo.getURL(), "imageInfo's url doesn't match");
+            Assert.areEqual(ITEM_PRODUCTNAME, imageInfo.alt, "imageInfo's alt doesn't match");
+            Assert.areEqual(ITEM_PRODUCTNAME, imageInfo.title, "imageInfo's title doesn't match");
+        })
+        .test("Product image info is correctly fetched for GiftCard ProductLineItem", function () {
+            var giftCardLineItem = createPhysicalGiftCardProductLineItem(),
+                viewType = "lineItemTile",
+                imageIndex = 2;
+
+            var ProductUtilsFake = {
+                isConverseOne: function() { return false; },
+                isPhysicalGiftCard: function() { return true; },
+                getVariationAttributeValue: function() { return "Custom"; }
+            };
+
+            var ProductImageFactory = mockProductImageFactory();
+
+            var getProductutilsMock = Mockito.mockFunction();
+            Mockito.when(getProductutilsMock).call().thenReturn(ProductUtilsFake);
+
+            var getProductImageFactoryMock = Mockito.mockFunction();
+
+            inject(ProductImageResolver, "getProductUtils", ProductUtilsFake);
+            inject(ProductImageResolver, "getProductImageFactory", ProductImageFactory);
+
+            var imageInfo = ProductImageResolver.getProductLineItemImage(giftCardLineItem, viewType);
+
+            Mockito.verify(ProductImageFactory).createProductImage(giftCardLineItem.product, viewType, imageIndex);
+        })
+        .test("Standard image processing is applied when product type is neither GiftCard nor DYO", function () {
+            var product = createProduct(ProductType.Regular),
+                regularLineItem = createRegularProductLineItem(product, "Regular Product"),
+                viewType = "lineItemTile",
+                imageIndex = 0;
+
+            var ProductUtilsFake = {
+                isConverseOne: function() { return false; },
+                isPhysicalGiftCard: function() { return false; }
+            };
+
+            var ProductImageFactory = mockProductImageFactory();
+
+            inject(ProductImageResolver, "getProductUtils", ProductUtilsFake);
+            inject(ProductImageResolver, "getProductImageFactory", ProductImageFactory);
+
+            var imageInfo = ProductImageResolver.getProductLineItemImage(regularLineItem, viewType);
+
+            Mockito.verify(ProductImageFactory).createProductImage(product, viewType, imageIndex);
+        });
+
+    return PIPELET_NEXT;
+};

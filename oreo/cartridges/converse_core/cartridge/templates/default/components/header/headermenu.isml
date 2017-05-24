@@ -1,0 +1,55 @@
+<iscache type="relative" hour="24" />
+<isinclude template="util/modules"/>
+
+<iscomment><!--
+  This template displays a 2-level category tree as top navigation.
+  Only categories marked with showInMenu are shown.
+
+--></iscomment>
+
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("util/ViewHelpers.ds");
+    importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+    
+    var topLevelCategory = getTopLevelCategory();
+    
+    var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+    
+    var deviceType: String = pdict.CurrentSession.custom.device;
+    
+    var enableHTMLBuilder = FeatureToggleService.isFeatureEnabled("html-builder");
+    var enableHTMLBuilderOnDesktop = FeatureToggleService.isFeatureEnabled("html-builder-on-desktop");
+    var enableFlashBuilder = FeatureToggleService.isFeatureEnabled("flash-builder");
+    
+    var isMobileDevice: Boolean = deviceType === 'mobile' || deviceType === 'tablet';
+    var showHtmlBuilder: Boolean = (isMobileDevice && enableHTMLBuilder) || (!isMobileDevice && enableHTMLBuilder && enableHTMLBuilderOnDesktop);
+    var showFlashBuilder: Boolean = (!isMobileDevice && enableFlashBuilder);
+
+    var enableCustom: Boolean = showHtmlBuilder || showFlashBuilder;
+	var topMenuCategories = getSubcategoriesInMenuForTopLevelCategory(topLevelCategory);
+	var numberOfTopMenuCategories = Math.ceil(topMenuCategories.length+1).toFixed();
+</isscript>
+<isif condition="${topLevelCategory != null}">
+    <div class="menu-category-container columns-${numberOfTopMenuCategories}">
+        <ul class="menu-category level-1 clearfix">
+        	<isloop items="${topMenuCategories}" var="topCat">
+                <isif condition="${topCat.getID() == 'CUSTOM'}">
+                    <isif condition="${enableCustom == true}">
+	                    <li id='${topCat.getID()}-container'>
+	                        <iscategoryflyout category="${topCat}"/>
+	                    </li>
+	                </isif>
+                <iselse>
+                    <li id='${topCat.getID()}-container'>
+                        <iscategoryflyout category="${topCat}"/>
+                    </li>
+                </isif>
+            </isloop>
+            
+        </ul>
+    </div>
+    <div class="external-category-container" data-slider-area="subcategory-panel">
+        <div class="level-2 " ></div>
+    </div>
+</isif>

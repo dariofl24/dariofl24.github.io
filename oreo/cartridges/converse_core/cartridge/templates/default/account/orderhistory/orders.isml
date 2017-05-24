@@ -1,0 +1,147 @@
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+    importScript("converse_core:product/ProductUtils.ds");
+    importScript("converse_core:account/order/OrderUtils.ds");
+    importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+    importScript("converse_core:util/LocaleInfo.ds");
+    importScript("util/ViewHelpers.ds");
+
+    var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+    var ProductImageResolver = converse.product.ProductImageResolver;
+    var OrderUtils = converse.account.order.OrderUtils;
+
+    var EnableOrderReturns = FeatureToggleService.getFeature("order-returns").isEnabled();
+
+    // [CEMEA-5] Filter orders to only show the orders shipped to the current selected country. This is only for converse-EU sites.
+    var currentCountry = converse.utils.getCurrentCountryCode( pdict.CurrentRequest );
+    var filteredOrders = new dw.util.ArrayList();
+
+    for each (var item in pdict.CurrentForms.orders.orderlist){
+        if(item.object.getDefaultShipment().getShippingAddress().countryCode.value === currentCountry) {
+            filteredOrders.push(item);
+            if( filteredOrders.size() === converse.constants.MaxOrderHistoryCountPerCountry )
+            {
+                break;
+            }
+        }
+    }
+
+    var pageSize = pdict.OrderPagingModel.pageSize;
+    var pm:PagingModel = new dw.web.PagingModel(filteredOrders);
+    pm.setPageSize( converse.constants.MaxOrderHistoryCountPerCountry );
+
+    pdict.OrderPagingModel = pm;
+
+</isscript>
+<isdecorate template="account/orderhistory/pt_orderhistory">
+    <isinclude template="util/modules"/>
+    <div id="order-history-container">
+        <isif condition="${pdict.OrderPagingModel.empty}">
+
+            <div class="no_orders">${Resource.msg('orders.noorders','account',null)}</div>
+
+        <iselse/>
+
+            <form action="${URLUtils.httpsContinue()}" method="post" id="${pdict.CurrentForms.orders.htmlName}">
+            <iscomment>
+            <div class="search-result-options">
+                <ispagingbar pageurl="${URLUtils.https('Order-History')}" pagingmodel="${pdict.OrderPagingModel}"/>
+            </div>
+            </iscomment>
+
+            <ul class="order-history-products">
+
+            <isloop items="${filteredOrders}" var="item" status="orderloopstate">
+                <isset name="Order" value="${item.object}" scope="page"/>
+
+                <isif condition="${!empty(Order.productLineItems)}">
+                <li class="order-history-product">
+
+                    <div  class="order-history-item-image">
+                        <isset name="firstLineItem" value="${Order.productLineItems[0]}" scope="page"/>
+                        <isset name="image" value="${ProductImageResolver.getProductImage(firstLineItem.getProduct(), 'small', 0)}" scope="page"/>
+
+                        <isif condition="${!empty(image)}">
+                            <isset name="thumbnailUrl" value="${image.getURL()}" scope="page"/>
+                            <isset name="imageAlt" value="${image.alt}" scope="page"/>
+                            <isset name="imageTitle" value="${image.title}" scope="page"/>
+                        <iselse/>
+                            <isset name="thumbnailUrl" value="${URLUtils.staticURL('/images/noimagemedium.png')}" scope="page"/>
+                            <isset name="imageAlt" value="${firstLineItem.productName}" scope="page"/>
+                            <isset name="imageTitle" value="${firstLineItem.productName}" scope="page"/>
+                        </isif>
+
+                        <a class="thumb-link" href="${ProductUtils.getProductLineItemLink(firstLineItem)}" title="${firstLineItem.getProduct().name}">
+                            <img src="${thumbnailUrl}" alt="${imageAlt}" title="${imageTitle}"/>
+                        </a>
+                    </div>
+
+                    <div class="order-history-order-details">
+                        <div class="order-history-header">
+                            <div class="order-mini-info">
+                                <div class="order-date">
+                                    <span class="label">${Resource.msg('orders.datelabel','account',null)}</span>
+                                    <span class="value"><isprint value="${Order.creationDate}" /></span>
+                                </div>
+                                <div class="order-number">
+                                    <isif condition="${dw.system.Site.current.ID == "converse"}">
+                                        <isset name="orderNo" value="${!empty(Order.custom.dyoJourneysOrderID) ? Order.custom.dyoJourneysOrderID : Order.custom.inlineJourneysOrderID}" scope="page"/>
+                                    <iselse>
+                                        <isset name="orderNo" value="${Order.orderNo}" scope="page"/>
+                                    </isif>
+
+                                    <isif condition="${empty(orderNo)}">
+                                        <span class="label red bold">${Resource.msg('summary.order.error.technical','checkout',null)}</span>
+                                    <iselse>
+                                        <span class="label">${Resource.msg('orders.numberlabel','account',null)}</span>
+                                        <span class="value"><isprint value="${orderNo}" /></span>
+                                    </isif>
+                                </div>
+                                <div class="order-number">
+                                    <span class="label">${Resource.msg('orders.ordertotal','account',null)}</span>
+                                    <span class="value"><isprint value="${Order.totalGrossPrice}" /></span>
+                                </div>
+                            </div>
+                            <ul class="order-history-buttons">
+                                <li>
+                                    <button class="label-view-order button" type="submit"
+                                            value="${Resource.msg('orders.orderdetail','account',null)}"
+                                            name="${item.show.htmlName}">
+                                        ${Resource.msg('orders.orderdetail','account',null)}
+                                    </button>
+                                </li>
+                                <isif condition="${EnableOrderReturns && OrderUtils.canReturnOrder(Order)}">
+                                    <li>
+                                        <a class="label-view-order button" href="${URLUtils.url('Returns-Start', 'orderID', Order.getUUID())}">
+                                            ${Resource.msg('orders.orderreturn','account',null)}
+                                        </a>
+                                    </li>
+                                </isif>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                 </isif>
+
+                <iscomment>if we have more than five orders, we use the paging bar</iscomment>
+                <isif condition="${orderloopstate.count >= (pdict.OrderPagingModel.pageSize + 1)}">
+                    <isbreak/>
+                </isif>
+
+            </isloop>
+
+            </ul>
+
+            <iscomment>
+            <div class="search-result-options">
+                <ispagingbar pageurl="${URLUtils.https('Order-History')}" pagingmodel="${pdict.OrderPagingModel}"/>
+            </div>
+            </iscomment>
+
+            </form>
+
+        </isif>
+
+    </div>
+</isdecorate>

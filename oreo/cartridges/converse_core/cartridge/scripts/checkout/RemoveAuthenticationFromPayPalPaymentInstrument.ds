@@ -1,0 +1,34 @@
+/**
+ * Removes PayPal lookup result and sets the 'authenticated' flag to false to force PayPal re-authentication
+ *
+ * @input Basket : dw.order.Basket The basket.
+ */
+importPackage( dw.system );
+importPackage( dw.order );
+importPackage( dw.util );
+importPackage( dw.value );
+importPackage( dw.web );
+
+importScript("converse_core:checkout/Utils.ds");
+importScript("converse_core:constants.ds");
+
+function execute(args : PipelineDictionary) : Number
+{
+    let logger = Logger.getLogger("CARDINAL");
+    let basket : Basket = args.Basket;
+    if( basket == null)
+    {
+        return PIPELET_ERROR;
+    }
+
+    let paymentInstruments = basket.getPaymentInstruments(converse.constants.PaymentMethodId.PayPal);
+    if (paymentInstruments.length > 0) {
+        logger.info("Removing PayPal lookup result.");
+        
+        let paymentInstrument = paymentInstruments[0];
+        paymentInstrument.custom.centinelLookupResult = null;
+        paymentInstrument.custom.authenticated = false;
+    }
+
+    return PIPELET_NEXT;
+}

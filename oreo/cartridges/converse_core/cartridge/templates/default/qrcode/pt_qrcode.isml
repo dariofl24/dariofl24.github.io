@@ -1,0 +1,26 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="ie9 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+
+<head>
+    <isinclude template="util/modules"/>
+    <isinclude template="qrcode/qrcodehead"/>
+</head>
+
+<body>
+    <isreplace/>
+
+    <script src="${URLUtils.staticURL('/js/third_party_libs.js')}"></script>
+    <script type="text/javascript"><isinclude template="resources/appresources"/></script>
+    <script type="text/javascript"><isinclude template="featuretoggle"/></script>
+    <script src="${URLUtils.staticURL('/js/app.core.js')}"></script>
+    <script src="${URLUtils.staticURL('/js/app.js')}"></script>
+    <script type="text/javascript" src="${URLUtils.staticURL('/js/onload_qrcode.js')}"></script>
+
+    <isinclude url="${URLUtils.url('QRCode-IncludeFooter')}"/>
+</body>
+
+</html>

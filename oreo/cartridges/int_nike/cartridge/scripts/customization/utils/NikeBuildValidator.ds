@@ -1,0 +1,50 @@
+importPackage( dw.system );
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+(function() {
+    var buildInvalidStatus = function(message : String) : Object{
+        return { valid: false, message: message };
+    };
+    
+    var NikeBuildValidator = {
+        validate: function(nikeBuild) : Object {
+            let validationStatus = { valid: true, message: "" };
+            
+            if (nikeBuild.invalidated) {
+                validationStatus = buildInvalidStatus("Error persisting item to cart");
+                return validationStatus;
+            }
+            
+            if (empty(nikeBuild.sku)){
+                validationStatus = buildInvalidStatus("SKU can not be null or empty");
+            } 
+            else if (empty(nikeBuild.size)) {
+                validationStatus = buildInvalidStatus("Size can not be null or empty");
+            } 
+            else if (Number(nikeBuild.quantity) <= 0) {
+                validationStatus = buildInvalidStatus("Quantity can not be 0 or a negative value");
+            } 
+            else if (Number(nikeBuild.metricId) <= 0) {
+                validationStatus = buildInvalidStatus("MetricId can not be 0 or a negative value");
+            } 
+            else if (empty(nikeBuild.nikeProductId)) {
+                validationStatus = buildInvalidStatus("NikeProductId can not be null or empty");
+            }
+            
+            return validationStatus;
+        }
+    };
+    
+    Namespace.extend(integration, {
+        nike: {
+            customization: {
+                utils: {
+                    NikeBuildValidator : NikeBuildValidator,
+                    buildInvalidStatus : buildInvalidStatus
+                }
+            }
+        }
+    });
+})();

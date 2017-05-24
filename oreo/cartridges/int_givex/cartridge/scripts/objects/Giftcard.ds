@@ -1,0 +1,49 @@
+importPackage(dw.system);
+importPackage(dw.value);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function(){
+    
+    var Giftcard = Class.extend({
+        init: function(cardNumber : String, pin : String, currency: String) {
+            this.cardNumber = cardNumber;
+            this.pin = pin;
+            this.currency = currency;
+            
+            this.balance = null;
+            this.emptyValue = new Money(0, currency);
+        },
+        
+        isBalanceSet: function() : Boolean {
+            return !empty(this.balance);
+        },
+        
+        isOldGiftcard: function() : Boolean {
+            return this.cardNumber.length == 16;
+        },
+        
+        isPinValid: function() : Boolean {
+            return this.isBalanceSet() && !empty(this.balance.securityCode) && this.balance.securityCode == this.pin;
+        },
+        
+        // old giftcards had no PINs and that's why we don't perform a PIN check on them
+        isValid : function() : Boolean {
+            return this.isBalanceSet() && (this.isOldGiftcard() || this.isPinValid()); 
+        },
+        
+        getBalanceValue: function() : Money {
+            return this.isValid() ? this.balance.certBalance : this.emptyValue;
+        },
+        
+        getBalanceString: function() : String {
+            return this.getBalanceValue().toFormattedString();
+        }
+    });    
+    
+    var ns = Namespace.extendFromString(integration, "givex.objects");
+    Namespace.extend(ns, { Giftcard: Giftcard });
+        
+})();

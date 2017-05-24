@@ -1,0 +1,8 @@
+<isdecorate template="account/pt_account"/>
+<isinclude template="util/modules"/>
+
+	<isslot id="account-banner" description="Banner for My Account pages" context="global" />
+
+	<iscontentasset aid="account-landing"/>
+		
+</isdecorate>

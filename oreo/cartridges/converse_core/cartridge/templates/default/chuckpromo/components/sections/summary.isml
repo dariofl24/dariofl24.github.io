@@ -1,0 +1,7 @@
+<section class="summary">
+    <span class="chuckII"></span>
+
+    <p>${Resource.msg('summary.obsession.announcement','chuckpromo',null)}</p>
+
+    <i class="icon down"></i>
+</section>

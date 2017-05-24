@@ -1,0 +1,30 @@
+/**
+ * @input CentinelLookupResult: Object
+ * @output CentinelVoidResult: Object
+ */
+importPackage( dw.system );
+
+importScript("converse_core:constants.ds");
+importScript('int_cardinal:CardinalService.ds')
+importScript('int_cardinal:command/CentinelRequest.ds')
+
+function execute( args : PipelineDictionary ) : Number
+{
+	var CARDINAL = integration.cardinal;
+	var cardinalService = new CARDINAL.CardinalService();
+	var response;
+	
+	for each (var order in args.CentinelLookupResult.orders) {
+		var voidCommand = new CARDINAL.command.CentinelVoidRequest(order.orderId);
+		cardinalService.call(voidCommand);
+		response = voidCommand.responseObject;
+		
+		if (!response.isSuccess()) {			
+			break;
+		}
+	}
+		
+	args.CentinelVoidResult = response;
+
+   return PIPELET_NEXT;
+}

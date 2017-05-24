@@ -1,0 +1,51 @@
+<iscache type="relative" hour="24"/>
+<isdecorate template="content/home/pt_storefront">
+
+<iscomment>this is the template rendering the clp2 (CONS)</iscomment>
+	<div id="oc"></div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page2/singletout"/>
+	</div>
+	<div>
+        <isinclude template="components/heroslideshow/categorylandingpages/page2/heroslot.isml"/>
+	</div>
+	<br><br>
+	<div class="lc">
+		<div class="featured-categories">
+			<isslot id="clp-2-static-gridwall-1" description="clp2 static gridwall" context="global" />
+		</div>
+	</div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page2/doubletout"/>
+        <isinclude template="components/brandsegments/categorylandingpages/page2/tripletout"/>
+    </div>
+	<div class="lc">
+		<div class="featured-categories">
+			<isslot id="clp-2-static-gridwall-2" description="clp2 static gridwall" context="global" />
+		</div>
+	</div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page2/singletout_row2"/>
+	</div>
+	<div class="lc">
+		<div class="featured-categories">
+			<isslot id="clp-2-static-gridwall-3" description="clp2 static gridwall" context="global" />
+		</div>
+	</div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page2/singletout_row3"/>
+	</div>
+	<div class="lc">
+        <isinclude template="components/brandsegments/categorylandingpages/page2/doubletout_row2"/>
+        <isinclude template="components/brandsegments/categorylandingpages/page2/tripletout_row2"/>
+	</div>
+    <div class="lc">
+         <div class="featured-categories">
+		     <isslot id="clp-2-static-gridwall-4" description="clp2 static gridwall" context="global" />
+	     </div>
+	</div>
+    <div class="featured-categories">
+    	<isslot id="clp-2-featured-tabs" description="clp2 featured tabs" context="global" />
+    </div>
+	<isslot id="clp-2-view-all-cta" description="cta for view all link" context="global" />
+</isdecorate>

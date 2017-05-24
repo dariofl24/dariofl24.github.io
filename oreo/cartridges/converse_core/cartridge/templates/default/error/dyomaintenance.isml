@@ -1,0 +1,3 @@
+<div class="builder-offline">
+    <isinclude url="${URLUtils.url('Page-Include', 'cid', 'builder-down-message')}"/>
+</div>

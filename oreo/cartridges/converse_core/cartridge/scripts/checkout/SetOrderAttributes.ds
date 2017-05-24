@@ -1,0 +1,27 @@
+/**
+* Sets various order attributes after successful order placement.
+*
+* @input Order : dw.order.Order The order.
+* @input BasketSummary: Object
+* @input Device: Object
+*/
+importPackage(dw.order);
+importPackage(dw.system);
+
+importScript("checkout/Utils.ds");
+importScript("constants.ds");
+importScript("util/ViewHelpers.ds");
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+    var order: Order = pdict.Order;
+    var basketSummary = pdict.BasketSummary;
+    
+	if (isSite('US')) {
+	    setOrderJourneysIds(order, basketSummary);
+	} else {
+	    setAttributesForArvato(order, pdict.Device);
+	}
+   
+    return PIPELET_NEXT;
+}

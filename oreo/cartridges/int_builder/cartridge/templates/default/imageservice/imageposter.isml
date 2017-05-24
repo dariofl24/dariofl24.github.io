@@ -1,0 +1,15 @@
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("int_builder:utils/BuilderUtils.ds");
+    
+    var UTILS = integration.builder.utils;
+    var posterServiceUrl = UTILS.BuilderUtils.getPosterServiceUrl(pdict.CurrentRequest.httpQueryString);
+</isscript>
+
+<html>
+	<head>
+	</head>
+    <body>
+        <iframe src="${posterServiceUrl}" style="width: 100%; height: 100%" />
+    </body>
+</html>

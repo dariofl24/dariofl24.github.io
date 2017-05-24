@@ -1,0 +1,32 @@
+<iscontent type="text/javascript" charset="UTF-8" compact="true"/>
+<isscript>
+    importPackage(dw.system);
+    importPackage(dw.util);
+    
+    importScript("converse_core:constants.ds");
+    importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+    
+    var FeatureToggleService = converse.featuretoggle.FeatureToggleService,
+        features = FeatureToggleService.getFeaturesAsObject();
+</isscript>
+    
+(function(app) {
+
+    var Features = <isprint value="${JSON.stringify(features)}" encoding="off"/>;
+
+    function getFeature(featureName) {
+        return Features[featureName] || null;
+    }
+
+    function isFeatureEnabled(featureName) {
+        var feature = getFeature(featureName);
+        return feature !== null && feature.enabled === true;
+    }
+    
+    app.featuretoggle = {
+        Features: Features,
+        getFeature: getFeature,
+        isFeatureEnabled: isFeatureEnabled
+    };
+     
+}(window.app = window.app || {}));

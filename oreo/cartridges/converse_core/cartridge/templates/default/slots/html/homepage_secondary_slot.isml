@@ -1,0 +1,10 @@
+<iscache type="relative" hour="24"/>
+<isif condition="${slotcontent != null}">
+	<div id="secondary-slot-image">
+		<isprint value="${slotcontent.getContent()[0]}" encoding="off"/>
+	</div>
+	<div id="secondary-slot-text">
+		<isprint value="${slotcontent.getCalloutMsg().markup}" encoding="off"/>
+	</div>
+</isif>
+

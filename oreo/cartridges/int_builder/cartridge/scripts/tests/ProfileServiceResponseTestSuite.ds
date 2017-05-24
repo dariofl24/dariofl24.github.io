@@ -1,0 +1,149 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.value)
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_builder:BuilderConstants.ds");
+importScript("int_builder:profileservice/objects/ProfileServiceResponse.ds");
+importScript("int_builder:profileservice/utils/ProfileServiceResponseBuilder.ds");
+
+function execute(args : PipelineDictionary) : Number {
+	let BUILDER = integration.builder;
+    let UTILS = BUILDER.utils;
+    let CONSTANTS = BUILDER.constants;
+
+    let ProfileServiceResponseBuilderStub = {
+        invocationsCounter : 0,
+
+        operationName : "",
+
+        reset : function() {
+            this.invocationsCounter = 0;
+            this.operationName = "";
+        },
+
+        build : UTILS.ProfileServiceResponseBuilder.build,
+
+        buildIsLoggedInSuccess: function( ) : ProfileServiceResponse {
+            this.operationName = "buildIsLoggedInSuccess";
+            this.invocationsCounter++;
+        },
+
+        buildIsLoggedInFailure: function( ) : ProfileServiceResponse {
+            this.operationName = "buildIsLoggedInFailure";
+            this.invocationsCounter++;
+        },
+
+        buildGetProfileSuccess: function( ) : ProfileServiceResponse {
+            this.operationName = "buildGetProfileSuccess";
+            this.invocationsCounter++;
+        },
+
+        buildGetProfileFailure: function( ) : ProfileServiceResponse {
+            this.operationName = "buildGetProfileFailure";
+            this.invocationsCounter++;
+        },
+
+        buildUnsupportedOperation: function( ) : ProfileServiceResponse {
+            this.operationName = "buildUnsupportedOperation";
+            this.invocationsCounter++;
+        }
+    };
+
+    args.Unit.describe("Builder Profile Service Test Suite")
+        .test("ProfileServiceResponseBuilder.buildIsLoggedInSuccess", function () {
+            let response = UTILS.ProfileServiceResponseBuilder.buildIsLoggedInSuccess();
+
+            let responseXML : XML = response.getXML();
+
+            Assert.isTrue(responseXML.children().length() == 1, "ProfileServiceResponse should have only 1 child" );
+            Assert.isTrue(responseXML.status == "true", "ProfileServiceResponse should have status = 'true'" + responseXML);
+        })
+        .test("ProfileServiceResponseBuilder.buildIsLoggedInFailure", function () {
+            let response = UTILS.ProfileServiceResponseBuilder.buildIsLoggedInFailure();
+
+            let responseXML : XML = response.getXML();
+
+            Assert.isTrue(responseXML.children().length() == 2, "ProfileServiceResponse should have 2 children");
+            Assert.isTrue(responseXML.status == "false", "ProfileServiceResponse should have status = 'false'");
+            Assert.isTrue(responseXML.exceptions.exception == "User not logged in.", "ProfileServiceResponse should have one exception as 'User not logged in.'");
+        })
+        .test("ProfileServiceResponseBuilder.buildGetProfileSuccess", function () {
+            let response = UTILS.ProfileServiceResponseBuilder.buildGetProfileSuccess();
+
+            let responseXML : XML = response.getXML();
+
+            Assert.isTrue(responseXML.children().length() == 2, "ProfileServiceResponse should have 2 children");
+            Assert.isTrue(responseXML.status == "success", "ProfileServiceResponse should have status = 'success'");
+            Assert.isTrue(responseXML.profile.securityStatus == 4, "ProfileServiceResponse should have a securityStatus as 4");
+        })
+        .test("ProfileServiceResponseBuilder.buildGetProfileFailure", function () {
+            let response = UTILS.ProfileServiceResponseBuilder.buildGetProfileFailure();
+
+            let responseXML : XML = response.getXML();
+
+            Assert.isTrue(responseXML.children().length() == 2, "ProfileServiceResponse should have 2 children");
+            Assert.isTrue(responseXML.status == "error", "ProfileServiceResponse should have status = 'success'");
+            Assert.isTrue(responseXML.exceptions.exception == "User not logged in.", "ProfileServiceResponse should have one exception as 'User not logged in.'");
+        })
+        .test("ProfileServiceResponseBuilder.buildUnsupportedOperation", function () {
+            let response = UTILS.ProfileServiceResponseBuilder.buildUnsupportedOperation();
+
+            let responseXML : XML = response.getXML();
+
+            Assert.isTrue(responseXML.children().length() == 2, "ProfileServiceResponse should have 2 children");
+            Assert.isTrue(responseXML.status == "failure", "ProfileServiceResponse should have status = 'failure'");
+            Assert.isTrue(responseXML.exceptions.exception == "Unsupported operation.", "ProfileServiceResponse should have one exception as 'Unsupported operation.'");
+        })
+        .test("ProfileServiceResponseBuilder.build with action=isloggedin and authenticated=true", function () {
+            let builderStub = ProfileServiceResponseBuilderStub;
+            builderStub.reset();
+        	builderStub.build( CONSTANTS.Profile.Action.IsLoggedIn, true );
+
+            Assert.isTrue(builderStub.invocationsCounter == 1, "1 operation should be executed");
+            Assert.isTrue(builderStub.operationName == "buildIsLoggedInSuccess", "buildIsLoggedInSuccess should be invoked");
+        })
+        .test("ProfileServiceResponseBuilder.build with action=isloggedin and authenticated=false", function () {
+            let builderStub = ProfileServiceResponseBuilderStub;
+            builderStub.reset();
+            builderStub.build( CONSTANTS.Profile.Action.IsLoggedIn, false );
+
+            Assert.isTrue(builderStub.invocationsCounter == 1, "1 operation should be executed");
+            Assert.isTrue(builderStub.operationName == "buildIsLoggedInFailure", "buildIsLoggedInFailure should be invoked");
+        })
+        .test("ProfileServiceResponseBuilder.build with action=getprofile and authenticated=true", function () {
+            let builderStub = ProfileServiceResponseBuilderStub;
+            builderStub.reset();
+            builderStub.build( CONSTANTS.Profile.Action.GetProfile, true );
+
+            Assert.isTrue(builderStub.invocationsCounter == 1, "1 operation should be executed");
+            Assert.isTrue(builderStub.operationName == "buildGetProfileSuccess", "buildGetProfileSuccess should be invoked");
+        })
+        .test("ProfileServiceResponseBuilder.build with action=getprofile and authenticated=false", function () {
+            let builderStub = ProfileServiceResponseBuilderStub;
+            builderStub.reset();
+            builderStub.build( CONSTANTS.Profile.Action.GetProfile, false );
+
+            Assert.isTrue(builderStub.invocationsCounter == 1, "1 operation should be executed");
+            Assert.isTrue(builderStub.operationName == "buildGetProfileFailure", "buildGetProfileFailure should be invoked");
+        })
+        .test("ProfileServiceResponseBuilder.build with action=anyotheroperation and authenticated=true", function () {
+            let builderStub = ProfileServiceResponseBuilderStub;
+            builderStub.reset();
+            builderStub.build( "anyotheroperation", true );
+
+            Assert.isTrue(builderStub.invocationsCounter == 1, "1 operation should be executed");
+            Assert.isTrue(builderStub.operationName == "buildUnsupportedOperation", "buildUnsupportedOperation should be invoked");
+        });
+
+        return PIPELET_NEXT;
+};

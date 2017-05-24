@@ -1,0 +1,2 @@
+<iscontent type="application/json" charset="UTF-8" compact="true"/>
+{ success: false, message: "Error. No matching implementation found for PickupPoint functionality." }

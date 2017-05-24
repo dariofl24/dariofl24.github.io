@@ -1,0 +1,25 @@
+/**
+*
+* @input countryCode : String This is a sample comment.
+* @input Address: dw.customer.CustomerAddress
+*
+*/
+importPackage( dw.system );
+
+function execute( args : PipelineDictionary ) : Number
+{
+
+    // read pipeline dictionary input parameter
+    var address = args.Address;
+    var cc = args.countryCode;
+
+    // insert business logic here
+    
+    //address.setCountryCode(cc);
+
+    // write pipeline dictionary output parameter
+
+    // args.ExampleOut = ...
+
+    return PIPELET_NEXT;
+}

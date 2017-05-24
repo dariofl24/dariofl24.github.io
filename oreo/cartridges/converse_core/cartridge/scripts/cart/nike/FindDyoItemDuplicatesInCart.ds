@@ -1,0 +1,66 @@
+/**
+* @input NikeBuilds : Array array of Nike Builds
+* @input Basket : dw.order.Basket user's Cart
+* @output XMLResult : XML response that will be returned
+*/
+importPackage( dw.system );
+importPackage( dw.order );
+importPackage( dw.util );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:constants.ds");
+
+importScript("int_nike:customization/objects/NikeCart.ds");
+
+var NikeCustomization = integration.nike.customization;
+var NikeCart = NikeCustomization.NikeCart;
+var NikeItem = NikeCustomization.NikeItem;
+
+function execute( args : PipelineDictionary ) : Number
+{
+    let productLineItems = args.Basket.getAllProductLineItems();
+    let nikeBuilds = args.NikeBuilds;
+    let duplicate = findDuplicate(productLineItems, nikeBuilds);
+
+    if (!empty(duplicate)) {
+    	args.XMLResult = buildResult(duplicate);	
+    	return PIPELET_ERROR;
+    }
+    
+    return PIPELET_NEXT;
+}
+
+function findDuplicate(productLineItems, nikeBuilds) {
+	let result = null;
+
+	for each (let productLineItem in productLineItems) {
+    	for each (let nikeBuild in nikeBuilds) {
+    		if (areEqual(productLineItem, nikeBuild)) {
+    			result = nikeBuild;
+    			break;
+    		}
+    	}
+
+    	if (!empty(result)) {
+    		break;
+    	}
+    }
+
+    return result;
+}
+
+function areEqual(productLineItem, nikeBuild) {
+	let result = productLineItem.productID === nikeBuild.sku;
+	result = result && productLineItem.custom.metricID === nikeBuild.metricId;
+
+	return result;
+}
+
+function buildResult(nikeBuild) {
+	let nikeCart = new NikeCart(1);
+	let nikeItem = new NikeItem({ metricId: nikeBuild.metricId, cartId: "" });
+	nikeCart.addDuplicateItem(nikeItem);
+   	
+   	return nikeCart.getXML();
+}
+

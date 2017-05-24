@@ -1,0 +1,105 @@
+<iscache type="relative" hour="24"/>
+<isinclude template="util/modules"/>
+<isinclude template="product/pdp/modules"/>
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+    importScript("converse_core:product/ProductUtils.ds");
+    importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+
+    var ProductImageResolver = converse.product.ProductImageResolver;
+
+    var productImage = ProductImageResolver.getProductImage(pdict.VariantToDisplay, 'social', 0);
+    var productImageURL = productImage ? productImage.getURL() : "";
+    var productURL = pdict.ProductToDisplayInfo.productURL;
+    var pdp_template = pdict.Product.custom.pdp_template;
+
+    var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+    var EnableSharing = FeatureToggleService.getFeature("gigya-integration").isEnabled();
+    
+    if(request.httpCookies.acceptConverseCookiePolicy){    
+    	if(request.httpCookies.acceptConverseCookiePolicy.value == 0 || 
+    	        request.httpCookies.acceptConverseCookiePolicy.value == 1){
+    		EnableSharing = false;
+    	}  	
+    }
+
+    var isGigyaEnabled = EnableSharing ? '' : 'no-gigya-integration';
+    var isModelImage = pdp_template == 'clothing' ? 'is-model-image' : '';
+    
+    var idReactBuilderUrl = dw.system.Site.getCurrent().getCustomPreferenceValue('customization.idreactbuilder.url');
+    
+    var currentSite : String = dw.system.Site.getCurrent().getID();
+    var currentLocale : String = pdict.CurrentRequest.getLocale();
+    var localization = converse.constants.localization;
+    var countryCode = localization[currentSite][currentLocale].country.code;
+</isscript>
+
+<section class="product-detail pdp">
+    <div class="product-detail-wrapper">
+        <istitleandpricing product_name="${pdict.Product.name}" show_price="true" context="mobile"/>
+        <isinclude template="product/pdp/dyo_b16/productcontent"/>
+	</div>
+</section>
+
+<section class="product-content ${isGigyaEnabled} ${isModelImage}">
+    <div class="product-image-container">
+        <div id="image-view-1" class="product-image-view left"></div>
+        <div id="image-view-2" class="product-image-view right clear"></div>
+        <div id="image-view-3" class="product-image-view left"></div>
+        <div id="image-view-4" class="product-image-view right clear"></div>
+        <div id="image-view-5" class="product-image-view left"></div>
+        <div id="image-view-6" class="product-image-view right clear"></div>
+    </div>
+</section>
+
+<section class="product-detail mobile">
+    <div class="product-detail-wrapper">
+        <isinclude template="product/pdp/dyo_b16/productcontent"/>
+        <isproductoptions context="mobile"/>
+    </div>
+</section>
+
+<script src="${URLUtils.staticURL('/js/onload_tooltips.js')}"></script>
+<isif condition="${pdict.CurrentSession.custom.device == 'desktop'}">
+    <script>
+      $('.swatch').tooltip();
+    </script>
+</isif>
+<!-- div id="id-react-builder" data-locale="${currentLocale}" data-country="${countryCode}" data-pathname="${pdict.Product.custom.nikeProductID}" data-prebuildid="${pdict.Product.custom.inspirationID}"--><!-- React app will go here! --><!-- /div-->
+<div id="id-react-builder" data-locale="" data-country="" data-pathname="" data-prebuildid=""><!-- React app will go here! --></div>
+<style>
+/* Fix to make the popup of the B16 POC full screen. */ 
+.mfp-wrap {
+    z-index: 10000;
+} 
+
+.product-image-view {
+    width: 50%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.product-image-view.left {
+    float: left;
+}
+
+.product-image-view.right {
+    float:right;
+}
+
+.product-image-view.clear {
+    clear: right;
+}
+
+</style>
+
+<script type="text/javascript">
+  var nsgConfig = {
+    HOST: 'http://www.nike.com',
+    PLATFORM: 'mobile'
+  };
+</script>
+<script type="text/javascript" src="http://www.nike.com/styleguide/init/nsg.js"></script>
+<script src="${idReactBuilderUrl}" type="text/javascript"></script>
+<script src="${URLUtils.staticURL('/js/onload_id_react_builder.js')}"></script>

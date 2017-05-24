@@ -1,0 +1,31 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+importScript( "SigmaConstants.ds" );
+
+(function() {
+
+    var SigmaConstants = integration.sigma.SigmaConstants;
+
+    var SigmaServiceResponse = Class.extend({
+        init: function (orderTransResponse, status) {
+            this.status = status;
+
+            if (!empty(orderTransResponse)) {
+                this.errorCode = orderTransResponse.responseCode;
+                this.errorMessage = orderTransResponse.responseMessage;
+                this.tax = orderTransResponse.orderInfo && orderTransResponse.orderInfo.defaultTaxCharge;
+            }
+        },
+
+        isSuccess: function() {
+            return (this.status !== Status.ERROR) && this.errorCode === SigmaConstants.TaxStatus.Success;
+        }
+    });
+    
+    var ns = Namespace.extendFromString(integration, "sigma.tax.objects");
+    Namespace.extend(ns, { SigmaServiceResponse: SigmaServiceResponse });
+})();

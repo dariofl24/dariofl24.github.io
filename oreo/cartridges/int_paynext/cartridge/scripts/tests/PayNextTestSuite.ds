@@ -1,0 +1,242 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.svc);
+importPackage(dw.net);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+function execute(args : PipelineDictionary) : Number {
+
+    args.Unit.describe("PayNext Test Suite")
+        .test("GetSecurityToken", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.GetSecurityToken");
+            var result = service.setMock().call();
+
+            Assert.isTrue(result.isMockResult());
+
+            Assert.areEqual("OK", result.getStatus());
+            
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.passedSecurityToken);
+            Assert.areEqual("SecurityToken", result.getObject().PaynextVerificationStatus.securityToken);
+        })
+        .test("SavePayment fails without security token", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.SavePayment");
+            var result = service.setMock().call(null, null);
+
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isFalse(result.getObject().PaynextVerificationStatus.passedSavePayment);
+            Assert.areEqual("The security token  is not of a GUID format", result.getObject().PaynextVerificationStatus.errorMessage);
+        })
+        .test("SavePayment fails with security token valid and PaymentData null", function () {
+
+            var service : SOAPService = ServiceRegistry.get("PayNext.SavePayment");
+            var result = service.setMock().call("valid_token", null);
+
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isFalse(result.getObject().PaynextVerificationStatus.passedSavePayment);
+            Assert.areEqual("The PaymentData property of the RequestSavePayment is null!", result.getObject().PaynextVerificationStatus.errorMessage);
+        })
+        .test("SavePayment success Visa", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.SavePayment");
+            
+            var paymentData = new Object();
+            paymentData.Method = converse.constants.PaymentMethodId.CreditCard;
+            paymentData.CreditCardType = "Visa";
+            paymentData.CreditCardHolder = "Jon Doe";
+            paymentData.CreditCardNumber = "4111111111111111";
+            paymentData.CreditCardExpirationMonth = 12;
+            paymentData.CreditCardExpirationYear = 2015;
+            paymentData.CreditCardCVC = "111";
+            
+            var result = service.setMock().call("valid_token", paymentData);
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.passedSavePayment);
+            Assert.areEqual("valid_payment_token", result.getObject().PaynextVerificationStatus.paymentToken);
+        })
+        .test("SavePayment success MasterCard", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.SavePayment");
+            
+            var paymentData = new Object();
+            paymentData.Method = converse.constants.PaymentMethodId.CreditCard;
+            paymentData.CreditCardType = "Master";
+            paymentData.CreditCardHolder = "Jon Doe";
+            paymentData.CreditCardNumber = "5555555555554444";
+            paymentData.CreditCardExpirationMonth = 12;
+            paymentData.CreditCardExpirationYear = 2015;
+            paymentData.CreditCardCVC = "111";
+            
+            var result = service.setMock().call("valid_token", paymentData);
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.passedSavePayment);
+            Assert.areEqual("valid_payment_token", result.getObject().PaynextVerificationStatus.paymentToken);
+        })
+        .test("SavePayment success AmericanExpress", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.SavePayment");
+            
+            var paymentData = new Object();
+            paymentData.Method = converse.constants.PaymentMethodId.CreditCard;
+            paymentData.CreditCardType = "Amex";
+            paymentData.CreditCardHolder = "Jon Doe";
+            paymentData.CreditCardNumber = "378282246310005";
+            paymentData.CreditCardExpirationMonth = 12;
+            paymentData.CreditCardExpirationYear = 2015;
+            paymentData.CreditCardCVC = "111";
+            
+            var result = service.setMock().call("valid_token", paymentData);
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.passedSavePayment);
+            Assert.areEqual("valid_payment_token", result.getObject().PaynextVerificationStatus.paymentToken);
+        })
+        .test("SavePayment success PayPal", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.SavePayment");
+            
+            var paymentData = new Object();
+            paymentData.Method = converse.constants.PaymentMethodId.PayPal;
+            
+            var result = service.setMock().call("valid_token", paymentData);
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.passedSavePayment);
+            Assert.areEqual("valid_payment_token", result.getObject().PaynextVerificationStatus.paymentToken);
+        })
+        .test("GetPaymentInfo fails without payment token", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.GetPaymentInfo");
+            var result = service.setMock().call(null);
+
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isFalse(result.getObject().PaynextVerificationStatus.passedPaymentInfo);
+            Assert.areEqual("The PaymentToken provided in the RequestGetPaymentInfo request is null or empty", result.getObject().PaynextVerificationStatus.errorMessage);
+        })
+        .test("GetPaymentInfo invalid token", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.GetPaymentInfo");
+            var result = service.setMock().call("invalid_token");
+
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isFalse(result.getObject().PaynextVerificationStatus.passedPaymentInfo);
+        })
+        .test("GetPaymentInfo CreditCard success", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.GetPaymentInfo");
+            var result = service.setMock().call("cc_valid_token");
+
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.passedPaymentInfo);
+            
+            Assert.areEqual("CREDIT_CARD", result.getObject().Method);
+            
+            Assert.areEqual("Jon Doe", result.getObject().CardHolder);
+            Assert.areEqual("xxxxxxxxxxxx0000", result.getObject().CardNumber);
+            Assert.areEqual("*********", result.getObject().CVC);
+            Assert.areEqual("12", result.getObject().ExpirationMonth);
+            Assert.areEqual("2014", result.getObject().ExpirationYear);
+        })
+         .test("GetPaymentInfo PayPal success", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.GetPaymentInfo");
+            var result = service.setMock().call("pp_valid_token");
+
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.passedPaymentInfo);
+            
+            Assert.areEqual("PAY_PAL", result.getObject().Method);
+        })
+        .test("Authorize fails without payment token", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.Authorize");
+            var result = service.setMock().call(null, null);
+
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isFalse(result.getObject().PaynextVerificationStatus.passedVerification);
+            Assert.areEqual("The PaymentToken property of the RequestAuthorize request is null or empty!", result.getObject().PaynextVerificationStatus.errorMessage);
+        })
+        .test("Authorize success", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.Authorize");
+            
+            var authorize = new Object();
+            authorize.countryCode = "DE";
+            authorize.currency = "EUR";
+            authorize.externalId = "orderId";
+            authorize.returnUrl = "returnUrl";
+            
+            var billingAddress = new Object();
+            billingAddress.City = "city";
+            billingAddress.CountryCode = authorize.countryCode;
+            billingAddress.Email = "test@email.com";
+            billingAddress.FirstName = "Jon";
+            billingAddress.LastName = "Doe";
+            billingAddress.State = "ST";
+            billingAddress.Street1 = "street";
+            billingAddress.Zip = "12345";
+            
+            var shippingAddress = new Object();
+            shippingAddress.City = "city";
+            shippingAddress.CountryCode = authorize.countryCode;
+            shippingAddress.Email = "test@email.com";
+            shippingAddress.FirstName = "Jon";
+            shippingAddress.LastName = "Doe";
+            shippingAddress.State = "ST";
+            shippingAddress.Street1 = "street";
+            shippingAddress.Zip = "12345";
+            
+            var order = new Object();
+            order.amount = 10;
+            order.billingAddress = billingAddress;
+            order.shippingAddress = shippingAddress;
+            
+            authorize.order = order;
+            
+            var result = service.setMock().call("any_valid_token", authorize);
+
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.passedVerification);
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.authorizationDone);
+            Assert.areEqual("token", result.getObject().PaynextVerificationStatus.transactionToken);
+            
+        })
+        .test("GetTransactiontInfo fails without transaction token", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.GetTransactionInfo");
+            var result = service.setMock().call(null);
+
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.passedTransactionInfo);
+            Assert.areEqual("Transaction not found", result.getObject().PaynextVerificationStatus.errorMessage);
+        })
+        .test("GetTransactiontInfo invalid token", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.GetTransactionInfo");
+            var result = service.setMock().call("invalid_token");
+
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.passedTransactionInfo);
+            Assert.areEqual("Transaction not found", result.getObject().PaynextVerificationStatus.errorMessage);
+        })
+        .test("GetTransactiontInfo success", function () {
+            var service : SOAPService = ServiceRegistry.get("PayNext.GetTransactionInfo");
+            var result = service.setMock().call("any_valid_token");
+
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.passedTransactionInfo);
+            Assert.isTrue(result.getObject().PaynextVerificationStatus.authorizationDone);
+            Assert.areEqual("Authorized", result.getObject().PaynextVerificationStatus.authorizationStatus);
+            
+        });
+
+    return PIPELET_NEXT;
+};

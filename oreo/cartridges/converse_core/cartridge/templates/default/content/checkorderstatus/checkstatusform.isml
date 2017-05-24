@@ -1,0 +1,92 @@
+<isinclude template="util/modules"/>
+
+<iscache status="off" />
+
+<h2 class="noshow">${Resource.msg('checkorderstatus.alreadyregistered.heading','customerservice',null)}</h2>
+<form 
+        id="login-form"
+        class="noshow"
+        action="${URLUtils.https('CustomerService-CheckOrderStatusLogin', 'format', 'ajax')}"
+        method="post" 
+        data-validate="parsley" 
+        autocomplete="off">
+
+    <div class="form-row">
+        <ispinputfield
+            formfield="${pdict.CurrentForms.login.username}"
+            labelkey="profile.username.placeholder"
+            show_description="false"
+            rowClass="form-column"
+            required_message="${Resource.msg('login.username.missing-error','forms',null)}"
+            regexp_message="${Resource.msg('profile.usernameerror','forms',null)}"
+            type="input"/>
+        
+        <ispinputfield
+            formfield="${pdict.CurrentForms.login.password}"
+            rowClass="form-column"
+            required_message="${Resource.msg('login.password.missing-error','forms',null)}"
+            type="password"/>
+        
+        <input type="hidden"
+            name="${pdict.CurrentForms.login.rememberme.htmlName}"
+            value="false" />
+        
+        <div class="form-actions form-column">
+            <input type="hidden" name="${pdict.CurrentForms.login.login.htmlName}" value="Log In" />
+            <button type="submit">
+                ${Resource.msg('global.login','locale',null)}
+            </button>
+        </div>
+        
+        
+
+        <input type="hidden"
+                name="${pdict.CurrentForms.login.secureKeyHtmlName}"
+                value="${pdict.CurrentForms.login.secureKeyValue}"/>
+    </div>
+    
+    <div class="form-row error-form"></div>
+</form>
+
+<h2 class="noshow">${Resource.msg('checkorderstatus.nonregistered.heading','customerservice',null)}</h2>
+<form 
+       id="check-order-status-form" 
+        action="${URLUtils.https('CustomerService-CheckOrderStatusByOrderNumber')}" 
+        method="post"
+        autocomplete="off">
+    
+    <div class="form-row">
+        <ispinputfield
+            formfield="${pdict.CurrentForms.checkorderstatus.email}"
+            rowClass="form-column"
+            regexp_message="${Resource.msg('checkorderstatus.email.parseerror','forms',null)}"
+            required_message="${Resource.msg('checkorderstatus.email.missing-error','forms',null)}"
+            type="input"/>
+    
+        <ispinputfield
+            formfield="${pdict.CurrentForms.checkorderstatus.ordernumber}"
+            rowClass="form-column"
+            required_message="${Resource.msg('checkorderstatus.ordernumber.missing-error','forms',null)}"
+            type="input"/>
+            
+        <ispinputfield
+            formfield="${pdict.CurrentForms.checkorderstatus.zipcode}"
+            rowClass="form-column"
+            regexp_message="${Resource.msg('checkorderstatus.zipcode.parseerror','forms',null)}"
+            required_message="${Resource.msg('checkorderstatus.zipcode.missing-error','forms',null)}"
+            type="input"/>
+        
+        <div class="form-actions form-column">
+            <input type="hidden" name="${pdict.CurrentForms.checkorderstatus.checkstatus.htmlName}" value="Check Status" />
+            <button type="submit">
+                ${Resource.msg('checkorderstatus.checkstatus','forms',null)}
+            </button>
+        </div>
+    </div>
+    
+    <div class="form-row error-form"></div>
+</form> 
+<div class="check-order-status-notice">
+    <h2>${Resource.msg('checkorderstatus.orderhistory.heading','customerservice',null)}</h2>
+    <div><isprint value="${Resource.msg('checkorderstatus.orderhistory.subheader','customerservice',null)}" encoding="off"/></div>
+<div>

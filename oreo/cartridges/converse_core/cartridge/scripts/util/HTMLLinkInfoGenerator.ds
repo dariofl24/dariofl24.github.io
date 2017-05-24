@@ -1,0 +1,199 @@
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage( dw.web );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libLang.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+     
+(function() {     
+	var HTMLLinkInfo =  Class.extend({
+        init : function(rel : String, href : String, hrefLang : String) {
+            this.rel = rel;
+            this.href = href;
+            this.hrefLang = hrefLang;
+        },
+        
+        getRel : function() {
+            return this.rel;
+        },
+        
+        getHref : function() {
+            return this.href;
+        },
+        
+        getHrefLang : function() {
+            return this.hrefLang;
+        },
+        
+        equals : function( target : converse.utils.HTMLLinkInfo ) {
+            var localRel = new String(this.getRel() );
+            var localHref = new String( this.getHref() );
+            var localHrefLang = new String( this.getHrefLang() );
+            
+            var targetRel = new String( target.getRel() );
+            var targetHref = new String( target.getHref() );
+            var targetHrefLang = new String( target.getHrefLang() );
+            
+            if( localRel.valueOf() === targetRel.valueOf() 
+                && localHref.valueOf() === targetHref.valueOf()
+                && localHrefLang.valueOf() === targetHrefLang.valueOf() ) {
+            
+                return true;
+            }
+            
+            return false;
+        }
+    });
+    
+	var SiteIdWithLocale =  Class.extend({
+        init : function(siteId : String, locale : String) {
+            this.siteId = siteId;
+            this.locale = locale;
+        },
+        
+        getSiteId : function() {
+            return this.siteId;
+        },
+        
+        getLocale : function() {
+            return this.locale;
+        },
+        
+        equals : function( target : converse.utils.SiteIdWithLocale ) {
+            var localSiteId = new String(this.getSiteId() );
+            var localLocale = new String( this.getLocale() );
+            
+            var targetSiteId = new String( target.getSiteId() );
+            var targetLocale = new String( target.getLocale() );
+            
+            if( localSiteId.valueOf() === targetSiteId.valueOf() 
+                && localLocale.valueOf() === targetLocale.valueOf() ) {
+            
+                return true;
+            }
+            
+            return false;
+        }
+    });
+	
+	var HTMLLinkInfoGenerator = Class.extend({
+	    init : function( currentSiteId, currentLocale ) {
+	       this.currentSiteId = currentSiteId;
+	       this.currentLocale = currentLocale;
+	    },
+
+	    getSiteCanonicalUrl : function(pdict, locale, siteId) : String {  
+		    var currentAction = pdict.CurrentSession.clickStream.last.pipelineName;  
+		    var urlAction = new URLAction(currentAction, siteId, locale);  
+		    var args = [urlAction];  
+		    var parameterMap = pdict.CurrentHttpParameterMap;  
+		  
+		  
+		    // iterate over current request's parameters, put them into the URL  
+		    for (var p in parameterMap) {  
+		        if (parameterMap.hasOwnProperty(p)) {  
+		            // Add params only if controller has special SEO mappings handled by DW  
+		            if (currentAction === 'Search-Show' && p === 'cgid') {  
+		                args.push(new URLParameter(p, parameterMap[p]));  
+		            } else if (currentAction === 'Product-Show' || 'Product-ShowInCategory' && p === 'pid' && pdict.Product) {  
+		                var pid = pdict.Product.isMaster() ? pdict.Product.ID : pdict.Product.getVariationModel().getMaster().ID;  
+		                args.push(new URLParameter(p, pid));  
+		            } else if (currentAction === 'Page-Show' && p === 'cid') {  
+		                args.push(new URLParameter(p, parameterMap[p]));  
+		            }  
+		        }  
+		    }
+		  
+		    return pdict.CurrentRequest.httpProtocol + '://' + pdict.CurrentRequest.httpHost + URLUtils.url.apply(null, args);  
+	    },
+	
+	    getAllSites : function() {
+			return dw.system.Site.getAllSites();
+		},
+	
+	    getAllSiteIdsWithLocales : function( ) : List{
+		    
+		    var sites = this.getAllSites();
+		    var sitesWithLocales = new ArrayList();
+		    
+		    var currentSiteId = this.getCurrentSiteId();
+		    var currentLocale = this.getCurrentLocale();
+		    
+		    for each( var candidateSite in sites) {
+		        var candidateSiteId = candidateSite.getID();
+		        
+		        var candidateAllowedLocales = candidateSite.getAllowedLocales();
+		        
+		        for each( var candidateAllowedLocale in candidateAllowedLocales )
+		        {
+		            if( candidateSiteId === currentSiteId && candidateAllowedLocale === currentLocale )
+		            { 
+		                sitesWithLocales.addAt( 0, new converse.utils.SiteIdWithLocale( candidateSiteId, candidateAllowedLocale ) );
+		            }
+		            else
+		            {
+		            	sitesWithLocales.push( new converse.utils.SiteIdWithLocale( candidateSiteId, candidateAllowedLocale ) );
+		            }
+		        }
+		        
+		    }
+		    
+		    return sitesWithLocales;
+	   },
+	
+	    getSiteIdsWithLocales : function( ) : List{
+        
+            return this.getAllSiteIdsWithLocales( );
+        },
+		
+		getCurrentSiteId : function( ) {
+		    return this.currentSiteId;
+		},
+		
+		getCurrentLocale : function( ){
+		    return this.currentLocale;
+		},
+	
+	    getAlternateLinks : function( pdict : PipelineDictionary ) : List{
+	       var currentSiteId = this.getCurrentSiteId();
+           var currentLocale = this.getCurrentLocale( );
+       
+		   var alternateLinks = new ArrayList();
+		   
+		   var siteIdsWithLocales = this.getSiteIdsWithLocales( );
+           
+		   for each( var siteIdWithLocale : SiteIdWithLocale in siteIdsWithLocales )
+		   {
+		   	   var href = null;
+		   	   
+		   	   try{ 
+			       href = this.getSiteCanonicalUrl( pdict, siteIdWithLocale.getLocale(), siteIdWithLocale.getSiteId() );
+		   	   }catch(err){
+		   	     //Cannot get canonical url
+		   	   }
+		   	   
+		       if( href != null )
+		       {
+		       	    var hrefLang = siteIdWithLocale.getLocale().replace("_", "-");
+		           alternateLinks.push( new converse.utils.HTMLLinkInfo( "alternate", href, hrefLang ) );
+		       }    
+		   }
+		   
+		   return alternateLinks;
+	    }
+	    
+	});
+
+	
+	Namespace.extend(converse, {
+        utils: {
+            SiteIdWithLocale : SiteIdWithLocale,
+            HTMLLinkInfoGenerator : HTMLLinkInfoGenerator,
+            HTMLLinkInfo : HTMLLinkInfo
+        }
+    });
+    
+})();

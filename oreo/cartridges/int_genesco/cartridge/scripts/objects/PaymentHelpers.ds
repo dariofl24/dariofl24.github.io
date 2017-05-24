@@ -1,0 +1,98 @@
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/HelperFactory.ds");
+importScript("converse_core:common/libStringUtilsExt.ds");
+
+importScript("int_genesco:GenescoConstants.ds");
+
+(function() {
+    let GC = integration.genesco.constants;
+
+    let AbstractPaymentHelper = Class.extend({
+        setAddressParameters: function(parameters : Object, address : OrderAddress, prefix : String) {
+            this.setCommonAddressParameters(parameters, address, prefix);
+            this.setLocalisableAddressParameters(parameters, address, prefix);            
+        },
+
+        setCommonAddressParameters: function (parameters : Object, address : OrderAddress, prefix : String) {
+            parameters[StringUtilsExt.prefix("FirstName", prefix)] = address.firstName;
+            parameters[StringUtilsExt.prefix("LastName", prefix)] = address.lastName;
+            parameters[StringUtilsExt.prefix("Phone", prefix)] = address.phone;
+            
+            parameters[StringUtilsExt.prefix("Address1", prefix)] = address.address1;
+            if(!empty(address.address2)) {
+                parameters[StringUtilsExt.prefix("Address2", prefix)] = address.address2;
+            }
+            
+            parameters[StringUtilsExt.prefix("City", prefix)] = address.city;
+        },
+
+        setLocalisableAddressParameters: function(parameters : Object, address : OrderAddress, prefix : String) {
+            throw "Please use localised version of 'AbstractPaymentHelper'.";
+        },
+
+        setPortalParameters: function(parameters : Object, portalId : String) {
+            throw "Please use localised version of 'AbstractPaymentHelper'.";
+        },
+
+        setShippingAndTotalParameters: function(parameters : Object, shipment : Shipment) {
+            throw "Please use localised version of 'AbstractPaymentHelper'.";
+        }
+    });
+
+    let USPaymentHelper = AbstractPaymentHelper.extend({
+        setLocalisableAddressParameters: function(parameters : Object, address : OrderAddress, prefix : String) {
+            parameters[StringUtilsExt.prefix("StateCode", prefix)] = address.state; 
+            parameters[StringUtilsExt.prefix("Zip", prefix)] = address.postalCode.replace('-', '');
+            parameters[StringUtilsExt.prefix("CountryCode", prefix)] = 0; // US
+            parameters[StringUtilsExt.prefix("CountryName", prefix)] = "United States";
+        },
+
+        setPortalParameters: function(parameters : Object, portalId : String) {
+            parameters["PortalCompanyNumber"] = GC.PortalCompanyNumber;
+            parameters["PortalID"] = portalId;
+        },
+
+        setShippingAndTotalParameters: function(parameters : Object, shipment : Shipment) {
+            parameters["Shipping"] = shipment.getShippingNetAmount();
+            parameters["Total"] = shipment.getAmount(true);
+        }
+    });
+
+    let GBPaymentHelper = AbstractPaymentHelper.extend({
+        setLocalisableAddressParameters: function(parameters : Object, address : OrderAddress, prefix : String) {
+            parameters[StringUtilsExt.prefix("StateCode", prefix)] = converse.localization['converse-gb']['en_GB']['country']['code']; 
+            parameters[StringUtilsExt.prefix("Zip", prefix)] = address.postalCode.replace('-', '');
+            parameters[StringUtilsExt.prefix("CountryCode", prefix)] = converse.localization['converse-gb']['en_GB']['country']['code'];
+            parameters[StringUtilsExt.prefix("CountryName", prefix)] = "Great Britain";
+        },
+
+        setPortalParameters: function(parameters : Object, portalId : String) {
+            parameters["PortalCompanyNumber"] = GC.PortalCompanyNumber;
+            parameters["PortalID"] = GC.GBPortalID;
+        },
+
+        setShippingAndTotalParameters: function(parameters : Object, shipment : Shipment) {
+            parameters["Shipping"] = shipment.getShippingNetAmount();
+            parameters["Total"] = shipment.getNetAmount(true);
+        }
+    });
+
+    let PaymentHelperFactory = converse.common.HelperFactory.extend({
+        initHelpers: function() {
+            this.helpers[converse.constants.SiteID.US] = USPaymentHelper;
+            this.helpers[converse.constants.SiteID.GB] = GBPaymentHelper;
+        }
+    });
+
+    Namespace.extend(integration, { 
+        genesco: { 
+            objects: {
+                USPaymentHelper: USPaymentHelper,
+                GBPaymentHelper: GBPaymentHelper,
+                PaymentHelperFactory: PaymentHelperFactory
+            }
+        }
+    });
+})();

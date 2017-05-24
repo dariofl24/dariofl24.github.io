@@ -1,0 +1,34 @@
+<iscache type="relative" hour="24" varyby="price_promotion" />
+<isinclude template="util/modules.isml">
+<isscript>
+    importScript("converse_core:util/ViewHelpers.ds");
+    importScript("converse_core:catalog/CategoryUtils.ds");
+    var CategoryUtils = converse.catalog.CategoryUtils;
+    
+    var topCat = pdict.category;
+    var menutoplevelcat = topCat.getID(); 
+    var flyOutRenderer = MainNavigationUtilities.generateFlyoutRendering(topCat);
+    var subCategoriesList = getSubcategoriesInMenuForSecondaryCategory(topCat);
+	var numberOfSubCategories = Math.ceil(subCategoriesList.length).toFixed();
+
+    var categoryUrl = empty(topCat.custom.alternativeUrl) ? 'javascript:void(0);' : topCat.custom.alternativeUrl;
+    var level1Class = flyOutRenderer.renderFlyout ? 'hasSubcategories' : '';
+</isscript>
+
+
+<a href="${categoryUrl}" class="level-1 ${level1Class}" data-category="${topCat.getID()}">
+    <isprint value="${CategoryUtils.getCategoryMenuDisplayName(topCat)}"/>
+</a>
+
+<isif condition="${flyOutRenderer.renderFlyout}">
+    <div class="level-2" data-parent-category='${topCat.getID()}' id='${topCat.getID()}-level-2'>
+        <div class="menu-wrapper columns-${numberOfSubCategories}">
+            <ismenusubcategories p_subcategories="${subCategoriesList}" 
+            	p_num_of_subcategories="${numberOfSubCategories}" 
+            	p_class="level-2" 
+            	p_row="first"
+            	p_menutoplevelcatid="${topCat.getID()}"/>
+            	
+        </div>
+    </div>
+</isif>

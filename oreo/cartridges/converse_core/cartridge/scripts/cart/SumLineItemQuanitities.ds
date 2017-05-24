@@ -1,0 +1,41 @@
+/**
+ * 
+ * @input ShipmentsForm : dw.web.FormGroup The form definition representing the cart shipments.
+ * @output  BasketQuantity : Number 
+ * 
+ */
+
+importPackage(dw.system);
+importPackage(dw.order);
+importPackage(dw.web);
+ 
+ 
+function execute( pdict : PipelineDictionary ) : Number
+{
+    var cartShipmentsForm : FormGroup = pdict.ShipmentsForm;
+    var totalQuantity: Number = 0;
+    
+    if (cartShipmentsForm.shipments) {
+        for each(var shipmentitem in cartShipmentsForm.shipments) {
+            for each(var item in shipmentitem.items) {
+                var productLineItem : ProductLineItem = item.object;
+                var quant : Number = item.quantity.value; 
+                totalQuantity += quant;
+            } 
+        }
+    }
+    
+    if (! cartShipmentsForm.shipments) {
+        for (var it : Number = 0; cartShipmentsForm['i' + it] ; it++) {
+            var itemsContainer = cartShipmentsForm['i' + it];
+            var items = itemsContainer.items;
+            for (var it2: Number = 0; items['i' + it2] ; it2++) {
+                var itemContainer = items['i' + it2];
+                var itemQuantity = itemContainer.quantity.value;
+                totalQuantity += itemQuantity;
+            }
+        }
+    }
+    pdict.BasketQuantity = totalQuantity;
+    return PIPELET_NEXT;
+}

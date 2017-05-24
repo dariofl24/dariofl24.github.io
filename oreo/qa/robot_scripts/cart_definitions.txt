@@ -1,0 +1,52 @@
+*** Settings ***
+Documentation     Elements from the cart's page
+Library           Selenium2Library
+Resource          pdp_declarations.txt
+Resource          checkout_definitions.txt
+Resource          common_keywords.txt
+
+*** Variables ***
+#${I_PRODUCTQUANTITY}    Quantity
+${L_QUANTITY}     //h1[@id='cart-h1']
+${I_EDITBUTTON}    /td[2]/div/div[2]/a
+${B_ADDTOCART}    add-to-cart
+${B_PAYPALFROMCART}    //div[@id='secondary']//div[@class='checkout-sidebar-inner']//div[@class='checkout-options']//a[@class='paypal-checkout-button']
+${B_UPDATE}       //button[@id='add-to-cart']
+${S_QTYLIST}      //select[@id='Quantity']
+${T_CARTTABLE}    //div[@id='cart-wrapper']/ul/li/div[1]/div[2]/div[2]/div/div
+${L_FORQUANTITY}    /a
+${QUANTITY}       cartCount
+${L_DYO_ATTRIBUTES}    //li[@class='item']//div[@class='item-details']
+${L_DYO_DISABLEDQTY}    //div[@class='item-quantity']//input[@disabled='disabled']
+${D_DYO_NAME}     //div[@class='name']//a[@title='
+${D_DYO_ATTRIBUTES}    //li//div[@class='inner-left-details']//div[@class='attribute']
+${S_METRIC_ID}    //span[@class='value'][contains(text(),'
+
+*** Keywords ***
+Set a Product Number in Cart
+    [Arguments]    ${number}
+    Wait Until Page Contains Element    ${T_CARTTABLE}//input
+    Input Text    ${T_CARTTABLE}//input    ${number}
+    Wait Until Page Contains Element    ${T_CARTTABLE}${L_FORQUANTITY}
+    Click Element    ${T_CARTTABLE}${L_FORQUANTITY}
+    Sleep    4
+
+Click Paypal from Cart Option
+    Wait Until Page Contains Element    ${B_PAYPALFROMCART}
+    Click Element    ${B_PAYPALFROMCART}
+    #Wait Until Page Contains    @{PAYPAL_PAGETITLE}[${env_id}]
+
+Set Product Quantity from Cart
+    [Arguments]    ${qty}
+    Set a Product Number in Cart    ${qty}
+    #Verify Inventory and Price in Cart Page
+
+Verify Information Set In Cart
+    [Arguments]    ${QTY}    ${SKU}
+    Element Should Contain    ${QUANTITY}    ${QTY}
+
+Verify DYO's Attributes In Cart
+    [Arguments]    ${name}    ${metricID}
+    Wait Until Page Contains Element    ${L_DYO_ATTRIBUTES}${L_DYO_DISABLEDQTY}
+    Wait Until Page Contains Element    ${L_DYO_ATTRIBUTES}${D_DYO_NAME}${name}']
+    Wait Until Page Contains Element    ${D_DYO_ATTRIBUTES}${S_METRIC_ID}${metricID}')]

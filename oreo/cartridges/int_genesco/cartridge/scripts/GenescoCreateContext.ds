@@ -1,0 +1,26 @@
+/**
+* This pipelet creates execution context for the Genesco web service.
+*
+* @input BasketSummary : Object The basket.
+* @input CentinelLookupResult : Object
+* @input OrderNo : String The order number.
+* @input CVV : String Credit Card Verification Value
+*
+* @output GenescoContext : dw.util.Map The context with values used during calls to the Genesco web service.
+*/
+importPackage(dw.system);
+importPackage(dw.order);
+importPackage(dw.util);
+
+function execute(pdict : PipelineDictionary) : Number
+{
+    let context : Map = new HashMap();
+    context.put("basketSummary", pdict.BasketSummary);
+    context.put("orderNo", pdict.OrderNo);
+    context.put("cvv", pdict.CVV);
+    context.put("centinelLookupResult", pdict.CentinelLookupResult);
+
+    pdict.GenescoContext = context;
+
+    return PIPELET_NEXT;
+}

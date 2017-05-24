@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<redirect-urls xmlns="http://www.demandware.com/xml/impex/redirecturl/2011-09-01">
+    <redirect-url uri="/ROBOTs.txt">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>http://www.converse.com/robots.txt</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/en">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/be</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/en/go">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/be</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/en/home">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/be</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/de">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/be/de/go</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/de/home">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/be/de/go</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/fr">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/be/fr/go</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/fr/home">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/be/fr/go</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/nl">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/be/nl/go</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/nl/home">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/be/nl/go</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/giftcards">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/</destination-url>
+        <copy-source-params>no</copy-source-params>
+    </redirect-url>
+
+</redirect-urls>

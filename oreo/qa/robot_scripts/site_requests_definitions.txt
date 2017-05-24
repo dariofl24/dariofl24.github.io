@@ -1,0 +1,45 @@
+*** Settings ***
+Documentation   Http requests library
+Library         Selenium2Library
+Library         HttpLibrary.HTTP
+Resource        site_declarations.txt
+Library         String
+
+*** Variables ***
+${BRANDSEGMENT}  //*[@id="license-plates-container"]/ul/li[
+${BRANDSEGMENTLINK}  ]/a[1]
+@{INDEXES}    1    3    5
+
+*** Keywords ***
+Get Homepage Request
+  Open Browser to Converse Site
+  Verifies Brand Segments Links
+
+Verifies Brand Segments Links
+  : FOR  ${index}  IN    @{INDEXES}
+  \  ${reference} =  Get Element Attribute  ${BRANDSEGMENT}${index}${BRANDSEGMENTLINK}@href
+  \  Verify Link Response  ${reference}
+
+Verify Link Response
+  [Arguments]  ${link}
+  GET  ${link}
+  ${status}=  Get Response Status
+  ${code}=  Get Substring  ${status}  0  3
+  ${codenum}=  Convert To Integer  ${code}
+  Should Be True  ${codenum}< 400
+  #Should Start With  200  ${status}
+
+Verify Link Doesn't Retrieves Text Response
+  [Arguments]  ${link}  ${message}
+  ${linkSet} =  Catenate  http://@{USER}[${env_id}]:@{PASSWORD}[${env_id}]@@{LIST_ENVIRONMENT}[${env_id}].store.converse.demandware.net${link}
+  GET  ${link}
+  ${body}=  Get Response Body
+  Should Not Contain  ${body}  ${message}
+
+Verify Subcategories
+  Open Browser To Converse Site
+  ${subcategories}=  Get Matching Xpath Count  ${D_NAVIGATION}${D_CATEGORYCONTAINER}/ul/li
+  : FOR  ${index}  IN RANGE  2  ${subcategories}
+  \  Click Element  ${D_NAVIGATION}${D_CATEGORYCONTAINER}/ul/li[${index}]/a
+  \  ${urlcategory}=  Get Element Attribute  ${D_SPECIFIC_SUBCATEGORY}${index}]/a@href
+  \  Verify Link Response  ${urlcategory}

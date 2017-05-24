@@ -1,0 +1,72 @@
+/**
+* Creates a list of objects with gift card payment instrument data: card number and pin.
+*
+* @input Basket : dw.order.Basket
+* @output gcList : dw.util.Collection
+*/
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage( dw.object );
+importPackage( dw.catalog );
+importScript("converse_core:constants.ds");
+
+function getImageUrlWhereAltTagMatchesVariantId( variantObject ) {
+    var url;
+    
+    for each( img in variantObject.getImages('swatch') ) {
+        
+        if ( img.getAlt() === variantObject.getID() ) {
+            url = img.getURL();
+        }
+    }
+    return url;
+}
+
+function getElectronicGiftCardVariants() : dw.util.Collection
+{
+    var eProdName = converse.constants.GiftCard.ProductMaster.electronic;
+    var p = dw.catalog.ProductMgr.getProduct(eProdName);
+    return p.getVariants();    
+}
+
+function getPhysicalGiftCardValueAttributes() : Object
+{
+    var gProdName = converse.constants.GiftCard.ProductMaster.physical;
+    var AttrSleeve = converse.constants.GiftCard.Attributes.sleeve;
+    var AttrValue = converse.constants.GiftCard.Attributes.value;
+    var p = dw.catalog.ProductMgr.getProduct(gProdName);
+    var vm = p.variationModel;
+    var AttrSleeveList = vm.getAllValues(vm.getProductVariationAttribute(AttrSleeve));
+    var AttrValueList = vm.getAllValues(vm.getProductVariationAttribute(AttrValue));
+    return {
+        AttrSleeveList: AttrSleeveList,
+        AttrValueList: AttrValueList
+    };
+}
+
+function getVariantsAsObject( ) : Object{
+    var gProdName = converse.constants.GiftCard.ProductMaster.physical;
+    var p = dw.catalog.ProductMgr.getProduct(gProdName);
+    var variantList = p.getVariants();
+    var variantJsonObject = {};
+
+    for ( var i = 0; i < variantList.length; i++ ) {
+        var v = variantList[i];
+        var vm = v.variationModel;
+        var vas = vm.getProductVariationAttribute("sleeve");
+        var vav = vm.getProductVariationAttribute("value");
+        var selSleeve = vm.getSelectedValue( vas );
+        var selValue = vm.getSelectedValue( vav );
+
+        if ( selSleeve && selValue ) {
+            sleeveId = selSleeve.getID();
+            valueId = selValue.getID();
+            if ( ! variantJsonObject[sleeveId] ) {
+                variantJsonObject[sleeveId] = {};
+            }
+            variantJsonObject[sleeveId][valueId] = v.getID();
+        }
+    }
+
+    return variantJsonObject;
+}

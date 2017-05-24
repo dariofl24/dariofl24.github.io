@@ -1,0 +1,7 @@
+<isset name="isDYO" value="${pdict.p_dyo}" scope="page"/>
+
+<iscomment>
+<div class="header-banner">
+    <isslot id="header-banner" description="Header banner within the header" context="global" />
+</div>
+</iscomment>

@@ -1,0 +1,33 @@
+importPackage(dw.system);
+importPackage(dw.value);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+(function() {
+    var ResponseParser = Class.extend({
+        init: function(response : String) {
+            this.response = response;
+        },
+        
+        isValid: function() : Boolean {
+            let responseXml = new XML(this.response);
+            
+            return this.hasError() || (responseXml.@Value == 'true');
+        },
+            
+        hasError: function() : Boolean {
+            return this.response.indexOf("<profanityCheck ") == -1;
+        }
+    });
+    
+    Namespace.extend(integration, {
+        nike: {
+            profanecheck: {
+                ResponseParser : ResponseParser
+            }
+        }
+    });
+})();

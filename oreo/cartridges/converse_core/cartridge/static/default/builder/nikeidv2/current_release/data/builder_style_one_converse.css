@@ -1,0 +1,840 @@
+a {
+	color: #FFFFFF;
+}
+.iDConverse.primaryButton.label {
+  font-family: Helvetica, Arial;
+  font-weight: bold;
+  font-size: 18px;
+  color: #ffffff;
+  letter-spacing: -0.5;
+}
+
+.iDConverse.primaryButton.label.download {
+	font-family: Helvetica, Arial;
+	font-weight: bold;
+	font-size: 12px;
+	color: #ffffff;
+	letter-spacing: -0.5;
+}
+
+.iDConverse.secondaryButton.label {
+  font-family: Helvetica, Arial;
+  font-weight: bold;
+  font-size: 15px;
+  color: #666666;
+  letter-spacing: -0.5;
+}
+.iDConverse.utilityButton.label {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-weight: bold;
+	font-size: 10px;
+	color: #FFFFFF;
+	letter-spacing: -0.5;
+}
+.iDConverse.breadrumb {
+  font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+  /*font-style: italic;*/
+  font-size: 12px;
+  color: #999999;
+  letter-spacing: -0.5;
+}
+.iDdefault {
+	color: #666666;
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-size: 13px;
+	padding: 0;
+	margin-left: 0;
+	margin-right: 0;
+	text-align: left;
+	font-weight: normal;
+}
+.iDConverse {
+	color: #666666;
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-size: 13px;
+	padding: 0;
+	margin-left: 0;
+	margin-right: 0;
+	text-align: left;
+	font-weight: normal;
+}
+a {
+	color: #0000FF;
+}
+.id {
+	color: #FF6600;
+}
+.iDConverse.buttonLabel {
+	font-family: Helvetica, Arial;
+	color: #FFFFFF;
+	font-size: 14px;
+	font-weight: bold;
+	letter-spacing: -0.5;
+}
+.iDConverse.inputLabel {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-size: 12;
+	font-weight: bold;
+	color: #333333;
+}
+.iDConverse.palette.learnMore {
+	color: #333333;
+	/*font-style: italic;*/
+	font-size: 11px;
+}
+.iDConverse.palette.input {
+	color: #333333;
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-weight: normal;
+	font-size: 12;
+	letter-spacing: 1;
+}
+.iDConverse.palette.input.hint {
+	/* same as above with diff't color */
+	
+	color: #808080;
+}
+.iDConverse.snapshot.count {
+	color: #666666;
+	font-size: 12px;
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-weight: bold;
+	text-align: center;
+}
+.iDConverse.snapshot.saveLabel {
+	color: #FFFFFF;
+	font-size: 14px;
+}
+.iDConverse.snapshot.info {
+	color: #DDDDDD;
+	font-size: 12px;
+	text-align: center;
+}
+.iDConverse.snapshot.button {
+	color: #FFFFFF;
+	font-size: 15px;
+	font-weight: bold;
+	font-family: Helvetica, Arial;
+	letter-spacing: -0.5;
+}
+.iDdefault.snapshot.selectLabel {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #808080;
+	font-size: 12;
+	letter-spacing: -0.5;
+	text-align: center;
+}
+.iDdefault.snapshot.design.vs {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #000000;
+	font-size: 24;
+	font-weight: bold;
+	letter-spacing: -0.5;
+}
+.iDdefault.snapshot.design.name.input {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #000000;
+	font-size: 30;
+	font-weight: bold;
+	letter-spacing: -0.5;
+}
+.iDdefault.snapshot.design.name.label {
+	font-family: HelveticaNeueLT Std;
+	color: #666666;
+	font-size: 10;
+}
+.iDConverse.snapshotShareDialog.title {
+	color: #000000;
+	font-size: 20px;
+}
+.iDConverse.snapshotShareDialog.previewLabel {
+	color: #333333;
+	font-size: 18px;
+}
+.iDConverse.snapshotShareDialog.shareLabel {
+	color: #333333;
+	font-size: 14px;
+}
+/*
+.iDConverse.toolmenu {
+color: #ffffff;
+font-size: 10px;
+font-family: @Futura;
+}
+.iDConverse.toolmenu.bgBtn {
+font-size: 14px;
+font-family: @Futura;
+}
+.iDConverse.toolmenu.flyout.title {
+font-family: @Futura;
+color: #ffffff;
+font-size: 12px;
+}
+*/
+.iDConverse.tooltip.title {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-weight: normal;
+	color: #ffffff;
+	font-size: 16px;
+	letter-spacing:0.2;
+}
+.iDConverse.tooltip.body {
+	/* this style is used in some special tooltips that have a title  - normal weight helv */
+	font-family:Helvetica, Arial;
+	color: #FFFFFF;
+	font-size: 11px;
+}
+.iDConverse.tooltip.body.italic {
+	/* this style is used by CartTooltip */
+	
+	/*font-style: italic;*/
+	font-weight: normal;
+	text-align: left;
+}
+.iDConverse.sidetooltip {
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: normal;
+}
+.iDConverse.startOver {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #808080;
+	font-size: 12px;
+	text-decoration: underline; 
+}
+
+.iDConverse.startOver.label {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #000000;
+	font-size: 12px;
+}
+
+.iDConverse.startOver.time {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #000000;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.iDConverse.shippingMsg.label {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #000000;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.iDConverse.shippingMsg.time {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #000000;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.iDConverse.productInfo {
+	font-family: Helvetica, Arial;
+	font-weight: bold;
+	font-size:17px;
+	letter-spacing: -0.5;
+	color:#000;
+}
+.iDConverse.productInfo.name {
+	font-family: Helvetica, Arial;
+	color: #000;
+	font-size: 18px;
+	leading: -5;
+	letter-spacing: -1;
+}
+.iDConverse.productInfo.cat {
+	font-family: Helvetica, Arial;
+	/*font-style: italic;*/
+	color: #666666;
+	font-size: 14px;
+}
+.iDConverse.productInfo.price {
+	color: #000;
+	font-size: 18px;
+	font-weight:normal;
+	font-family: Garamond, Georgia;
+	font-style:none;
+}
+.iDConverse.productInfo.reviewsCount {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-weight: bold;
+	color: #C00000;
+	font-size: 12px;
+	letter-spacing: 0;
+}
+.iDConverse.size {
+	color: #000000;
+	font-size: 12px;
+}
+.iDConverse.size.questionInfo {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-size: 12px;
+}
+.iDConverse.size.dropdownLabel {
+	font-family: Helvetica, Arial;
+	font-weight: bold;
+	font-size: 10px;
+	color:#000;
+}
+.iDConverse.size.addMore {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-style: none;
+	font-size: 12px;
+	color: #808080;
+}
+.iDConverse.sizeButton.value {
+	color: #C00000;
+	font-size: 18px;
+	font-weight: bold;
+	font-family: Helvetica, Arial;
+	letter-spacing: -0.5;
+}
+/* TODO: get rid of unused iDdefault styles */
+.iDdefault.b {
+	font-weight: bold;
+}
+.iDdefault.personalize_policy {
+	color: #FF6600;
+}
+.iDdefault.inputdefault {
+	font-weight: normal;
+	color: #000000;
+	font-size: 13;
+}
+.iDdefault.inputdefault.hint {
+	color: #A2ACB4;
+}
+.iDdefault.menu {
+	color: #a2acb4;
+	font-size: 11;
+}
+.iDdefault.menu.over {
+	color: #FFFFFF;
+}
+.iDdefault.menu.selected {
+	color: #FFFFFF;
+}
+.iDdefault.menu.title {
+	color: #FFFFFF;
+	font-size: 11;
+}
+.iDdefault.menu.price {
+	font-size: 11;
+	font-weight: bold;
+}
+.iDdefault.menu.percent {
+	color: #FF6600;
+	font-family: HelveticaNeueLT Std Thin, Trebuchet MS, Verdana;
+	font-size: 27;
+}
+.iDdefault.menu.percent.done {
+	color: #A2ACB4;
+}
+.iDdefault.menu.percent.char {
+	font-size: 15;
+	left: -3;
+	top: 2;
+}
+.iDdefault.menu.openclose {
+	color: #A2ACB4;
+	/*/ added*/
+	
+	hover: #FFFFFF;
+	/*/ added*/
+	
+	font-size: 11;
+}
+.iDdefault.menu.progressInfo {
+	color: #FF6600;
+	font-size: 10;
+}
+.iDdefault.menu.section_title {
+	color: #4c5155;
+	font-size: 10;
+}
+.iDdefault.menu.btn {
+	color: #A2ACB4;
+	font-size: 12;
+}
+.iDdefault.menu.btn.answer {
+	color: #ff6600;
+}
+.iDdefault.menu.btn.add_to_cart {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 12;
+}
+.iDdefault.palette.title {
+	color: #333333;
+	font-family: Helvetica, Arial;
+	font-weight: bold;
+	font-size: 18px;
+	text-align: center;
+	letter-spacing: -0.5;
+}
+/*
+.iDdefault.palette.moreinfo {
+color: #B2B2B2;
+font-weight: bold;
+font-size: 13;
+}
+*/
+.iDdefault.palette.button_label {
+	font-family: Helvetica, Arial;
+	color: #FFFFFF;
+	font-size: 14px;
+	font-weight: bold;
+	letter-spacing: -0.5;
+}
+.iDdefault.palette.question_title {
+	font-family: Helvetica, Arial;
+	/*font-style: italic;*/
+	color: #808080;
+	font-size: 10px;
+}
+.iDdefault.palette.question_info {
+	color: #808080;
+	font-size: 10px;
+	font-family:Helvetica, Arial;
+}
+.iDdefault.palette.question_font {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.iDdefault.palette.question_generic {
+	color: #000;
+	font-weight: bold;
+}
+.iDdefault.palette.question_meterial {
+	color: #000;
+	font-weight: bold;
+}
+.iDdefault.palette.question_symbol {
+	color: #000;
+	font-weight: bold;
+}
+.iDdefault.palette.question_symbol_label {
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 11;
+}
+.iDdefault.palette.generic_asset {
+	/* description copy sometimes visible in generic asset items */
+	
+	color: #000;
+	font-size: 11px;
+	leading: -3;
+}
+.iDdefault.palette.generic_asset_title {
+	font-weight: bold;
+	color: #000;
+	font-size: 11;
+}
+.iDdefault.palette.generic_asset.over {
+	color: #ffffff;
+}
+.iDdefault.palette.generic_asset_title.over {
+	color: #ffffff;
+}
+.iDdefault.size.label {
+	font-size: 12px;
+	font-family: Helvetica, Arial, _sans;
+	color: #000000;
+}
+.iDdefault.size.dropdown_label {
+	font-family: Helvetica, Arial;
+	font-size: 10px;
+	text-align: center;
+	color:#000000;
+}
+.iDdefault.size.button_label {
+	font-size: 10px;
+	font-family: Helvetica, Arial;
+	color:#000000;
+}
+.iDdefault.toolTip {
+	color: #ffffff;
+	font-size: 12px;
+	font-weight: normal;
+	text-align: center;
+}
+.iDdefault.alerts {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #808080;
+	font-size: 12px;
+}
+.iDdefault.alerts.header {
+	font-family: Helvetica, Arial;
+	color: #000000;
+	font-size: 25px;
+	letter-spacing: -0.5;
+	font-weight: bold;
+}
+.iDdefault.alerts.button_label {
+	font-family: Helvetica, Arial;
+	color: #FFFFFF;
+	font-size: 10px;
+	font-weight:bold;
+}
+.iDdefault.alerts.reset_button_label {
+	color: #FFFFFF;
+	font-size: 12;
+	font-weight: bold;
+}
+.iDdefault.wallpaper {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #333333;
+	font-size: 12;
+	font-weight: bold;
+}
+.iDdefault.wallpaper.sizes {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #333333;
+	font-size: 11;
+	font-weight: normal;
+}
+.iDdefault.wallpaper.header {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #000000;
+	font-size: 24;
+	font-weight: bold;
+	letter-spacing: -0.5;
+}
+.iDdefault.wallpaper.body {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-weight: normal;
+	font-size: 12;
+	color: #808080;
+}
+.iDdefault.wallpaper.addcaption {
+	font-family: Helvetica, Arial;
+	font-size: 18;
+	text-align: center;
+	color: #000000;
+	leading: -3;
+	font-weight:bold;
+}
+.iDdefault.wallpaper.facebookcaption {
+	font-family: Helvetica, Arial;
+	font-size: 18;
+	letter-spacing: -3;
+	text-align: left;
+	color: #000000;
+}
+.iDdefault.wallpaper.inputLabel {
+	font-family: Helvetica, Arial;
+	color: #000;
+	font-size: 12;
+}
+.iDdefault.wallpaper.previewInput {
+	font-size: 10;
+}
+.iDdefault.print {
+	color: #666666;
+	font-size: 12;
+	font-weight: bold;
+	leading: -2;
+}
+.iDdefault.print.title {
+	color: #000000;
+}
+.iDdefault.print.footer {
+	color: #666666;
+	font-size: 10;
+	text-align: right;
+}
+.iDdefault.designSearch {
+	color: #A2ACB4;
+}
+.iDdefault.designSearch.choose {
+	font-size: 12;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.iDdefault.sendtofriend {
+	font-size: 12;
+	color: #333333;
+	font-weight: bold;
+}
+.iDdefault.sendtofriend.sans {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-weight: normal;
+}
+.iDdefault.sendtofriend.header {
+	font-family: Helvetica, Arial;
+	letter-spacing: -0.5;
+	font-size: 25;
+	font-weight: bold;
+	color: #000000;
+}
+.iDdefault.sendtofriend.subheader {
+	color: #333333;
+	font-weight: normal;
+}
+.iDdefault.sendtofriend.info {
+	color: #ababab;
+	font-weight: normal;
+}
+.iDdefault.sendtofriend.btn {
+	font-weight: bold;
+	font-size: 10;
+	color: #FFFFFF;
+}
+.iDdefault.startscreen {
+	font-size: 18;
+	leading: -1;
+	color: #FFFFFF;
+}
+.iDdefault.startscreen.blank {
+	font-size: 15;
+	color: #FFFFFF;
+	hover: #a2acb4;
+}
+.iDdefault.startscreen.search {
+	font-size: 11;
+	color: #403E3B;
+	hover: #FFFFFF;
+}
+.iDdefault.startscreen.widget.title {
+	font-size: 24;
+	color: #000000;
+	font-family: Helvetica, Arial;
+	letter-spacing: -1.75;
+	leading: -5;
+}
+.iDdefault.startscreen.widget.body {
+	font-size: 9;
+	color: #7d7d7d;
+	font-weight: bold;
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	leading: 3;
+}
+.iDdefault.startscreen.widget.touch {
+	font-size: 14;
+	color: #7d7d7d;
+	font-weight: bold;
+	/*font-style: italic;*/
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+}
+.iDdefault.startscreen.widget.blank {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+  	font-size: 12px;
+  	color: #808080;
+}
+/*added for share*/
+.iDdefault.saveAndShare {
+	font-family: Helvetica, Arial;
+	color: #808080;
+	font-weight:normal;
+	font-size: 12;
+	letter-spacing: -0.5;
+}
+.iDdefault.saveAndShare.label {
+	color: #808080;
+	font-weight: bold;
+}
+.iDdefault.saveAndShare.label1 {
+	color: #808080;
+	font-size: 12;
+	font-weight: bold;
+}
+.iDdefault.saveAndShare.label2 {
+	color: #808080;
+	font-size: 10;
+}
+.iDdefault.saveAndShare.tags {
+	color: #666666;
+	font-size: 10;
+}
+.iDdefault.saveAndShare.title {
+	font-family: Helvetica, Arial;
+	color: #000000;
+	font-size: 14;
+}
+.iDdefault.saveAndShare.subtitle {
+	font-family: Helvetica, Arial;
+	color: #808080;
+	font-weight:normal;
+	font-size: 12;
+	letter-spacing: -0.5;
+}
+.iDdefault.saveAndShare.tags.label {
+	color: #808080;
+	font-size: 12;
+	font-weight: bold;
+}
+.iDdefault.inputdefault.sans {
+	font-weight: normal;
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+}
+.iDConverse.saveAndShare.terms {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-size: 10;
+	color: #666666;
+}
+.iDdefault.inspiration.title {
+	font-family: Helvetica, Arial;
+	color: #333333;
+	font-size: 25px;
+	letter-spacing: -0.5;
+}
+.iDdefault.inspiration.findMore.title {
+	font-family: Helvetica, Arial;
+	letter-spacing: -0.5;
+	font-weight: bold;
+	color: #333333;
+	font-size: 24;
+}
+.iDdefault.inspiration.findMore.body {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #333333;
+	font-size: 12;
+}
+.iDdefault.inspiration.product.startHere {
+	font-family: Helvetica, Arial;
+	letter-spacing: -0.5;
+	font-weight: bold;
+	color: #FFFFFF;
+	font-size: 14;
+}
+.iDdefault.inspiration.product.designer {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-weight: bold;
+	font-size: 12;
+	color: #333333;
+}
+.iDdefault.inspiration.community.button.label {
+	font-family: Helvetica, Arial;
+	font-weight: bold;
+	font-size: 15px;
+	color: #666666;
+	letter-spacing: -0.5;
+}
+.iDdefault.inspiration.linked.product {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #666666;
+	font-size: 11;
+}
+.iDdefault.shareBar.title {
+	font-family: Helvetica, Arial;
+	color: #FFFFFF;
+	font-size: 16;
+}
+.iDdefault.shareBar.button.design {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-weight: bold;
+	color: #000000;
+	font-size: 14;
+	letter-spacing: -0.5;
+}
+.iDdefault.shareBar.button.social {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #000000;
+	font-weight: bold;
+	font-size: 10;
+	letter-spacing: -0.5;
+}
+.iDdefault.shareBar.button.small {
+	font-family: Helvetica, Arial;
+	color: #ffffff;
+	font-size: 10;
+	font-weight:bold;
+}
+.iDdefault.shareBar.button.poster {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #FFFFFF;
+	font-size: 12;
+}
+.iDdefault.shareBar.button.poster {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #333333;
+	font-size: 11;
+}
+.iDdefault.poster.size.title {
+	font-family: Helvetica,Arial;
+	color: #000000;
+	font-size: 12;
+}
+.iDdefault.shareDialog.submit {
+  	font-family: Helvetica, Arial;
+	color: #FFFFFF;
+ 	font-weight:bold;
+	font-size: 18;
+	letter-spacing: -0.5;
+}
+/*
+BEGIN - TEAM PICKER FONT STYLES
+*/
+.iDConverse.teamPicker.dialog.header {
+	font-family: Helvetica, Arial;
+	color: #333333;
+	font-size: 17;
+	letter-spacing: -0.5;
+}
+.iDConverse.teamPicker.dialog.division.label {
+	font-family: Helvetica, Arial;
+	letter-spacing: -0.5;
+	color: #333333;
+	font-size: 12;
+}
+.iDConverse.teamPicker.tooltip.team.label {
+	font-family: Helvetica, Arial;
+	letter-spacing: -0.5;
+	color: #FFFFFF;
+	font-size: 12;
+}
+.iDConverse.teamPicker.change.team.label {
+	font-family: Helvetica, Arial;
+	letter-spacing: -0.5;
+	color: #333333;
+	font-size: 14;
+}
+.iDConverse.teamPicker.select.team.rollover.label {
+	font-family: Helvetica, Arial;
+	letter-spacing: -0.5;
+	color: #FFFFFF;
+	font-size: 18;
+}
+.iDConverse.teamPicker.select.team.first.tooltip {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	color: #FFFFFF;
+	font-size: 14;
+}
+.iDConverse.alerts.confirmAdd {
+	font-family: Helvetica, Arial;
+	color: #000;
+	font-weight:bold;
+	font-size: 24;
+	letter-spacing: -0.5;
+}
+
+.iDConverse.alerts.confirmLabel{
+	font-family: Helvetica, Arial;
+	color: #808080;
+	font-weight:normal;
+	font-size: 12;
+	letter-spacing: -0.5;
+}
+
+.iDdefault.palette.question_title_add_id_checkbox {
+	font-family: Helvetica, Arial;
+	color: #000000;
+	font-size: 11px;
+}
+/*
+END - TEAM PICKER FONT STYLES
+*/
+/*
+BEGIN - OPERATIONAL MESSAGE STYLES
+*/
+.iDdefault.startscreen.widget.operational.message {
+	font-family: Helvetica, Trebuchet MS, Verdana, Arial, _sans;
+	font-weight: bold;
+	font-size: 12;
+	color: #666666;
+}
+/*
+END - OPERATIONAL MESSAGE STYLES
+*/

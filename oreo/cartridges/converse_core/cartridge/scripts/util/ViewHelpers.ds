@@ -1,0 +1,404 @@
+/**
+* View Helpers are small snippets of code that can be called in your views to help keep isml DRY
+* i.e. Any code that you are repeating regularly can most likely be moved into a helper.
+*/
+
+importPackage( dw.system );
+importPackage( dw.util );
+
+importScript("constants.ds");
+importScript("common/libLang.ds");
+importScript("catalog/CategoryUtils.ds");
+
+function isSite(siteID : String) : Boolean {
+    return converse.constants.SiteID[siteID] === Site.getCurrent().getID();
+}
+
+function getSubcategoriesInMenuForTopLevelCategory(category : dw.catalog.Category) : Object {
+    return converse.catalog.CategoryUtils.getMenuSubCategories(category);
+}
+
+function getSubcategoriesInMenuForSecondaryCategory(category : dw.catalog.Category) : Object {
+    return converse.catalog.CategoryUtils.getMenuSubCategories(category);
+}
+
+function getTopLevelCategory() : dw.catalog.Category {
+    return converse.catalog.CategoryUtils.getTopLevelCategory();
+}
+
+ViewHelpers.getMobileSubcategories = function (category : dw.catalog.Category) : Object {
+    return converse.catalog.CategoryUtils.getMobileSubcategories(category);
+}
+
+/**
+*	namespace for functions used on categoryflyout.isml
+*/
+function MainNavigationUtilities() {}
+
+/**
+*	calculates rendering information based on the category using subcategory information  
+*/
+MainNavigationUtilities.generateFlyoutRendering = function(topCat) {
+	var flyoutRenderer = new Object();
+	var subCategories = getSubcategoriesInMenuForTopLevelCategory(topCat);
+	flyoutRenderer.subCategories = subCategories;
+	
+	
+	if(subCategories.length > 5) {
+		flyoutRenderer.firstcolcount = Math.ceil(subCategories.length/2).toFixed();
+	} else {
+	   	flyoutRenderer.firstcolcount = subCategories.length;
+	}
+	
+	flyoutRenderer.columns = flyoutRenderer.firstcolcount != subCategories.length ? 2 : 1;
+	flyoutRenderer.renderFlyout = !empty(subCategories) && subCategories.length > 0;
+
+	flyoutRenderer.topCatId = topCat.getID();
+	
+	return flyoutRenderer;
+}
+	
+/**
+* Returns HttpParameterMap as JSON serializable simple object
+*/
+MainNavigationUtilities.getSimpleHttpParams = function(map : dw.web.HttpParameterMap) {
+	var params = {};
+	for(var i=0,len=map.parameterNames.length;i<len;i++) {	
+		var paramName = map.parameterNames[i];
+		params[paramName] = map.get(paramName).stringValue;
+	}
+	return params;
+}
+
+/**
+* Returns HttpParameterMap as uri encoded querystring 
+*/
+MainNavigationUtilities.getHttpParamsAsQueryString = function(map : dw.web.HttpParameterMap, suppressParams : Array) {	
+	var len = map.parameterNames.length;
+	var params : Array = [];
+	for(var i=0,len=map.parameterNames.length;i<len;i++) {
+		var paramName = map.parameterNames[i];
+		if (suppressParams && suppressParams.indexOf(paramName) >= 0) { continue; }	
+		params.push(encodeURIComponent(paramName)+"="+encodeURIComponent(map.get(paramName).stringValue));		
+	}
+	var result = params.join("&"); 
+	return result;
+}
+
+
+
+/**
+* Isaay images are hosted by Fluid Retail. This small helper will generate the urls for fetching necessary assets
+* by using the following convention:
+*
+* <view-type>isaay_category</view-type>
+* 
+*    http://cdn.fluidretail.net/customers/c1442/[productId]/generated/[productId]_[colorId]_1_230x345.jpg
+* 
+* Example: http://cdn.fluidretail.net/customers/c1442/LAM-100671/generated/LAM-100671_NUD_1_230x345.jpg
+* 
+* 
+* <view-type>isaay_recommendation</view-type>
+* 
+*    http://cdn.fluidretail.net/customers/c1442/[productId]/generated/[productId]_[colorId]_1_128x192.jpg
+* 
+* Example: http://cdn.fluidretail.net/customers/c1442/LAM-100671/generated/LAM-100671_NUD_1_128x192.jpg
+* 
+* 
+* <view-type>isaay_pdpthumbnail</view-type>
+* 
+*    http://cdn.fluidretail.net/customers/c1442/[productId]/generated/[productId]_[colorId]_1_40x60.jpg
+* 
+* Example: http://cdn.fluidretail.net/customers/c1442/LAM-100671/generated/LAM-100671_NUD_1_40x60.jpg
+* 
+* 
+* <view-type>isaay_swatchsmall</view-type>
+* 
+*    http://cdn.fluidretail.net/customers/c1442/[productId]/[productId]_swatches_small/thumb_variation_[colorId]_11x11.jpg
+* 
+* Example: http://cdn.fluidretail.net/customers/c1442/LAM-100671/LAM-100671_swatches_small/thumb_variation_NUD_11x11.jpg
+* 
+* 
+* <view-type>isaay_swarchlarge</view-type>
+* 
+*    http://cdn.fluidretail.net/customers/c1442/[productId]/[productId]_swatches_large/thumb_variation_[colorId]_23x23.jpg
+* 
+* Example: http://cdn.fluidretail.net/customers/c1442/LAM-100671/LAM-100671_swatches_large/thumb_variation_NUD_23x23.jpg
+* 
+* <view-type>isaay_cart</view-type>
+* 
+*        http://cdn.fluidretail.net/customers/c1442/[productId]/generated/[productId]_[colorId]_1_84x126.jpg
+* 
+* Example: http://cdn.fluidretail.net/customers/c1442/LAM-100671/generated/LAM-100671_NUD_1_84x126.jpg
+* 
+* 
+* <view-type>isaay_pdp</view-type>
+* 
+* This image is contained within the Fluid Display zoom component.
+*/
+function fluidRetailGetImageUrl(type : String, product : dw.catalog.Product, color : String) : String {
+
+  var customer_id = "c1442";
+  var p_id = getMasterProductId(product);
+  if(empty(color)){
+  	var color : String = getColorName(product);
+  }
+
+  var image_settings = {
+        category:       "http://cdn.fluidretail.net/customers/{customer_id}/{id}/generated/{id}_{color}_1_230x345.jpg"
+      , recommendation: "http://cdn.fluidretail.net/customers/{customer_id}/{id}/generated/{id}_{color}_1_128x192.jpg"
+      , pdpthumbnail:   "http://cdn.fluidretail.net/customers/{customer_id}/{id}/generated/{id}_{color}_1_40x60.jpg"
+      , cart:           "http://cdn.fluidretail.net/customers/{customer_id}/{id}/generated/{id}_{color}_1_84x126.jpg"
+      , swatchsmall:    "http://cdn.fluidretail.net/customers/{customer_id}/{id}/{id}_swatches_small/thumb_variation_{color}_11x11.jpg"
+      , swarchlarge:    "http://cdn.fluidretail.net/customers/{customer_id}/{id}/{id}_swatches_small/thumb_variation_{color}_11x11.jpg"
+  };
+
+    if(!type in image_settings) {
+    	return;
+    }
+    
+    return image_settings[type].
+            replace((new RegExp('{customer_id}','')), customer_id).
+            replace((new RegExp('{id}','g')), p_id).
+            replace((new RegExp(color?'{color}':'_{color}','')), color||'');
+}
+
+
+/**
+ * Gets the color name for a product or its default variation.
+ */
+function getColorName(product : dw.catalog.Product) : String {
+    var currentProduct = getCurrentProduct(product);
+    if (currentProduct != null) {
+        var variationModel : dw.catalog.ProductVariationModel = currentProduct.variationModel;
+        return variationModel.getSelectedValue(variationModel.getProductVariationAttribute('color')).getID();
+    }
+    return '';
+}
+
+
+
+/**
+ * Returns the current product or its default variation if it is a variation master
+ */
+function getCurrentProduct(product : dw.catalog.Product) : dw.catalog.Product {
+
+    var currentProduct = product;
+    if(!empty(product.master)) {
+        if(!empty(product.variationModel.defaultVariant)) {
+            currentProduct = product.variationModel.defaultVariant;
+        } else if(product.variationModel.variants.length > 0) {
+            currentProduct = product.variationModel.variants[0];
+        }
+    }
+    return currentProduct;
+}
+
+
+
+/**
+ * Returns the ID of this product or it's master if it is a variant
+ */
+function getMasterProductId(product : dw.catalog.Product) : String {
+    if(product.isVariant()) {
+    	var productVariant : dw.catalog.Variant = product;
+		return productVariant.getMasterProduct().ID;
+    }
+    return product.ID;
+}
+
+function ViewHelpers() {};
+ViewHelpers.isMobile = function() {
+	var mobileAgentHash = ["mobile","tablet","phone","ipad","ipod","android","blackberry","windows ce","opera mini","palm"],
+		idx = 0,
+		item = null,
+		isMobile = false,
+		userAgent = empty(request.httpUserAgent) ? "" : request.httpUserAgent.toLowerCase();
+			
+	while (item = mobileAgentHash[idx++] && !isMobile) {
+		isMobile = (userAgent.indexOf(mobileAgentHash[idx]) >= 0);
+	}
+	return isMobile;	
+};
+
+ViewHelpers.getSubmittedForm = function(forms : dw.web.Forms) {
+	var form : dw.web.Form = null;
+	for each (form in forms) {
+		if (form.getSubmittedAction() != null) {
+			break;
+		}
+	}	
+	return form;
+}
+
+ViewHelpers.getFormElementsWithError = function(form : dw.web.Form) {
+    var errors = ViewHelpers.createFormErrorsObj(dw.web.Resource.msg("forms.error", "forms", null));
+    ViewHelpers.addFormElementsWithError(form, errors);
+    return errors;
+}
+
+ViewHelpers.createFormErrorsObj = function(defaultMessage: String): Object {
+    return {
+        errorMessage: defaultMessage || "",
+        formGroups: {},
+        formFields: {} 
+    }
+}
+
+ViewHelpers.addFormElementsWithError = function(formGroup : dw.web.FormGroup, errors : Object) {
+	if (!empty(formGroup.getError())) {
+		errors.formGroups[formGroup.getHtmlName()] = ViewHelpers.getFormGroupInfo(formGroup);
+	}
+	
+	var formField : dw.web.FormField = null;
+	for each (var el in formGroup) {
+		if (el instanceof dw.web.FormField) {
+			formField = el;
+			if (!formField.isValid()) {
+				errors.formFields[formField.getHtmlName()] = ViewHelpers.getFormFieldInfo(formField);
+			}
+		}
+		else if (el instanceof dw.web.FormGroup) {
+			ViewHelpers.addFormElementsWithError(el, errors);
+		}
+	}
+}
+
+ViewHelpers.getFirstFormGroupError = function(form : dw.web.FormGroup) {
+    var errors = ViewHelpers.getFormElementsWithError(form);
+    return Lang.firstObjectProperty(errors.formGroups);
+}
+
+ViewHelpers.getFormGroupInfo = function(group : dw.web.FormGroup) {
+	var groupInfo = {
+		"formId": group.getFormId(),
+		"dynamicHtmlName": group.getDynamicHtmlName(),
+		"error": group.getError(),
+		"htmlName": group.getHtmlName(),
+		"valid": group.isValid(),
+		"errorMessage": dw.web.Resource.msg(group.getError(), "forms", null)
+	};
+	
+	return groupInfo;
+}
+
+ViewHelpers.getFormFieldInfo = function(field : dw.web.FormField) {
+	var fieldInfo = {
+		"formId": field.getFormId(),
+		"description": field.getDescription(),
+		"dynamicHtmlName": field.getDynamicHtmlName(),
+		"error": field.getError(),
+		"htmlName": field.getHtmlName(),
+		"htmlValue": field.getHtmlValue(),
+		"label": field.getLabel(),
+		"mandatory": field.isMandatory(),
+		"value": field.getValue(),
+		"type": field.getType(),
+		"valid": field.isValid()
+	};
+	
+	if (empty(field.getError())) {
+		var label = dw.web.Resource.msg(field.getLabel(), "forms", field.getLabel());
+		fieldInfo["errorMessage"] = dw.web.Resource.msgf("global.fielderror", "locale", null, label); 
+	}
+	else {
+		fieldInfo["errorMessage"] = dw.web.Resource.msg(field.getError(), "forms", null);
+	}
+	
+	return fieldInfo;
+}
+
+ViewHelpers.getFieldOptions = function(formField : dw.web.FormField, resourceFile : String) {	
+	if (empty(formField.options)) {
+		return {};
+	}
+	var fields = {};
+	
+	var opts = formField.options;
+	for (o in opts) {
+		try {
+			if (opts[o] && opts[o].value && opts[o].value.length > 0) { 
+				var option = opts[o];
+				fields[option.value] = dw.web.Resource.msg(option.label, resourceFile, option.label);
+			}
+		}
+		catch (error) {
+			if (!fields.error) {
+				fields.error = [];
+			}
+			fields.error.push("Error: "+error);
+		} 
+	}	
+	
+	return fields;
+};
+
+/* DEPRECATED: the form definitions have changed, this code is no longer relevant. It was here to support shipment to multiple countries on a single site
+   which is not a requirement anymore */
+ViewHelpers.getCountriesAndRegions = function(countryField : dw.web.FormField,  stateForm : dw.web.FormGroup, resourceName : String) {
+	
+	var list = {};	
+	if (empty(countryField.options)) {
+		return list;
+	}
+	
+	var countryOptions = countryField.options;
+	for (o in countryOptions) {
+		try {
+			if (countryOptions[o] && countryOptions[o].value && countryOptions[o].value.length > 0) { 
+				var option = countryOptions[o];									
+				var formField = stateForm["state"+option.value]
+				list[option.value] = {					
+					label:dw.web.Resource.msg(formField.label, resourceName, formField.label),
+					regions: ViewHelpers.getFieldOptions(formField, resourceName)
+				};			
+			}
+		}
+		catch (error) {
+			if (!list.error) {
+				list.error = [];
+			}
+			list.error.push("Error: "+error);
+		} 
+	}
+	return list;	
+};
+
+/*
+Parameters:
+	prefixes: Array of strings that we expect the testString to begin with.
+	testString: A string we wish to test to see if it has one of the prefixes.
+Return Value:
+	Object result: {
+						prefix: prefix value,
+						remiander: remainder value
+			   		}
+Example:
+	Parameters:
+		prefixes: ["Chuck Taylor", "Jack Purcell", "Design Your Own"]
+		testString: "Chuck Taylor All Star Riff"
+	Returns:
+		result: { 
+					prefix: Chuck Taylor,
+					remainder: All Star Riff
+				}			
+*/
+ViewHelpers.splitStringByPrefix = function(prefixes, testString : String) {
+    var remainderValue : String = "";
+    var prefixValue : String = "";
+    var is_prefix_present : Number = -1;
+    
+    for	(var index = 0; index < prefixes.length; index++) {
+    	prefixValue = prefixes[index];
+    	is_prefix_present = testString.indexOf(prefixValue, 0);
+    	if(is_prefix_present == 0) {
+    	   remainderValue = testString.substring(prefixValue.length+1);
+    	   var result = {
+    	   		prefix : prefixValue,
+    	   		remainder : remainderValue
+    	   };   	   
+    	   return result;
+        }
+    }       
+    return null;
+};

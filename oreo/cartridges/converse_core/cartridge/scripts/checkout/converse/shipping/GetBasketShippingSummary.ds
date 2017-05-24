@@ -1,0 +1,87 @@
+/**
+* Gets the shipping summary for a certain basket. 
+* Returns an object that contains shipments and its shipping methods grouped by product type
+* 
+* @input Basket : dw.order.Basket
+* @input AvailableShippingMethodsGroups: Object
+* @input ShippingMethodsGroups: Object
+*
+* @output BasketShippingSummary : Object
+*
+*/
+importPackage(dw.order);
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+
+function execute(args : PipelineDictionary) : Number
+{
+	var ProductType = converse.constants.ProductType;
+    var basket : Basket = args.Basket;  
+    var availableGroups = args.AvailableShippingMethodsGroups;
+    var allGroups = args.ShippingMethodsGroups;
+    
+    var shipments = basket.getShipments();
+
+    var isAvailable = function(availableShippingMethods, method) : Boolean {
+        for each (let shippingMethod in availableShippingMethods) {
+            if (shippingMethod.shippingMethod.getID() === method.shippingMethod.getID()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    var getShippingMethodsSummaries = function(allShippingMethods, availableShippingMethods) {
+        let result = [];
+
+        for each (let shippingMethod in allShippingMethods) {
+        	
+        	if(isAvailable(availableShippingMethods, shippingMethod)){
+        		
+        		result.push({
+                	method: shippingMethod
+                });
+        		
+        	}
+            
+        }//for
+
+        return result;
+    }
+
+    var getShippingMethodsSummariesByProductType = function(productType) {
+        let allShippingMethods = allGroups.getShippingMethods(productType);
+        let availableShippingMethods = availableGroups.getShippingMethods(productType);
+        return getShippingMethodsSummaries(allShippingMethods, availableShippingMethods);
+    };
+    
+    var getShipmentSummaryByProductType = function(shipment, productType) {
+        return {
+            name: 'shipping.' + productType + '.name',
+            shipment: shipment,
+            productType: productType,
+            productLineItems: shipment.getProductLineItems(),
+            shippingModel: ShippingMgr.getShipmentShippingModel(shipment),
+            shippingMethodsSummaries: getShippingMethodsSummariesByProductType(productType)
+        };
+    };
+    
+    var summary = {
+    	shipments: {},
+    	getDYOShipment: function () { return this.shipments[ProductType.C1]; },
+        getPGCShipment: function () { return this.shipments[ProductType.PhysicalGiftCard]; },
+        getEGCShipment: function () { return this.shipments[ProductType.ElectronicGiftCard]; },
+        getRegularShipment: function () { return this.shipments[ProductType.Regular]; }
+    };
+
+    for each (var shipment: Shipment in shipments) {
+        let productType = shipment.custom.productType;
+        let shipmentSummary = getShipmentSummaryByProductType(shipment, productType);        
+        summary.shipments[productType] = getShipmentSummaryByProductType(shipment, productType);
+    }
+    
+    args.BasketShippingSummary = summary;
+    return PIPELET_NEXT;
+}

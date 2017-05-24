@@ -1,0 +1,102 @@
+/**
+* Exports Shipped Orders with Employee Discount applied to CSV
+*
+* @input ExportFile : String The export file name
+* @input OrdersToExport : dw.util.Iterator The orders to export
+* @input FirstCycle : Boolean
+*
+* @output ErrorMsg : String The error message if any
+*/
+
+importPackage(dw.io);
+importPackage(dw.order);
+importPackage(dw.campaign);
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("custom/CsvFileWriter.ds");
+importScript("custom/EmeaOrderDataReader.ds");
+
+var logger : Logger = Logger.getLogger('ExportOrders');
+var CsvFileWriter = converse.utils.CsvFileWriter;
+
+function execute(args : PipelineDictionary) : Number
+{
+    let errorMsg : String = null;
+    
+    try {
+        writeOrdersToCsvFile(args.ExportFile, args.OrdersToExport, args.FirstCycle);
+    } catch(e) {
+        errorMsg = e.toString();
+        logger.error(errorMsg);
+    }
+    
+    args.ErrorMsg = errorMsg;
+
+    return empty(errorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function writeOrdersToCsvFile(csvFileName : String, orders : Iterator, firstCycle : Boolean) {
+    
+    let orderDataReader : EmeaOrderDataReader = new converse.utils.EmeaOrderDataReader();
+    let csvWriter : CsvFileWriter =  new CsvFileWriter(csvFileName, !firstCycle, '\t');
+    
+    if (firstCycle) {
+        let header = getCsvHeader();
+        csvWriter.writeNext(header);
+    }
+    
+    while (orders.hasNext()) {
+        let order : Order = orders.next();
+        var isProcessed = order.custom.isExportedAsEmployeeOrder;
+        if (isProcessed) {
+            logger.debug("Skipping Order as already processed: " + order.getOrderNo() + "order.custom.isExportedAsEmployeeOrder="+isProcessed);
+            continue;
+        }
+        var isOrderShipped = (order.getShippingStatus() == Order.SHIPPING_STATUS_SHIPPED);
+        if (!isOrderShipped) {
+            logger.debug("Order is not shipped: " + order.getOrderNo());
+            order.custom.isExportedAsEmployeeOrder = false;
+            continue;
+        }
+        
+        let productLineItems : Collection = order.getProductLineItems();
+        var hasEmployeeDiscount = false;
+        for each (let productLineItem : ProductLineItem in productLineItems) {
+            var employeePriceAdjustment : PriceAdjustment = productLineItem.getPriceAdjustmentByPromotionID('EMEA.EmployeeDiscount');
+            if (!empty(employeePriceAdjustment)) {
+                hasEmployeeDiscount = true;
+                break;
+            }
+        }
+        if (!hasEmployeeDiscount) {
+            logger.debug("Order doesn't have employee discount applied: " + order.getOrderNo());
+            order.custom.isExportedAsEmployeeOrder = false;
+            continue;
+        }
+        order.custom.isExportedAsEmployeeOrder = true;
+        csvWriter.writeAll(orderDataReader.read(order));
+    }
+    
+    csvWriter.close();
+}
+
+function getCsvHeader() : Array {
+    return ["ORDER_REF",
+            "EMPLOYEE_NUMBER",
+            "EMPLOYEE_EMAIL",
+            "SUBMITTED_DATE",
+            "ACTUAL_SHIP_DATE",
+            "EAN_NUMBER",
+            "QUANTITY",
+            "CURRENCY_CODE",
+            "DISCOUNT_ADJ",
+            "LIST_PRICE",
+            "TOTAL_LIST_PRICE",
+            "TOTAL_PURCHASE_PRICE",
+            "INVOICE_ID",
+            "ORDER_TYPE"];
+}

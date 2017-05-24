@@ -1,0 +1,457 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_conv_mixins";
+@import "_media_query";
+@import "compass/utilities/general/clearfix";
+@import "compass/typography/text/replacement";
+@import "compass/css3/box-shadow";
+@import "susy";
+
+/* Sidebar for Cart & Checkout */
+
+$susy: (
+  columns: 12,
+  gutters: 1/4,
+);
+
+.checkout-sidebar {
+    background-color: $CONVERSE_COLOR_PDP_4;
+    @include mq-large-pdp {
+        min-height: 100vh;
+    }
+    width: pxtoem(329);
+    float: right;
+    padding-bottom: pxtoem(20);
+    border-left: 1px solid $CONVERSE_COLOR_6;
+
+    @include mq-medium-pdp-cascade {
+        width: span(12);
+        float: none;
+        display: block;
+    }
+
+    .checkout-sidebar-inner {
+        padding: pxtoem(50);
+
+        @include mq-medium-b-cascade() {
+            padding: pxtoem(20);
+        }
+
+        h4, .title {
+            text-transform: uppercase;
+            border-bottom: 3px solid $CONVERSE_COLOR_1;
+            font-weight: bold;
+            font-size: pxtoem(17);
+            padding-bottom: pxtoem(20);
+            margin-bottom: pxtoem(20);
+            margin-top: pxtoem(15);
+        }
+
+        label {
+            margin-bottom: pxtoem(5);
+            font-size: pxtoem(10);
+            &.inline {
+                display: inline-block;
+            }
+        }
+
+        .cart-coupon-code {
+            margin-top: pxtoem(20);
+
+            input {
+                width: span(6);
+                float: left;
+                margin-bottom: pxtoem(25);
+                text-align: center;
+            }
+            button {
+                float: right;
+                width: span(6);
+                font-weight: normal;
+                padding: 9px 18px;
+                @include border-radius(3px, 3px);
+                margin-bottom: 8px;
+            }
+
+            &.error {
+                input {
+                    border: 1px solid $CONVERSE_COLOR_7;
+                }
+
+                label {
+                    color: $CONVERSE_COLOR_7;
+                }
+                .error-message {
+                    color: $CONVERSE_COLOR_7;
+                    line-height: pxtoem(16);
+                    clear: both;
+                    padding-top: pxtoem(5);
+                    padding-bottom: pxtoem(5);
+                }
+            }
+
+            .coupon-applied {
+                float: left;
+                width: span(6);
+                text-align: left;
+
+                .coupon-code {
+                    color: $CONVERSE_COLOR_PDP_10;
+                    font-weight: bold;
+                }
+
+                .discount-amount {
+                    margin-top: 5px;
+
+                    .ammount {
+                        width: auto;
+                        font: bold pxtoem(14) $CONVERSE_FONT_FAMILY_PDP;
+                        text-align: right;
+                    }
+                }
+            }
+
+            .discount-name {
+                width: span(12);
+                clear: both;
+                float: none;
+                padding-top: 9px;
+                margin-bottom: -15px;
+                @include mq-medium-cascade {
+                    text-align: left;
+                }
+            }
+        }
+
+        #sheerid-checkbox {
+            clear: both;
+            padding: pxtoem(20) 0;
+            margin-top: pxtoem(20);
+            border-top: 1px solid $CONVERSE_COLOR_6;
+            border-bottom: 1px solid $CONVERSE_COLOR_6;
+
+            #has-sheerid {
+                margin-right: 5px;
+            }
+        }
+
+        .order-totals-container {
+            margin-top: -20px;
+
+            .order-row {
+                border-bottom: 1px solid $CONVERSE_COLOR_6;
+                padding: pxtoem(20) 0;
+
+                .label {
+                    font-family: $CONVERSE_FONT_FAMILY_PDP_2;
+                    text-transform: uppercase;
+                    font-size: pxtoem(10);
+                }
+
+                .price {
+                    font-size: pxtoem(13);
+                    font-weight: bold;
+                    float: right;
+                    text-align: right;
+                }
+
+                &.order-total {
+                    padding-bottom: pxtoem(45);
+                    border-bottom: none;
+
+                    .label {
+                        font-weight: bold;
+                    }
+                    .price {
+                        font-size: pxtoem(38);
+                    }
+                }
+                &.order-sales-tax {
+                    padding: 0;
+                    height: 53px;
+                    display: inline-table;
+                    width: span(12);
+                    .price {
+                        width: pxtoem(90);
+                        font-weight: normal;
+                        float: none;
+                        text-align: right;
+                    }
+                    span {
+                        display: table-cell;
+                        vertical-align: middle;
+                    }
+                }
+            }
+            .gift-card-total {
+                clear: both;
+            }
+        }
+
+        .checkout-button {
+            @include border-radius(5px, 5px);
+            background-color: $CONVERSE_COLOR_PDP_6;
+            font-size: pxtoem(17);
+            padding: pxtoem(10);
+            font-family: $CONVERSE_FONT_FAMILY_PDP;
+            font-weight: normal;
+            margin-top: pxtoem(20);
+            width: 100%;
+            text-transform: none;
+            clear: both;
+
+            &:focus {
+                outline: 0;
+            }
+
+            &:hover, &:active {
+                color: $CONVERSE_COLOR_PDP_2;
+                background-color: $CONVERSE_COLOR_PDP_10;
+            }
+        }
+
+        .questions .links li {
+            font-size: pxtoem(11);
+            font-family: $CONVERSE_FONT_FAMILY_PDP_2;
+            padding-top: pxtoem(20);
+            a {
+                color: $CONVERSE_COLOR_PDP_5;
+                &:hover {
+                    color: $CONVERSE_COLOR_1;
+                }
+            }
+        }
+
+        .line-divide {
+            font: italic normal pxtoem(12) $CONVERSE_FONT_FAMILY_PDP;
+            max-width: 100px;
+            margin: 2em auto;
+            text-transform: lowercase;
+            text-align: center;
+
+            &:after,
+            &:before {
+                content: " ";
+                height: .28em;
+                display: inline-block;
+                border-top: 1px solid $CONVERSE_COLOR_6;
+                width: 26px;
+                margin: 0 8px;
+            }
+        }
+        .paypal-checkout-button {
+            width: 100%;
+            background-color: $CONVERSE_COLOR_12;
+            @include border-radius(5px, 5px);
+            text-align: center;
+            padding: pxtoem(14) 0;
+            display: block;
+            @include single-box-shadow(0, 2px, 1px, 0, $CONVERSE_COLOR_6);
+
+            span {
+                display: inline-block;
+                font-family: $CONVERSE_FONT_FAMILY_PDP_2;
+                font-size: pxtoem(11);
+                color: $CONVERSE_COLOR_2;
+                margin-right: pxtoem(15);
+            }
+            img {
+                display: inline-block;
+                vertical-align: middle;
+                width: pxtoem(80);
+            }
+        }
+
+        .checkout-options {
+            margin-bottom: pxtoem(50);
+        }
+
+        #sidebar-minicart-items {
+            @include mq-medium-b-cascade {
+                display: none;
+            }
+
+            .cart-item {
+                padding: pxtoem(20) 0;
+                border-top: 1px solid $CONVERSE_COLOR_6;
+                @include clearfix;
+
+                @include mq-medium-pdp-cascade {
+                    position: relative;
+                    padding-bottom: 63px;
+                }
+
+                &:first-child {
+                    border: none;
+                }
+
+                .item-image {
+                    text-align: center;
+                    padding-bottom: pxtoem(20);
+
+                    @include mq-medium-pdp-cascade {
+                        width: span(4);
+                        display: inline-block;
+                        padding: 0;
+                        text-align: center;
+                    }
+                }
+
+                .item-total {
+                    @include mq-medium-pdp-cascade {
+                        display: inline-block;
+                        width: span(8);
+                    }
+                    .product-list-item {
+                        .name {
+                            width: span(6);
+                            display: inline-block;
+                            font-weight: normal;
+                            font-size: pxtoem(13);
+
+                            @include mq-medium-pdp-cascade {
+                                font-size: pxtoem(22);
+                                font-weight: normal;
+                                padding-bottom: pxtoem(17);
+                                width: span(8);
+                            }
+                        }
+                        .attribute {
+                            clear:both;
+                            font-size: pxtoem(11);
+
+                            @include mq-medium-pdp-cascade {
+                                font-size: pxtoem(13);
+                                color: $CONVERSE_COLOR_PDP_5;
+                                font-family: $CONVERSE_FONT_FAMILY_PDP_2;
+                                margin-bottom: pxtoem(6);
+                            }
+
+                            &:first-child {
+                                margin-top: pxtoem(15);
+                            }
+
+                            &:last-child {
+                                margin-bottom: pxtoem(20);
+                            }
+                            .label {
+                                width: pxtoem(50);
+                                display: inline-block;
+                                text-transform: capitalize;
+                                font-family: $CONVERSE_FONT_FAMILY_PDP_2;
+                                font-size: pxtoem(11);
+
+                                @include mq-medium-pdp-cascade {
+                                    width: pxtoem(60);
+                                    display: inline-block;
+                                    text-transform: none;
+                                }
+                            }
+                            .value {
+                                font-family: $CONVERSE_FONT_FAMILY_PDP_2;
+                                font-size: pxtoem(11);
+
+                                @include mq-medium-pdp-cascade {
+                                    display: inline-block;
+                                }
+                            }
+                        }
+                        .item-price {
+                            width: span(5);
+                            display: inline-block;
+                            float: right;
+                            text-align: right;
+                            font-size: pxtoem(17);
+
+                            @include mq-medium-pdp-cascade {
+                                font-size: pxtoem(30);
+                                font-weight: bold;
+                                position: absolute;
+                                bottom: 0;
+                                display: block;
+                                text-align: left;
+                            }
+
+                            .price-sales {
+                                color: $CONVERSE_COLOR_1;
+                                &.red {
+                                    color: $CONVERSE_COLOR_PDP_6;
+                                }
+                            }
+
+                            .tax-info {
+                                font-size: 10px;
+                                margin-top: -4px;
+                                .tax-label {
+                                    font-weight: normal;
+                                }
+                                .tax {
+                                    font-size: 11px;
+                                }
+                            }
+
+                            .product-price {
+                                margin-top: -6px;
+                                @include mq-medium-pdp-cascade {
+                                    &.tax {
+                                        top: -25px;
+                                        position: absolute;
+                                        .tax-info {
+                                            margin-top: -14px;
+                                            color: $CONVERSE_COLOR_1;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .price-standard {
+                        text-decoration: line-through;
+                        color: $CONVERSE_COLOR_7;
+                    }
+                }
+
+                .name {
+                    font-size: pxtoem(11);
+                }
+            }
+
+            .rowcoupons {
+                padding: 0 0 pxtoem(22) 0;
+            }
+
+            .btn-container {
+                text-align: center;
+                margin-bottom: pxtoem(21);
+                display: none;
+            }
+
+            .btn-view-more {
+                @include conv_button_style($CONVERSE_COLOR_12, $CONVERSE_COLOR_1);
+                border: 1px solid $CONVERSE_COLOR_5;
+                font-size: pxtoem(11);
+                @include border-radius(3px);
+                font-family: $CONVERSE_FONT_FAMILY_PDP;
+                text-transform: capitalize;
+
+                &:hover {
+                    background-color: $CONVERSE_COLOR_1;
+                    color: $CONVERSE_COLOR_12;
+                }
+            }
+
+        }
+
+        #payment-logos {
+            padding-top: 40px;
+
+            @include mq-medium-cascade() {
+                display: none;
+            }
+        }
+    }
+
+    @include mq-medium-cascade {
+        width: span(12);
+    }
+}

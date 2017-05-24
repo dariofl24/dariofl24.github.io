@@ -1,0 +1,4 @@
+<isinclude template="util/modules"/>
+<isif condition="${pdict.CurrentCustomer.registered}">
+	<iscontentasset aid="account-nav-registered"/>
+</isif>

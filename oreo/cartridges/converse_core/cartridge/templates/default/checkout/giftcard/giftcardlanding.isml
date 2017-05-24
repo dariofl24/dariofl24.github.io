@@ -1,0 +1,7 @@
+<isdecorate template="checkout/pt_giftcard">	
+	<isinclude template="util/modules"/>
+
+	<activetab data-active-tab="#checkgc-view"></activetab>
+	
+	<isinclude url="${URLUtils.url('GiftCard-CheckBalance', 'standalone', true)}" />
+</isdecorate>

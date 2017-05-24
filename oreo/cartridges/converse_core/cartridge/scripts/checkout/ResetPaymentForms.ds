@@ -1,0 +1,35 @@
+/**
+*
+*   @input Basket : dw.order.Basket
+*   @input paymentMethodForms : dw.web.FormGroup
+*
+*/
+importPackage( dw.system );
+importPackage( dw.web );
+
+importScript("converse_core:checkout/Utils.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+	
+	var paymentMethodForms : FormGroup = args.paymentMethodForms;
+    var selectedPaymentMethodID : String = paymentMethodForms.selectedPaymentMethodID.value;
+	var basket : Basket = args.Basket;
+
+    if (selectedPaymentMethodID === dw.order.PaymentInstrument.METHOD_CREDIT_CARD) {
+        paymentMethodForms.regionalpaymentfields.clearFormElement();
+    } else if (selectedPaymentMethodID === "IDEAL") {
+    	paymentMethodForms.creditCard.clearFormElement();
+    } else {
+    	paymentMethodForms.regionalpaymentfields.clearFormElement();
+    	paymentMethodForms.creditCard.clearFormElement();
+    }
+    
+    if (selectedPaymentMethodID === "GIFT_CARD") {
+    	removeExistingPaymentInstruments(basket, "PAY_PAL");
+    } else {
+    	removeAllExistingPaymentInstrumentsExcept(basket, "GIFT_CARD");
+    }
+
+    return PIPELET_NEXT;
+}

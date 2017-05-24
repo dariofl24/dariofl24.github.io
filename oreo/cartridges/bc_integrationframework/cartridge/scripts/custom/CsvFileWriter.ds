@@ -1,0 +1,42 @@
+importPackage(dw.io);
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("custom/CsvRowBuilder.ds");
+
+(function() {
+
+    var CsvFileWriter = Class.extend({
+    	append: false,
+        init : function(fileName : String, append : Boolean, separator : String) {
+			if(append) { 
+				this.append = append;
+			}
+            this.writer = new FileWriter(new File(fileName), this.append);
+            this.csvRowBuilder = new converse.utils.CsvRowBuilder(separator);
+        },
+
+        writeNext : function(line, shouldAdjust) {
+            let row : String = this.csvRowBuilder.getRow(line, shouldAdjust);
+            this.writer.write(row);
+        },
+        
+        writeAll : function(lines : Collection) {
+            for each (let line in lines) {
+                this.writeNext(line);
+            }
+        },
+
+        close : function() {
+            this.writer.flush();
+            this.writer.close();
+        }
+    });
+
+    var ns = Namespace.extendFromString(converse, "utils");
+    Namespace.extend(ns, { CsvFileWriter : CsvFileWriter });
+})();

@@ -1,0 +1,11 @@
+<!--- TEMPLATENAME: result.isml --->
+RESULT=${pdict.result}
+SECURITY_TOKEN=${pdict.SecurityToken}
+RSA_PUBLIC_KEY=${pdict.RSAPublicKey}
+ERROR_MESSAGE=${pdict.errorMessage}
+ERROR_DETAILS=${pdict.errorDetails}
+PAYMENT_TOKEN=${pdict.PaymentToken}
+PAYMENT_METHOD=${pdict.PaymentMethod}
+TRANSACTION_TOKEN=${pdict.TransactionToken}
+AUTHORIZATION_DONE=${pdict.AuthorizationDone}
+AUTHORIZATION_Status=${pdict.AuthorizationStatus}

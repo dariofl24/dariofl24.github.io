@@ -1,0 +1,31 @@
+/**
+* Creates a list of objects with gift card payment instrument data: card number and pin.
+*
+* @input Basket : dw.order.Basket
+* @output gcList : dw.util.Collection
+*/
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage( dw.order );
+
+importScript("converse_core:constants.ds");
+importScript("checkout/giftcard/GiftCardPayment.ds");
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+	var basket : Basket = pdict.Basket;
+	var paymentInstruments : ArrayList = basket.getPaymentInstruments(converse.order.GiftCardPayment.METHOD_GIFT_CARD);
+	var gcList : ArrayList = new ArrayList();
+	
+	for each(var gcPaymentInstrument : OrderPaymentInstrument in paymentInstruments) 
+	{
+		gcList.add({ 
+			cardNumber: gcPaymentInstrument.custom.giftCardNumber, 
+			pin:  gcPaymentInstrument.custom.giftCardPin
+		});
+	}
+	
+	pdict.gcList = gcList;
+	
+    return PIPELET_NEXT;
+}

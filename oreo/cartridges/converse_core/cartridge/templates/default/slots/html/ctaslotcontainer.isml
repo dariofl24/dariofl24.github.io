@@ -1,0 +1,11 @@
+<iscache type="relative" hour="24"/>
+
+<div class="cta-slot-container">
+	<isif condition="${slotcontent != null}">
+        <isif condition="${slotcontent.getCalloutMsg() != null}">
+            <div class="cta-button">
+			    <a href="${slotcontent.getCalloutMsg()}">${Resource.msg('global.view.all', 'locale', null)}</a>	
+            </div>
+        </isif>
+	</isif>
+</div>

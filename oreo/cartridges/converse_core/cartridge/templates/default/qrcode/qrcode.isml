@@ -1,0 +1,23 @@
+<isdecorate template="qrcode/pt_qrcode">
+
+<iscache type="relative" hour="24" />
+
+<div id="parent-container">
+	<div class="row-one"></div>
+
+	<div class="row-two">
+		<div class="player youtube"></div>
+	</div>
+
+	<div class="row-three">
+		<div class="thumb music"><a href="http://conversemusic.tumblr.com" title="Converse Music Tumblr"></a></div>
+		<div class="thumb gplus"><a href="https://plus.google.com/+converse" title="Converse Google Plus"></a></div>
+		<div class="thumb twitter"><a href="https://twitter.com/Converse" title="Converse Twitter"></a></div>
+	</div>
+
+	<div class="row-four">
+		<div class="player soundcloud"></div>
+	</div>
+</div>
+
+</isdecorate>

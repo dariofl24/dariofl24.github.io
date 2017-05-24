@@ -1,0 +1,29 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/command/SoapCommand.ds");
+
+(function(){
+    
+    var AbstractGivexCommand = converse.webservices.command.SoapCommand.extend({
+    
+        init: function() {
+            this.logger = Logger.getLogger("GIVEX");
+        },
+        
+        createIdentification: function () {
+            var ident = new this.webReference.Identification();
+            ident.token = this.configuration.token;
+            ident.user = this.configuration.user;
+            ident.userPasswd = this.configuration.password;
+            ident.language = this.configuration.language;
+            return ident;
+        }
+        
+    });
+    
+    var ns = Namespace.extendFromString(integration, "givex.command");
+    Namespace.extend(ns, { AbstractGivexCommand: AbstractGivexCommand });
+    
+})();

@@ -1,0 +1,185 @@
+importPackage( dw.system );
+importPackage( dw.value );
+importPackage( dw.util );
+importPackage( dw.catalog );
+importPackage( dw.campaign );
+
+importScript("converse_core:constants.ds");
+importScript("common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+    let ProductType = converse.constants.ProductType;
+    let PromotionType = converse.constants.PromotionType;
+    
+    let CURRENCY = converse.constants.CurrencyCode;
+    let SHIPMENTS_MAPPING = {};
+    SHIPMENTS_MAPPING[ProductType.Regular] = [ProductType.Regular, ProductType.ElectronicGC, ProductType.PhysicalGC];
+    SHIPMENTS_MAPPING[ProductType.C1] = [ProductType.C1];
+
+    // This is an utility method to validate the LineItem passed is an instance of PriceAdjustment, which is the only option at the moment of writing this
+    // that would work in runtime and from the DW tests with mocked objects.
+    //
+    // It might look like there are other alternatives for the code below, so here is a break down on why none of them have been used here:
+    // * instanceof would perfectly work in runtime, but would fail when ran from tests because we are unable to
+    //   cheat on the engine and impersonate our mocks as DW objects;
+    // * trying something like hasOwnProperty would perfectly work for tests but would fail for DW objects, returning false;
+    // * using lineItem["getPromotion"] on the LineItem that is not an instance of PriceAdjustment would throw a ReferenceError
+    let isPriceAdjustment = function(lineItem) : Boolean {
+        return "getPromotion" in lineItem;
+    };
+    
+    let isMatchingShipment = function(shipment, shipmentType) : Boolean {
+        return SHIPMENTS_MAPPING[shipmentType].indexOf(shipment.custom.productType) !== -1;
+    };
+    
+    let getShipmentPriceAdjustments = function(shipment) {
+        let priceAdjustments = new ArrayList();
+        
+        for each (let lineItem in shipment.getAllLineItems()) {
+            if (isPriceAdjustment(lineItem)) {
+                priceAdjustments.add(lineItem);
+            }
+        }
+        
+        return priceAdjustments;
+    };
+    
+    let isOrderClassPromotion = function(promotion : Promotion) : Boolean {
+        return promotion && promotion.getPromotionClass() === Promotion.PROMOTION_CLASS_ORDER;
+    };
+
+    let containsDiscount = function(discounts, discount) {
+        var result = false;
+
+        for each (var item in discounts) {
+            if (item.id.equals(discount.id)) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    };
+
+    let addDiscount = function(discounts, discount) {
+        for each (var item in discounts) {
+            if (containsDiscount(discounts, item)) {
+                item.ammount = item.ammount.add(discount.ammount);
+                break;
+            }
+        }
+    };
+    
+    let PromotionHelper = Class.extend({
+        init: function(promotionManager : PromotionMgr) {
+            this.promotionManager = promotionManager;
+        },
+        
+        getLineItemCtnrPromotionInfo : function(lineItemContainer, shipmentType) {
+            let promotionInfo = {};
+            
+            let priceAdjustments = this.getAllPriceAdjustments(lineItemContainer, shipmentType);
+
+            for each (let priceAdjustment in priceAdjustments) {
+                let associatedPromotion = priceAdjustment.getPromotion();
+                
+                if (!empty(associatedPromotion)) {
+                    if (isOrderClassPromotion(associatedPromotion)) {
+                        promotionInfo = {};
+                        promotionInfo[PromotionType.ORDER_DISCOUNT] = associatedPromotion.custom.promoCodeOverride;
+                        break;
+                    }
+                    
+                    let promotionType = associatedPromotion.custom.promotionType.value;
+                    promotionInfo[promotionType] = true;
+                }
+            }
+            
+            return promotionInfo;
+        },
+        
+        getOrderLevelDiscountSavings : function(container : LineItemCtnr) : Money {
+            let priceAdjustments : Collection = container.getPriceAdjustments();
+            let savings : Money = new Money(0, CURRENCY);
+        
+            for each (let priceAdjustment : PriceAdjustment in priceAdjustments) {
+                let associatedPromotion : Promotion = priceAdjustment.getPromotion();
+            
+                if (isOrderClassPromotion(associatedPromotion)) {
+                    savings = savings.add(priceAdjustment.getNetPrice());
+                }
+            }
+            
+            return savings;
+        },
+        
+        getOrderPriceAdjustments : function(lineItemContainer, shipment : Shipment) {
+            let orderLevelPriceAdjustments : ArrayList = new ArrayList(lineItemContainer.getPriceAdjustments());
+            
+            if (empty(orderLevelPriceAdjustments) || !this.isShipmentQualifiedForPromotion(shipment, orderLevelPriceAdjustments.get(0).getPromotion())) {
+                return new ArrayList();
+            }
+            
+            return orderLevelPriceAdjustments;
+        },
+        
+        isShipmentQualifiedForPromotion : function(shipment : Shipment, appliedOrderLevelPromotion : Promotion) {
+            let firstProduct : Product = new ArrayList(shipment.getProductLineItems()).get(0).getProduct();
+            let promotionsForProduct : Collection = this.promotionManager.getActiveCustomerPromotions().getProductPromotions(firstProduct);
+            
+            for each (let promotion : Promotion in promotionsForProduct) {
+                if (promotion.getID() === appliedOrderLevelPromotion.getID()) {
+                    return true;
+                }
+            }
+            
+            return false;
+        },
+        
+        getAllPriceAdjustments : function(lineItemContainer, shipmentType) {
+            let priceAdjustments = new ArrayList();
+            
+            for each (let shipment : Shipment in lineItemContainer.getShipments()) {
+                if (isMatchingShipment(shipment, shipmentType)) {
+                    priceAdjustments.addAll(this.getOrderPriceAdjustments(lineItemContainer, shipment));
+                    priceAdjustments.addAll(getShipmentPriceAdjustments(shipment));
+                }
+            }
+            
+            return priceAdjustments;
+        },
+
+        getCouponLineItemDiscounts : function(couponLineItem) {
+            if (empty(couponLineItem)) {
+                return [];
+            }
+
+            if (empty(couponLineItem.priceAdjustments) || couponLineItem.priceAdjustments.size() === 0) {
+                return [];
+            }
+
+            var result = [];
+
+            for each (var pa in couponLineItem.priceAdjustments) {
+                var discount = { "id": pa.promotionID, 
+                                "name": pa.lineItemText, 
+                                "ammount": pa.price };
+                
+                if (!containsDiscount(result, discount)) {
+                    result.push(discount);
+                } else {
+                    addDiscount(result, discount);
+                }
+            }
+
+            return result;
+        }
+    });
+    
+    Namespace.extend(converse, {
+        promotion: {
+            PromotionHelper : PromotionHelper
+        }
+    });
+})();

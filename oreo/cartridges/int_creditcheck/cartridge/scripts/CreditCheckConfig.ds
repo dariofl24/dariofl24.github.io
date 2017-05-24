@@ -1,0 +1,30 @@
+importPackage(dw.system);
+importPackage(dw.order);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libStringUtilsExt.ds");
+
+(function(){
+	var logger = Logger.getLogger("CreditCheckConfig");
+	logger.info("entering CreditCheckConfig");
+    var sitePreferences = Site.getCurrent().getPreferences().getCustom();
+    var config = {
+        getInvoiceOptionCode: function(){ return Site.getCurrent().getPreferences().getCustom()["creditcheck.invoiceOptionCode"];} ,
+        getBusinessId: function(){ return Site.getCurrent().getPreferences().getCustom()["creditcheck.businessId"];} ,
+        getDistributionChannel: function(){ return Site.getCurrent().getPreferences().getCustom()["creditcheck.distributionChannel"];} ,
+        getOperationalUnit: function(){ return Site.getCurrent().getPreferences().getCustom()["creditcheck.operationalUnit"];} ,
+        getSalesOrganisation: function(){ return Site.getCurrent().getPreferences().getCustom()["creditcheck.salesOrganisation"];} ,
+        getBasketValidity: function(){ return Site.getCurrent().getPreferences().getCustom()["creditcheck.basketValidity"];} ,
+        getAddressExtensionLenght: function(){ return Site.getCurrent().getPreferences().getCustom()["creditcheck.addressExtensionLenght"];} ,
+        getSchema: function(){ return Site.getCurrent().getPreferences().getCustom()["creditcheck.schema"];} ,
+    };
+    Namespace.extend(integration, {
+        creditcheck: {
+            config: config
+        }
+    });
+    
+})();
+

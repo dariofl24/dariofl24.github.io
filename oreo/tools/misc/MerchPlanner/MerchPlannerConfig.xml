@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<configuration>
+	<appSettings>
+		<!-- ACE OLEDB -->
+		<!--add key="ConnectionString" value="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=MerchPlanner.mdb" /-->
+		<!--add key="Require32Bit" value="false" /-->
+		
+        <!-- JET OLEDB -->
+		<!--add key="ConnectionString" value="Provider=Microsoft.Jet.OLEDB.4.0;Data Source=MerchPlanner.mdb" /-->
+		<!--add key="Require32Bit" value="true" /-->
+		
+		<!-- File paths -->
+		<add key="ExportFilePath" value="merchplanner_data.csv" />
+		<add key="ImportFilePath" value="prodman_product_data.csv" />
+  </appSettings>
+</configuration>

@@ -1,0 +1,192 @@
+<!-- TEMPLATENAME:billingaddress.isml -->
+
+<isscript>
+importScript("converse_core:constants.ds");
+importScript("converse_core:checkout/AddressHelper.ds");
+
+var AddressHelper = new converse.global.AddressHelperFactory().helper();
+</isscript>
+
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+    
+    var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+    var isPhoneOptional = FeatureToggleService.isFeatureEnabled("phone-optional");
+</isscript>
+
+<div class="form-row">
+    <div class="form-column-full">
+        <h3>${Resource.msg('billing.addressheader','checkout',null)}</h3>
+        <isif condition="${pdict.NonGiftCardAmount.value==0}">
+            ${Resource.msg('billing.billinginforequired','checkout',null)}
+        </isif>
+    </div>
+</div>
+
+<div class="form-row billing-same-shipping" 
+	style="${((pdict.CurrentForms.singleshipping.pickuppoint.selectedShippingType.value!='pup')?'display: block;':'display: none;')}" >
+    <div class="form-column-full label-inline billing-shipping-info">
+        <ispinputfield 
+        	formfield="${pdict.CurrentForms.billing.billingAddress.billingSameAsShipping}" 
+        	type="checkbox"
+        	checked="${(pdict.CurrentForms.singleshipping.pickuppoint.selectedShippingType.value!='pup')?'checked':null }"
+        	/>
+        	
+        <div class="form-row billing-address">
+            <div class="form-column-left">
+                <isset name="shipping" value="${pdict.CurrentForms.singleshipping.shippingAddress.addressFields}" scope="page"/>
+                <ul>
+                    <li><isprint value="${shipping.common.firstName.htmlValue}"/> <isprint value="${shipping.common.lastName.htmlValue}"/></li>
+                    <li><isprint value="${shipping.common.address1.htmlValue}"/></li>
+                    <isif condition="${!empty(shipping.common.address2.htmlValue)}">
+                    <li><isprint value="${shipping.common.address2.htmlValue}"/></li>
+                    </isif>
+                    <li><isprint value="${AddressHelper.formatAddressForSummary(shipping.common.city.htmlValue, shipping.regional.zip.htmlValue, shipping.states.stateCode.htmlValue)}" encoding="off" /></li>
+                    <li><isprint value="${Resource.msg('countries.'+pdict.currentSiteCC.toLowerCase(),'forms', null) }"/></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<iscomment>display select box with stored addresses if customer is authenticated and there are saved addresses</iscomment>
+<isif condition="${pdict.CurrentCustomer.authenticated && pdict.CurrentCustomer.profile.addressBook.addresses.size() > 0}">
+    <div class="form-row select-address">
+        <div class="form-column-left">
+            <label for="${pdict.CurrentForms.billing.addressList.htmlName}">
+                ${Resource.msg('global.savedaddresses','locale',null)}:
+            </label>
+            <isscript>
+                importScript("converse_core:cart/CartUtils.ds");
+                var customerAddresses = CartUtils.getAddressList(pdict.Basket, pdict.CurrentCustomer, false);
+            </isscript>
+            <isaddressselectlist p_listId="${pdict.CurrentForms.billing.addressList.htmlName}" p_listaddresses="${customerAddresses}" />
+        </div>
+    </div>
+</isif>
+
+<div class="form-row name-row">
+    <ispinputfield
+        rowClass="form-column-left"
+        formfield="${pdict.CurrentForms.billing.billingAddress.addressFields.common.firstName}"
+        required_message="${Resource.msg('forms.address.firstname.missing','forms',null)}"
+        maxlength_message="${Resource.msgf('forms.address.maxlength.error','forms',null,50)}"
+        trigger="keyup"
+        type="input"/>
+
+    <ispinputfield
+        rowClass="form-column-right"
+        formfield="${pdict.CurrentForms.billing.billingAddress.addressFields.common.lastName}"
+        required_message="${Resource.msg('forms.address.lastname.missing','forms',null)}"
+        maxlength_message="${Resource.msgf('forms.address.maxlength.error','forms',null,50)}"
+        trigger="keyup"
+        type="input"/>
+</div>
+
+<div class="form-row address-row">
+    <ispinputfield
+        rowClass="form-column-left"
+        formfield="${pdict.CurrentForms.billing.billingAddress.addressFields.common.address1}"
+        required_message="${Resource.msg('forms.addresserror','forms',null)}"
+        maxlength_message="${Resource.msgf('forms.address.maxlength.error','forms',null,64)}"
+        trigger="keyup"
+        type="input"/>
+
+    <ispinputfield
+        rowClass="form-column-right"
+        formfield="${pdict.CurrentForms.billing.billingAddress.addressFields.common.address2}"
+        maxlength_message="${Resource.msgf('forms.address.maxlength.error','forms',null,30)}"
+        trigger="keyup"
+        type="input"/>
+</div>
+
+<div class="form-row city-state-zip-row">
+    <ispinputfield
+        rowClass="form-column-left"
+        formfield="${pdict.CurrentForms.billing.billingAddress.addressFields.common.city}"
+        required_message="${Resource.msg('forms.address.city.missing','forms',null)}"
+        maxlength_message="${Resource.msgf('forms.address.maxlength.error','forms',null,35)}"
+        trigger="keyup"
+        type="input"/>
+
+    <ispinputfield
+        trigger="focusout"
+        rowClass="form-column-right"
+        formfield="${pdict.CurrentForms.billing.billingAddress.addressFields.regional.zip}"
+        required_message="${Resource.msg('forms.errorzip','forms',null)}"
+        regexp_message="${Resource.msg('forms.address.field.invalid','forms',null)}"
+        maxlength_message="${Resource.msgf('forms.address.maxlength.error','forms',null,pdict.CurrentForms.billing.billingAddress.addressFields.regional.zip.maxLength)}"
+        minlength_message="${Resource.msgf('forms.address.minlength.error','forms',null,pdict.CurrentForms.billing.billingAddress.addressFields.regional.zip.minLength)}"
+        type="input"/>
+</div>
+
+<div class="form-row">
+	
+   <ispinputfield
+          trigger="focusout"
+          rowClass="form-column-left form-column-country"
+          labelkey="forms.country"
+          valuestring="${Resource.msg('countries.'+pdict.CurrentForms.billing.billingAddress.addressFields.regional.country.options[0].htmlValue.toLowerCase(), 'forms', null) }"
+          attribute1="disabled"
+          value1="disabled"
+          attribute2="style"
+          value2="background-color:rgb(255, 255, 255)"
+          extraclass="countryname"
+          type="input"/>
+   
+   <div class="form-group form-column-right form-column-phone">
+        <div class="form-field-tooltip phone-tip">
+            <div class="converse-popover" data-content="${Resource.msg('billing.tooltip.phone','checkout',null)}">?</div>
+        </div>
+        
+        <isif condition="${isPhoneOptional}" >
+        	
+        	<ispinputfield
+            	formfield="${pdict.CurrentForms.billing.billingAddress.addressFields.regional.phoneOpt}"
+            	regexp_message="${Resource.msg('forms.address.field.invalid','forms',null)}"
+            	maxlength_message="${Resource.msgf('forms.address.maxlength.error','forms',null,pdict.CurrentForms.billing.billingAddress.addressFields.regional.phone.maxLength)}"
+            	trigger="focusout"
+            	type="input"/>
+        	
+        <iselse>
+        	<ispinputfield
+            	formfield="${pdict.CurrentForms.billing.billingAddress.addressFields.regional.phone}"
+            	required_message="${Resource.msg('forms.address.phone.missing','forms',null)}"
+            	regexp_message="${Resource.msg('forms.address.field.invalid','forms',null)}"
+            	maxlength_message="${Resource.msgf('forms.address.maxlength.error','forms',null,pdict.CurrentForms.billing.billingAddress.addressFields.regional.phone.maxLength)}"
+            	trigger="focusout"
+            	type="input"/>
+        	        	 
+	    </isif>
+        
+            
+    </div>
+</div>
+
+<div class="form-row email-row">
+    <div class="form-group form-column-left">
+        <div class="form-field-tooltip email-tip">
+            <div class="converse-popover" data-content="${Resource.msg('billing.tooltip.email','checkout',null)}">?</div>
+        </div>
+        <ispinputfield
+            formfield="${pdict.CurrentForms.billing.billingAddress.email.emailAddress}"
+            input_type="email"
+            required_message="${Resource.msg('forms.address.email.missing','forms',null)}"
+            regexp_message="${Resource.msg('forms.address.email.invalid','forms',null)}"
+            trigger="focusout"
+            type="email"/>
+    </div>
+
+    <isset name="equalto" value="${pdict.CurrentForms.billing.billingAddress.email.emailAddress.htmlName}" scope="page"/>
+    <ispinputfield
+        rowClass="form-column-right"
+        formfield="${pdict.CurrentForms.billing.billingAddress.email.confirmationEmailAddress}"
+        input_type="email"
+        equalto="${'#' + equalto}"
+        equalto_message="${Resource.msg('forms.address.email.notequal','forms',null)}"
+        required_message="${Resource.msg('forms.address.email.missing','forms',null)}"
+        regexp_message="${Resource.msg('forms.address.email.invalid','forms',null)}"
+        trigger="focusout"
+        type="email"/>
+</div>

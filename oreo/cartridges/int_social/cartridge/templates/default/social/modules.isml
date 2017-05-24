@@ -1,0 +1,18 @@
+<iscomment>Header Script include</iscomment>
+<ismodule 
+    template="components/header/social_head.isml" 
+    name="socialhead"/>
+
+<iscomment>Login</iscomment>
+<ismodule
+    template="account/social_login.isml"
+    name="sociallogin"
+    attribute="height"
+    attribute="width"
+    attribute="buttonstyle"
+    attribute="buttonsize"
+    attribute="showTerms"
+    attribute="callback"
+    attribute="container"
+    attribute="moduleid"
+    attribute="providers"/>

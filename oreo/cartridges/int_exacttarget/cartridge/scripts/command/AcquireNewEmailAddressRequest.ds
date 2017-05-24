@@ -1,0 +1,121 @@
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_exacttarget:ExactTargetConstants.ds");
+importScript("int_exacttarget:command/AbstractRequest.ds");
+importScript("int_exacttarget:objects/AcquireNewEmailAddressResponse.ds");
+importScript("int_exacttarget:objects/AddUpdateSubscriberBuilder.ds");
+
+(function(){
+    var ET_NS = integration.exacttarget;
+    var OBJ_NS = ET_NS.objects;
+    var COMMAND_NS = ET_NS.command;
+    
+    var ExactTargetConstants = ET_NS.ExactTargetConstants;
+    var AbstractRequest = COMMAND_NS.AbstractRequest;
+    var AcquireNewEmailAddressResponse = OBJ_NS.AcquireNewEmailAddressResponse;
+    var AddUpdateSubscriberBuilder = OBJ_NS.AddUpdateSubscriberBuilder;
+    var PropertyNames = ExactTargetConstants.PropertyNames;
+
+    var AcquireNewEmailAddressRequest = AbstractRequest.extend({
+        init: function(subscriptionData : Object) {
+            this._super();
+            this.subscriptionData = subscriptionData;
+        },
+        
+        createRequest: function () {
+            var request = new this.webReference.CreateRequest();
+            var options = new this.webReference.CreateOptions();
+            
+            var subscriber = createSubscriber.call(this);
+            var properties = getSubscriptionDataProperties.call(this);
+            var ts = new this.webReference.TriggeredSend();
+            var clientIDObject = new this.webReference.ClientID();
+            clientIDObject.ID = this.configuration.clientId;
+            ts.setClient(clientIDObject);
+            
+            var tsd = new this.webReference.TriggeredSendDefinition();
+            
+            tsd.setCustomerKey(this.configuration.acquireNewEmailDataObjectName);
+            subscriber.setAttributes(properties);
+            ts.setSubscribers([subscriber]);
+            ts.setTriggeredSendDefinition(tsd);
+            
+            options.setSaveOptions(createSaveOptions.call(this));
+            request.setOptions(options);
+            request.setObjects([ts]);
+            
+            return request;
+        },
+        
+        execute: function(request) {
+            return this.serviceClient.create(request);
+        },
+        
+        handleResponse: function(response) {
+            this.logErrorIfAvailable(response);
+            this.response = new AcquireNewEmailAddressResponse(response);
+        }
+    });
+
+    Namespace.extend(COMMAND_NS, { AcquireNewEmailAddressRequest: AcquireNewEmailAddressRequest });
+
+    function createSubscriber() {
+        var status = this.webReference.SubscriberStatus.Active;
+        var listIds = getListIds.call(this);
+        var builder = new AddUpdateSubscriberBuilder(this.webReference);
+
+        return builder.setEmail(this.subscriptionData.email)
+                      .setEmailTypePreference(this.webReference.EmailType.HTML)
+                      .setStatus(status)
+                      .createSubscribeList(status, listIds)
+                      .build();
+    }
+
+    function getListIds() {
+        var listIds: ArrayList = new ArrayList();
+        var config = this.configuration;
+        return [ config.listId, config.allSubscribersListId ];
+    }
+
+    function createSaveOptions() : Array {
+        var saveAction = this.webReference.SaveAction.UpdateAdd;
+        var saveOption = new this.webReference.SaveOption();
+        
+        saveOption.setSaveAction(saveAction);
+        saveOption.setPropertyName("*");
+
+        return [ saveOption ];
+    }
+
+    function getSubscriptionDataProperties() {
+        var createAttribute = function(webReference, name, value) {
+            let attribute = new webReference.Attribute();
+            
+            attribute.setName(name);
+            attribute.setValue(value);
+
+            return attribute;
+        };
+
+        var properties = [];
+        
+        properties.push(createAttribute(this.webReference, PropertyNames.DateOfBirth, this.subscriptionData.dateOfBirth));
+        properties.push(createAttribute(this.webReference, PropertyNames.SiteCode, converse.constants.SiteCode[Site.getCurrent().getID()]));
+        if (!empty(this.subscriptionData.gender)) {
+            properties.push(createAttribute(this.webReference, PropertyNames.Gender, this.subscriptionData.gender));
+        }
+        properties.push(createAttribute(this.webReference, 'Promotion', this.subscriptionData.promotion));
+        
+        var formName = empty(this.subscriptionData.referrer) ? 'acquire-new-email-addresses' : this.subscriptionData.referrer;
+        if (this.subscriptionData.promotion === 'ChuckII') {
+        	formName = 'acquire-new-email-chuck2';
+        }
+        properties.push(createAttribute(this.webReference, 'FormName', formName));
+        
+        return properties;
+    }
+})();

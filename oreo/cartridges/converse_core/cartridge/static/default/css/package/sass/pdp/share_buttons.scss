@@ -1,0 +1,160 @@
+@import "_constants";
+@import "_media_query";
+@import "compass/css3/border-radius";
+@import "compass/utilities/general/clearfix";
+
+.pdp-main {
+    .product-options {
+        $font-size: 11;
+        font-size: pxtoem($font-size);
+        float: left;
+        width: 100%;
+        @include clearfix;
+
+        @include mq-medium-cascade() {
+            width: auto;
+            float: none;
+            margin: pxtoem(16) auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .container {
+            @include mq-medium-cascade() {
+                float: left;
+                position: relative;
+                left: 50%;
+            }
+        }
+
+        .share {
+            @include clearfix;
+            $social-list: facebook, twitter, pinterest, googleplus, email;
+
+            .share-links {
+                width: 100%;
+
+                .gig-button {
+                    margin: 0;
+                }
+
+                .gig-share-button {
+                    background-color: $CONVERSE_COLOR_PDP_3;
+                    height: pxtoem(40);
+                    color: $CONVERSE_COLOR_PDP_1;
+
+                    &:hover {
+                        background-color: $CONVERSE_COLOR_PDP_2;
+
+                        @each $social in $social-list {
+                            $i: index($social-list, $social) - 1;
+                            #share-links-pdp-reaction#{$i}-#{$social}_img:after,
+                            #share-links-tablet-reaction#{$i}-#{$social}_img:after,
+                            #share-links-mobile-reaction#{$i}-#{$social}_img:after {
+                                color: $CONVERSE_COLOR_1;
+                            }
+                        }
+                    }
+                }
+
+                @each $social in $social-list {
+                    $i: index($social-list, $social) - 1;
+                    #share-links-pdp-reaction#{$i}-#{$social}_img,
+                    #share-links-tablet-reaction#{$i}-#{$social}_img,
+                    #share-links-mobile-reaction#{$i}-#{$social}_img {
+                        position: relative !important;
+                        background-image: none !important;
+
+                        &:after {
+                            color: $CONVERSE_COLOR_PDP_1;
+                            font-size: pxtoem(19);
+                            font-family: FontAwesome;
+                            position: absolute;
+                            top: pxtoem(7);
+                            left: pxtoem(5);
+                        }
+                    }
+                }
+
+                #share-links-pdp-reaction1-twitter_img:after,
+                #share-links-tablet-reaction1-twitter_img:after,
+                #share-links-mobile-reaction1-twitter_img:after {
+                    content: "\f099"
+                }
+
+                #share-links-pdp-reaction2-pinterest_img:after,
+                #share-links-tablet-reaction2-pinterest_img:after,
+                #share-links-mobile-reaction2-pinterest_img:after {
+                    content: "\f0d2";
+                }
+
+                #share-links-pdp-reaction3-googleplus_img:after,
+                #share-links-tablet-reaction3-googleplus_img:after,
+                #share-links-mobile-reaction3-googleplus_img:after {
+                    content: "\f0d5";
+                }
+
+                .gig-button-container-facebook > div {
+                    @include border-radius(5px 0 0 5px, 5px 0 0 5px);
+
+                    #share-links-pdp-reaction0-facebook_img:after,
+                    #share-links-tablet-reaction0-facebook_img:after,
+                    #share-links-mobile-reaction0-facebook_img:after {
+                        content: "\f09a";
+                    }
+                }
+
+                .gig-button-container-email > div {
+                    @include border-radius(0 5px 5px 0, 0 5px 5px 0);
+
+                    #share-links-pdp-reaction4-email_img:after,
+                    #share-links-tablet-reaction4-email_img:after,
+                    #share-links-mobile-reaction4-email_img:after {
+                        content: "\f003";
+                        top: 8px;
+                        left: 4px;
+                    }
+                }
+
+                div.gig-button-container {
+                    width: 98%;
+                    padding: 0 1px 0 0;
+                }
+
+                .gig-share-bar-container > table {
+                    width: 100%;
+
+                    td {
+                        width: 20%;
+                    }
+                }
+
+            }
+
+            @include mq-medium-cascade() {
+                .share-social {
+                    display: block;
+                }
+
+                .share-links {
+                    margin: 0;
+
+                    .gig-button {
+                        margin: 0;
+                    }
+
+                    .gig-button-container {
+                        margin: pxtoem(20) 0;
+                    }
+                }
+            }
+
+            a {
+                font-weight: bold;
+                text-transform: uppercase;
+                line-height: pxtoembase(28, $font-size);
+                cursor: pointer;
+            }
+        }
+    }
+}

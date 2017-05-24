@@ -1,0 +1,178 @@
+/**
+* @input Unit: Object
+*/
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("custom/ExportUtils.ds");
+
+function execute(args : PipelineDictionary) : Number {
+    let ExportUtils = converse.utils.ExportUtils;
+
+    args.Unit.describe("Export Utils Test Suite")
+        .test("Should trim string when max length is less than string length", function() {
+            let value = "Lorem ipsum dolor sit amet orci aliquam.";
+
+            let result = ExportUtils.ellipse(value, 20);
+
+            Assert.areEqual("Lorem ipsum dolo ...", result);
+        })
+        .test("Should not trim string when max length is greater than string length", function() {
+            let value = "Lorem ipsum dolor sit amet orci aliquam.";
+
+            let result = ExportUtils.ellipse(value, 40);
+
+            Assert.areEqual("Lorem ipsum dolor sit amet orci aliquam.", result);
+        })
+        .test("Should remove start tag", function() {
+            let value = "This is a test<tag>";
+
+            let result = ExportUtils.removeTags(value);
+
+            Assert.areEqual("This is a test", result);
+        })
+        .test("Should remove ending tag", function() {
+            let value = "This is a test</tag>";
+
+            let result = ExportUtils.removeTags(value);
+
+            Assert.areEqual("This is a test", result);
+        })
+        .test("Should return true when online and variant are true", function() {
+            let value = "This is a  test.";
+
+            let result = ExportUtils.stripWhitespace(value);
+
+            Assert.areEqual("This is a test.", result);
+        })
+        .test("Should return true when online and variant are true", function() {
+            let product = {
+                online: true,
+                variant: true
+            };
+
+            let result = ExportUtils.shouldBeExported(product);
+
+            Assert.isTrue(result);
+        })
+        .test("Should return false when online is true and variant is false", function() {
+            let product = {
+                online: true,
+                variant: false
+            };
+
+            let result = ExportUtils.shouldBeExported(product);
+
+            Assert.isFalse(result);
+        })
+        .test("Should return false when online is false", function() {
+            let product = {
+                online: false,
+                variant: true
+            };
+
+            let result = ExportUtils.shouldBeExported(product);
+
+            Assert.isFalse(result);
+        })
+        .test("Should return 'Converse' when no categories", function() {
+            let product = {
+                masterProduct: {
+                    custom: {
+                        gender: '',
+                        pillar: '',
+                        merchPlannerCategory: ''
+                    }
+                }
+            };
+
+            let result = ExportUtils.getCategory(product);
+
+            Assert.areEqual("Converse", result);
+        })
+        .test("Should return categories", function() {
+            let product = {
+                masterProduct: {
+                    custom: {
+                        gender: 'men',
+                        pillar: 'pillar',
+                        merchPlannerCategory: 'merchPlannerCategory'
+                    }
+                }
+            };
+
+            let result = ExportUtils.getCategory(product);
+
+            Assert.areEqual("Men's, pillar, merchPlannerCategory", result);
+        })
+        .test("Should return valid result when valid gender", function() {
+            let product = {
+                masterProduct: {
+                    custom: {
+                        gender: 'men'
+                    }
+                }
+            };
+
+            let result = ExportUtils.getGender(product);
+
+            Assert.areEqual("Men's", result);
+        })
+        .test("Should return empty when empty gender", function() {
+            let product = {
+                masterProduct: {
+                    custom: {
+                        gender: ''
+                    }
+                }
+            };
+
+            let result = ExportUtils.getGender(product);
+
+            Assert.areEqual('', result);
+        })
+        .test("Should not add value when value is empty", function() {
+            let value = "";
+            let arr = [];
+
+            ExportUtils.addIfNotEmpty(value, arr);
+
+            Assert.areEqual(0, arr.length);
+        })
+        .test("Should add value when array is not empty", function() {
+            let value = "value";
+            let arr = [];
+
+            ExportUtils.addIfNotEmpty(value, arr);
+
+            Assert.areEqual(1, arr.length);
+            Assert.areEqual("value", arr[0]);
+        })
+        .test("Should remove whitespaces", function() {
+            let value = "This is a  test.";
+
+            let result = ExportUtils.stripWhitespace(value);
+
+            Assert.areEqual("This is a test.", result);
+        })
+        .test("Should remove leading zeros", function() {
+            let value = "0015781C_M";
+
+            let result = ExportUtils.removeLeadingZeros(value);
+
+            Assert.areEqual("15781C_M", result);
+        })
+        .test("Should keep the number when no leading zeros", function() {
+            let value = "117891F_090";
+
+            let result = ExportUtils.removeLeadingZeros(value);
+
+            Assert.areEqual("117891F_090", result);
+        });
+
+    return PIPELET_NEXT;
+}

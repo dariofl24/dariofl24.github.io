@@ -1,0 +1,18 @@
+/**
+ *   @input Stores : dw.util.LinkedHashMap Stores to sort
+ *   @output SortedStores : dw.util.Collection
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.catalog);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:storelocator/StoreLocatorUtils.ds");
+
+let Utils = converse.storelocator.Utils;
+
+function execute(pdict : PipelineDictionary) : Number
+{
+    pdict.SortedStores = Utils.sort(pdict.Stores);
+    return PIPELET_NEXT;
+}

@@ -1,0 +1,85 @@
+<div id="pup-popup" class="pup-map-popup mfp-hide">
+    <div class="pup-container">
+        <div class="pup-header">
+            <h2>Select your Collection Point</h2>
+        </div>
+        <div class="pup-menu">
+            <ul class="toggle-view">
+                <li class="menu-list-link"><span class="left-icon"></span>List</li>
+                <li class="menu-route-link">Route</li>
+                <li class="menu-map-link">Map<span class="right-icon"></span></li>
+            </ul>
+            <ul class="menu-items hide-mobile">
+                <li class="menu-search-link">
+                    <span class="search-icon"></span>
+                    <span class="hide-mobile">Search</span>
+                </li>
+                <li class="menu-nearest-link">
+                    <span class="nearest-icon"></span>
+                    <span class="hide-mobile">To the nearest!</span>
+                </li>
+                <li class="menu-locate-link">
+                    <span class="locate-icon"></span>
+                    <span class="hide-mobile">Locate Me</span>
+                </li>
+            </ul>
+        </div>
+        <div class="pup-map-list">
+            <div id="pup-error-message"></div>
+            <div id="pup-list" style="position: absolute;height: inherit;" >
+                <div class="list-container">
+                    <div class="pup-list-header">
+                        <form class="pup-form find-pickuppoints-form" data-validate="parsley">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="pup-popup-postal">Postal Code</label>
+                                    <div>
+                                        <input class="input-text" type="text" id="pup-popup-postal" data-required="true" data-required-message="Please enter a Zip Code">
+                                    </div>
+                                    <div id="pup-search-button-container">
+                                        <button id="pup-search-button">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="pup-route">
+                <div class="route-container">
+                    <div class="travel-mode-toggle">
+                        <div class="icon-container selected" data-travel-mode="driving">
+                            <span class="car-icon"></span>
+                        </div>
+                        <div class="icon-container" data-travel-mode="walking">
+                            <span class="walk-icon"></span>
+                        </div>
+                    </div>
+                    <form class="pup-form" id="find-route-form" data-validate="parsley">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="route-origin">From</label>
+                                <input class="input-text" type="text" id="route-origin" placeholder="Click to find your location" readonly="readonly" data-lat="" data-lng="">
+                                <div class="message-placeholder"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="route-destination">Destination</label>
+                                <input class="input-text" type="text" id="route-destination" placeholder="Click to find the nearest destination available" readonly="readonly"  data-lat="" data-lng="">
+                                <div class="message-placeholder"></div>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="step-by-step-panel">
+                        <div id="step-by-step-header">Route Details
+                            <span class="close">X</span>
+                        </div>
+                        <div class="step-by-step-directions"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="pup-map"></div>
+        </div>
+    </div>
+</div>

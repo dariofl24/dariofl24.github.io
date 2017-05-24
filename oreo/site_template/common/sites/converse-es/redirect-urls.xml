@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<redirect-urls xmlns="http://www.demandware.com/xml/impex/redirecturl/2011-09-01">
+    <redirect-url uri="/ROBOTs.txt">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>http://www.converse.com/robots.txt</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+    <redirect-url uri="/es/en/home">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/es/en/go</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/es/es/go">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/es/es</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/es/es/home">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/es/es</destination-url>
+        <copy-source-params>yes</copy-source-params>
+    </redirect-url>
+
+    <redirect-url uri="/giftcards">
+        <status-code>301</status-code>
+        <enabled-flag>true</enabled-flag>
+        <destination-url>/es/en</destination-url>
+        <copy-source-params>no</copy-source-params>
+    </redirect-url>
+
+</redirect-urls>

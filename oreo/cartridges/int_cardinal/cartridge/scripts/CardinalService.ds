@@ -1,0 +1,21 @@
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/AbstractHttpClientService.ds" );
+
+(function() {
+    var CardinalService = converse.webservices.AbstractHttpClientService.extend({
+        init : function() {
+            this._super('Cardinal');
+
+            this.configuration.merchantProcessorAliases = {};
+            this.configuration.merchantProcessorAliases[converse.constants.ProductType.Regular] = this.configuration.regularMerchantProcessorAlias;
+            this.configuration.merchantProcessorAliases[converse.constants.ProductType.C1] = this.configuration.c1MerchantProcessorAlias;            
+        }
+    });
+    
+    Namespace.extend(integration, { 
+        cardinal: {
+            CardinalService: CardinalService
+        }
+    });
+})();

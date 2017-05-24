@@ -1,0 +1,10 @@
+<iscomment>Controls caching for dyo PDPs</iscomment>
+<iscache status="off" />
+
+<isobject object="${pdict.Product}" view="detail">
+<div id="pdpMain" class="pdp-main clearfix">
+    <div class="dyo">
+        <isinclude template="product/pdp/productdyocontent" />
+    </div>
+</div>
+</isobject>

@@ -1,0 +1,134 @@
+importPackage(dw.system);
+importPackage(dw.catalog);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libLang.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function(){
+    
+    function getTopLevelCategory() : Category {
+        var root : Category = null;
+        var pimRoot : Category = CatalogMgr.getCategory(converse.constants.PIMCategoryDefinition.GlobalCategoryID);
+        
+        var siteCatalog : Catalog = CatalogMgr.getSiteCatalog();
+        if (siteCatalog != null) {
+            if (pimRoot != null) {
+                root = pimRoot;
+            } else {
+                root = siteCatalog.getRoot();
+            }
+        }
+        
+        return root;
+    }
+    
+    function getOnlineSubCategories(parentCategory : Category) : Object {
+        var result = [];
+        
+        if (parentCategory == null) {
+            parentCategory = getTopLevelCategory();
+        }
+        
+        if (parentCategory != null) {
+            result = parentCategory.getOnlineSubCategories();
+        }
+        
+        return result;
+    }
+
+    function genericCategoryListFilter(categoryList : Object, filter) : Object {
+        var responseObject = [];
+
+        for each(var subCategory : Category in categoryList) {
+            if (filter == null || (Lang.isFunction(filter) && filter(subCategory))) {
+                responseObject.push(subCategory);
+            }
+        }
+        return responseObject;
+    }
+    
+    function filterOnlineSubCategories(parentCategory : Category, filter) : Object {
+        var result = [];
+        var subCategories = getOnlineSubCategories(parentCategory);
+
+        if (!empty(subCategories)){
+            result = genericCategoryListFilter(subCategories, filter);
+        }
+        return result;
+    }
+
+    function getMenuSubCategories(parentCategory : Category) : Object {
+        var filter = function(category) {
+            return ('showInMenu' in category.custom) && category.custom.showInMenu.valueOf();
+        };
+        var categoryResponse = filterOnlineSubCategories(parentCategory, filter);
+        return categoryResponse;
+    }
+    
+    function getMobileSubcategories(parentCategory : Category) : Object {
+        var filter = function(category) {
+            return ('showInMobileNavigation' in category.custom) && category.custom.showInMobileNavigation.valueOf();
+        };
+        var categoryResponse = filterOnlineSubCategories(parentCategory, filter);
+        return categoryResponse;
+    }
+    
+    
+    function getCategoryMenuDisplayName(category : Category) : String {
+        var menuDisplayName = Lang.getCustomAttributeValue(category, 'menuDisplayName');
+        return empty(menuDisplayName) ? category.getDisplayName() : menuDisplayName;
+    }
+    
+    //this function forms category URL based on it's ID, or using value of custom attribute alternativeUrl when present
+    //it will also append nav_fo parameter to resulting URL with its value taken from category's ID
+    function getCategoryUrl(category : Category, source : String,menutoplevelcatID : String) {
+        var alternateUrl : dw.content.MarkupText = Lang.getCustomAttributeValue(category, 'alternativeUrl');
+        //prepend with source, remove white spaces and change to lowercase
+        
+        var cat : String =category.getDisplayName().replace(/\s/g,'').toLowerCase();
+        var parcat: String ='';
+        var parparcat : String ='';
+        
+        if(category.getParent() != null){
+        	parcat = category.getParent().getDisplayName().replace(/\s/g,'').toLowerCase()+'-';
+        	
+        	if(category.getParent().getParent()!= null){
+        		parparcat = category.getParent().getParent().getDisplayName().replace(/\s/g,'').toLowerCase()+'-';
+        	}
+        	
+        }
+        
+        var categoryIdForTealium : String = source+'-'+parparcat+parcat+cat;
+        
+        if (!empty(alternateUrl)){
+        	var tealiumParameters : String = 'nav_fo=' + encodeURIComponent(categoryIdForTealium);
+		    var urlString : String = alternateUrl.toString();
+		    if (urlString.indexOf('?')===-1) {
+		    	tealiumParameters = '?' + tealiumParameters;
+		    } else {
+		    	tealiumParameters = '&' + tealiumParameters;
+		    }
+        	return urlString + tealiumParameters;
+        }
+        var categoryURL : dw.web.URL = dw.web.URLUtils.http('Search-Show', 'cgid', category.getID(), 'nav_fo', categoryIdForTealium);
+        return categoryURL; 
+    }
+    
+  
+    Namespace.extend(converse, { 
+        catalog: {
+            CategoryUtils: {
+                getTopLevelCategory: getTopLevelCategory,
+                getOnlineSubCategories: getOnlineSubCategories,
+                filterOnlineSubCategories: filterOnlineSubCategories,
+                getMenuSubCategories: getMenuSubCategories,
+                getCategoryMenuDisplayName: getCategoryMenuDisplayName,
+                getCategoryUrl: getCategoryUrl,
+                getMobileSubcategories: getMobileSubcategories
+            }
+        }
+    });
+
+})();

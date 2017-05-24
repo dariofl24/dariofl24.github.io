@@ -1,0 +1,48 @@
+importPackage(dw.system);
+importPackage(dw.value);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+(function() {
+    var RequestGenerator = Class.extend({
+        init: function(words : Array) {
+            this.words = words;
+        },
+        
+        getParameters: function() {
+            let parameters = new HashMap();
+
+            parameters.put('x', UUIDUtils.createUUID());
+            parameters.put('appFlag', "Nike_ID");
+            parameters.put('xml', this.getWordDataXml());
+
+            return parameters;
+        },
+            
+        getWordDataXml: function() {
+
+            let root : XML = <root />;
+
+            for each (var word : String in this.words) {
+                root.appendChild(this.getItemXml(word));
+            };
+
+            return root.toXMLString();
+        },
+        
+        getItemXml: function(item: String) : XML {
+            return new XML('<word><![CDATA[' + item + ']]></word>');
+        }
+    });
+    
+    Namespace.extend(integration, {
+        nike: {
+            profanecheck: {
+                RequestGenerator : RequestGenerator
+            }
+        }
+    });
+})();

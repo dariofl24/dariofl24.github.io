@@ -1,0 +1,39 @@
+<iscomment>
+	Renders a minimal page with relevant information about the Product. 
+    That permits the Social Networks to pick the relevant information up
+    and display it properly into their applications without loading the full/heavy PDPs.
+</iscomment>
+<isanalyticsoff/>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:product/ProductUtils.ds");
+    importScript("converse_core:product/ImageProductResolver.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+    importScript("converse_core:util/ViewHelpers.ds");
+    var ImageProductResolver = converse.product.ImageProductResolver,
+        ProductImageResolver = converse.product.ProductImageResolver;
+
+</isscript>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+    <isset name="colorVarInf" value="${ProductUtils.getColorVariationInfo(pdict.ProductToDisplayInfo.colorVariationInfos,pdict.ProductId)}" scope="page" />
+    <isset name="imgSmall" value="${ProductImageResolver.getProductImage(colorVarInf.variant, 'sharesocial', 0 )}" scope="page"/>
+    <head>
+        <meta property="og:url" content='<isprint value = "${pdict.shareUrl}" encoding="off">'/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="${pdict.Title}"/>
+        <meta property="og:description" content="${pdict.Description}"/>
+        <meta property="og:image:width" content="250"/>
+        <meta property="og:image:height" content="250"/>
+        <meta property="og:image" content="${imgSmall.getURL()}"/>
+        <meta name="title" content="${pdict.Title}"/>
+        <meta name="description" content="${pdict.Description}"/>
+        <meta name="image_url" content="${imgSmall.getURL()}"/>
+    <title>${pdict.Title}</title>
+    </head>
+    <body>
+              <script type="text/javascript">
+                  window.location = '<isprint value = "${pdict.PdpUrl}" encoding="off">';
+              </script>
+    </body>
+</html>

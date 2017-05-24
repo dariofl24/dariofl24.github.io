@@ -1,0 +1,149 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/command/HttpClientCommand.ds");
+
+importScript("int_cardinal:CentinelResponseTransformer.ds");
+importScript("int_cardinal:CardinalConstants.ds");
+importScript("int_cardinal:objects/CentinelRequestParametersHelper.ds");
+importScript("converse_core:cart/objects/BasketSummary.ds");
+
+(function(){
+    var CARDINAL = integration.cardinal;
+    var CARDINAL_OBJ = CARDINAL.objects;
+    var CARDINAL_CONST = CARDINAL.constants.CardinalConstants;
+    var CART_OBJS = cart.objects;
+
+    var CentinelRequest = converse.webservices.command.HttpClientCommand.extend({
+        init: function() {
+            this.logger = Logger.getLogger("CARDINAL");
+        },
+        
+        createRequest: function () {
+            this.requestObject = this.createRequestObject(this);
+            return this.requestObject;
+        },
+        
+        execute: function(request) {            
+            var url = this.configuration.url;
+            var messageType = this.messageType();
+            var parameters = request.getParameters(); 
+
+            this.logger.info("Performing a {0} request to Cardinal with parameters: {1}", messageType, JSON.stringify(parameters));
+
+            var response = this.doPost(url, this.encodeParameters(parameters));
+            
+            this.logger.info("Response got from {0} Cardinal: {1}", messageType, response);
+            
+            return response;
+        },
+        
+        handleResponse: function(response) {
+            this._super(response);            
+            this.responseObject = this.createResponseObject(this);
+            return this.responseObject; 
+        },
+        
+        hasError: function() {
+            return this._super() || this.response.indexOf("<CardinalMPI>") == -1;
+        },
+        
+        createRequestObject: function( request : CentinelRequest) {
+            throw new Error("The command does not implement the required method 'createResponseObject'.");
+        },
+        
+        createResponseObject: function(command) {
+            throw new Error("The command does not implement the required method 'createResponseObject'.");
+        },
+        
+        messageType: function() {
+            throw new Error("The command does not implement the required method 'messageType'.");
+        }
+    });
+    
+    var CentinelLookupRequest = CentinelRequest.extend({
+        init: function( basket : BasketSummary ) {
+            this._super();
+            this.basket = basket;      
+        },
+
+        createRequestObject: function(centinelLookupRequest : CentinelLookupRequest ) {         
+           return CARDINAL_OBJ.RequestCentinelHelperFactory.getHelper(centinelLookupRequest);               
+        },
+        
+        createResponseObject: function(command) {
+            return CARDINAL.CentinelResponseTransformer.getLookupResponse(new CARDINAL_OBJ.RawCentinelResponse(command));
+        },
+        
+        messageType: function() {
+            return CARDINAL_CONST.MessageType.Lookup;
+        }
+    });
+
+    var CentinelAuthenticateRequest = CentinelRequest.extend({
+        init: function(centinelLookupResult) {
+            this._super();
+            this.centinelLookupResult = centinelLookupResult;
+        },
+
+        createRequestObject: function(centinelAuthenticateRequest : CentinelAuthenticateRequest) {
+            return  CARDINAL_OBJ.RequestCentinelHelperFactory.getHelper(centinelAuthenticateRequest);                                                                                             
+        },
+        
+        createResponseObject: function(command) {
+            return CARDINAL.CentinelResponseTransformer.getAuthenticateResponse(new CARDINAL_OBJ.RawCentinelResponse(command));
+        },
+        
+        messageType: function() {
+            return CARDINAL_CONST.MessageType.Authenticate;
+        }
+    });
+
+    var CentinelOrderRequest = CentinelRequest.extend({
+        init: function( basket : BasketSummary, centinelLookupResult ) {
+            this._super();
+            this.basket = basket;
+            this.centinelLookupResult = centinelLookupResult;
+        },
+
+        createRequestObject: function(centinelOrderRequest : CentinelOrderRequest) {
+            return  CARDINAL_OBJ.RequestCentinelHelperFactory.getHelper(centinelOrderRequest);
+        },
+        
+        createResponseObject: function(command) {
+            return CARDINAL.CentinelResponseTransformer.getOrderResponse(new CARDINAL_OBJ.RawCentinelResponse(command));
+        },
+        
+        messageType: function() {
+            return CARDINAL_CONST.MessageType.Order;
+        }
+    });
+
+    var CentinelVoidRequest = CentinelRequest.extend({
+        init: function(orderId) {
+            this._super();
+            this.orderId = orderId;
+        },
+
+        createRequestObject: function(centinelVoidRequest : CentinelVoidRequest) {
+            return  CARDINAL_OBJ.RequestCentinelHelperFactory.getHelper(centinelVoidRequest);
+        },
+        
+        createResponseObject: function(command) {
+            return CARDINAL.CentinelResponseTransformer.getVoidResponse(new CARDINAL_OBJ.RawCentinelResponse(command));
+        },
+        
+        messageType: function() {
+            return CARDINAL_CONST.MessageType.Void;
+        }
+    });
+    
+    var ns = Namespace.extendFromString(integration, "cardinal.command");
+    Namespace.extend(ns, { 
+        CentinelLookupRequest: CentinelLookupRequest,
+        CentinelAuthenticateRequest: CentinelAuthenticateRequest,
+        CentinelOrderRequest: CentinelOrderRequest,
+        CentinelVoidRequest: CentinelVoidRequest
+    });
+})();

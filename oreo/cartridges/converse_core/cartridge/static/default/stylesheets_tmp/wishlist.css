@@ -1,0 +1,17 @@
+/* constants file for scss variable values */
+/* wishlist */
+/* ------------------------------------- */
+/* line 5, ../css/package/sass/wishlist.scss */
+.pt_wish-list .list-table-header {
+  background: url('../images/sprites_site_graphic-s175b47e9fb.png') 0 -57px repeat-x scroll left top #F5F5F1;
+  overflow: hidden;
+  padding: 2em;
+}
+/* line 8, ../css/package/sass/wishlist.scss */
+.pt_wish-list .list-table-header p {
+  color: #808080;
+  float: right;
+  margin: 0;
+  overflow: hidden;
+  width: 37%;
+}

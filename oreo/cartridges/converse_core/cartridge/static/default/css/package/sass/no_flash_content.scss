@@ -1,0 +1,33 @@
+@import "_constants";
+@import "_conv_mixins";
+@import "compass/utilities/general/clearfix";
+
+#no-flash-content {
+    width: pxtoem(1000);
+    height: pxtoem(420);
+    display: none;
+    background: $CONVERSE_COLOR_1;
+    margin: 0 auto;
+    padding-left: pxtoem(60);
+    text-align: left;
+    text-transform: uppercase;
+    @include box-sizing(border-box);
+    @include clearfix;
+
+    .required-message {
+        $font-size: $FONT_SIZE_2;
+        font-size: pxtoem($font-size);
+        color: $CONVERSE_COLOR_12;
+        margin-top: pxtoembase(255, $font-size);
+    }
+
+    .download-link {
+        margin-top: pxtoem(5);
+
+        a {
+            $font-size: $FONT_SIZE_2;
+            font-size: pxtoem($font-size);
+            color: $CONVERSE_COLOR_7;
+        }
+    }
+}

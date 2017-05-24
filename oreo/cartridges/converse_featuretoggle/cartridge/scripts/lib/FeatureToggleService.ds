@@ -1,0 +1,114 @@
+importPackage(dw.util);
+importPackage(dw.object);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:util/LocaleInfo.ds");
+
+(function() {
+    
+    var Feature = Class.extend({
+        init: function(name: String, enabled: Boolean, description: String) {
+            this.name = name;
+            this.enabled = enabled;
+            this.description = description;
+        },
+        
+        getName: function() : String {
+            return this.name;
+        },
+        
+        isEnabled: function() : Boolean {
+            return Boolean(this.enabled);
+        },
+        
+        getDescription: function() : String {
+            return this.description;
+        }
+    });
+    
+    var FeatureRepository = Class.extend({
+        init: function() {
+        },
+        
+        getFeatures: function() : Map {
+            var features : Map = new HashMap();
+            
+            var iter : Iterator = CustomObjectMgr.getAllCustomObjects('Feature');
+            while (iter.hasNext()) {
+                let featureCustObj : CustomObject = iter.next();
+                let name = featureCustObj.custom.name;
+                let enabled = featureCustObj.custom.enabled;
+                let description = featureCustObj.custom.description;
+                
+                features.put(name, new Feature(name, enabled, description));
+            }
+            
+            return features;
+        }
+    });
+    
+    var FeatureToggleService = Class.extend({
+        init: function() {
+            var featureRepository : FeatureRepository = new FeatureRepository();
+            this.features = featureRepository.getFeatures();
+        },
+        
+        getFeatures: function() : Map {
+            return this.features;
+        },
+        
+        getFeaturesAsObject: function() : Object {
+            var featuresObj = {};
+            
+            var features : Map = this.getFeatures();
+            for each (let featureName : String in features.keySet()) {
+                featuresObj[featureName] = features.get(featureName);
+            }
+        
+            return featuresObj;
+        },
+        
+        hasFeature: function(featureName: String) : Boolean {
+            return this.features.containsKey(featureName);
+        }, 
+        
+        getFeature: function(featureName: String) : Object {
+            var feature : Feature;
+            
+            if (this.hasFeature(featureName)) {
+                feature = this.features.get(featureName);
+            }
+            else {
+                feature = new Feature(featureName, false, "");
+            }
+
+            return feature;
+        },
+        
+        isFeatureEnabled: function(featureName : String) : Boolean {
+            return this.getFeature(featureName).isEnabled();
+        },
+        
+        isPickUpPointEnabled: function(currentRequest) : Boolean {
+        	
+        	var currentCountry = converse.utils.getCurrentCountryCode(currentRequest);
+        	
+        	if(currentCountry == 'AT' || currentCountry == 'LU'){
+        		return false;
+        	}
+        	
+        	var isPickupPointEnabled = this.isFeatureEnabled("pickup-point");
+        	
+        	return isPickupPointEnabled;
+        }
+    });
+    
+    Namespace.extend(converse, { 
+        featuretoggle: {
+            FeatureToggleService: new FeatureToggleService()
+        }
+    });
+    
+})();

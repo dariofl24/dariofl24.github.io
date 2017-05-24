@@ -1,0 +1,11 @@
+<isdecorate template="util/inputfield/date.isml">
+    <div style="clear:both;" class="visually-hidden">
+        <input class="date-value input-text ${html.class}"
+            type="text" 
+            name="${html.name}"
+            id="${html.id}"
+            value="${html.value}"
+            <isprint value="${html.attributes}" encoding="off"/>
+        />
+    </div>
+</isdecorate>

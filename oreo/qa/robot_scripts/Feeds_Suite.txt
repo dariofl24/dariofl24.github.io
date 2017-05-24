@@ -1,0 +1,23 @@
+*** Settings ***
+Documentation   Verifies Feeds and XML services
+Suite Teardown  Close All Browsers
+Force Tags      feeds  Regression
+Resource        feeds_definitions.txt
+
+*** Variables ***
+${pricefeedURI}  .demandware.net/on/demandware.store/Sites-converse-Site/default/Feeds-NikePriceFeed
+${samplerDataService}  .demandware.net/handler/Products/MobileProductListHandler.ashx
+${ROBOTSFILE}   .demandware.net/robots.txt
+${robotexamplefile}  /robots.txt
+
+*** Test Cases ***
+Verifies Price Feeds
+  [Tags]  US
+  Verify Feed  ${pricefeedURI}
+
+Verifies Sampler Data Service
+  [Tags]  US
+  Verify Sampler Data Service  ${samplerDataService}
+
+Verifies robots.txt all access is disallowed on non-production instances
+  Verify File Contains Text  ${ROBOTSFILE}  ${CURDIR}${robotexamplefile}

@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+    <title>Inliner Output</title>
+    <isif condition="${!empty(pdict.Stylesheet)}">
+        <link rel="stylesheet" href="${URLUtils.staticURL(pdict.Stylesheet)}" />
+    </isif>
+
+    <script src="${URLUtils.staticURL('/js/lib/jquery/jquery-1.7.1.min.js')}" type="text/javascript"></script>
+</head>
+<body>
+    <h1>Inliner Output</h1>
+    <button id="reaply">REAPPLY RULES</button>
+    <div id="templateContent" style="display:none">
+        <isif condition="${!empty(pdict.TemplatePath)}">
+            <isif condition="${!empty(pdict.TemplateType) && pdict.TemplateType === 'pipeline'}">
+                <isinclude url="${URLUtils.url(pdict.TemplatePath)}" />
+            <iselse>
+                <isinclude template="${pdict.TemplatePath}" />
+            </isif>
+        </isif>
+    </div>
+
+    <textarea id="result" rows="30" style="font-size: 13px;width:100%;"></textarea>
+    <a id="showLog" href="#">SHOW LOG</a>
+    <div id="log" style="display: none;"></div>
+
+    <script>
+        var templateContent = $("#templateContent");
+        var log = $("#log");
+
+        function addLog(message, tag) {
+            var newLog = document.createElement(tag || "div");
+            newLog.innerText = message;
+            log.append(newLog);
+        }
+
+        $("#showLog").click(function(e) {
+            e.preventDefault();
+            log.toggle();
+        });
+
+        $("#reaply").click(function() {
+            applyCSSRules();
+        });
+
+        function replaceRgbWithHex(styleStr) {
+            return styleStr.replace(/\brgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/g,
+                function($0, $1, $2, $3) {
+                    return "#" + ("0"+Number($1).toString(16)).substr(-2) + ("0"+Number($2).toString(16)).substr(-2) + ("0"+Number($3).toString(16)).substr(-2);
+                });
+        }
+
+        function inlineStyle(rule, i, elem) {
+            var cssText = replaceRgbWithHex(rule.style.cssText);
+            elem.style.cssText += cssText;
+            addLog(elem.tagName + " style : " + cssText);
+        }
+
+        function getHighLevelCSSRules() {
+            var rules = [];
+            for(var i = 0, len = document.styleSheets.length; i < len; i++) {
+                var clonedList = Array.prototype.slice.call(document.styleSheets[i].cssRules, 0);
+                rules = rules.concat(clonedList);
+            }
+            return rules;
+        }
+
+        function applyCSSRules() {
+            log.empty();
+
+            var rules = getHighLevelCSSRules();
+
+            while(rules.length) {
+                var rule = rules.pop();
+                if('styleSheet' in rule) {
+                    Array.prototype.push.apply(rules, rule.styleSheet.cssRules);
+                    continue;
+                }
+                var foundItems = templateContent.find(rule.selectorText);
+                if(foundItems.length > 0) {
+                    addLog("Applying rule : " + rule.selectorText, "h4");
+                    templateContent
+                        .find(rule.selectorText)
+                        .each(function(i, elem) {
+                            inlineStyle(rule, i, elem);
+                        });
+                } else {
+                    addLog("No items found for rule : " + rule.selectorText, "p");
+                }
+            }
+
+            var templateContentHtml = $("#templateContent").html();
+            $("#result").val(templateContentHtml);
+        }
+
+        applyCSSRules();
+    </script>
+</body>
+</html>

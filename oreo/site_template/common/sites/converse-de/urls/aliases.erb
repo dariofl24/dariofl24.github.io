@@ -1,0 +1,72 @@
+
+{
+    "__version": "1",
+    "<%=host%>" : [
+        {
+            "if-site-path" : "de",
+            "locale" : "de_DE"
+        },
+        {
+            "if-site-path" : "de/de",
+            "locale" : "de_DE"
+        },
+        {
+            "if-site-path" : "de/en",
+            "locale" : "en_DE"
+        },
+        {
+            "if-site-path" : "at",
+            "locale" : "de_AT"
+        },
+        {
+            "if-site-path" : "at/de",
+            "locale" : "de_AT"
+        },
+        {
+            "if-site-path" : "at/en",
+            "locale" : "en_AT"
+        }
+    ],
+    "www.converse.de" : [
+        {
+            "host" : "www.converse.com",
+            "path" : "de"
+        }
+    ],
+    "converse.de" : [
+        {
+            "host" : "www.converse.com",
+            "path" : "de"
+        }
+    ],
+    "converse.com" : [
+        {
+            "host" : "www.converse.com"
+        },
+        {
+            "if-site-path" : "de",
+            "pipeline" : "Default-Start"
+        }
+    ],
+    "www.converse.at" : [
+        {
+            "host" : "www.converse.com",
+            "path" : "at"
+        }
+    ],
+    "converse.at" : [
+        {
+            "host" : "www.converse.com",
+            "path" : "at"
+        }
+    ],
+    "converse.com" : [
+        {
+            "host" : "www.converse.com"
+        },
+        {
+            "if-site-path" : "at",
+            "pipeline" : "Default-Start"
+        }
+    ]
+}

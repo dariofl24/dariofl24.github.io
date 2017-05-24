@@ -1,0 +1,38 @@
+/**
+* @input Basket : dw.order.Basket
+* @input PostCode : String
+* @output PickupPointSearchResult : Object
+*/
+importPackage( dw.system );
+importPackage( dw.order );
+importPackage( dw.svc );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:util/TimeUtils.ds");
+importScript("int_pickuppoint:objects/PickupPointSearchResult.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+    var PickupPointSearchResult = integration.pickuppoint.objects.PickupPointSearchResult;
+    var logger = Logger.getLogger("FindPickupPoints");
+    var service = dw.svc.ServiceRegistry.get("PostNLLocationService.GetNearestLocations");
+    
+    var deliveryOptions : Array = ["PG"]; //TODO: for now hardcoding to PG - PakjeGemak, until we get an uderstanding how are we going to fetch this value. Maybe add a custom attribute to ShippingMethod?
+    var result : Result = 
+        service.call({ 
+            postCode: args.PostCode,
+            deliveryDate: TimeUtils.getTimestamp("dd-MM-yyyy"), //TODO: hardcoding this to now, until we get an understanding on what value should we pass
+            deliveryOptions: deliveryOptions
+        });
+    
+    if (result.getStatus() == Result.OK) {
+        args.PickupPointSearchResult = result.getObject();
+    } else {
+        logger.error("Error fetching pickup points for postalCode {0} using PostNL service. Error code {1} and errorMessage {2} (extra errorMessage {3})", 
+            args.PostCode, result.getError(), result.getErrorMessage(), result.getMsg());
+        args.PickupPointSearchResult = new PickupPointSearchResult(false, "Unable to fetch pickup points.");
+    }
+    
+    return PIPELET_NEXT;
+}

@@ -1,0 +1,55 @@
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function(){
+
+    var GenescoConstants = {
+
+        PortalCompanyNumber : "2", // Converse/Nike
+
+        RegularPortalID : "2",
+        C1PortalID : "1",
+        GBPortalID : "3",
+
+        RegularGiftCardDeliveryMethod : "1",
+        C1GiftCardDeliveryMethod : "",
+
+        GiftWrap : "False",
+        GiftWrapCharge : "",
+
+        ShippingCode: {
+            EmailDelivery : "1",
+            UpsExpedited : "V",
+            UpsExpress : "X",
+            UpsExpressDelivery : "3",
+            UpsGround : "1",
+            UpsNextDayAir : "2",
+            UpsThreeDayAir : "T",
+            UpsThreeDayGround : "G",
+            UspsApoFpo : "5",
+            UspsGround : "1",
+            UspsMailServices : "0"
+        },
+
+        CreditCardType : {
+            Visa : "VI",
+            MasterCard : "MC",
+            AmericanExpress : "AE",
+            Discover : "DC",
+            PayPal : "PP"
+        },
+
+        OrderPlaceStatus: {
+            NotPlaced: "0",
+            Success: "1",
+            Failure: "2"
+        }
+    };
+
+    Namespace.extend(integration, {
+        genesco: {
+            constants: GenescoConstants
+        }
+    });
+
+})();

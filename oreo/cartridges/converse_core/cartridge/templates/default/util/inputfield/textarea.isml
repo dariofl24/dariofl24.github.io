@@ -1,0 +1,5 @@
+<textarea class="input-textarea ${html.class}"
+    name="${html.name}"
+    id="${html.id}"
+    <isprint value="${html.attributes}" encoding="off" /> >${html.value}
+</textarea>

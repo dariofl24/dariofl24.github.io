@@ -1,0 +1,47 @@
+<isinclude template="content/pagecontext" />
+<isinclude template="util/modules"/>
+
+<isdecorate template="content/pt_customerservice">
+    <div class="contactus-page">
+        <div class="contactus-section">
+            <div class="contactus-left">
+                <h2>${Resource.msg('contactus.shopping.callheading', 'customerservice', null)}</h2>
+                <div class="contact-group">
+    	            <div class="contact-block">
+    	                <div class="contact-widget contact-widget-call">
+    	                    <div class="contact-badge">
+    	                        <div class="contact-icon"></div>
+    	                        <div class="contact-text">
+    	                            <span>${Resource.msg('contactus.shopping.call', 'customerservice', null)}</span>
+    	                        </div>
+    	                    </div>
+    	                </div>
+                        <h2>${Resource.msg('contactus.shopping.calltext', 'customerservice', null)}</h2>
+    	            </div>
+                </div>
+            </div>
+            <div class="contactus-center">
+                <h2>${Resource.msg('contactus.shopping.or', 'customerservice', null)}</h2>
+            </div>
+            <div class="contactus-right">
+                <h2 class="product-header">${Resource.msg('contactus.shopping.emailheading', 'customerservice', null)}</h2>
+                <div class="contact-group">
+    	            <div class="contact-block">
+    	                <a href="mailto:${Resource.msg('contactus.shopping.email', 'customerservice', null)}" title="${Resource.msg('contactus.shopping.emailheading', 'customerservice', null)}">
+    	                    <div class="contact-widget contact-widget-email">
+    	                        <div class="contact-badge">
+    	                            <div class="contact-icon"></div>
+    	                            <div class="contact-text">
+    	                                <span>${Resource.msg('contactus.shopping.email', 'customerservice', null)}</span>
+    	                            </div>
+    	                        </div>
+    	                    </div>
+    	                </a>
+                        <h2>${Resource.msg('contactus.shopping.emailtext', 'customerservice', null)}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</isdecorate>

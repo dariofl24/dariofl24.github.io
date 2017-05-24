@@ -1,0 +1,3 @@
+<!--- TEMPLATENAME: addtomydesignsresponse.isml --->
+<isstatus value="${pdict.StatusCode}"/>
+<isprint value="${pdict.Result}" encoding="off"/>

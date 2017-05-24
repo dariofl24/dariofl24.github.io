@@ -1,0 +1,93 @@
+/**
+*    Contains Csv related utility functions.
+*/
+
+importPackage(dw.io);
+importPackage(dw.system);
+importPackage(dw.util);
+
+var CsvHelper = function(options) {
+    this.options = options || {};
+};
+
+CsvHelper.prototype = {
+
+    streamCsvFile: function(file : File, headerIndex : Number, callback : Function) {
+
+        var csvReader : CSVStreamReader = null;
+        try {
+            var headerLine : Array = null,
+                line : Array = null,
+                index : Number = 0;
+
+            csvReader = new CSVStreamReader(new FileReader(file));
+
+            while((line = csvReader.readNext()) != null) {
+                let isHeader : Boolean = index === headerIndex;
+                if (isHeader) {
+                    headerLine = line;
+                    line = null;
+                }
+                callback(headerLine, line, index, isHeader);
+                index++;
+            }
+        }
+        finally{
+            if (csvReader) {
+                csvReader.close();
+            }
+        }
+    },
+
+    readCsvFileIntoArray: function(file : File, headerIndex : Number, mapper : Function) : Array {
+        var arr : Array = [];
+
+        this.streamCsvFile(file,
+                           headerIndex,
+                           function(headerLine : Array, line : Array, index : Number, isHeader : Boolean) {
+                                if (isHeader) return;
+
+                                var obj = mapper(headerLine, line, index, isHeader);
+                                if (obj != null) {
+                                    arr.push(obj);
+                                }
+                            });
+
+        return arr;
+    },
+
+    readCsvFileIntoArrayUsingPropertyToColumnMap: function(file : File, headerIndex : Number, map : Map) : Array {
+        var _this = this;
+        return this.readCsvFileIntoArray(file,
+                                         headerIndex,
+                                         function(headerLine : Array, line : Array, index : Number, isHeader : Boolean) {
+                                            return _this.lineToObject(headerLine, line, map);
+                                         });
+    },
+
+    lineToObject : function(headerLine : Array, line : Array, propertyToColumnMap : Map) : Object {
+        var obj = {};
+
+        for each (var propertyName in propertyToColumnMap.keySet()) {
+            var columnName : String = propertyToColumnMap.get(propertyName);
+            var value : String = this.getColumnValue(headerLine, line, columnName);
+            obj[propertyName] = value;
+        }
+
+        return obj;
+    },
+
+    getColumnValue: function(headerLine : Array, line : Array, columnName : String) : String {
+        var columnValue : String = null;
+        
+        var columnIndex : Number = headerLine.indexOf(columnName);
+        if (columnIndex >= 0) {
+            columnValue = line[columnIndex];
+        }
+        else if (this.options.failOnMissingColumn === true) {
+            throw new Error(StringUtils.format("CSV column \"{0}\" not found", columnName));
+        }
+        
+        return columnValue;
+    }
+}

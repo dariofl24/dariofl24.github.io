@@ -1,0 +1,31 @@
+*** Settings ***
+Library         Selenium2Library
+Resource        common_keywords.txt
+Resource        register_definitions.txt
+
+*** Variables ***
+${B_CREATEACCOUNT_BUTTON}  //button[@id='checkout-create-account-btn']
+${D_MINIBILLING_FRAME}  //div[@id='secondary']//div[contains(@class, 'mini-billing-address')]//div[@class='details']
+${D_MINIBILLING_Field}  //div[
+${XP_CONTAINS_TEXT}  [contains(text(), '
+
+*** Keywords ***
+Verify Preset Login
+  [Arguments]  ${email}
+  Wait Until Page Contains Element  ${B_CREATEACCOUNT_BUTTON}
+  ${value} =  Get Element Attribute  ${B_CREATEACCOUNT_BUTTON}@data-customer-email
+  Should Be True  '${value}' == '${email}'
+  Click Button  ${B_CREATEACCOUNT_BUTTON}
+  Wait Until Page Contains Element  ${I_EMAIL}
+
+Verify Mini Address
+  [Arguments]  ${paypal_billingUserName}  ${paypal_billingUserLastName}  ${paypal_billingStreetAddress}  ${paypal_billingCity}  ${paypal_billingState}  ${paypal_billingZipCode}
+  ...  ${paypal_billingCountry}
+  Wait Until Page Contains Element  ${D_MINIBILLING_FRAME}
+  Page Should Contain Element  ${D_MINIBILLING_FRAME}${D_MINIBILLING_Field}1]${XP_CONTAINS_TEXT}${paypal_billingUserName}')]
+  Page Should Contain Element  ${D_MINIBILLING_FRAME}${D_MINIBILLING_Field}1]${XP_CONTAINS_TEXT}${paypal_billingUserLastName}')]
+  Page Should Contain Element  ${D_MINIBILLING_FRAME}${D_MINIBILLING_Field}2]${XP_CONTAINS_TEXT}${paypal_billingStreetAddress}')]
+  Page Should Contain Element  ${D_MINIBILLING_FRAME}${D_MINIBILLING_Field}3]${XP_CONTAINS_TEXT}${paypal_billingCity}')]
+  Page Should Contain Element  ${D_MINIBILLING_FRAME}${D_MINIBILLING_Field}3]${XP_CONTAINS_TEXT}${paypal_billingState}')]
+  Page Should Contain Element  ${D_MINIBILLING_FRAME}${D_MINIBILLING_Field}3]${XP_CONTAINS_TEXT}${paypal_billingZipCode}')]
+  Page Should Contain Element  ${D_MINIBILLING_FRAME}${D_MINIBILLING_Field}4]${XP_CONTAINS_TEXT}${paypal_billingCountry}')]

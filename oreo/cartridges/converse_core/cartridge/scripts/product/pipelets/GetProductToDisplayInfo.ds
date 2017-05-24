@@ -1,0 +1,35 @@
+/*
+* @input Product : dw.catalog.Product
+* @input DefaultVariant : dw.catalog.Product
+* @input CurrentVariationModel : dw.catalog.ProductVariationModel
+* @output ProductToDisplayInfo : Object
+* @output VariantToDisplay : dw.catalog.Product
+*/
+
+importPackage( dw.system );
+importPackage( dw.catalog );
+importPackage( dw.util );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:product/ProductUtils.ds");
+importScript("converse_core:product/ProductDataResolver.ds");
+
+function execute(args : PipelineDictionary) : Number
+{
+    let productRequested = ProductUtils.getProductToShow(args.Product, args.DefaultVariant);
+    
+    if (productRequested.master) {
+    	return PIPELET_ERROR;
+    }
+    
+    if (ProductUtils.isConverseOne(productRequested)) {
+        args.ProductToDisplayInfo = {
+            dyo : true
+        };
+    } else {
+        args.ProductToDisplayInfo = converse.product.ProductDataResolver.forProductDetailPage(productRequested, args.Product, args.CurrentVariationModel);
+        args.VariantToDisplay = args.ProductToDisplayInfo.variantToDisplay;
+    }
+
+    return PIPELET_NEXT;
+}

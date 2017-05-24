@@ -1,0 +1,184 @@
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage( dw.order );
+importPackage( dw.campaign );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+(function() {
+    let ProductType = converse.constants.ProductType;
+    let PromotionType = converse.constants.PromotionType;
+    
+    let PromotionCode = Class.extend({
+        init: function() {
+            this.firstPart = "";
+            this.secondPart = "";
+        },
+        
+        toString: function() {
+            return StringUtils.format("{0}{1}", this.firstPart, this.secondPart);
+        }
+    });
+    
+    let AbstractCodeResolver = Class.extend({
+        getCode: function() : String {
+            throw new Error("The class does not implement the required method 'getCode'.");
+        },
+        
+        applies: function(promotionInfo) : Boolean {
+            return promotionInfo[this.getCode()];
+        },
+        
+        canBeCombinedWithPriceBookDiscount: function() {
+            return true;
+        },
+        
+        canBeCombinedWithShippingDiscount: function() {
+            return true;
+        },
+        
+        resolve: function(promotionInfo, promotionCode : PromotionCode) {
+            if (this.applies(promotionInfo)) {
+                if (promotionInfo[PromotionType.PRBK] && promotionInfo[PromotionType.FREESHIP]) {
+                    if (promotionInfo[PromotionType.BOGO]) {
+                        promotionCode.firstPart = PromotionType.BOGO;
+                    } else {
+                        promotionCode.firstPart = PromotionType.PRBK;
+                    }
+                    
+                    promotionCode.secondPart = PromotionType.FREESHIP;
+                } else {
+                    if (promotionInfo[PromotionType.PRBK] && this.canBeCombinedWithPriceBookDiscount()) {
+                        promotionCode.firstPart = PromotionType.PRBK;
+                        promotionCode.secondPart = this.getCode();
+                    } 
+                    else if (promotionInfo[PromotionType.FREESHIP] && this.canBeCombinedWithShippingDiscount()) {
+                        promotionCode.firstPart = this.getCode();
+                        promotionCode.secondPart = PromotionType.FREESHIP;
+                    }
+                    else {
+                        promotionCode.firstPart = this.getCode();
+                        promotionCode.secondPart = PromotionType.PLACEHOLDER;
+                    }
+                }
+            }
+        }
+    });
+    
+    let SimpleDiscountCodeResolver = AbstractCodeResolver.extend({
+        getCode: function() : String {
+            return PromotionType.DISCOUNT;
+        },
+    });
+    
+    let GWPDiscountCodeResolver = AbstractCodeResolver.extend({
+        getCode: function() : String {
+            return PromotionType.GWP;
+        },
+    });
+    
+    let BOGODiscountCodeResolver = AbstractCodeResolver.extend({
+        getCode: function() : String {
+            return PromotionType.BOGO;
+        }
+    });
+    
+    let EmployeeDiscountCodeResolver = AbstractCodeResolver.extend({
+        getCode: function() : String {
+            return PromotionType.PRBK;
+        },
+        
+        canBeCombinedWithPriceBookDiscount: function() {
+            return false;
+        },
+        
+        canBeCombinedWithShippingDiscount: function() {
+            return true;
+        }
+    });
+    
+    let ShippingDiscountCodeResolver = AbstractCodeResolver.extend({
+        getCode: function() : String {
+            return PromotionType.FREESHIP;
+        },
+        
+        canBeCombinedWithPriceBookDiscount: function() {
+            return true;
+        },
+        
+        canBeCombinedWithShippingDiscount: function() {
+            return false;
+        }
+    });
+    
+    let OrderLevelDiscountCodeResolver = AbstractCodeResolver.extend({
+        getCode: function() : String {
+            return PromotionType.ORDER_DISCOUNT;
+        },
+        
+        applies: function(promotionInfo) : Boolean {
+            return !empty(promotionInfo[this.getCode()]);
+        },
+        
+        resolve: function(promotionInfo, promotionCode : PromotionCode) {
+            if (this.applies(promotionInfo)) {
+                promotionCode.firstPart = promotionInfo[PromotionType.ORDER_DISCOUNT];
+            }
+        }
+    });
+    
+    let PromotionCodeBuilder = Class.extend({
+        init: function(lineItemContainer : LineItemCtnr, promotionHelper) {
+            this.lineItemContainer = lineItemContainer;
+            this.promotionHelper = promotionHelper;
+            this.codeResolvers = new Array();
+        },
+        
+        add: function(codeResolver) {
+            this.codeResolvers.push(codeResolver);
+            return this;
+        },
+        
+        build: function(shipmentType : String) : String {
+            let promotionCode : PromotionCode = new PromotionCode();
+            let promotionInfo = this.promotionHelper.getLineItemCtnrPromotionInfo(this.lineItemContainer, shipmentType);
+            
+            for each (let codeResolver in this.codeResolvers) {
+                codeResolver.resolve(promotionInfo, promotionCode);
+            }
+            
+            return promotionCode.toString();
+        }
+    });
+    
+    let PromotionCodeResolver = Class.extend({
+        init: function(promotionHelper) {
+            this.promotionHelper = promotionHelper;
+        },
+        getPromoCodes: function(lineItemContainer : LineItemCtnr) : Object {
+            let promotionCodeBuilder : PromotionCodeBuilder = new PromotionCodeBuilder(lineItemContainer, this.promotionHelper);
+            promotionCodeBuilder
+                .add(new EmployeeDiscountCodeResolver())
+                .add(new ShippingDiscountCodeResolver())
+                .add(new GWPDiscountCodeResolver())
+                .add(new SimpleDiscountCodeResolver())
+                .add(new BOGODiscountCodeResolver())
+                .add(new OrderLevelDiscountCodeResolver());
+            
+            let promoCodes = {};
+            promoCodes[ProductType.Regular] = promotionCodeBuilder.build(ProductType.Regular);
+            promoCodes[ProductType.C1] = promotionCodeBuilder.build(ProductType.C1); 
+            
+            return promoCodes;
+        }
+    });
+    
+    Namespace.extend(converse, {
+        promotion: {
+            PromotionCodeResolver : PromotionCodeResolver,
+            PromotionType : PromotionType
+        }
+    });
+})();

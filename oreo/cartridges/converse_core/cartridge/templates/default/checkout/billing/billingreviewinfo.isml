@@ -1,0 +1,54 @@
+<isset name="billing" value="${pdict.Basket.billingAddress}" scope="page"/>
+<isset name="paymentField" value="${pdict.Basket.paymentInstrument}" scope="page"/>
+
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("util/ViewHelpers.ds");
+    importScript("converse_core:checkout/AddressHelper.ds");
+    
+    var expireDate : Date = new Date(paymentField.creditCardExpirationYear, paymentField.creditCardExpirationMonth);
+    var AddressHelper = new converse.global.AddressHelperFactory().helper();
+</isscript>
+
+<div class="checkout-step-review">
+<isif condition="${!empty(billing)}">
+    <ul class="address-details">
+        <li class="label"><isprint value="${Resource.msg('shippingreview.billingaddress.label','checkout',null)}"/></li>
+        <li><isprint value="${billing.firstName}"/> <isprint value="${billing.lastName}"/></li>
+        <li><isprint value="${billing.address1}"/></li>
+        <isif condition="${!empty(billing.address2)}">
+            <li><isprint value="${billing.address2}"/></li>
+        </isif>
+        <li><isprint value="${AddressHelper.formatAddressForSummary(billing.city, billing.postalCode, billing.stateCode)}" encoding="off"/></li>
+
+               <isif condition="${isSite('US') || isSite('GB')}">
+          <li><isprint value="${billing.countryCode}"/></li>
+        <iselse>
+          <li><isprint value="${Resource.msg('countries.'+ billing.countryCode.value.toLowerCase(), 'forms', null) }"/></li>
+        </isif>
+        <li><isprint value="${pdict.Basket.customerEmail}"></li>
+        <isif condition="${!empty(billing.phone)}">
+            <li><isprint value="${billing.phone}"/></li>
+        </isif>
+    </ul>
+    <ul class="method-details">
+        <isif condition="${paymentField.paymentMethod === converse.constants.PaymentMethodId.CreditCard}">
+            <li class="label"><isprint value="${Resource.msg('shippingreview.chargeto.label','checkout',null)}"/></li>
+            <li><isprint value="${paymentField.creditCardType}"/></li>
+            <li><isprint value="${paymentField.maskedCreditCardNumber}"/></li>
+            <iscomment>
+                timezone="INSTANCE" take the timezone set in BM  Administration > Global Preferences > Instance Time Zone.
+                By this time, this timezone is set to US/Eastern, and isprint takes the month starting from 1, this means
+                January is 1, February is 2 and so on.
+                When selected UTC timezone, isprint takes the month starting from 0, this means
+                January is 0, February is 1 and so on. That will change the expiration date showing a month ahead of 
+                the one entered.
+            </iscomment>
+            <li>${Resource.msg('billing.review.payment.creditcardexpires','checkout',null)} <isprint value="${expireDate}" formatter="MMM YYYY" timezone="INSTANCE"/></li>
+        <iselseif condition="${paymentField.paymentMethod === converse.constants.PaymentMethodId.Invoice}">
+            <li class="label"><isprint value="${Resource.msg('shippingreview.chargeto.label','checkout',null)}"/></li>
+            <li><isprint value="${Resource.msg('billing.invoice','forms',null)}"/></li>
+        </isif>
+    </ul>
+</isif>
+</div>

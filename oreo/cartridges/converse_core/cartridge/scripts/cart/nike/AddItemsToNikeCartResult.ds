@@ -1,0 +1,36 @@
+/**
+* @input NikeBuilds : Array
+* @output XMLResult : XML XML response to be sent back to Nike on add to cart
+*/
+importPackage( dw.system );
+
+importScript("converse_core:constants.ds");
+
+importScript("int_nike:customization/objects/NikeCart.ds");
+
+var NikeCustomization = integration.nike.customization;
+var NikeCart = NikeCustomization.NikeCart;
+var NikeItem = NikeCustomization.NikeItem;
+
+function execute( args : PipelineDictionary ) : Number
+{
+    let nikeBuilds = args.NikeBuilds;
+    
+    if (!empty(nikeBuilds) && nikeBuilds.length > 0) {
+        let nikeCart = new NikeCart(nikeBuilds.length);
+
+        for each (let build in nikeBuilds) {
+            let nikeItem = new NikeItem({ metricId: build.metricId, cartId: "" });
+
+            if (build.getStatus().valid) {
+                nikeCart.addSuccessItem(nikeItem);
+            } else {
+                nikeCart.addFailureItem(nikeItem);
+            }
+        }
+        
+        args.XMLResult = nikeCart.getXML();
+    }
+    
+    return PIPELET_NEXT;
+}

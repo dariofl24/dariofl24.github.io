@@ -1,0 +1,60 @@
+<iscache type="relative" hour="24"/>
+<isinclude template="util/modules"/>
+<isinclude template="product/pdp/modules"/>
+
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+    importScript("converse_core:product/ProductUtils.ds");
+    importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+
+    var ProductImageResolver = converse.product.ProductImageResolver;
+
+    var productImage = ProductImageResolver.getProductImage(pdict.VariantToDisplay, 'social', 0);
+    var productImageURL = productImage ? productImage.getURL() : "";
+    var productURL = pdict.ProductToDisplayInfo.productURL;
+    var pdp_template = pdict.Product.custom.pdp_template;
+
+    var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+    var EnableSharing = FeatureToggleService.getFeature("gigya-integration").isEnabled();
+    
+    if(request.httpCookies.acceptConverseCookiePolicy){    
+    	if(request.httpCookies.acceptConverseCookiePolicy.value == 0 || 
+    	        request.httpCookies.acceptConverseCookiePolicy.value == 1){
+    		EnableSharing = false;
+    	}  	
+    }
+
+    var isGigyaEnabled = EnableSharing ? '' : 'no-gigya-integration';
+    var isModelImage = pdp_template == 'clothing' ? 'is-model-image' : '';
+</isscript>
+
+<section class="product-detail pdp">
+    <div class="product-detail-wrapper">
+        <istitleandpricing product_name="${pdict.VariantToDisplay.name}" show_price="true" context="mobile"/>
+	    <isinclude template="product/pdp/productcontent"/>
+	</div>
+</section>
+
+<section class="product-content ${isGigyaEnabled} ${isModelImage}">
+    <div class="product-image-container">
+        <isinclude template="product/pdp/components/productimages"/>
+    </div>
+    
+    <isinclude template="product/pdp/components/variations"/>
+</section>
+
+<section class="product-detail mobile">
+    <div class="product-detail-wrapper">
+        <isinclude template="product/pdp/components/variations"/>
+        <isinclude template="product/pdp/productcontent"/>
+        <isproductoptions context="mobile"/>
+    </div>
+</section>
+
+<script src="${URLUtils.staticURL('/js/onload_tooltips.js')}"></script>
+<isif condition="${pdict.CurrentSession.custom.device == 'desktop'}">
+    <script>
+      $('.swatch').tooltip();
+    </script>
+</isif>

@@ -1,0 +1,32 @@
+@import "_constants";
+
+.pixleeInstaBlock {
+    position: relative;
+    background: $CONVERSE_COLOR_1;
+    padding: 60px 0 90px;
+
+    *, *:before, *:after {
+        box-sizing: border-box;
+    }
+
+    &:before,
+    &:after {
+        content: " "; /* 1 */
+        display: table; /* 2 */
+    }
+
+    &:after {
+        clear: both;
+    }
+
+    h2 {
+        font: pxtoem(12) $CONVERSE_FONT_FAMILY_PDP;
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        color: $CONVERSE_COLOR_PDP_9;
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: pxtoem(18);
+    }
+
+}

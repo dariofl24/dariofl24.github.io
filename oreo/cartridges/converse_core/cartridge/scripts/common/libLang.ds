@@ -1,0 +1,182 @@
+/**
+ * JavaScript common functions
+ *
+ * @see http://andrewdupont.net/2009/08/28/deep-extending-objects-in-javascript/
+ */
+
+importPackage(dw.util);
+
+// Hack, because vars cannot be imported in DW, only functions
+function Lang(){}
+
+(function() {
+
+    var DATE_FORMAT : String = "MM/dd/yyyy";
+    var DATE_FORMAT_REGEX : RegExp = /^(0?[1-9]|[12][0-9]|3[01])[\.|\/|-](0?[1-9]|1[012])[\.|\/|-]\d{4}$/;
+    var US_ZIP_REGEX : RegExp = /^\d{5}(-\d{4})?$/;
+
+    var ONE_HOUR = 1000 * 60 * 60;
+    var ONE_DAY = ONE_HOUR * 24;
+
+    Lang.isFunction = function(x) {
+          return Object.prototype.toString.call(x) === '[object Function]';
+    };
+    
+    Lang.isChecked = function(value) : Boolean {
+        let valueStr = String(value).toLowerCase(); 
+        return (valueStr === "true" || valueStr === "1" || valueStr === "yes" || valueStr === "on");
+    };
+    
+    Lang.extend = function(destination, source) {
+        var toString = Object.prototype.toString,
+            objTest = toString.call({});
+    
+        for (var property in source) {
+              if (source[property] && objTest === toString.call(source[property])) {
+                destination[property] = destination[property] || {};
+                arguments.callee(destination[property], source[property]);
+              } 
+              else {
+                destination[property] = source[property];
+              }
+        }
+    
+        return destination;
+    };
+
+    Lang.getObjectProperty = function(obj : Object, path : String) {
+        if (empty(obj) || empty(path)) {
+            return null;
+        }
+
+        path = path.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+        path = path.replace(/^\./, ''); // strip a leading dot
+
+        var keys = path.split('.'),
+            val = obj;
+
+        for (let i = 0, l = keys.length; i < l; i++) {
+            val = val[keys[i]];
+            if (empty(val)) {
+                break;
+            }
+        }
+        
+        return val;
+    };
+    
+    Lang.firstObjectProperty = function (obj) {
+        if (!empty(obj)) {
+            var key;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    return obj[key];
+                }
+            }
+        }
+        
+        return null;
+    };
+    
+    Lang.getCustomAttributeValue = function(object : dw.object.ExtensibleObject, attributeName : String) : Object {
+        if ((attributeName in object.custom) && !empty(object.custom[attributeName])) {
+            return object.custom[attributeName];
+        }
+        return null;
+    };
+    
+    Lang.isValidDate = function(str : String) : Boolean {
+        if (empty(str)) return false;
+        
+        if (DATE_FORMAT_REGEX.test(str)) {
+            var dateArray = str.split(/[\.|\/|-]/);
+            
+            var day : Number = parseInt(dateArray[0], 10);
+            var month : Number = parseInt(dateArray[1], 10) - 1;
+            var year : Number = parseInt(dateArray[2], 10);
+            
+            var date : Date = new Date(year, month, day);
+            
+            return (date.getDate() === day && date.getMonth() === month && date.getFullYear() === year);
+        }
+        
+        return false;
+    };
+    
+    Lang.stringToDate = function(str : String) : Date {
+        if (empty(str)) return null;
+        var value = str.replace(/[\.|-]/g, "/");
+        return new Date(value);
+    };
+    
+    /**
+     * this function only handles date part of 2013-10-10T12:34:45...
+     */
+    Lang.isoStringToDateNoTime = function(isoStr : String) : Date {
+        let parts : Array = isoStr.split(/[-T:\.]/); 
+        return (3 > parts.length) ? null : new Date(parts[0], parseInt(parts[1], 10) - 1, parts[2]);
+    }
+
+    Lang.dateToString = function(date : Date) : String {
+        if (empty(date)) return null;
+        var cal : Calendar = new Calendar(date);
+        return StringUtils.formatCalendar(cal, DATE_FORMAT);
+    };
+    
+    
+    Lang.isValidUSZip = function(str: String) : Boolean {
+        return !empty(str) && US_ZIP_REGEX.test(str);
+    };
+    
+    Lang.getAgeFromDOB = function(dob : Date) : Number {
+        var birthday : Date = new Date(dob.getTime());
+        var today : Date = new Date();
+        
+        var years : Number = today.getFullYear() - birthday.getFullYear();
+        
+        // If the user's birthday has not occurred yet this year, subtract 1.
+        birthday.setFullYear(today.getFullYear());
+        if (today < birthday)
+        {
+            years--;
+        }
+        
+        return years;
+    };
+    
+    Lang.diffMillis = function(date1 : Date, date2 : Date) : Number {
+        return Math.abs(date1.getTime() - date2.getTime());
+    }; 
+    
+    Lang.diffDays = function(date1 : Date, date2 : Date) : Number {
+        return Math.round(Lang.diffMillis(date1, date2) / ONE_DAY);
+    };
+    
+    Lang.diffHours = function(date1 : Date, date2 : Date) : Number {
+        return Math.round(Lang.diffMillis(date1, date2) / ONE_HOUR);
+    };
+
+    Lang.maxDate = function(date1 : Date, date2 : Date) : Date { 
+        return date1 >= date2 ? date1 : date2;
+    };
+    
+    Lang.addDays = function(date : Date, daysToAdd : Number) : Date {
+        let calendar = new Calendar(date);
+        calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
+
+        return calendar.getTime();
+    };
+
+	Lang.trimTimeFromCalendar = function(calendar : Calendar) : Calendar {
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		return calendar;
+	}
+	
+    Lang.toProtocolNeutralURL = function(url : String) : String {
+        var index = empty(url) ? -1 : url.indexOf("://");
+        return index >= 0 ? url.substr(index + 1) : url;
+    };
+})();
+

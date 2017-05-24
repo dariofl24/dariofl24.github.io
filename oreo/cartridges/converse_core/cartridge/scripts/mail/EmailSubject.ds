@@ -1,0 +1,16 @@
+/**
+ * 
+ *   @input OrderNumbers : String 
+ *   @output Subject : String
+ *
+ */
+importPackage( dw.system );
+importPackage( dw.web );
+
+function execute( args : PipelineDictionary ) : Number
+{
+
+    args.Subject = Resource.msgf('order.confirmation.subject','mail', null, args.OrderNumbers);
+
+    return PIPELET_NEXT;
+}

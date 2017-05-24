@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="http://www.demandware.com/xml/impex/catalog/2006-10-31" catalog-id="service-catalog">
+    <header>
+        <image-settings>
+            <internal-location base-path="/"/>
+            <view-types>
+                <view-type>large</view-type>
+                <view-type>medium</view-type>
+                <view-type>small</view-type>
+                <view-type>swatch</view-type>
+            </view-types>
+            <alt-pattern>${productname}</alt-pattern>
+            <title-pattern>${productname}</title-pattern>
+        </image-settings>
+    </header>
+
+    <category category-id="root">
+        <display-name xml:lang="x-default">Service catalog</display-name>
+        <description xml:lang="x-default">A catalog containing service products.</description>
+        <online-flag>true</online-flag>
+        <template/>
+        <page-attributes/>
+    </category>
+
+    <product product-id="dummy-product">
+        <ean/>
+        <upc/>
+        <unit/>
+        <min-order-quantity>1.0</min-order-quantity>
+        <step-quantity>1.0</step-quantity>
+        <online-flag>true</online-flag>
+        <available-flag>false</available-flag>
+        <searchable-flag>false</searchable-flag>
+        <searchable-if-unavailable-flag>false</searchable-if-unavailable-flag>
+        <page-attributes/>
+        <custom-attributes/>
+    </product>
+</catalog>

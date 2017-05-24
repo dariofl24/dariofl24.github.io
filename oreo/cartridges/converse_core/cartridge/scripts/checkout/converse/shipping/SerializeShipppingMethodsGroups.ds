@@ -1,0 +1,56 @@
+/**
+ * @input ApplicableShippingMethodsGroups : Object
+ * @output JSON: String
+ */
+
+importPackage(dw.order);
+importPackage(dw.system);
+importPackage(dw.util);
+
+function execute( args : PipelineDictionary ) : Number
+{
+	var list = {};
+	var asm = args.ApplicableShippingMethodsGroups;
+	if (asm == null) {
+		return PIPELET_ERROR;
+	}
+
+	var groups = asm.getProductTypes();
+	
+	for each(var group in groups) {
+		var a = [];
+		
+		var methods : ArrayList = asm.getShippingMethods(group);
+		for each(var method in methods) {
+			var shippingMethod : ShippingMethod = method.shippingMethod;
+			
+			a.push({
+				'shippingMethod': {
+					'name': shippingMethod.displayName,
+					'id': shippingMethod.ID
+				}
+			});
+		}
+		
+		list[group] = a;
+	}
+	
+	var result = {
+		'methods': list
+	};
+	
+	if (asm.hasMessages())  {
+		var messages = asm.getMessages();
+		
+		result.messages = [];
+		var message = "";
+		for each (message in messages) {
+			var resource = dw.web.Resource.msg(message, 'checkout', null);
+			result.messages.push(resource);
+		}
+	}
+		
+	args.JSON = JSON.stringify(result);
+	
+   	return PIPELET_NEXT;
+}

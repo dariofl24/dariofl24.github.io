@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<request segment="US">
+    <package id="1Z678RY06703005794" carrier_id="UPS">
+        <ship_group_id>521956274_00</ship_group_id>
+        <order_id>1910255</order_id>
+        <changed_item>
+            <commerce_item_id />
+            <old_state>FIRST_DELIVERY</old_state>
+            <new_state>DELIVERED</new_state>
+            <ets_date>03/11/2013</ets_date>
+            <timestamp>03/19/2013 13:41 GMT</timestamp>
+        </changed_item>
+        <package_contents>
+            <commerce_items>
+                <commerce_item_id />
+            </commerce_items>
+        </package_contents>
+    </package>
+</request>

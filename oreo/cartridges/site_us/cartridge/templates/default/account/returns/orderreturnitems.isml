@@ -1,0 +1,53 @@
+<isinclude template="util/modules"/>
+
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:checkout/Utils.ds");
+    importScript("converse_core:product/ProductUtils.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+
+    var ProductImageResolver = converse.product.ProductImageResolver;
+</isscript>
+
+<isset name="constants" value="${converse.constants}" scope="page"/>
+    
+<iscomment>render a box for each shipment</iscomment>
+<isloop items="${ReturnOrderForm.shipments}" var="shipment" status="shipmentloopstate">
+    <isif condition="${shipment.items}">
+    
+        <div class="order-details-header order-details-shipment-separator">
+            <ul>
+                <li class="left-hand-side" >${Resource.msg('returns.order','account',null)} ${shipment.object.original.custom.journeysOrderID}</li>
+                <li class="right-hand-side">${Resource.msg('returns.select.items','account',null)}</li>
+            </ul>
+        </div>
+                
+        <div class="order-details-shipment-container">
+            <iscomment>Shipment items table</iscomment>
+
+            <isloop items="${shipment.items}" var="item">
+            
+                <isset name="product" value="${item.object.original.product}" scope="page"/>
+                <isset name="itemStatus" value="${item.object.original.externalLineItemStatus}" scope="page"/>
+                
+                <div class="shipment-product-details returns">
+                    <div class="shipment-column image-cell">
+                        <isset name="mediaFile" value="${ProductImageResolver.getProductLineItemImage(item.object.original, 'lineItemTile', request.httpSecure)}" scope="page"/>
+                        <a class="thumb-link" href="${ProductUtils.getProductLineItemLink(item.object.original)}" title="${product.name}">
+                            <img src="${mediaFile.getURL()}" alt="${mediaFile.alt}" title="${mediaFile.title}" />
+                        </a>
+                    </div>
+                    
+                    <div class="shipment-column detail">
+                        <isdisplayliproduct p_productli="${item.object.original}" p_dynamicpricing="${false}" p_hidepromo="${true}" p_hideavailability="${true}"/>
+                    </div>
+                    
+                    <div class="shipment-column selectbox">
+                        <ispinputfield trigger="change" formfield="${item.selectItem}" type="checkbox" label="return" />
+                    </div>
+                    
+                </div>
+            </isloop>
+        </div>
+    </isif>
+</isloop>

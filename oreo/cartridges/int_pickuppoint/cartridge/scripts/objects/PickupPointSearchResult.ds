@@ -1,0 +1,198 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+    
+    var PickupPointSearchResult = Class.extend({
+        init: function(success, message) {
+            this.pickupPoints = new Object();
+            this.success = success;
+            this.message = message;
+        },
+        
+        isSuccess: function() : Boolean {
+            return this.success;
+        },
+        
+        setSuccess: function(success : Boolean) {
+            this.success = success;
+        },
+        
+        getMessage: function() : String {
+            return this.message;
+        },
+        
+        setMessage: function(message : String) {
+            this.message = message;
+        },
+        
+        getPickupPoints: function() : Array {
+            return this.pickupPoints;
+        },
+        
+        addPickupPoint: function(pickupPoint : PickupPoint) {
+            var id = pickupPoint.getId();
+            this.pickupPoints[id] = pickupPoint;
+        }
+    });
+    
+    var PickupPoint = Class.extend({
+        init: function() {
+            this.businessDays = new Array();
+        },
+        
+        getId: function() : String {
+            return this.id;
+        },
+        
+        setId: function(id : String) {
+            this.id = id;
+        },
+        
+        getName: function() : String {
+            return this.name;
+        },
+        
+        setName: function(name : String) {
+            this.name = name;
+        },
+        
+        getCarrier: function(carrier : String) {
+            return this.carrier;
+        },
+        
+        setCarrier: function(carrier : String) {
+            this.carrier = carrier;
+        },
+        
+        getLocation: function() : Location {
+            return this.location;
+        },
+        
+        setLocation: function(location : Location) {
+            this.location = location;
+        },
+        
+        getAddress: function() : Address {
+            return this.address;
+        },
+        
+        setAddress: function(address : Address) {
+            this.address = address;
+        },
+        
+        getBusinessDays: function() : Array {
+            return this.businessDays;
+        },
+        
+        addBusinessDay: function(businessDay : BusinessDay) {
+            this.businessDays.push(businessDay);
+        }
+    });
+    
+    var Location =  Class.extend({
+        getDistance: function() : String {
+            return this.distance;
+        },
+        
+        setDistance: function(distance : String) {
+            this.distance = distance;
+        },
+        
+        getLatitude: function() : String {
+            return this.latitude;
+        },
+        
+        setLatitude: function(latitude : String) {
+            this.latitude = latitude;
+        },
+        
+        getLongitude: function() : String {
+            return this.longitude;
+        },
+        
+        setLongitude: function(longitude : String) {
+            this.longitude = longitude;
+        }
+    });
+    
+    var Address =  Class.extend({
+        getStreet: function() : String {
+            return this.street;
+        },
+        
+        setStreet: function(street : String) {
+            this.street = street;
+        },
+        
+        getPostalCode: function() : String {
+            return this.postalCode;
+        },
+        
+        setPostalCode: function(postalCode : String) {
+            this.postalCode = postalCode;
+        },
+        
+        getCity: function() : String {
+            return this.city;
+        },
+        
+        setCity: function(city : String) {
+            this.city = city;
+        }
+    });
+    
+    var BusinessDay = Class.extend({
+        init: function() {
+            this.businessHours = new Array();
+        },
+        
+        getDayOfWeek: function() : String {
+            return this.dayOfWeek;
+        },
+        
+        setDayOfWeek: function(dayOfWeek : String) {
+            this.dayOfWeek = dayOfWeek;
+        },
+        
+        getBusinessHours: function() : String {
+            return this.businessHours;
+        },
+        
+        addBusinessHour: function(businessHour : BusinessHour) {
+            this.businessHours.push(businessHour);
+        }
+    });
+    
+    var BusinessHour = Class.extend({
+        getOpenFrom: function() : String {
+            return this.openFrom;
+        },
+        
+        setOpenFrom: function(openFrom : String) {
+            this.openFrom = openFrom;
+        },
+        
+        getOpenTill: function() : String {
+            return this.openTill;
+        },
+        
+        setOpenTill: function(openTill : String) {
+            this.openTill = openTill;
+        }
+    });
+
+    var NS = Namespace.extendFromString(integration, "pickuppoint.objects");
+    Namespace.extend(NS, {
+        PickupPointSearchResult: PickupPointSearchResult,
+        PickupPoint: PickupPoint, 
+        Location : Location,
+        Address : Address,
+        BusinessDay : BusinessDay,
+        BusinessHour : BusinessHour
+    });
+
+})();

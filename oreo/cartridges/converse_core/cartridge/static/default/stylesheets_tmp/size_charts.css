@@ -1,0 +1,43 @@
+/* size charts */
+/* ------------------------------------- */
+/* line 4, ../css/package/sass/size_charts.scss */
+.sizinginformation {
+  border: 0 none;
+  padding: 10px;
+}
+
+/* line 5, ../css/package/sass/size_charts.scss */
+.sizinginformation th {
+  background: none repeat scroll 0 0 #F3F3F3;
+}
+
+/* line 6, ../css/package/sass/size_charts.scss */
+.sizinginformation td, .sizinginformation th {
+  border-bottom: 1px solid #F3F3F3;
+  padding: 10px;
+}
+
+/* line 7, ../css/package/sass/size_charts.scss */
+.sizinginformation td {
+  border-left: 1px solid #F3F3F3;
+}
+
+/* line 8, ../css/package/sass/size_charts.scss */
+.sizinginformation .ui-tabs-nav {
+  height: 33px;
+}
+
+/* line 9, ../css/package/sass/size_charts.scss */
+.sizinginformation .sizing-charts {
+  border: 0 none;
+}
+
+/* line 10, ../css/package/sass/size_charts.scss */
+.sizinginformation .tips-list {
+  padding: 0 !important;
+}
+
+/* line 11, ../css/package/sass/size_charts.scss */
+.sizinginformation .tips-list li {
+  list-style: none outside none !important;
+}

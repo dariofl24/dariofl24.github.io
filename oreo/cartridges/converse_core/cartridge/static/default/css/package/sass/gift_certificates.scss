@@ -1,0 +1,396 @@
+@import "_conv_mixins";
+@import "_base_account_gift_tabs";
+@import "_media_query";
+@import "_styled_radio_button";
+@import "compass/css3/opacity";
+@import "compass/css3/transform";
+@import "_tooltips";
+
+.pt_giftcard {
+	@extend %base_account_gift_tabs;
+
+	.servererror {
+		color: $CONVERSE_ERROR_COLOR;
+	}
+}
+
+%gc-label-input {
+	label {
+		font-size: 10px;
+	}
+	
+	input[type="text"] {
+		width:100%;
+		height:2em;
+	}
+}
+
+%allcards-options-containers {
+	padding-bottom: 5em;
+	display: inline-block;
+	margin: 0 auto;
+	line-height: 6em;
+	position:relative;
+
+	li {
+		line-height: 2em;
+		padding:0 3em 0 3em;
+		display:inline-block;
+		position:relative;
+		@include converse_radio_button(2em);
+		
+		span:before {
+			content:"$";
+			font-size:10px;
+			vertical-align: top;
+			line-height: 4em;
+		}
+
+		span {
+			font-size:25px;
+			vertical-align:middle;
+		}
+	}
+}
+
+%base-giftcards-main-containers {
+	width: 100%;
+	margin: 0 auto;
+		
+	form {
+		width:100%;
+		text-align: center;
+
+		fieldset {
+			@include mq-small() {
+				text-align: left;
+			}
+		}
+
+		p {
+			width: 50%;
+			font-weight: 300;
+			margin: 0 auto;
+			@include mq-small() {
+				text-align: left;
+				width: 100%
+			}
+		}
+
+		.messaging {
+			display:block;
+
+			&.step-title {
+				font-size: 18px;
+				font-weight: 300;
+				line-height: 1.5em;
+				padding-top: 2em;
+				
+				@include mq-small(12) {
+					text-align: left;
+					line-height: 2em;
+					padding-right: 1em;
+					padding-top: 1em;
+				}
+			}
+
+			&.step-message {
+				font-size: 22px;
+				font-weight: 600;
+				padding-bottom: 1em;
+				
+				@include mq-small(12) {
+					text-align: left;
+					display:inline;
+					line-height: 2em;
+					width: 6em;
+				}
+			}
+		}
+
+		button {
+			font-size: 1.5em;
+			width: 13.5em;
+            margin: 0 auto;
+
+			@include mq-small() {
+				width: 100%;
+			}
+		}
+	}
+}
+
+.gift-certificate-purchase {
+	@extend %base-giftcards-main-containers;
+
+	@include mq-small() {
+		min-height: 42em;
+	}
+
+	form {
+		.form-row-button {
+			input[type="radio"] {
+				display: none;
+			}
+		}
+
+		@include mq-small() {
+			.messaging.step-message.step1{
+				display:inline-block;
+				width:11em;
+				line-height: 2em;
+				padding-bottom: 0;
+			}
+		}
+
+		.error-form {
+			padding-top: 1em;
+
+			@include mq-small() {
+				clear: both;
+				margin-bottom: 0;
+				margin-top: 0;
+			}
+
+			@include mq-medium() {
+				clear: both;
+				margin-bottom: 0;
+				margin-top: 0;
+			}
+		}
+
+		.giftcard-options-container {
+			@extend %allcards-options-containers;
+
+			@include mq-small() {
+				display: none;
+			}
+		}
+
+		.select-giftcard-options-container {
+			display: none;
+			width: 50%;
+
+			@include mq-small() {
+				display: block;
+				float: left;
+			}
+		}
+
+		.sleeve-options {
+			padding-bottom: 1.5em;
+
+			li {
+				padding: 1em;
+				display:inline-block;
+				
+				@include mq-small() {
+					width:29%;
+					white-space: nowrap;
+					font-size: 8px;
+					font-weight: bold;
+					padding:1%;
+
+					img {
+						width:100%;
+					}
+				}
+			}
+		}
+
+		.qty-container {
+			display:block;
+			
+			.qty {
+				display: inline-block;
+				@extend %gc-label-input;
+
+				label {
+					text-align: center;
+				}
+				
+				input[type="text"] {
+					width: 7em;
+					text-align: center;	
+				}
+			}
+
+			@include mq-small() {
+				display: inline-block;
+				width: 40%;
+				padding-left: 5%;
+				float: left;
+				margin-top: pxtoem(-24);	
+			}
+		}
+
+		.email-fields {
+			padding-bottom: 4em;
+
+			@include mq-small() {
+				padding-bottom: 1.5em;
+			}
+
+			.label-above {
+				display: inline-block;
+				text-align: left;
+				width: 30%;
+				margin-left: 1em;
+				margin-right: 1em;	
+				
+				@extend %gc-label-input;
+
+				@include mq-small() {
+					width: 100%;
+					margin-left:0;
+					padding-bottom: 1em;
+				}
+			}
+		}
+
+		.send-multiple {
+			font-weight: 700;
+			line-height: 0;
+			width: 18.5em;
+			display: block;
+			margin: 0 auto;
+			
+			@include mq-small() {
+				margin: 0;
+				padding-top: 3em;
+			}
+
+			div {
+				@include question-tooltip;					
+			}
+		}
+		
+		@include mq-small() {
+			.messaging.step-message.lucky{
+				white-space: nowrap;
+				margin-top: -3.2em;
+				width: auto;
+				padding-bottom: 0;
+				padding-top: 1.6em;
+				line-height: 2em;
+			}
+		}
+	}
+}
+
+#gift-card-landing-container {
+	#giftcard-balance-container {
+			margin-top: pxtoem(20);
+			margin: 0 auto;
+	
+			form {
+					margin: 0 auto;
+					paddng: 0;
+					overflow: visible;
+					width: 47%;
+					
+					@include mq-medium-cascade() {
+						width:100%;
+					}
+
+					div {
+						&#balancevalue {
+							span {
+								font-size:1em;
+								font-family:Helvetica;
+								text-transform:uppercase;
+								vertical-align: middle;
+							}
+
+							#amount {
+								font-family: Adobe Garamond;
+							}
+							
+							width: 8em;
+							font-size: 2em;
+							white-space:nowrap;
+							margin-top: 0;
+							margin-right: auto;
+							margin-bottom: 0;
+							margin-left: auto;
+						}
+
+						&.inputs {
+							margin-top: 2em; 
+							margin-bottom: 1em;
+                            margin-left: 13%;
+							
+                            @include mq-medium-cascade() {
+								width: 22em;
+								margin: 0 auto;
+                                display:block;
+							}
+						}
+
+						&.title-text {
+							margin: 0 auto;
+							width: 22em;
+							font-size: 22px;
+							font-weight: bold;
+							text-transform:none;
+							white-space:nowrap;
+
+							@include mq-medium-cascade() {
+								font-size: 16px;
+								margin-bottom: 1em;
+							}
+
+							@include mq-small {
+								font-size: 14px;
+							}
+						}
+
+						&.button-cont {
+							width: 98%;
+							
+							#checkbalancebtn {
+								margin: 0 auto;
+								margin-top: 1em;
+								width:16em;
+								height: auto;
+							}
+
+							@include mq-small {
+								margin-bottom: 2em;
+							}
+						}
+
+						&.error-form {
+							text-align: center;
+
+							@include mq-small() {
+								margin-top: 0;
+							}
+						}
+					}
+					
+					input {
+							width: 12em;
+							height: auto;	
+							
+							@include mq-medium-cascade() {
+								width: 9em;
+							}
+					}
+
+					label {
+						font-size:10px;
+						padding-bottom: 0.7em;
+					}
+
+					span.error {
+							margin: pxtoem(3) 0 0 0;
+					}
+			}
+
+			.title-text {
+					font-weight: bold;
+					text-transform: uppercase;
+			}
+	}
+}

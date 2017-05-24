@@ -1,0 +1,15 @@
+<div class="message-placeholder">
+    <isif condition="${formfield.validation.valid}">
+        <isif condition="${formfield.show_description && !empty(formfield.description)}">
+            <div class="field-caption"><isprint value="${Resource.msg(formfield.description,'forms',null)}"/></div>
+        </isif>
+    <iselse/>
+        <isif condition="${!empty(formfield.validation.error)}">
+            <ul class="parsley-error-list" generated="true">
+                <li class="parsley-error">
+                    <isprint value="${Resource.msg(formfield.validation.error,'forms',null)}"/>
+                </li>
+            </ul>
+        </isif>
+    </isif>
+</div>

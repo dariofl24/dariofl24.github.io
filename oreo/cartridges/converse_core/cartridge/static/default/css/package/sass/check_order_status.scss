@@ -1,0 +1,138 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_media_query";
+@import "_conv_mixins";
+@import "compass/utilities/general/clearfix";
+
+.pt_customer-service {
+
+    .content-page, .support-page-content {
+        .check-order-status {
+            h2 {
+                @include mq-small() {
+                    text-align: center;
+                }
+                &.view-my-orders {
+                    font-size: pxtoem(18);
+
+                    .button {
+                        display: inline-block;
+                    }
+                }
+
+                &.return-label {
+                    margin-top: pxtoembase(40, 20);
+                }
+            }
+
+            .section-title {
+                $font-size: 24;
+
+                .sub-header {
+                    color: $CONVERSE_COLOR_4;
+                    font-size: pxtoembase(12, $font-size);
+                    padding-top: 0.5em;
+                    font-weight: bold;
+                }
+            }
+
+            form {
+                $font-size: 12;
+
+                @include clearfix();
+
+                font-size: pxtoem(12);
+                margin-top: pxtoem(20);
+
+                .form-row {
+                    .form-column {
+                        @include form-column-base(28%);
+                        float: left;
+                        margin-right: 4.5%;
+
+                        @include mq-small() {
+                            float: none;
+                            margin-right: none;
+                            margin-bottom: pxtoem(16);
+                            width: 100%;
+                        }
+                    }
+
+                    .form-group {
+                        label {
+                            color: $CONVERSE_COLOR_4;
+                            font-size: pxtoem($font-size);
+                            font-weight: bold;
+                        }
+
+                        input {
+                            font-size: pxtoembase(14, $font-size);
+                        }
+
+                        &.error {
+                            label {
+                                color: $CONVERSE_ERROR_COLOR;
+                            }
+                        }
+                    }
+                }
+
+                &:last-child {
+                    margin-bottom: pxtoem(0);
+                }
+
+                .form-actions {
+                    padding-top: $COMMON_LABEL_FONT_SIZE + 5px;
+
+                    button {
+                        min-width: pxtoembase(170,14);
+                    }
+
+                    @include mq-small() {
+                        padding-top: none;
+                        text-align: center;
+                    }
+                }
+            }
+
+            #check-order-status-form-by-invoice-number {
+                margin-top: 0;
+            }
+
+            .check-order-status-notice {
+
+                div {
+                    line-height: 1.5em;
+                }
+
+                a {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .mobile-content-container {
+
+        .content-page, .support-page-content {
+
+            .check-order-status {
+
+                .section-title {
+                    display: block;
+                    position: relative;
+                    border-bottom: none;
+
+                    .title {
+                        display: none;
+                    }
+
+                    .sub-header {
+                        text-align: left;
+                        padding-top: 0;
+                    }
+                }
+            }
+        }
+    }
+}

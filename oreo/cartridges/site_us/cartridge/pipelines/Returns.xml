@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?demandware-pipeline version="2.0"?>
+
+<pipeline group="Account" type="view">
+  <branch basename="Start">
+    <segment>
+      <node>
+        <start-node name="Start" secure="false">
+          <start-parameter value="OrderNo"/>
+        </start-node>
+        <node-display x="1" y="1"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <pipelet-node pipelet-name="Assign" pipelet-set-identifier="bc_api">
+          <config-property key="Transactional" value="false"/>
+          <key-binding alias="CurrentHttpParameterMap.orderID.stringValue" key="From_0"/>
+          <key-binding alias="OrderID" key="To_0"/>
+          <key-binding alias="null" key="From_1"/>
+          <key-binding alias="null" key="To_1"/>
+          <key-binding alias="null" key="From_2"/>
+          <key-binding alias="null" key="To_2"/>
+          <key-binding alias="null" key="From_3"/>
+          <key-binding alias="null" key="To_3"/>
+          <key-binding alias="null" key="From_4"/>
+          <key-binding alias="null" key="To_4"/>
+          <key-binding alias="null" key="From_5"/>
+          <key-binding alias="null" key="To_5"/>
+          <key-binding alias="null" key="From_6"/>
+          <key-binding alias="null" key="To_6"/>
+          <key-binding alias="null" key="From_7"/>
+          <key-binding alias="null" key="To_7"/>
+          <key-binding alias="null" key="From_8"/>
+          <key-binding alias="null" key="To_8"/>
+          <key-binding alias="null" key="From_9"/>
+          <key-binding alias="null" key="To_9"/>
+        </pipelet-node>
+        <node-display x="0" y="1"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <decision-node condition-key="!empty(OrderID)" condition-operator="expr"/>
+        <node-display x="0" y="1"/>
+        <branch basename="b2" source-connector="yes">
+          <transition target-connector="in"/>
+          <segment>
+            <node>
+              <pipelet-node custom-name="Determine single order by its UUID" pipelet-name="SearchSystemObject" pipelet-set-identifier="bc_api">
+                <config-property key="ObjectType" value="Order"/>
+                <config-property key="SearchExpression" value="UUID={1} AND status!={2}"/>
+                <key-binding alias="Orders" key="SearchResult"/>
+                <key-binding alias="null" key="Search3Key"/>
+                <key-binding alias="null" key="Search4Key"/>
+                <key-binding alias="null" key="Search4Value"/>
+                <key-binding alias="null" key="Search5Key"/>
+                <key-binding alias="null" key="Search5Value"/>
+                <key-binding alias="null" key="SortBy2"/>
+                <key-binding alias="null" key="SortBy2Direction"/>
+                <key-binding alias="null" key="SortBy3"/>
+                <key-binding alias="null" key="SortBy3Direction"/>
+                <key-binding alias="OrderID" key="Search1Value"/>
+                <key-binding alias="null" key="Search1Key"/>
+                <key-binding alias="dw.order.Order.ORDER_STATUS_REPLACED" key="Search2Value"/>
+              </pipelet-node>
+              <node-display x="0" y="1"/>
+            </node>
+            <simple-transition>
+              <transition-display>
+                <bend-point relative-to="source" x="0" y="1"/>
+              </transition-display>
+            </simple-transition>
+            <node>
+              <decision-node condition-key="!empty(Orders) &amp;&amp; Orders.hasNext()" condition-operator="expr"/>
+              <node-display x="0" y="1"/>
+              <branch basename="b2" source-connector="yes">
+                <transition target-connector="in"/>
+                <segment>
+                  <node>
+                    <pipelet-node pipelet-name="Assign" pipelet-set-identifier="bc_api">
+                      <key-binding alias="Orders.next()" key="From_0"/>
+                      <key-binding alias="Order" key="To_0"/>
+                      <key-binding alias="null" key="From_1"/>
+                      <key-binding alias="null" key="To_1"/>
+                      <key-binding alias="null" key="From_2"/>
+                      <key-binding alias="null" key="To_2"/>
+                      <key-binding alias="null" key="From_3"/>
+                      <key-binding alias="null" key="To_3"/>
+                      <key-binding alias="null" key="From_4"/>
+                      <key-binding alias="null" key="To_4"/>
+                      <key-binding alias="null" key="From_5"/>
+                      <key-binding alias="null" key="To_5"/>
+                      <key-binding alias="null" key="From_6"/>
+                      <key-binding alias="null" key="To_6"/>
+                      <key-binding alias="null" key="From_7"/>
+                      <key-binding alias="null" key="To_7"/>
+                      <key-binding alias="null" key="From_8"/>
+                      <key-binding alias="null" key="To_8"/>
+                      <key-binding alias="null" key="From_9"/>
+                      <key-binding alias="null" key="To_9"/>
+                    </pipelet-node>
+                    <node-display x="0" y="1"/>
+                  </node>
+                  <simple-transition/>
+                  <node>
+                    <call-node start-name-ref="OrderStatus-Resolve"/>
+                    <node-display x="0" y="1"/>
+                  </node>
+                  <transition target-connector="in1" target-path="./+1"/>
+                </segment>
+                <segment>
+                  <node>
+                    <join-node/>
+                    <node-display x="0" y="1"/>
+                  </node>
+                  <simple-transition/>
+                  <node>
+                    <pipelet-node pipelet-name="Script" pipelet-set-identifier="bc_api">
+                      <config-property key="Transactional" value="false"/>
+                      <config-property key="OnError" value="PIPELET_ERROR"/>
+                      <config-property key="ScriptFile" value="converse_core:account/returns/CreateSelectableOrder.ds"/>
+                      <key-binding alias="Order" key="Order"/>
+                      <key-binding alias="SelectableOrder" key="SelectableOrder"/>
+                      <key-binding alias="ScriptLog" key="ScriptLog"/>
+                    </pipelet-node>
+                    <node-display x="0" y="1"/>
+                    <branch basename="b2" source-connector="error">
+                      <transition target-connector="in1" target-path="../../+1">
+                        <transition-display>
+                          <bend-point relative-to="source" x="6" y="0"/>
+                        </transition-display>
+                      </transition>
+                    </branch>
+                  </node>
+                  <simple-transition/>
+                  <node>
+                    <pipelet-node pipelet-name="Assign" pipelet-set-identifier="bc_api">
+                      <config-property key="Transactional" value="false"/>
+                      <key-binding alias="45" key="From_0"/>
+                      <key-binding alias="MaxDaysToCheck" key="To_0"/>
+                      <key-binding alias="50" key="From_1"/>
+                      <key-binding alias="MaxDaysToDisplay" key="To_1"/>
+                      <key-binding alias="null" key="From_2"/>
+                      <key-binding alias="null" key="To_2"/>
+                      <key-binding alias="null" key="From_3"/>
+                      <key-binding alias="null" key="To_3"/>
+                      <key-binding alias="null" key="From_4"/>
+                      <key-binding alias="null" key="To_4"/>
+                      <key-binding alias="null" key="From_5"/>
+                      <key-binding alias="null" key="To_5"/>
+                      <key-binding alias="null" key="From_6"/>
+                      <key-binding alias="null" key="To_6"/>
+                      <key-binding alias="null" key="From_7"/>
+                      <key-binding alias="null" key="To_7"/>
+                      <key-binding alias="null" key="From_8"/>
+                      <key-binding alias="null" key="To_8"/>
+                      <key-binding alias="null" key="From_9"/>
+                      <key-binding alias="null" key="To_9"/>
+                    </pipelet-node>
+                    <node-display x="0" y="1"/>
+                  </node>
+                  <simple-transition/>
+                  <node>
+                    <pipelet-node pipelet-name="ClearFormElement" pipelet-set-identifier="bc_api">
+                      <key-binding alias="CurrentForms.returnsselectableorder" key="FormElement"/>
+                    </pipelet-node>
+                    <node-display x="0" y="1"/>
+                  </node>
+                  <simple-transition>
+                    <transition-display>
+                      <bend-point relative-to="source" x="0" y="1"/>
+                    </transition-display>
+                  </simple-transition>
+                  <node>
+                    <pipelet-node pipelet-name="UpdateFormWithObject" pipelet-set-identifier="bc_api">
+                      <key-binding alias="CurrentForms.returnsselectableorder" key="Form"/>
+                      <key-binding alias="SelectableOrder" key="Object"/>
+                    </pipelet-node>
+                    <node-display x="0" y="1"/>
+                  </node>
+                  <transition target-connector="in1" target-path="./+1"/>
+                </segment>
+                <segment>
+                  <node>
+                    <join-node/>
+                    <node-display x="0" y="1"/>
+                  </node>
+                  <simple-transition/>
+                  <node>
+                    <interaction-continue-node secure="false" start-name="select" transaction-required="false">
+                      <template buffered="true" dynamic="false" name="account/returns/orderreturns"/>
+                    </interaction-continue-node>
+                    <node-display x="0" y="1"/>
+                    <branch basename="b2" source-connector="proceed">
+                      <transition target-connector="in">
+                        <transition-display>
+                          <bend-point relative-to="source" x="0" y="1"/>
+                        </transition-display>
+                      </transition>
+                      <segment>
+                        <node>
+                          <pipelet-node pipelet-name="UpdateObjectWithForm" pipelet-set-identifier="bc_api">
+                            <key-binding alias="CurrentForms.returnsselectableorder" key="Form"/>
+                            <key-binding alias="SelectableOrder" key="Object"/>
+                          </pipelet-node>
+                          <node-display x="0" y="1"/>
+                          <branch basename="b2" source-connector="error">
+                            <transition target-connector="in1" target-path="./b3.1"/>
+                          </branch>
+                        </node>
+                        <simple-transition/>
+                        <node>
+                          <pipelet-node pipelet-name="Script" pipelet-set-identifier="bc_api">
+                            <config-property key="Transactional" value="false"/>
+                            <config-property key="OnError" value="PIPELET_ERROR"/>
+                            <config-property key="ScriptFile" value="converse_core:account/returns/ValidateSelectedItems.ds"/>
+                            <key-binding alias="ScriptLog" key="ScriptLog"/>
+                            <key-binding alias="SelectableOrder" key="SelectableOrder"/>
+                            <key-binding alias="ErrorMsg" key="ErrorMsg"/>
+                          </pipelet-node>
+                          <node-display x="0" y="1"/>
+                          <branch basename="b3" source-connector="error">
+                            <transition target-connector="in1">
+                              <transition-display>
+                                <bend-point relative-to="target" x="0" y="2"/>
+                              </transition-display>
+                            </transition>
+                            <segment>
+                              <node>
+                                <join-node/>
+                                <node-display x="2" y="-1"/>
+                              </node>
+                              <transition target-connector="in3" target-path="../../-1">
+                                <transition-display>
+                                  <bend-point relative-to="target" x="4" y="0"/>
+                                </transition-display>
+                              </transition>
+                            </segment>
+                          </branch>
+                        </node>
+                        <simple-transition>
+                          <transition-display>
+                            <bend-point relative-to="source" x="0" y="1"/>
+                          </transition-display>
+                        </simple-transition>
+                        <node>
+                          <pipelet-node pipelet-name="ClearFormElement" pipelet-set-identifier="bc_api">
+                            <key-binding alias="CurrentForms.returnslabel" key="FormElement"/>
+                          </pipelet-node>
+                          <node-display x="0" y="1"/>
+                        </node>
+                        <simple-transition/>
+                        <node>
+                          <pipelet-node pipelet-name="Script" pipelet-set-identifier="bc_api">
+                            <config-property key="Transactional" value="false"/>
+                            <config-property key="OnError" value="PIPELET_ERROR"/>
+                            <config-property key="ScriptFile" value="account/returns/CreatePackageInfo.ds"/>
+                            <key-binding alias="ScriptLog" key="ScriptLog"/>
+                            <key-binding alias="PackageInfo" key="PackageInfo"/>
+                            <key-binding alias="ReturnAddress" key="ReturnAddress"/>
+                          </pipelet-node>
+                          <node-display x="0" y="1"/>
+                          <branch basename="b4" source-connector="error">
+                            <transition target-connector="in2" target-path="./+1"/>
+                          </branch>
+                        </node>
+                        <transition target-connector="in1" target-path="./+1"/>
+                      </segment>
+                      <segment>
+                        <node>
+                          <join-node/>
+                          <node-display x="0" y="1"/>
+                        </node>
+                        <simple-transition/>
+                        <node>
+                          <pipelet-node pipelet-name="UpdateFormWithObject" pipelet-set-identifier="bc_api">
+                            <key-binding alias="CurrentForms.returnslabel.packageinfo" key="Form"/>
+                            <key-binding alias="PackageInfo" key="Object"/>
+                          </pipelet-node>
+                          <node-display x="0" y="1"/>
+                        </node>
+                        <transition target-connector="in1" target-path="./+1"/>
+                      </segment>
+                      <segment>
+                        <node>
+                          <join-node/>
+                          <node-display x="0" y="1"/>
+                        </node>
+                        <simple-transition/>
+                        <node>
+                          <interaction-continue-node secure="false" start-name="providepackageinfo" transaction-required="false">
+                            <template buffered="true" dynamic="false" name="account/returns/packageinfo"/>
+                          </interaction-continue-node>
+                          <node-display x="0" y="1"/>
+                          <branch basename="b2" source-connector="proceed">
+                            <transition target-connector="in">
+                              <transition-display>
+                                <bend-point relative-to="source" x="0" y="1"/>
+                              </transition-display>
+                            </transition>
+                            <segment>
+                              <node>
+                                <pipelet-node pipelet-name="UpdateObjectWithForm" pipelet-set-identifier="bc_api">
+                                  <key-binding alias="CurrentForms.returnslabel.packageinfo" key="Form"/>
+                                  <key-binding alias="PackageInfo" key="Object"/>
+                                </pipelet-node>
+                                <node-display x="0" y="1"/>
+                                <branch basename="b2" source-connector="error">
+                                  <transition target-connector="in1" target-path="./b7.6"/>
+                                </branch>
+                              </node>
+                              <simple-transition>
+                                <transition-display>
+                                  <bend-point relative-to="source" x="0" y="1"/>
+                                </transition-display>
+                              </simple-transition>
+                              <node>
+                                <pipelet-node pipelet-name="UpdateObjectWithForm" pipelet-set-identifier="bc_api">
+                                  <key-binding alias="CurrentForms.returnslabel.returnaddress.common" key="Form"/>
+                                  <key-binding alias="ReturnAddress" key="Object"/>
+                                </pipelet-node>
+                                <node-display x="0" y="1"/>
+                                <branch basename="b3" source-connector="error">
+                                  <transition target-connector="in2" target-path="./b7.5"/>
+                                </branch>
+                              </node>
+                              <simple-transition/>
+                              <node>
+                                <pipelet-node pipelet-name="UpdateObjectWithForm" pipelet-set-identifier="bc_api">
+                                  <key-binding alias="CurrentForms.returnslabel.returnaddress.regional" key="Form"/>
+                                  <key-binding alias="ReturnAddress" key="Object"/>
+                                </pipelet-node>
+                                <node-display x="0" y="1"/>
+                                <branch basename="b4" source-connector="error">
+                                  <transition target-connector="in1" target-path="./b7.4"/>
+                                </branch>
+                              </node>
+                              <simple-transition/>
+                              <node>
+                                <pipelet-node pipelet-name="UpdateObjectWithForm" pipelet-set-identifier="bc_api">
+                                  <key-binding alias="CurrentForms.returnslabel.returnaddress.returnstates" key="Form"/>
+                                  <key-binding alias="ReturnAddress" key="Object"/>
+                                </pipelet-node>
+                                <node-display x="0" y="1"/>
+                                <branch basename="b5" source-connector="error">
+                                  <transition target-connector="in1" target-path="./b7.3"/>
+                                </branch>
+                              </node>
+                              <simple-transition/>
+                              <node>
+                                <pipelet-node pipelet-name="GetOrder" pipelet-set-identifier="bc_api">
+                                  <key-binding alias="SelectableOrder.getOrderNo()" key="OrderNo"/>
+                                  <key-binding alias="Order" key="Order"/>
+                                </pipelet-node>
+                                <node-display x="0" y="1"/>
+                                <branch basename="b6" source-connector="error">
+                                  <transition target-connector="in2" target-path="./b7.2"/>
+                                </branch>
+                              </node>
+                              <simple-transition/>
+                              <node>
+                                <pipelet-node pipelet-name="Assign" pipelet-set-identifier="bc_api">
+                                  <config-property key="Transactional" value="false"/>
+                                  <key-binding alias="DoIt" key="To_0"/>
+                                  <key-binding alias="null" key="From_1"/>
+                                  <key-binding alias="null" key="To_1"/>
+                                  <key-binding alias="null" key="From_2"/>
+                                  <key-binding alias="null" key="To_2"/>
+                                  <key-binding alias="null" key="From_3"/>
+                                  <key-binding alias="null" key="To_3"/>
+                                  <key-binding alias="null" key="From_4"/>
+                                  <key-binding alias="null" key="To_4"/>
+                                  <key-binding alias="null" key="From_5"/>
+                                  <key-binding alias="null" key="To_5"/>
+                                  <key-binding alias="null" key="From_6"/>
+                                  <key-binding alias="null" key="To_6"/>
+                                  <key-binding alias="null" key="From_7"/>
+                                  <key-binding alias="null" key="To_7"/>
+                                  <key-binding alias="null" key="From_8"/>
+                                  <key-binding alias="null" key="To_8"/>
+                                  <key-binding alias="null" key="From_9"/>
+                                  <key-binding alias="null" key="To_9"/>
+                                  <key-binding alias="SelectableOrder.attach(Order)" key="From_0"/>
+                                </pipelet-node>
+                                <node-display x="0" y="1"/>
+                              </node>
+                              <simple-transition/>
+                              <node>
+                                <pipelet-node pipelet-name="Script" pipelet-set-identifier="bc_api">
+                                  <config-property key="Transactional" value="true"/>
+                                  <config-property key="OnError" value="PIPELET_ERROR"/>
+                                  <config-property key="ScriptFile" value="account/returns/CallUPS.ds"/>
+                                  <key-binding alias="ScriptLog" key="ScriptLog"/>
+                                  <key-binding alias="SelectableOrder" key="SelectableOrder"/>
+                                  <key-binding alias="UPSResult" key="UPSResult"/>
+                                  <key-binding alias="CurrentUser" key="CurrentUser"/>
+                                  <key-binding alias="ErrorMsg" key="ErrorMsg"/>
+                                  <key-binding alias="PackageInfo" key="PackageInfo"/>
+                                  <key-binding alias="ReturnAddress" key="ReturnAddress"/>
+                                </pipelet-node>
+                                <node-display x="0" y="1"/>
+                                <branch basename="b7" source-connector="error">
+                                  <transition target-connector="in1"/>
+                                  <segment>
+                                    <node>
+                                      <join-node/>
+                                      <node-display x="2" y="0"/>
+                                    </node>
+                                    <transition target-connector="in1" target-path="./+1"/>
+                                  </segment>
+                                  <segment>
+                                    <node>
+                                      <join-node/>
+                                      <node-display x="0" y="-2"/>
+                                    </node>
+                                    <transition target-connector="in1" target-path="./+1"/>
+                                  </segment>
+                                  <segment>
+                                    <node>
+                                      <join-node/>
+                                      <node-display x="0" y="-1"/>
+                                    </node>
+                                    <transition target-connector="in1" target-path="./+1"/>
+                                  </segment>
+                                  <segment>
+                                    <node>
+                                      <join-node/>
+                                      <node-display x="0" y="-1"/>
+                                    </node>
+                                    <transition target-connector="in1" target-path="./+1"/>
+                                  </segment>
+                                  <segment>
+                                    <node>
+                                      <join-node/>
+                                      <node-display x="0" y="-1"/>
+                                    </node>
+                                    <transition target-connector="in2" target-path="./+1"/>
+                                  </segment>
+                                  <segment>
+                                    <node>
+                                      <join-node/>
+                                      <node-display x="0" y="-1"/>
+                                    </node>
+                                    <transition target-connector="in1" target-path="../../+1"/>
+                                  </segment>
+                                </branch>
+                              </node>
+                              <simple-transition>
+                                <transition-display>
+                                  <bend-point relative-to="source" x="0" y="1"/>
+                                </transition-display>
+                              </simple-transition>
+                              <node>
+                                <pipelet-node pipelet-name="Script" pipelet-set-identifier="bc_api">
+                                  <config-property key="Transactional" value="true"/>
+                                  <config-property key="OnError" value="PIPELET_ERROR"/>
+                                  <config-property key="ScriptFile" value="account/returns/UpdateOrderWithUPS.ds"/>
+                                  <key-binding alias="ScriptLog" key="ScriptLog"/>
+                                  <key-binding alias="SelectableOrder" key="SelectableOrder"/>
+                                  <key-binding alias="UPSResult" key="UPSResult"/>
+                                </pipelet-node>
+                                <node-display x="0" y="1"/>
+                                <branch basename="b8" source-connector="error">
+                                  <transition target-connector="in2" target-path="./+1"/>
+                                </branch>
+                              </node>
+                              <transition target-connector="in1" target-path="./+1"/>
+                            </segment>
+                            <segment>
+                              <node>
+                                <join-node/>
+                                <node-display x="0" y="1"/>
+                              </node>
+                              <simple-transition/>
+                              <node>
+                                <interaction-node transaction-required="false">
+                                  <template buffered="true" dynamic="false" name="account/returns/printlabel"/>
+                                </interaction-node>
+                                <node-display x="0" y="1"/>
+                              </node>
+                            </segment>
+                          </branch>
+                        </node>
+                        <transition target-connector="in1" target-path="./+1"/>
+                      </segment>
+                      <segment>
+                        <node>
+                          <join-node/>
+                          <node-display x="2" y="-1"/>
+                        </node>
+                        <transition target-connector="in1" target-path="./-1"/>
+                      </segment>
+                    </branch>
+                  </node>
+                  <transition target-connector="in1" target-path="./+1"/>
+                </segment>
+                <segment>
+                  <node>
+                    <join-node/>
+                    <node-display orientation="horizontal" x="-1" y="-1"/>
+                  </node>
+                  <transition target-connector="in2" target-path="./-1"/>
+                </segment>
+              </branch>
+            </node>
+            <transition target-connector="in1" target-path="../+1"/>
+          </segment>
+        </branch>
+      </node>
+      <transition target-connector="in2" target-path="./+1">
+        <transition-display>
+          <bend-point relative-to="target" x="0" y="-4"/>
+        </transition-display>
+      </transition>
+    </segment>
+    <segment>
+      <node>
+        <join-node/>
+        <node-display x="3" y="2"/>
+      </node>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="1" y="0"/>
+        </transition-display>
+      </simple-transition>
+      <node>
+        <jump-node start-name-ref="Order-History"/>
+        <node-display orientation="horizontal" x="1" y="0"/>
+      </node>
+    </segment>
+  </branch>
+</pipeline>

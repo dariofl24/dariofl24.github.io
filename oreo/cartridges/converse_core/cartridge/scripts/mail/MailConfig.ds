@@ -1,0 +1,50 @@
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.web);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function(){
+
+    var KEYS = {
+        EMPLOYEE_REGISTRATION: "employee.registration",
+        CUSTOMER_REGISTRATION: "customer.registration",
+        FAMILY_MEMBER_INVITE: "family.member.invite",
+        FAMILY_MEMBER_INVITE_ACCEPTED: "family.member.invite.accepted",
+        DYO_SEND_TO_FRIEND: "dyo.sendtofriend",
+        ORDER_CONFIRMATION: "order.confirmation"
+    };
+
+    var MailConfig = Class.extend({
+        
+        init: function() {
+        },
+        
+        getNoReplyAddress: function() : String {
+            return Resource.msg('mail.noreply.address', 'mail', null);
+        },
+
+        getSubject: function(key : String) : String {
+            var args: Array = [key + '.subject', 'mail', null];
+            var restArgs: Array = Array.prototype.slice.call(arguments, 1);
+            var args = args.concat(restArgs);
+
+            return Resource.msgf.apply(null, args);
+        },
+
+        getTemplate: function(key : String) : String {
+            return Resource.msg(key + '.template', 'mail', null);
+        }
+        
+    });
+    MailConfig.prototype.KEYS = KEYS;
+
+    Namespace.extend(converse, {
+        mail: {
+            MailConfig: MailConfig
+        }
+    });
+
+})();

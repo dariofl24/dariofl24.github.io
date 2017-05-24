@@ -1,0 +1,10 @@
+<iscomment>This will load a custom radiobutton</iscomment>
+<ismodule template="components/radiobutton"
+    name="radiobutton"
+		attribute="radiolabelposition"
+    attribute="radioid"
+		attribute="radioname"
+		attribute="radiodisplaytexton"
+		attribute="radiodisplaytextoff"
+		attribute="radiolabeltext"
+/>

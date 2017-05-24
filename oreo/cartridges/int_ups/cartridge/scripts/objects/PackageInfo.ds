@@ -1,0 +1,87 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_ups:objects/Dimensions.ds");
+
+(function() {
+    
+    var PackageInfo = Class.extend({
+        
+        init: function(description: String, packagingCode : Object, dimensions : Object, weight : Number) {
+            this.description = description;
+            this.packagingCode = packagingCode;
+            this.dimensions = (dimensions || new integration.ups.objects.Dimensions());
+            this.weight = weight;
+            this.reason = null;
+            this.exchange = null;
+            this.orderId = null;
+        },
+
+        getOrderId: function() : String {
+            return this.orderId;
+        },
+
+        setOrderId: function(orderId : String) {
+            this.orderId = orderId;
+        },
+
+        getDescription: function() : String {
+            return this.description;
+        },
+
+        setDescription: function(description : String) {
+            this.description = description;
+        },
+
+        getPackagingCode: function() : Object {
+            return this.packagingCode;
+        },
+        
+        setPackagingCode: function(packagingCode : Object) {
+            this.packagingCode = packagingCode;
+        },
+        
+        getDimensions: function() : Object {
+            return this.dimensions;
+        },
+        
+        setDimensions: function(dimensions : Object) {
+            this.dimensions = dimensions;
+        },
+        
+        getWeight: function() : Number {
+            return this.weight;
+        },
+        
+        setWeight: function(weight : Number) {
+            this.weight = weight;
+        },
+        
+        getReason: function() : String {
+            return this.reason; 
+        }, 
+        
+        setReason: function(reason: String) {
+            this.reason = reason;
+        },
+        
+        getExchange: function() : String {
+            return this.exchange;
+        },
+        
+        setExchange: function(exchange : String) {
+            this.exchange = exchange;
+        }
+    });
+    
+    PackageInfo.create = function(description: String, packagingCode : Object, dimensions : Object, weight : Number) : Object {
+        return new PackageInfo(description, packagingCode, dimensions, weight);
+    };
+    
+    var ns = Namespace.extendFromString(integration, "ups.objects");
+    Namespace.extend(ns, { PackageInfo: PackageInfo });
+    
+})();

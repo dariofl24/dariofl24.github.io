@@ -1,0 +1,19 @@
+---
+:archive_dir: /home/demandware/outgoing_archive/surin
+:archive_max: 10
+:delimiter: "|"
+:fn_pattern: "*.csv"
+:garbage_can: /var/opt/garbage_can
+:in_dir: /home/surin/drop_off
+:integration: Surin
+:metadata_filename: metadata.txt
+:mkdirs:
+    - :archive_dir
+    - :out_dirs
+    - :work_dir
+:notification:
+    :to_addrs: 
+         - confoo-reports-jobs@lists.tacitknowledge.com
+:out_dirs: 
+    - /home/demandware/staging/nike
+:work_dir: /var/tmp/surin

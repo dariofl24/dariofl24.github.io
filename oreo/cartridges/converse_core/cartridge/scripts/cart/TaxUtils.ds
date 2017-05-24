@@ -1,0 +1,8 @@
+importPackage( dw.system );
+importPackage( dw.value );
+
+function TaxUtils() {}
+
+TaxUtils.calculateTaxRate = function(taxValue : Number, price : Money) : Number{
+    return taxValue/price.value;
+}

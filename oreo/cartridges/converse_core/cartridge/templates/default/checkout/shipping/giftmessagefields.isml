@@ -1,0 +1,32 @@
+<isinclude template="util/modules"/>
+
+<isscript>
+    importScript("converse_core:cart/CartUtils.ds");
+    var regularItemsExist = CartUtils.hasRegularItems(pdict.Basket);
+</isscript>
+
+<isif condition="${regularItemsExist}">
+    <div class="form-row">
+       <div class="form-column-isgift">
+           <isif condition="${pdict.CurrentForms.singleshipping.shippingAddress.giftmessageFields.isGift.value}">
+               <isset name="gift_message_css_class" value="gift-message-text" scope="page"/>
+               <input type="checkbox" id="is-gift-yes" name="${pdict.CurrentForms.singleshipping.shippingAddress.giftmessageFields.isGift.htmlName}" checked="checked" value="true" />
+           <iselse>
+               <isset name="gift_message_css_class" value="gift-message-text hidden" scope="page"/>
+               <input type="checkbox" id="is-gift-yes" name="${pdict.CurrentForms.singleshipping.shippingAddress.giftmessageFields.isGift.htmlName}" value="true"  />
+           </isif>
+           <label class="inline" for="is-gift-yes">${Resource.msg(pdict.CurrentForms.singleshipping.shippingAddress.giftmessageFields.isGift.label,'forms',null)}</label>
+       </div>
+
+       <div class="${gift_message_css_class}">
+           <ispinputfield
+               trigger="keyup"
+               rowclass="gift-message-textbox"
+               formfield="${pdict.CurrentForms.singleshipping.shippingAddress.giftmessageFields.giftMessage}"
+               type="textarea"
+               attribute1="data-character-limit"
+               value1="100"/>
+           <p class="disclaim"><span>${Resource.msg('singleshipping.giftnote.title','checkout',null)}</span> ${Resource.msg('singleshipping.giftnote','checkout',null)}</p>
+       </div>
+    </div>
+</isif>

@@ -1,0 +1,427 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("module_test:Framework/Assert.ds"); 
+importScript("converse_core:common/libLang.ds");
+
+function execute(args : PipelineDictionary) : Number {
+
+    args.Unit.describe("Lib Lang Test Suite")
+        .test("undefined is not a function", function () {
+            Assert.isFalse(Lang.isFunction(undefined));
+        })
+        .test("null is not function", function () {
+            Assert.isFalse(Lang.isFunction(null));
+        })
+        .test("object is not function", function () {
+            Assert.isFalse(Lang.isFunction(new Object()));
+        })
+        .test("object literal is not function", function () {
+            Assert.isFalse(Lang.isFunction({}));
+        })
+        .test("array is not function", function () {
+            Assert.isFalse(Lang.isFunction(new Array()));
+        })
+        .test("array literal is not function", function () {
+            Assert.isFalse(Lang.isFunction([]));
+        })
+        .test("string is not function", function () {
+            Assert.isFalse(Lang.isFunction("abcdef"));
+        })
+        .test("function is function", function () {
+            Assert.isTrue(Lang.isFunction(function(){}));
+        })
+        .test("undefined is not checked", function () {
+            Assert.isFalse(Lang.isChecked());
+        })
+        .test("null is not checked", function () {
+            Assert.isFalse(Lang.isChecked(null));
+        })
+        .test("empty string is not checked", function () {
+            Assert.isFalse(Lang.isChecked(""));
+        })
+        .test("true is checked", function () {
+            Assert.isTrue(Lang.isChecked(true));
+            Assert.isTrue(Lang.isChecked("True"));
+            Assert.isTrue(Lang.isChecked("TRuE"));
+            Assert.isTrue(Lang.isChecked("true"));
+            Assert.isTrue(Lang.isChecked("TRUE"));
+        })
+        .test("false is not checked", function () {
+            Assert.isFalse(Lang.isChecked(false));
+            Assert.isFalse(Lang.isChecked("False"));
+            Assert.isFalse(Lang.isChecked("FalSe"));
+            Assert.isFalse(Lang.isChecked("false"));
+            Assert.isFalse(Lang.isChecked("FALSE"));
+        })
+        .test("1 is checked", function () {
+            Assert.isTrue(Lang.isChecked(1));
+            Assert.isTrue(Lang.isChecked(1.0));
+            Assert.isTrue(Lang.isChecked("1"));
+        })
+        .test("not 1 is not checked", function () {
+            Assert.isFalse(Lang.isChecked(0));
+            Assert.isFalse(Lang.isChecked(-1));
+            Assert.isFalse(Lang.isChecked(3));
+            Assert.isFalse(Lang.isChecked("1.0"));
+        })
+        .test("yes is checked", function () {
+            Assert.isTrue(Lang.isChecked("Yes"));
+            Assert.isTrue(Lang.isChecked("YeS"));
+            Assert.isTrue(Lang.isChecked("yes"));
+            Assert.isTrue(Lang.isChecked("YES"));
+        })
+        .test("no is not checked", function () {
+            Assert.isFalse(Lang.isChecked("No"));
+            Assert.isFalse(Lang.isChecked("nO"));
+            Assert.isFalse(Lang.isChecked("no"));
+            Assert.isFalse(Lang.isChecked("NO"));
+        })
+        .test("on is checked", function () {
+            Assert.isTrue(Lang.isChecked("On"));
+            Assert.isTrue(Lang.isChecked("oN"));
+            Assert.isTrue(Lang.isChecked("on"));
+            Assert.isTrue(Lang.isChecked("ON"));
+        })
+        .test("off is not checked", function () {
+            Assert.isFalse(Lang.isChecked("Off"));
+            Assert.isFalse(Lang.isChecked("oFF"));
+            Assert.isFalse(Lang.isChecked("off"));
+            Assert.isFalse(Lang.isChecked("OFF"));
+        })
+        .test("extend empty object", function () {
+            var src = { "name" : "abcdef" };
+            var dest = {};
+            Lang.extend(dest, src);
+            
+            Assert.isNotNull(dest.name);
+            Assert.areEqual(dest.name, "abcdef");
+        })
+        .test("extend object with same property", function () {
+            var src = { "name" : "abcdef" };
+            var dest = { "name" : "12345" };
+            Lang.extend(dest, src);
+            
+            Assert.isNotNull(dest.name);
+            Assert.areEqual(dest.name, "abcdef");
+        })
+        .test("extend object with nested properties", function () {
+            var src = { 
+                "data" : {
+                    "token1" : null,
+                    "token2" : "",
+                    "token3" : [],
+                    "token4" : {},
+                    "token5" : {
+                        "value" : "test"
+                    }
+                } 
+            };
+            var dest = { "name" : "12345" };
+            Lang.extend(dest, src);
+            
+            Assert.isNotNull(dest.name);
+            Assert.areEqual(dest.name, "12345");
+            Assert.isNotNull(dest.data);
+            Assert.areEqual(dest.data.token1, null);
+            Assert.isNotNull(dest.data.token2);
+            Assert.areEqual(dest.data.token2, "");
+            Assert.isNotNull(dest.data.token3);
+            Assert.areEqual(dest.data.token3.toSource(), "[]");
+            Assert.isNotNull(dest.data.token4);
+            Assert.areEqual(dest.data.token4.toSource(), "({})");
+            Assert.isNotNull(dest.data["token5"]);
+            Assert.areEqual(dest.data["token5"].value, "test");
+        })
+        .test("get property returns null for null object", function () {
+            Assert.isNull(Lang.getObjectProperty(null, "prop1"));
+        })
+        .test("get property returns null for undefined object", function () {
+            Assert.isNull(Lang.getObjectProperty(undefined, "prop1"));
+        })
+        .test("get property returns null for empty object", function () {
+            Assert.isNull(Lang.getObjectProperty({}, "prop1"));
+        })
+        .test("get property returns null for null path", function () {
+            Assert.isNull(Lang.getObjectProperty({ "prop1" : "val1"}, null));
+        })
+        .test("get property returns null for undefined path", function () {
+            Assert.isNull(Lang.getObjectProperty({ "prop1" : "val1"}));
+        })
+        .test("get property returns object for empty path", function () {
+            Assert.isNull(Lang.getObjectProperty({ "prop1" : "val1"}, ""));
+        })
+        .test("get property returns null for object without that property", function () {
+            let obj = { "prop1" : { "val1" : [ { "arr1" : "abc" }, { "arr2" : 567 } ] } };
+            Assert.areEqual(Lang.getObjectProperty(obj, "prop1.val1[0].arr1"), "abc");
+            Assert.isNull(Lang.getObjectProperty(obj, "prop2"));
+            Assert.isNull(Lang.getObjectProperty(obj, "prop1.val2"));
+            Assert.isNull(Lang.getObjectProperty(obj, "prop1.val1[3]"));
+            Assert.isNull(Lang.getObjectProperty(obj, "prop1.val1[0].attr2"));
+        })
+        .test("get property returns value for simple path", function () {
+            let result = Lang.getObjectProperty({ "prop1" : 123 }, "prop1");
+            Assert.areEqual(result, 123);
+        })
+        .test("get property returns value for nested path", function () {
+            let result = Lang.getObjectProperty({ "prop1" : { "val1" : { "nested1" : "abc" } } }, "prop1.val1.nested1");
+            Assert.areEqual(result, "abc");
+        })
+        .test("get property returns value for nested path with index 1", function () {
+            let obj = { "prop1" : { "val1" : "abc" }, "prop2" : [ true, { "val2" : "xyz" }, { "val3" : { "nested" : 789 } } ] };
+            let result = Lang.getObjectProperty(obj, "prop2[2].val3.nested");
+            Assert.areEqual(result, 789);
+        })
+        .test("get property returns value for nested path with index 2", function () {
+        	let now = new Date();
+            let obj = { "prop" : { "val" : { "nested" : [ "asd", 123, true, { "complex" : { "test" : now } } ] } } };
+            let result = Lang.getObjectProperty(obj, "prop[val].nested[3][complex].test");
+            Assert.areEqual(result, now);
+        })
+        .test("first property returns null for null object", function () {
+            Assert.isNull(Lang.firstObjectProperty(null));
+        })
+        .test("first property returns null for undefined object", function () {
+            Assert.isNull(Lang.firstObjectProperty(undefined));
+        })
+        .test("first property returns null for empty object", function () {
+            Assert.isNull(Lang.firstObjectProperty({}));
+        })
+        .test("first property returned for object with one property", function () {
+            let result = Lang.firstObjectProperty({ "value" : 1234 });
+            Assert.areEqual(result, 1234);
+        })
+        .test("first property returned for object with many properties", function () {
+            let result = Lang.firstObjectProperty({ "prop1" : "abc", "prop2" : null, "prop3" : true, "prop4" : "xyz" });
+            Assert.isNotNull(result);
+            Assert.areEqual(result, "abc");
+        })
+        .test("first property returned for object with nested properties", function () {
+            let result = Lang.firstObjectProperty({ "prop1" : { "val1" : "abc", "val2" : { "nested1" : "xyz" } }, "prop2" : { "val1" : 789 } });
+            Assert.isNotNull(result);
+            Assert.areEqual(result.val1, "abc");
+            Assert.areEqual(result.val2.nested1, "xyz");
+        })
+        .test("undefined date not valid", function () {
+            Assert.isFalse(Lang.isValidDate(undefined));
+        })
+        .test("null date not valid", function () {
+            Assert.isFalse(Lang.isValidDate(null));
+        })
+        .test("empty date not valid", function () {
+            Assert.isFalse(Lang.isValidDate(""));
+        })
+        .test("month out of range date not valid", function () {
+            Assert.isFalse(Lang.isValidDate("13/13/2000"));
+        })
+        .test("day out of range date not valid", function () {
+            Assert.isFalse(Lang.isValidDate("11/32/2000"));
+        })
+        .test("negative month not valid", function () {
+            Assert.isFalse(Lang.isValidDate("-11/12/2000"));
+        })
+        .test("negative day not valid", function () {
+            Assert.isFalse(Lang.isValidDate("11/-12/2000"));
+        })
+        .test("negative year not valid", function () {
+            Assert.isFalse(Lang.isValidDate("11/12/-2000"));
+        })
+        .test("zero month not valid", function () {
+            Assert.isFalse(Lang.isValidDate("0/12/2000"));
+        })
+        .test("zero day not valid", function () {
+            Assert.isFalse(Lang.isValidDate("11/0/2000"));
+        })
+        .test("zero year not valid", function () {
+            Assert.isFalse(Lang.isValidDate("11/12/00"));
+        })
+        .test("non leap year feb 29 not valid", function () {
+            Assert.isFalse(Lang.isValidDate("29/2/2001"));
+        })
+        .test("leap year feb 29 valid", function () {
+            Assert.isTrue(Lang.isValidDate("29/2/2012"));
+        })
+        .test("feb out of range not valid", function () {
+            Assert.isFalse(Lang.isValidDate("30/2/2012"));
+            Assert.isFalse(Lang.isValidDate("31/2/2012"));
+        })
+        .test("30 day months with 31 day invalid", function () {
+            Assert.isFalse(Lang.isValidDate("31/04/2012"));
+            Assert.isFalse(Lang.isValidDate("31/06/2012"));
+            Assert.isFalse(Lang.isValidDate("31/09/2012"));
+            Assert.isFalse(Lang.isValidDate("31/11/2012"));
+        })
+        .test("empty day invalid", function () {
+            Assert.isFalse(Lang.isValidDate("/11/2012"));
+        })
+        .test("empty month invalid", function () {
+            Assert.isFalse(Lang.isValidDate("03//12"));
+        })
+        .test("empty year invalid", function () {
+            Assert.isFalse(Lang.isValidDate("08/24/"));
+        })
+        .test("two digit year invalid", function () {
+            Assert.isFalse(Lang.isValidDate("08/24/70"));
+        })
+        .test("three digit year invalid", function () {
+            Assert.isFalse(Lang.isValidDate("08/24/970"));
+        })
+        .test("five digit year invalid", function () {
+            Assert.isFalse(Lang.isValidDate("08/24/30089"));
+        })
+        .test("einstein birthday valid", function () {
+            Assert.isTrue(Lang.isValidDate("14/03/1879"));
+        })
+        .test("gagarin birthday valid", function () {
+            Assert.isTrue(Lang.isValidDate("09-03-1934"));
+        })
+        .test("turing birthday valid", function () {
+            Assert.isTrue(Lang.isValidDate("23.06.1912"));
+        })
+        .test("string to date using dash", function () {
+            Assert.areEqual(Lang.stringToDate("04-23-1974").toString(), new Date("04/23/1974").toString());
+        })
+        .test("string to date using dot", function () {
+            Assert.areEqual(Lang.stringToDate("04.23.1974").toString(), new Date("04/23/1974").toString());
+        })
+        .test("string to date using slash", function () {
+            Assert.areEqual(Lang.stringToDate("04/23/1974").toString(), new Date("04/23/1974").toString());
+        })
+        .test("diff days month middle", function () {
+            var date1 : Date = new Date(2001, 0, 11);
+            var date2 : Date = new Date(2001, 0, 16);
+            var diffDays = Lang.diffDays(date1, date2);
+            Assert.areEqual(5, diffDays);
+        })
+        .test("diff days month change", function () {
+            var date1 : Date = new Date(2012, 1, 27);
+            var date2 : Date = new Date(2012, 2, 3);
+            var diffDays = Lang.diffDays(date1, date2);
+            Assert.areEqual(5, diffDays);
+        })
+        .test("diff days year change", function () {
+            var date1 : Date = new Date(2009, 11, 24);
+            var date2 : Date = new Date(2010, 0, 6);
+            var diffDays = Lang.diffDays(date1, date2);
+            Assert.areEqual(13, diffDays);
+        })
+        .test("diff days with time round to 0 test 1", function () {
+            var date1 : Date = new Date("October 13, 1975 23:59:00");
+            var date2 : Date = new Date("October 14, 1975 00:00:00");
+            var diffDays = Lang.diffDays(date1, date2);
+            Assert.areEqual(0, diffDays);
+        })
+        .test("diff days with time round to 0 test 2", function () {
+            var date1 : Date = new Date("October 13, 1975 12:00:01");
+            var date2 : Date = new Date("October 14, 1975 00:00:00");
+            var diffDays = Lang.diffDays(date1, date2);
+            Assert.areEqual(0, diffDays);
+        })
+        .test("diff days with time round to 0 test 3", function () {
+            var date1 : Date = new Date("October 13, 1975 14:12:00");
+            var date2 : Date = new Date("October 14, 1975 02:11:59");
+            var diffDays = Lang.diffDays(date1, date2);
+            Assert.areEqual(0, diffDays);
+        })
+        .test("diff days with time round to 1 test 1", function () {
+            var date1 : Date = new Date("October 13, 1975 11:59:00");
+            var date2 : Date = new Date("October 14, 1975 00:00:00");
+            var diffDays = Lang.diffDays(date1, date2);
+            Assert.areEqual(1, diffDays);
+        })
+        .test("diff days with time round to 1 test 2", function () {
+            var date1 : Date = new Date("October 13, 1975 00:00:00");
+            var date2 : Date = new Date("October 13, 1975 23:59:59");
+            var diffDays = Lang.diffDays(date1, date2);
+            Assert.areEqual(1, diffDays);
+        })
+        .test("diff hours same day", function () {
+            var date1 : Date = new Date("October 13, 1985 05:00:00");
+            var date2 : Date = new Date("October 13, 1985 07:34:10");
+            var diffHours = Lang.diffHours(date1, date2);
+            Assert.areEqual(3, diffHours);
+        })
+        .test("diff hours diff days", function () {
+            var date1 : Date = new Date("October 13, 1985 05:00:00");
+            var date2 : Date = new Date("October 15, 1985 07:34:10");
+            var diffHours = Lang.diffHours(date1, date2);
+            Assert.areEqual(51, diffHours);
+        })
+        .test("diff hours same day diff months", function () {
+            var date1 : Date = new Date("October 13, 1985 05:00:00");
+            var date2 : Date = new Date("November 13, 1985 07:34:10");
+            var diffHours = Lang.diffHours(date1, date2);
+            Assert.areEqual(31*24+3, diffHours);
+        })
+        .test("max date 1st is later", function () {
+            var date1 : Date = new Date("October 13, 1995 05:00:00");
+            var date2 : Date = new Date("November 13, 1985 07:34:10");
+            var maxDate = Lang.maxDate(date1, date2);
+            Assert.areDatesEqual(maxDate, date1);
+        })
+        .test("max date 2nd is later", function () {
+            var date1 : Date = new Date("October 13, 1985 05:00:00");
+            var date2 : Date = new Date("November 13, 1985 07:34:10");
+            var maxDate = Lang.maxDate(date1, date2);
+            Assert.areDatesEqual(maxDate, date2);
+        })
+        .test("max date dates are equal", function () {
+            var date1 : Date = new Date("October 13, 1975 23:59:59");
+            var date2 : Date = new Date("October 13, 1975 23:59:59");
+            var maxDate = Lang.maxDate(date1, date2);
+            Assert.areDatesEqual(maxDate, date1);
+            Assert.areDatesEqual(maxDate, date2);
+        })
+        .test("add days positive", function () {
+            var date : Date = new Date("October 13, 1975 23:59:59");
+            var newDate = Lang.addDays(date, 31 + 5);
+            Assert.areDatesEqual(newDate, new Date("November 18, 1975 23:59:59"));
+        })
+        .test("add days negative", function () {
+            var date : Date = new Date("January 3, 1984 16:34:22");
+            var newDate = Lang.addDays(date, -10);
+            Assert.areDatesEqual(newDate, new Date("December 24, 1983 16:34:22"));
+        })
+        .test("add days zero", function () {
+            var date : Date = new Date("January 3, 1984 16:34:22");
+            var newDate = Lang.addDays(date, 0);
+            Assert.areDatesEqual(newDate, new Date("January 3, 1984 16:34:22"));
+        })
+        .test("protocol neutral url returns null for null url", function () {
+            Assert.isNull(Lang.toProtocolNeutralURL(null));
+        })
+        .test("protocol neutral url returns empty for empty url", function () {
+            Assert.areEqual(Lang.toProtocolNeutralURL(""), "");
+        })
+        .test("protocol neutral url returns parameter if no protocol", function () {
+            let url = "www.yahoo.com/test" 
+            Assert.areEqual(Lang.toProtocolNeutralURL(url), url);
+        })
+        .test("protocol neutral url returns correct url if protocol present 1", function () {
+            let url = "http://www.google.com:8080/" 
+            Assert.areEqual(Lang.toProtocolNeutralURL(url), "//www.google.com:8080/");
+        })
+        .test("protocol neutral url returns correct url if protocol present 2", function () {
+            let url = "https://yandex.ru/default.aspx?a=b&c=1" 
+            Assert.areEqual(Lang.toProtocolNeutralURL(url), "//yandex.ru/default.aspx?a=b&c=1");
+        })
+        .test("isoStringToDateNoTime", function () {
+            let staticallyDef : Date = new Date(2013, (10-1), 03);
+            let dynamicallyDef : Date = Lang.isoStringToDateNoTime("2013-10-03T22:55:49.236Z");
+            Assert.areEqual(staticallyDef.getTime(), dynamicallyDef.getTime());
+        })
+        .test("Should trim time from calendar", function() {
+        	let calendar = dw.system.System.getCalendar();
+        	calendar = Lang.trimTimeFromCalendar(calendar);
+        	Assert.areEqual(0, calendar.get(Calendar.HOUR_OF_DAY));
+        	Assert.areEqual(0, calendar.get(Calendar.MINUTE));
+        	Assert.areEqual(0, calendar.get(Calendar.SECOND));
+        })
+       
+	return PIPELET_NEXT;
+
+}
+        

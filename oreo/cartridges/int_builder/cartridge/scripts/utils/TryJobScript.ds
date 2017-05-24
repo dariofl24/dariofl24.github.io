@@ -1,0 +1,21 @@
+/**
+*
+* @input myvalue : String This is a sample comment.
+*
+*/
+importPackage( dw.system );
+
+var logger = Logger.getLogger("Tryjob");
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+
+    // read pipeline dictionary input parameter
+    var val : String = pdict.myvalue;
+    
+    logger.info("VAL::: "+pdict.myvalue);
+    logger.info("ID::: "+dw.system.Site.getCurrent().getID());
+    logger.info("NAME::: "+dw.system.Site.getCurrent().getName());
+    
+    return PIPELET_NEXT;
+}

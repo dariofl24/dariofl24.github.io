@@ -1,0 +1,18 @@
+<isscript>
+    var pageContext={title:'Converse Checkout Order Confirmation', type:'checkout-order-confirmation', ns:'orderConfirmation'};
+</isscript>
+<isdecorate template="pt_commonlayout">
+    <isinclude template="util/modules" />
+    <div id="main-overlay">
+        <div class="pt_order-confirmation">
+            <isbanners p_dyo=false />
+            <div id="main" role="main" class="clearfix primary-focus">
+                <div class="checkout-confirmation">
+                    <div class="checkout-confirmation-inner">
+                        <isreplace/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</isdecorate>

@@ -1,0 +1,36 @@
+/**
+*
+*   @input Country : String
+*   @input SupportedSites : Object
+*   @input SiteKey : String
+*   @output SiteName : String
+*   @output SiteLocale : String
+*
+*/
+importPackage( dw.system );
+importPackage( dw.web );
+
+function execute( args : PipelineDictionary ) : Number
+{
+    var countrySite : dw.system.Site = args.SupportedSites.get(args.SiteKey);
+    var siteName : String = countrySite.getID();
+    var siteLocale : String = countrySite.getDefaultLocale();
+    
+    // [CEMEA-21] if country belongs to converse-EU select the correct locale.
+    if (siteName === 'converse-eu'){
+        for each ( var locale: String in countrySite.allowedLocales) {
+           if (locale.search(new RegExp(args.Country)) > -1 ) {
+               siteLocale = locale;
+               break;
+           }
+        }
+    }
+    args.SiteName = siteName;
+    args.SiteLocale = siteLocale;
+    
+    var cookie : Cookie = new Cookie("preferredSiteLocale", siteLocale);
+    cookie.setMaxAge(365);
+    response.addHttpCookie(cookie);
+    
+    return PIPELET_NEXT;
+}

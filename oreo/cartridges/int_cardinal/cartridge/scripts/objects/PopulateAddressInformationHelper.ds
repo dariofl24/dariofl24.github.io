@@ -1,0 +1,79 @@
+importPackage ( dw.system );
+importPackage ( dw.util );
+importPackage ( dw.order);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("int_cardinal:CardinalConstants.ds");
+
+(function(){
+    let setShippingPhoneIfMissing = function(shippingAddress : OrderAddress, shippingPhone : String) {
+        if (empty(shippingAddress.getPhone())) {
+            shippingAddress.setPhone(shippingPhone);
+        }
+    };
+    
+    let setShippingName = function(shippingAddress : OrderAddress, shippingFullName : String) {
+        let nameTokensSeparator = " ";
+        let nameTokens : Array = shippingFullName.split(nameTokensSeparator);
+        
+        let firstName = nameTokens[0];
+        let lastNameTokens : Array = nameTokens.slice(1, nameTokens.length);
+        
+        shippingAddress.setFirstName(nameTokens[0]);
+        shippingAddress.setLastName(lastNameTokens.join(nameTokensSeparator));
+    };
+    
+    var PopulateAddressInformationHelper = {        
+        
+        setShippingAddressToBasket : function(basket : Basket, centinelAuthenticateResult) {            
+            for each (let shipment:Shipment in basket.getShipments()) {
+                let shippingAddress : OrderAddress  = shipment.getShippingAddress() || shipment.createShippingAddress();
+                setShippingName(shippingAddress, centinelAuthenticateResult.shippingFullName);
+                shippingAddress.setAddress1(centinelAuthenticateResult.shippingAddress1);
+                shippingAddress.setAddress2(centinelAuthenticateResult.shippingAddress2);
+                shippingAddress.setCountryCode(centinelAuthenticateResult.shippingCountryCode);
+                shippingAddress.setCity(centinelAuthenticateResult.shippingCity);
+                shippingAddress.setStateCode(centinelAuthenticateResult.shippingState);
+                shippingAddress.setPostalCode(centinelAuthenticateResult.shippingPostalCode);
+                setShippingPhoneIfMissing(shippingAddress, centinelAuthenticateResult.shippingPhone);
+            }
+        },
+        
+        setShippingAddress : function(shippingAddress : OrderAddress, centinelAuthenticateResult) {
+            setShippingName(shippingAddress, centinelAuthenticateResult.shippingFullName);
+            shippingAddress.setAddress1(centinelAuthenticateResult.shippingAddress1);
+            shippingAddress.setAddress2(centinelAuthenticateResult.shippingAddress2);
+            shippingAddress.setCountryCode(centinelAuthenticateResult.shippingCountryCode);
+            shippingAddress.setCity(centinelAuthenticateResult.shippingCity);
+            shippingAddress.setStateCode(centinelAuthenticateResult.shippingState);
+            shippingAddress.setPostalCode(centinelAuthenticateResult.shippingPostalCode);
+            setShippingPhoneIfMissing(shippingAddress, centinelAuthenticateResult.shippingPhone);
+        },
+        
+        setBillingAddressToBasket : function(basket : Basket, centinelAuthenticateResult) {
+            let billingAddress : OrderAddress = basket.getBillingAddress();
+            billingAddress.setFirstName(centinelAuthenticateResult.userFirstName);
+            billingAddress.setLastName(centinelAuthenticateResult.userLastName);
+            billingAddress.setAddress1(centinelAuthenticateResult.billingAddress1);
+            billingAddress.setAddress2(centinelAuthenticateResult.billingAddress2);
+            billingAddress.setCountryCode(centinelAuthenticateResult.billingCountryCode);
+            billingAddress.setCity(centinelAuthenticateResult.billingCity);
+            billingAddress.setStateCode(centinelAuthenticateResult.billingState);
+            billingAddress.setPostalCode(centinelAuthenticateResult.billingPostalCode);
+            billingAddress.setPhone(centinelAuthenticateResult.shippingPhone);
+            
+            basket.setCustomerEmail(centinelAuthenticateResult.userEmail);
+        }
+    };
+    
+    Namespace.extend(integration, { 
+        cardinal: { 
+            objects: {
+                PopulateAddressInformationHelper: PopulateAddressInformationHelper              
+            }
+        }
+    });     
+
+})();
+

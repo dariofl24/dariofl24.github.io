@@ -1,0 +1,93 @@
+importPackage(dw.crypto);
+importPackage(dw.customer);
+importPackage(dw.object);
+importPackage(dw.system);
+importPackage(dw.rpc);
+importPackage(dw.order);
+importPackage(dw.util);
+importPackage(dw.web);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libStringUtilsExt.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function() {
+    var CommandBuilder = function() {
+    };
+    
+    CommandBuilder.mac = new Mac(Mac.HMAC_SHA_512);
+    
+    CommandBuilder.addOrderInfo = function(request : NewOrderRequestElement, creditCard: Object, basketID: String) {
+        request.amount = this.getAmmountByCreditCardType(creditCard);
+        request.orderID = this.hashOrderId(basketID);
+    };
+    
+    CommandBuilder.addAddress = function(request: NewOrderRequestElement, address: OrderAddress) {
+        request.avsZip = StringUtilsExt.limit(address.postalCode, 5);
+        request.avsAddress1 = StringUtilsExt.limit(address.address1, 30);
+        request.avsAddress2 = StringUtilsExt.limit(address.address2, 30);
+        request.avsCity = StringUtilsExt.limit(address.city, 25);
+        request.avsState = StringUtilsExt.limit(address.stateCode, 2);
+        request.avsName = StringUtilsExt.limit(address.fullName, 30);
+        request.avsCountryCode = StringUtilsExt.limit(address.countryCode.value, 2);
+        request.avsPhone = StringUtilsExt.limit(address.phone, 20);
+    };
+    
+    CommandBuilder.addCardInfo = function(request: NewOrderRequestElement, creditCard: Object) {
+        request.ccAccountNum = creditCard.Number;
+        request.ccExp = this.formatExpirationDate(creditCard.Year, creditCard.Month); // YYYYMM
+        request.ccCardVerifyNum = creditCard.CVN;
+    };
+    
+    CommandBuilder.addHeaderInfo = function(request : NewOrderRequestElement, config : Object) {
+        request.orbitalConnectionUsername = config.PaymentechUsername;
+        request.orbitalConnectionPassword = config.PaymentechPassword;
+        request.industryType = "EC";   // 'EC' - eCommerce transaction
+        request.transType = "A";       // 'A' - Authorization request
+        request.bin = "000001";        // '000001' - Salem
+        request.terminalID = "001";
+        request.merchantID = config.MerchantID;
+    };
+    
+    CommandBuilder.hashOrderId = function(orderId) {
+        var self = this;
+        
+        var now = System.getCalendar().getTime();;
+        var bytes = CommandBuilder.mac.digest(orderId + "" + now, orderId);
+        var string = bytes.toString();
+        var string64 = StringUtils.encodeBase64(string);
+        
+        return string64.substr(0, 22);
+    };
+    
+    CommandBuilder.getAmmountByCreditCardType = function(creditCard: Object) {
+        if (creditCard.Type === converse.constants.CreditCardType.Visa ||
+                creditCard.Type === converse.constants.CreditCardType.MasterCard) {
+            return "000";
+        }
+        
+        return "001";
+    };
+    
+    CommandBuilder.formatExpirationDate = function(year: String, month: String) {
+        month = StringUtilsExt.lpad(month, 2, "0");        
+        return year + "" + month;
+    };
+    
+    CommandBuilder.formatCCNumber = function(num: String) {
+        if (num.length < 4) {
+            return "*";
+        }
+        
+        var part = num.substr(num.length - 4, 4);
+        
+        return "************" + part;
+    };
+    
+    Namespace.extend(integration, { 
+       paymentech: {
+            CommandBuilder: CommandBuilder
+       }
+    });
+})();

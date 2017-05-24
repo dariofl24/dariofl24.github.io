@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<customer-groups xmlns="http://www.demandware.com/xml/impex/customergroup/2007-06-30">
+    <customer-group group-id="emea.converse.and.nike.employees">
+        <description>Converse and Nike employees eligible for EMEA employee discount program</description>
+        <membership-rule>
+            <included-customers>
+                <condition-group match-mode="any">
+                    <condition>
+                        <attribute-path>customer.profile.login</attribute-path>
+                        <operator>exists</operator>
+                    </condition>
+                </condition-group>
+            </included-customers>
+            <excluded-customers>
+                <condition-group match-mode="any">
+                    <condition>
+                        <attribute-path>customer.profile.custom.employeeActive</attribute-path>
+                        <operator>is-false</operator>
+                    </condition>
+                    <condition>
+                        <attribute-path>customer.profile.custom.employeeActive</attribute-path>
+                        <operator>does-not-exist</operator>
+                    </condition>
+                </condition-group>
+            </excluded-customers>
+        </membership-rule>
+        <custom-attributes/>
+    </customer-group>
+
+</customer-groups>

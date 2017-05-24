@@ -1,0 +1,209 @@
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* primary catalog navigation */
+/* ------------------------------------- */
+/* line 10, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation {
+  position: relative;
+  margin: 0 auto;
+  background: #000000;
+  z-index: 100;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 10, ../css/package/sass/primary_catalog_navigation.scss */
+  #navigation {
+    display: none;
+  }
+}
+/* line 29, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation nav {
+  height: inherit;
+}
+/* line 33, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container {
+  display: none;
+}
+/* line 36, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 {
+  display: block;
+}
+/* line 39, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper {
+  width: 12em;
+  height: auto;
+  padding: 0 0 2em 0;
+  margin: 0 auto;
+}
+/* line 47, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper.columns-2 {
+  width: 21.6em;
+}
+/* line 47, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper.columns-3 {
+  width: 33.6em;
+}
+/* line 47, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper.columns-4 {
+  width: 45.6em;
+}
+/* line 47, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper.columns-5 {
+  width: 57.6em;
+}
+/* line 47, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper.columns-6 {
+  width: 69.6em;
+}
+/* line 52, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper {
+  width: 12em;
+  margin-left: 0;
+  font-size: 1em;
+  text-transform: inherit;
+}
+/* line 60, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper.columns-2 {
+  width: 21.6em;
+}
+/* line 60, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper.columns-3 {
+  width: 33.6em;
+}
+/* line 60, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper.columns-4 {
+  width: 45.6em;
+}
+/* line 60, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper.columns-5 {
+  width: 57.6em;
+}
+/* line 60, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper.columns-6 {
+  width: 69.6em;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 52, ../css/package/sass/primary_catalog_navigation.scss */
+  #navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper {
+    margin-left: 0;
+  }
+}
+/* line 69, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper .column {
+  width: 9.6em;
+  margin-right: 2.4em;
+  float: left;
+}
+/* line 74, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper .column.last {
+  margin-right: 0;
+}
+/* line 78, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper .column li {
+  margin-top: 0.5em;
+  line-height: 1.5em;
+}
+/* line 82, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper .column li.heading {
+  padding-bottom: 5px;
+  font-weight: 600;
+  font-size: 1.08333em;
+  border-bottom: 1px solid #333333;
+}
+/* line 89, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper .column li a {
+  padding: 0;
+  font-size: 1.08333em;
+}
+/* line 93, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .external-category-container .level-2 .menu-wrapper .textnav-wrapper .column li a:hover {
+  color: #B2B2B2;
+}
+/* line 104, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .menu-category-container {
+  width: 27em;
+  height: 2.08333em;
+  margin: 0 auto;
+  margin-bottom: 0.41667em;
+  text-align: center;
+}
+/* line 113, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .menu-category-container.columns-4 {
+  width: 36em;
+}
+/* line 113, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .menu-category-container.columns-5 {
+  width: 45em;
+}
+/* line 113, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .menu-category-container.columns-6 {
+  width: 54em;
+}
+/* line 113, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .menu-category-container.columns-7 {
+  width: 63em;
+}
+/* line 119, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation ul.level-1 {
+  display: inline-block;
+}
+/* line 122, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation ul.level-1 li {
+  position: relative;
+  float: left;
+  height: inherit;
+  min-width: 3.5em;
+  padding: 0 1.08333em;
+  line-height: 2.08333em;
+}
+/* line 131, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation ul.level-1 a {
+  display: block;
+  height: inherit;
+  font-size: 1.33333em;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-transform: capitalize;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 59.9375em) {
+  /* line 131, ../css/package/sass/primary_catalog_navigation.scss */
+  #navigation ul.level-1 a {
+    padding: 0 0.83333em;
+    font-size: 1em;
+  }
+}
+/* line 148, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation ul.level-1 a.hasSubcategories.clicked {
+  color: #940000;
+}
+/* line 154, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation ul.level-1 a:not(.hasSubcategories):hover {
+  color: #940000;
+}
+/* line 161, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation div.level-2 {
+  display: none;
+  position: relative;
+  margin: 0;
+  padding-top: 1.25em;
+  padding-bottom: 0;
+  padding-left: 1.25em;
+  padding-right: 1.25em;
+  background: #F8F8F8;
+}
+/* line 171, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation div.level-2 .menu-wrapper {
+  overflow: hidden;
+}
+/* line 176, ../css/package/sass/primary_catalog_navigation.scss */
+#navigation .ie7 div.level-2 {
+  width: 37.66667em;
+}

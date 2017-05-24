@@ -1,0 +1,46 @@
+{
+    "__version": "1",
+    "settings": {
+        "http-host" : "<%=host%>",
+        "https-host" : "<%=host%>",
+        "site-path" : "uk",
+        "default" : "true"
+    },
+    "ecn-www.converse.com" : [
+        {
+            "host" : "ecn-www.converse.com",
+            "path" : "us"
+        }
+    ],
+    "www.converse.co.uk" : [
+        {
+            "host" : "www.converse.com",
+            "path" : "uk"
+        }
+    ],
+    "converse.co.uk" : [
+        {
+            "host" : "www.converse.com",
+            "path" : "uk"
+        }
+    ],
+    "converse.com" : [
+        {
+            "host" : "www.converse.com"
+        },
+        {
+            "if-site-path" : "uk",
+            "pipeline" : "Default-Start"
+        },
+        {
+            "if-site-path" : "gb",
+            "pipeline" : "Default-Start"
+        }
+    ],
+    "www.converse.com" : [
+        {
+            "if-site-path" : "gb",
+            "pipeline" : "Default-Start"
+        }
+    ]
+}

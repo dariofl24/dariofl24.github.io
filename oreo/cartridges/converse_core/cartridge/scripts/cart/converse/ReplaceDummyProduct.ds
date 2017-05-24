@@ -1,0 +1,45 @@
+/**
+* Replace the product line item's dummy product with the original product and its attributes.
+*
+* @input ProductLineItem : dw.order.ProductLineItem The product line item holding the dummy product.
+* @input Product: dw.catalog.Product The product to be replaced with in the product line item.
+* @input CustomAttributes: Object The custom attribues holder.
+*
+*/
+importPackage(dw.catalog);
+importPackage(dw.order);
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:product/ProductUtils.ds")
+
+function execute( args : PipelineDictionary ) : Number
+{
+    var lineItem:ProductLineItem = args.ProductLineItem;
+    var product:Product = args.Product;
+    var customAttributes : Object = args.CustomAttributes;
+    
+    try {
+        lineItem.replaceProduct(product);
+    
+        if (customAttributes != null) {
+            if (ProductUtils.isElectronicGiftCard(product)) {
+                lineItem.custom.giftcardName = customAttributes.recipient;
+                lineItem.custom.giftcardEmail = customAttributes.recipientEmail;
+            }
+            else if (ProductUtils.isConverseOne(product)) {
+                lineItem.custom.personalization = customAttributes.personalization;
+                lineItem.custom.customSize = customAttributes.size;
+                lineItem.custom.metricID = customAttributes.metricId;
+                lineItem.custom.dyoImageUrl = customAttributes.dyoImageUrl;
+            }
+        }
+    
+    }
+    catch(e) {
+        var ex = e;
+        return PIPELET_ERROR;
+    }
+    
+    return PIPELET_NEXT;
+}

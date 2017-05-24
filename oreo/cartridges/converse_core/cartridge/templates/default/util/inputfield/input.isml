@@ -1,0 +1,7 @@
+<input class="input-text ${html.class}"
+    type="text"
+    name="${html.name}"
+    id="${html.id}"
+    value="${html.value}"
+    <isprint value="${html.attributes}" encoding="off" />
+/>

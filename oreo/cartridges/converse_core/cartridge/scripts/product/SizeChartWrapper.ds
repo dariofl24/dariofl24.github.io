@@ -1,0 +1,156 @@
+importPackage(dw.web);
+
+importScript("converse_core:constants.ds");
+importScript("util/ViewHelpers.ds");
+
+function SizeChartWrapper(sizeChart) {
+    var CONST = converse.constants;
+    var siteID = dw.system.Site.getCurrent().getID();
+
+    var self = {
+        sizeChart: sizeChart
+    };
+
+    var sizeDisplayValueForWomenAndMen = function(genescoSize, length) {
+        if (length === 'short') {
+            var menPrefix = Resource.msg('global.size.label.men.short', 'locale', null);
+            var womenPrefix = Resource.msg('global.size.label.women.short', 'locale', null);
+        } else {
+            var menPrefix = Resource.msg('global.size.label.men', 'locale', null);
+            var womenPrefix = Resource.msg('global.size.label.women', 'locale', null);
+        }
+
+        var size = self.sizeChart.Sizes[genescoSize];
+
+        if (isSite('US')) {
+            return menPrefix + " " + size.Men + " / " + womenPrefix + " " + size.Women;
+        } else if (isSite('GB')) {
+            return size.UK;
+        } else {
+            return size.EU;
+        }
+    };
+
+    var sizeDisplayValueForWomen = function(genescoSize) {
+        var womenPrefix = Resource.msg('global.size.label.women', 'locale', null);
+        var size = self.sizeChart.Sizes[genescoSize];
+
+        if (isSite('US')) {
+            return womenPrefix + " " + size.Women;
+        } else if (isSite('GB')) {
+            return size.UK;
+        } else {
+            return size.EU;
+        }
+    };
+
+    var sizeDisplayValueForKids = function(genescoSize, kidsSuffix) {
+        var size = self.sizeChart.Sizes[genescoSize];
+
+        if (isSite('US')) {
+            return size.Kids + " " + kidsSuffix;
+        } else if (isSite('GB')) {
+            return size.UK + " " + kidsSuffix;
+        } else {
+            return size.EU + " " + kidsSuffix;
+        }
+    };
+
+    var sizeShortDisplayValueForKids = function(genescoSize, kidsPrefix) {
+        var size = self.sizeChart.Sizes[genescoSize];
+
+        if (isSite('US')) {
+            return kidsPrefix + " " + size.Kids;
+        } else if (isSite('GB')) {
+            return kidsPrefix + " " + size.UK;
+        } else {
+            return kidsPrefix + " " + size.EU;
+        }
+    };
+
+    var sizeDisplayValueForInfant = function(genescoSize, length) {
+        if (length === 'short') {
+            var kidsPrefix = Resource.msg('global.size.label.infant.short', 'locale', null);
+            return sizeShortDisplayValueForKids(genescoSize, kidsPrefix);
+        } else {
+            var kidsSuffix = Resource.msg('global.size.label.infant.long', 'locale', null);
+            return sizeDisplayValueForKids(genescoSize, kidsSuffix);
+        }
+    };
+
+    var sizeDisplayValueForToddler = function(genescoSize, length) {
+        if (length === 'short') {
+            var kidsPrefix = Resource.msg('global.size.label.toddler.short', 'locale', null);
+            return sizeShortDisplayValueForKids(genescoSize, kidsPrefix);
+        } else {
+            var kidsSuffix = Resource.msg('global.size.label.toddler.long', 'locale', null);
+            return sizeDisplayValueForKids(genescoSize, kidsSuffix);
+        }
+    };
+
+    var sizeDisplayValueForYouth = function(genescoSize, length) {
+        if (length === 'short') {
+            var kidsPrefix = Resource.msg('global.size.label.youth.short', 'locale', null);
+            return sizeShortDisplayValueForKids(genescoSize, kidsPrefix);
+        } else {
+            var kidsSuffix = Resource.msg('global.size.label.youth.long', 'locale', null);
+            return sizeDisplayValueForKids(genescoSize, kidsSuffix);
+        }
+    };
+
+    var sizeDisplayValueForJunior = function(genescoSize, length) {
+        if (length === 'short') {
+            var kidsPrefix = Resource.msg('global.size.label.junior.short', 'locale', null);
+            return sizeShortDisplayValueForKids(genescoSize, kidsPrefix);
+        } else {
+            var kidsSuffix = Resource.msg('global.size.label.junior.long', 'locale', null);
+            return sizeDisplayValueForKids(genescoSize, kidsSuffix);
+        }
+    };
+
+    self.sizeChartDisplayValue = {};
+    self.sizeChartDisplayValue[CONST.SizeChart.Standard] = sizeDisplayValueForWomenAndMen;
+    self.sizeChartDisplayValue[CONST.SizeChart.Chuck] = sizeDisplayValueForWomenAndMen;
+    self.sizeChartDisplayValue[CONST.SizeChart.Jack] = sizeDisplayValueForWomenAndMen;
+    self.sizeChartDisplayValue[CONST.SizeChart.Womens] = sizeDisplayValueForWomen;
+    self.sizeChartDisplayValue[CONST.SizeChart.KidsNewborn] = sizeDisplayValueForInfant;
+    self.sizeChartDisplayValue[CONST.SizeChart.KidsToddler] = sizeDisplayValueForToddler;
+    self.sizeChartDisplayValue[CONST.SizeChart.KidsYouth] = sizeDisplayValueForYouth;
+    self.sizeChartDisplayValue[CONST.SizeChart.KidsExtyouth] = sizeDisplayValueForJunior;
+    
+    self.sizeChartDisplayValue[CONST.MaterialConverseID.MCID_1] = sizeDisplayValueForWomenAndMen;
+    self.sizeChartDisplayValue[CONST.MaterialConverseID.MCID_2] = sizeDisplayValueForWomenAndMen;
+    self.sizeChartDisplayValue[CONST.MaterialConverseID.MCID_4] = sizeDisplayValueForYouth;
+    self.sizeChartDisplayValue[CONST.MaterialConverseID.MCID_5] = sizeDisplayValueForToddler;
+    self.sizeChartDisplayValue[CONST.MaterialConverseID.MCID_6] = sizeDisplayValueForInfant;
+    self.sizeChartDisplayValue[CONST.MaterialConverseID.MCID_7] = sizeDisplayValueForWomen;
+    self.sizeChartDisplayValue[CONST.MaterialConverseID.MCID_8] = sizeDisplayValueForWomenAndMen;
+    self.sizeChartDisplayValue[CONST.MaterialConverseID.MCID_8A] = sizeDisplayValueForWomenAndMen;
+    self.sizeChartDisplayValue[CONST.MaterialConverseID.MCID_8B] = sizeDisplayValueForWomenAndMen;
+    self.sizeChartDisplayValue[CONST.MaterialConverseID.MCID_11] = sizeDisplayValueForJunior;
+
+    self.containsSize = function(genescoSize) {
+        var s = self;
+        
+        if (self.sizeChart.Sizes[genescoSize] && self.sizeChart.Sizes[genescoSize] != null) {
+            return true;
+        }
+
+        return false;
+    };
+
+    self.getSizeDisplayValue = function(genescoSize) {
+        return self.sizeChartDisplayValue[self.sizeChart.Name](genescoSize, 'long');
+    };
+
+    self.getSizeShortDisplayValue = function(genescoSize) {
+        return self.sizeChartDisplayValue[self.sizeChart.Name](genescoSize, 'short');
+    };
+    
+    self.getWeightOfSizeInSizeChart = function(genescoSize) {
+        let sizeInChart = self.sizeChart.Sizes[genescoSize];
+        return new Number(sizeInChart.EU);
+    };
+
+    return self;
+}

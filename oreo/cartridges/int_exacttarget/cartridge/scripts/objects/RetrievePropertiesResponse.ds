@@ -1,0 +1,30 @@
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_exacttarget:objects/AbstractRetrieveResponse.ds");
+
+(function() {
+
+    var OBJ_NS = integration.exacttarget.objects;
+
+    var AbstractRetrieveResponse = OBJ_NS.AbstractRetrieveResponse;
+
+    var RetrievePropertiesResponse = AbstractRetrieveResponse.extend({
+        getProperties: function() : Map {
+            var properties: Map = new HashMap();
+            var results = this.response.getResults();
+            var apiObjectProperties: Collection = results[0].getProperties();
+            for each(let property in apiObjectProperties) {
+                properties.put(property.getName(), property.getValue());
+            }
+            return properties;
+        }
+    });
+
+    Namespace.extend(OBJ_NS, { RetrievePropertiesResponse: RetrievePropertiesResponse });
+
+})();

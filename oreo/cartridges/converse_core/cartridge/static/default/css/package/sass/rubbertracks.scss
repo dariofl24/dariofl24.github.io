@@ -1,0 +1,196 @@
+@import "_constants";
+@import "_helper_functions";
+@import "_conv_mixins";
+@import "_sprites";
+@import "_tooltips";
+@import "compass/utilities/general/clearfix";
+@import "compass/css3/box-sizing";
+@import "_media_query";
+
+.pt_rubbertracks {
+    #main-title {
+        h1 {
+            float: none;
+        }
+    }
+
+    h2 {
+        font-size: pxtoem(16);
+        line-height: 1.3em;
+        a {
+        text-decoration: underline;  
+        }
+    }
+
+    #main {
+        margin-top: 2em;
+    } 
+
+    #primary {
+        width: 72%;
+        border: 0 none;
+        float: left;
+        margin: 0;
+        position: relative;
+
+        .region-header {
+            background: none repeat scroll 0 0 black;
+            color: white;
+        }
+
+        .region-title {
+            $font-size: 18;
+            float: left;
+            color: inherit;
+            font-size: pxtoem($font-size);
+            font-weight: bold;
+            line-height: pxtoembase(54, $font-size);
+            text-transform: uppercase;
+            padding-left: pxtoembase(20, $font-size);
+        }
+
+        .region-details {
+            border: pxtoem(1) solid $CONVERSE_COLOR_8;
+            padding: 2%;
+
+            a {
+                text-decoration: underline;
+            }
+
+            h2 {
+                font-weight: bold;
+            }
+
+            .description {
+                padding-top: 1em;
+                padding-bottom: 1em;
+                line-height: 1.5em;
+            }
+
+            input, .styled-select, textarea {
+                width: 98%;
+                font-size: pxtoem(16);
+                color: $CONVERSE_COLOR_4;
+                margin-bottom: 0.4em;
+            }
+
+            select {
+                color: $CONVERSE_COLOR_4;
+            }
+
+            input[type="checkbox"], input[type="radio"]  {
+                width: auto;
+            }
+
+            .form-row span {
+                font-size: 1em;
+            }
+
+            .band-description {
+                margin-top: pxtoem(14);
+            }
+
+            .band-urls textarea {
+                height: 9.1em;
+                font-size: 1em;
+            }
+
+            .terms-and-condition-error {
+                margin-top: 1em;
+                display: none;
+            }
+
+            .error {
+                color: $CONVERSE_ERROR_COLOR;
+            }
+
+            .content-asset {
+                display: inline;
+            }
+        }
+
+        .region-separator {
+            padding-bottom: 2em;
+        }
+
+        .no-top-border {
+            border-top: none;
+        }
+
+        .signup {           
+        }
+
+        @include mq-small {
+            width: 100%;
+        }            
+    }
+
+    #secondary {
+        font-size: pxtoem(13);
+
+        @include mq-small {
+            display: none;
+        }
+
+        .faq-sidebar {
+            @include clearfix;
+            padding: pxtoem(32) pxtoem(20);
+
+            .faq-sidebar-title {
+                font-size: pxtoem(18);
+                font-weight: bold;
+                padding: 0 0 pxtoembase(20, 18) 0;
+                border-bottom: pxtoem(1) solid $CONVERSE_COLOR_5;
+            }
+
+            ul {
+                margin-top: 2em;
+            }
+
+            li {
+                margin-bottom: 1.4em;
+
+                .faq-title {
+                    font-weight: bold;
+                    margin-bottom: 0.4em;
+                    cursor: pointer;
+                }
+
+                .faq-text {
+                    color: $CONVERSE_COLOR_4;
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .title {
+        text-align: center;
+
+        h2 {
+            font-size: pxtoem(18);
+            color: $CONVERSE_COLOR_4;
+            line-height: 1.2em;
+
+            @include mq-small {
+                text-align: left;
+                margin: 1em;
+            }
+        }
+    }
+}
+
+#rt-terms-and-conditions-dialog {
+    display: none;
+    overflow: auto;
+
+    .content {
+        margin: 1em;
+    }
+
+    h3 {
+        font-weight: bold;
+        margin-bottom: 1em;
+        margin-top: 1em;
+    }
+}

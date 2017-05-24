@@ -1,0 +1,18 @@
+/**
+ * Aravato, the fullfiller for Converse EMEA cannot handle orders above a maximum
+ *
+ * @output MaxPLIsPerCO : Number
+ */
+
+importPackage( dw.system );
+importPackage( dw.order );
+
+importScript("int_arvato:constants.ds");
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+    pdict.MaxPLIsPerCO = arvato.constants.BasketMax;
+    return PIPELET_NEXT;
+}
+
+

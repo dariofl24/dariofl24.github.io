@@ -1,0 +1,42 @@
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:product/ProductUtils.ds");
+    importScript("converse_core:product/ImageProductResolver.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+
+    var ImageProductResolver = converse.product.ImageProductResolver,
+    ProductImageResolver = converse.product.ProductImageResolver;
+</isscript>
+
+<isset name="productInfo" value="${pdict.ProductToDisplayInfo}" scope="page" />
+
+<isif condition="${productInfo.displayVariations}">
+    <div class="attribute color-attr">
+        <section class="color-swatch">
+            <p class="product-properties">
+                ${Resource.msg('productdetail.color','product',null)}: <span><isprint value="${productInfo.selectedColorAttribute.value}" /></span>
+                <span class="separator">/</span>
+                ${Resource.msg('productdetail.style','product',null)}: <span><isprint value="${productInfo.manufacturerSKU}"/></span>
+            </p>
+            <ul class="swatch-list">
+                <isloop items="${productInfo.colorVariationInfos}" var="colorVariationInfo">
+                    <isset name="activeClass" value="${colorVariationInfo.selected ? 'active' : ''}" scope="page" />
+                    <isset name="selectableClass" value="${colorVariationInfo.selected ? '' : 'selectable'}" scope="page" />
+                    <isset name="swatch_link" value="${colorVariationInfo.linkToVariant + '&overrideDefaultSizeSelect=true'}" scope="page" />
+                    <isset name="imgSmall" value="${ProductImageResolver.getProductImage(colorVariationInfo.variant, 'small', 0 )}" scope="page"/>
+                    <li class="swatch ${activeClass} ${selectableClass}">
+                        <a href="${swatch_link}"
+                            data-swatch-hex="${colorVariationInfo.mainColorHex}"
+                            title="${colorVariationInfo.displayValue}">
+                                <img class="productthumbnail" src="${imgSmall.getURL()}"/>
+                        </a>
+                    </li>
+                </isloop>
+            </ul>
+        </section>
+
+        <span class="visually-hidden" itemprop="url"><isprint value="${productInfo.productURL}"/></span>
+        <span class="visually-hidden" itemprop="brand"><isprint value="${productInfo.brand}"/></span>
+        <span class="visually-hidden" itemprop="manufacturer">${Resource.msg('productvariations.converse','chuckpromo',null)}</span>
+    </div>
+</isif>

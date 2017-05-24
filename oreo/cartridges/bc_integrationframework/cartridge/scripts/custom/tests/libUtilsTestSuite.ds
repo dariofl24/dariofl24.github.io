@@ -1,0 +1,42 @@
+/**
+* @input Unit: Object
+*/
+importPackage(dw.system);
+importPackage(dw.util);
+importScript("converse_core:constants.ds");
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("custom/libUtils.ds");
+
+function execute(args : PipelineDictionary) : Number {
+    
+    args.Unit.describe("libUtils Test Suite")
+        .test("Should NOT mask Order ids if site is Production or Staging", function() {
+        	
+        	var originalisProductionOrStagingSystem = Utils.isProductionOrStagingSystem;
+        	
+        	Utils.isProductionOrStagingSystem = function(){return true; };
+        	
+        	Assert.areEqual("2601", Utils.normalizeOrderId("2601") );
+        	Assert.areEqual("10102601", Utils.normalizeOrderId("10102601") );
+        	
+        	Utils.isProductionOrStagingSystem = originalisProductionOrStagingSystem;
+            
+        })
+        .test("Should  mask Order ids if site is NOT Production or Staging", function() {
+            
+            var originalisProductionOrStagingSystem = Utils.isProductionOrStagingSystem;
+            
+            Utils.isProductionOrStagingSystem = function(){return false; };
+            
+            Assert.areEqual("00002601", Utils.normalizeOrderId("2601") );
+            Assert.areEqual("10102601", Utils.normalizeOrderId("10102601") );
+            
+            Utils.isProductionOrStagingSystem = originalisProductionOrStagingSystem;
+            
+        });
+
+    return PIPELET_NEXT;
+};

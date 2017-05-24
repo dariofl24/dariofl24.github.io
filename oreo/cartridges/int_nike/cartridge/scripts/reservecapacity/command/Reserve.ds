@@ -1,0 +1,65 @@
+importPackage(dw.system);
+importPackage(dw.value);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/command/HttpClientCommand.ds");
+
+importScript("int_nike:reservecapacity/objects/RequestGenerator.ds");
+importScript("int_nike:reservecapacity/objects/ResponseHandler.ds");
+
+(function() {
+    
+    var NIKE = integration.nike.reservecapacity,
+        RequestGenerator = NIKE.RequestGenerator,
+        ResponseHandler = NIKE.ResponseHandler;
+    
+    var Reserve = converse.webservices.command.HttpClientCommand.extend({
+        
+        init: function(c1ShipmentSummary) {
+            this.c1ShipmentSummary = c1ShipmentSummary;
+            this.logger = Logger.getLogger("RESERVECAPACITY");
+        },
+        
+        getEndpoint: function() : String {
+            return this.configuration.nikeidDomain + this.configuration.reserveCapacityUri;
+        },
+        
+        createRequest: function() {
+            this.requestGenerator = new RequestGenerator(this.configuration.expirationDays);
+            this.requestObject = this.requestGenerator.getRequest(this.c1ShipmentSummary);
+            return this.requestObject;
+        },
+        
+        getDoms: function() : Map {
+            return this.requestGenerator.getDoms();
+        },
+        
+        execute: function(request) {
+            let endpoint : String = this.getEndpoint();
+
+            this.logger.info("Sending reserve capacity request: {0}", request);
+
+            let response = this.doPost(endpoint, request);
+            
+            this.logger.info("Received reserve capacity response: {0}", response);
+            
+            return response;
+        },
+
+        handleResponse: function(response) {
+            this._super(response);
+            this.responseHandler = new ResponseHandler(this.getDoms());
+            this.responseObject = this.responseHandler.getResponse(new XML(response));
+        },
+        
+        hasError: function() : Boolean {
+            return this._super() || this.response.indexOf("<results>") === -1;
+        }
+    });
+    
+    var ns = Namespace.extendFromString(integration, "nike.reservecapacity.command");
+    Namespace.extend(ns, { Reserve: Reserve });
+    
+})();

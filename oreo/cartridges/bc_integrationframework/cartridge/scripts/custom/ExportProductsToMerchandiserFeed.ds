@@ -1,0 +1,130 @@
+/**
+* Export Merchandiser Feed
+*
+* @input ExportFile : String The export file name
+*
+* @output ErrorMsg : String The error message if any
+*/
+
+importPackage(dw.io);
+importPackage(dw.order);
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.catalog);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:product/ProductUtils.ds");
+importScript("converse_core:product/ProductImageResolver.ds");
+importScript("converse_core:product/PriceResolver.ds");
+importScript("custom/ProductsExporter.ds");
+importScript("custom/ExportUtils.ds");
+
+var logger : Logger = Logger.getLogger('ExportMerchandiserFeed');
+var ProductImageResolver = converse.product.ProductImageResolver;
+var PriceResolver = converse.product.PriceResolver;
+var ProductsExporter = converse.utils.ProductsExporter;
+var ExportUtils = converse.utils.ExportUtils;
+
+function execute(args : PipelineDictionary) : Number
+{
+    try {
+        products = ProductMgr.queryAllSiteProducts();
+        let exporter = new ProductsExporter(args.ExportFile, getCsvHeader, getCsvRow, shouldBeExported);
+        let shouldAdjust = false;
+        exporter.export(products, converse.constants.SelectorType.Pipeline, shouldAdjust);
+    } catch(e) {
+        args.ErrorMsg = e.toString();
+        logger.error(args.ErrorMsg);
+    }
+
+    return empty(args.ErrorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function getCsvHeader() {
+    return [
+        "Product ID",
+        "Product Name",
+        "Sku Number",
+        "Primary Category",
+        "Secondary Category(ies)",
+        "Product URL",
+        "Product Image URL",
+        "Buy URL",
+        "Short Product Description",
+        "Long Product Description",
+        "Discount",
+        "Discount Type",
+        "Sale Price",
+        "Retail Price",
+        "Begin Date",
+        "End Date",
+        "Brand",
+        "Shipping",
+        "Is Deleted Flag",
+        "Keyword(s)",
+        "Is All Flag",
+        "Manufacturer Part #",
+        "Manufacturer Name",
+        "Shipping Information",
+        "Availability",
+        "Universal Pricing Code",
+        "Class ID",
+        "Is Product Link Flag",
+        "Is Storefront Flag",
+        "Is Merchandiser Flag",
+        "Currency",
+        "M1"
+    ];
+}
+
+function getCsvRow(product) {
+    let availability = ProductUtils.getAvailability(product, 1);
+
+    let productUrl = ProductUtils.getProductLink(product.ID);
+    let productImageUrl = ExportUtils.getProductImageUrl(product);
+    let pricing = PriceResolver.getProductPricing(product);
+    let price = PriceResolver.isStandardPriceAvailable(pricing) ? pricing.standardPriceFormatted : '';
+    let salePrice = PriceResolver.isSalesPriceAvailable(pricing) ? pricing.salesPriceFormatted : '';
+    let description = ExportUtils.stripWhitespace(ExportUtils.removeTags(empty(product.shortDescription) ? product.name : product.shortDescription.source));
+    let metaKeywords = ExportUtils.stripWhitespace(product.custom.metaSearchText);
+
+    values = [
+        '',    // product id
+        product.name,    // product name
+        product.manufacturerSKU, // sku number
+        ExportUtils.getCategory(product),   // primary category
+        '', // secondary categories
+        productUrl,    // product url
+        productImageUrl,    // image url
+        productUrl,    // buy url
+        ExportUtils.ellipse(description, 240),    // short description
+        description,    // full description  long
+        '', // discount left blank
+        '', // discount type
+        salePrice.replace("$", ""),    // clearance price
+        price.replace("$", ""), // retail price
+        product.onlineFrom, // begin date
+        product.onlineTo, // end date
+        'CONVERSE', // brand
+        '', // shipping
+        'N', // is deleted flag
+        metaKeywords, // keyword(s)
+        'Y', // is all flag
+        '', // manufacturer part #
+        '', // manufacturer name
+        '', // shipping information
+        '', // availability
+        '', // universal pricing code
+        '', // class ID
+        'Y', // is product link flag
+        'N', // is storefront flag
+        'Y', // is merchandiser flag
+        'USD', // currency
+        '', // M1
+    ];
+    return values;
+}
+
+function shouldBeExported(product) {
+    return product.online && product.variant && product.variationModel.master.online && product.priceModel.price.value;
+}

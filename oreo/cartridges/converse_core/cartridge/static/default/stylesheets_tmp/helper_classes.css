@@ -1,0 +1,40 @@
+/* helper classes */
+/* ------------------------------------- */
+/* line 5, ../css/package/sass/helper_classes.scss */
+.clearfix:after {
+  clear: both;
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+/* line 14, ../css/package/sass/helper_classes.scss */
+.visually-hidden {
+  border: 0 none;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/* line 25, ../css/package/sass/helper_classes.scss */
+.ie7 .visually-hidden {
+  width: 1px !important;
+}
+
+/* line 29, ../css/package/sass/helper_classes.scss */
+ul.menu {
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+/* line 33, ../css/package/sass/helper_classes.scss */
+ul.menu li {
+  float: left;
+  list-style: none outside none !important;
+}

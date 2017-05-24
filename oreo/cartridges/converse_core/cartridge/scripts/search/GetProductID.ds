@@ -1,0 +1,16 @@
+/**
+* @input ProductSearchModel : dw.catalog.ProductSearchModel The search model.
+* @output ProductID : String The product ID of the product, product master, product variant or null in case it's not a search by SKU.
+*/
+importPackage( dw.system );
+importPackage( dw.util );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:util/SearchUtils.ds");
+
+let SearchUtils = converse.search.SearchUtils;
+
+function execute( args : PipelineDictionary ) : Number {
+    args.ProductID = SearchUtils.resolveProductID(args.ProductSearchModel);
+    return PIPELET_NEXT;
+}

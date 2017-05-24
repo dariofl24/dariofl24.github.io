@@ -1,0 +1,29 @@
+<iscomment>In the product pipeline, if a product was not found for the selected attributes, we need to refresh the ProductVariationModel using the default selected variant</iscomment>
+
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+
+    var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+    var enableHTMLBuilder = FeatureToggleService.isFeatureEnabled("html-builder");
+    var enableHTMLBuilderOnDesktop = FeatureToggleService.isFeatureEnabled("html-builder-on-desktop");
+    var enableFlashBuilder = FeatureToggleService.isFeatureEnabled("flash-builder");
+    
+    var httpParams: dw.util.Map = pdict.CurrentHttpParameterMap;
+    var deviceType: String = pdict.CurrentSession.custom.device;
+
+    var nikeProductID: String = pdict.Product.custom.nikeProductID;
+
+    var metricId: String = httpParams.metricId.stringValue ||
+        httpParams.metricsId.stringValue ||
+        pdict.Product.custom.inspirationID || '';
+        
+    enableHTMLBuilderOnDesktop = enableHTMLBuilderOnDesktop || httpParams.enableHTMLBuilder.booleanValue === true;
+    var isMobileDevice: Boolean = deviceType === 'mobile' || deviceType === 'tablet';
+    var showHtmlBuilder: Boolean = (isMobileDevice && enableHTMLBuilder) || (!isMobileDevice && enableHTMLBuilder && enableHTMLBuilderOnDesktop);
+    var showFlashBuilder: Boolean = (!isMobileDevice && enableFlashBuilder);
+    
+
+</isscript>
+
+<isinclude template="product/pdp/components/htmlbuilderdyocontent" />

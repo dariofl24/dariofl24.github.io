@@ -1,0 +1,25 @@
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:checkout/AddressHelper.ds");
+    var shipment = pdict.Order.getDefaultShipment();
+    var address = shipment.shippingAddress;
+    var AddressHelper = new converse.global.AddressHelperFactory().helper();
+</isscript>
+
+<tr>
+    <td style="text-align: center;">
+        <p class="section-header" style="font-size: 19px; margin: 16px 0px;">
+            <strong>${Resource.msg('order.orderdetails.shipping','mail',null)}</strong>
+        </p>
+        <p style="margin: 16px 0px; font-size: 16px;">
+            <isprint value="${address.firstName}"/> <isprint value="${address.lastName}"/> <br/>
+            <isprint value="${address.address1}"/> <br/>
+            <br/>
+            <isif condition="${!empty(address.address2)}"> 
+                <isprint value="${address.address2}"/> <br/>
+            </isif>
+            <isprint value="${AddressHelper.formatAddressForSummary(address.city, address.postalCode, address.stateCode)}" encoding="off"/> <br/>
+            <isprint value="${Resource.msg('countries.'+ address.countryCode.value.toLowerCase(), 'forms', null) }"/> <br/>
+       </p>
+    </td>
+</tr>

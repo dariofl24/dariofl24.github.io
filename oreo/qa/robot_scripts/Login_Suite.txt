@@ -1,0 +1,25 @@
+*** Settings ***
+Documentation   Login process with valid data  #This suite needs of two users already created on DW
+Suite Setup     Open Browser to Converse Site
+Suite Teardown  Close All Browsers
+Test Setup      Click Login
+Test Teardown   Run Keyword If Test Failed  Run if Fails
+Force Tags      Login  Regression  US
+Test Template   Login Should Pass When
+Resource        login_definitions.txt
+Resource        site_declarations.txt
+
+*** Test Cases ***
+User with First Name logs In; system should log user in and shows his Name on header bar
+  [Tags]  ShortReg  Production
+  ${validSite_user}  ${validSite_pass}  ${validSite_name} ${validSite_lastName}  FALSE
+
+User without Name logs In; system should log user in and shows first part of his email @
+  noname_but_very_very_very_long_email@test.com  tacittacit  noname_but_very_very_very_long_email  FALSE
+
+User checks "Remember me" when log in; system should log user in and create cookie with user information
+  ${validSite_user}  ${validSite_pass}  ${validSite_name} ${validSite_lastName}  TRUE
+
+*** Keywords ***
+Login Should Pass
+  Login Should Pass When

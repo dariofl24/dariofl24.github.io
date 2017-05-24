@@ -1,0 +1,104 @@
+importPackage( dw.system );
+importPackage( dw.util );
+
+importScript("converse_core:constants.ds");
+
+let getValueOrEmpty = function (value : String) : String
+{
+    return empty(value) ? "" : value;
+}
+
+let getStateValue = function(formData : Object) : String
+{
+    let result;
+    
+    if (formData.countryCode == "US" ) 
+    {
+        result = formData.stateUs;
+    }
+    else
+    {
+        result = getValueOrEmpty(formData.stateNonUs);
+    }
+    
+    return result;
+}
+
+let getSignupCenterValue = function(formData : Object) : String 
+{
+    let result = formData.signupCenter;
+    
+    return empty(result) ? "" : result;
+}
+
+let getGuitarCenterValue = function(formData : Object) : String 
+{
+    let result = formData.guitarCenter;
+    
+    return empty(result) ? "false" : result;
+}
+
+let getCurrentDateTimeString = function() : String
+{
+    return StringUtils.formatCalendar(System.getCalendar(), 'yyyy-MM-dd HH:mm:ss');
+}
+
+let convertFormDataToSerializableObject = function(formData : Object) : Object
+{
+    let  result = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        city: formData.city,
+        state: getStateValue(formData),
+        country: formData.countryCode,
+        bandName: formData.bandName,
+        bandDescription: formData.bandDescription,
+        bandUrls: getValueOrEmpty(formData.bandUrls),
+        songs: formData.songs,
+        goals: formData.goals,
+        stages: formData.stages,
+        genres: formData.genres,
+        signupCenter: getSignupCenterValue(formData),
+        guitarCenter: getGuitarCenterValue(formData),
+        applicationDate: getCurrentDateTimeString()
+    }
+
+    return result;
+}
+
+let serializeRegistrationToJson = function(currentRegistrationInJson : String, formData : Object) : String
+{
+    let result = [];
+
+    if (currentRegistrationInJson != null)
+    {
+        result = JSON.parse(currentRegistrationInJson);
+    }
+
+    result.push(convertFormDataToSerializableObject(formData));
+
+    return JSON.stringify(result);
+}
+
+function RubberTracksUtils() {}
+
+RubberTracksUtils.saveRegistrationToJson = function(currentRegistrationInJson : String, formData : Object) : String
+{
+    return serializeRegistrationToJson(currentRegistrationInJson, formData);
+}
+
+RubberTracksUtils.hasValidState = function(formData : Object) : Object
+{
+    let result = true;
+    let inValidForUs = formData.countryCode == "US";
+    inValidForUs = inValidForUs && empty(formData.stateUs);
+
+    if (inValidForUs)
+    {
+        result = false;
+    }
+
+    return result;
+}

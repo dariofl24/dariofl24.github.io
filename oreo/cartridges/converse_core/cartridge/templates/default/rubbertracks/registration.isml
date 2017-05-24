@@ -1,0 +1,233 @@
+<isdecorate template="rubbertracks/pt_rubbertracks">
+    <isinclude template="util/modules"/>
+
+    <div id="main-title" class="primary-focus">
+        <h2>
+            <br>
+            ${Resource.msg('registration.title2','rubbertracks',null)}<a href="http://youtu.be/WBJwBZeddCc" target="_blank">${Resource.msg('global.here','locale',null)}</a>.
+        </h2>
+    </div>
+    <div id="main-title" class="primary-focus">
+        <h1>
+            ${Resource.msg('registration.title1','rubbertracks',null)}
+        </h1>
+    </div>
+
+    <div id="main" class="primary-focus clearfix">
+        <div id="primary">
+            <form 
+                action="${URLUtils.httpsContinue()}" 
+                autocomplete="off" 
+                id="rt-registration-form" 
+                method="post" 
+                name="${pdict.CurrentForms.rubbertracks.htmlName}" 
+                data-validate="parsley">
+
+                <div class="region-header clearfix">
+                    <h2 class="region-title">${Resource.msg('registration.region1','rubbertracks',null)}</h2>
+                </div>
+                <div class="region-details">
+                    <div class="form-row">
+                        <ispinputfield 
+                            rowclass="form-column-left" 
+                            formfield="${pdict.CurrentForms.rubbertracks.firstname}" 
+                            required_message="${Resource.msg('rubbertracks.firstname.missing-error','forms',null)}"
+                            maxlength_message="${Resource.msg('rubbertracks.firstname.maxlength-error','forms',null)}"
+                            type="input"/>
+                        <ispinputfield 
+                            rowclass="form-column-right" 
+                            formfield="${pdict.CurrentForms.rubbertracks.lastname}" 
+                            required_message="${Resource.msg('rubbertracks.lastname.missing-error','forms',null)}"
+                            maxlength_message="${Resource.msg('rubbertracks.lastname.maxlength-error','forms',null)}"
+                            type="input"/>
+                    </div>
+                    
+                    <div class="form-row">
+                        <ispinputfield 
+                            rowclass="form-column-left" 
+                            formfield="${pdict.CurrentForms.rubbertracks.email}" 
+                            required_message="${Resource.msg('rubbertracks.email.missing-error','forms',null)}"
+                            regexp_message="${Resource.msg('profile.emailparseerror','forms',null)}"
+                            maxlength_message="${Resource.msg('profile.email.maxlength-error','forms',null)}"
+                            type="email"/>
+                        <ispinputfield 
+                            rowclass="form-column-right" 
+                            formfield="${pdict.CurrentForms.rubbertracks.phone}" 
+                            required_message="${Resource.msg('rubbertracks.phone.missing-error','forms',null)}"
+                            regexp_message="${Resource.msg('profile.phoneparseerror','forms',null)}"
+                            maxlength_message="${Resource.msg('profile.phone.maxlength-error','forms',null)}"
+                            type="input"/>
+                    </div>
+                    
+                    <div class="form-row">
+                        <ispinputfield 
+                            rowclass="form-column-left" 
+                            formfield="${pdict.CurrentForms.rubbertracks.city}" 
+                            required_message="${Resource.msg('rubbertracks.city.missing-error','forms',null)}"
+                            maxlength_message="${Resource.msg('rubbertracks.city.maxlength-error','forms',null)}"
+                            type="input"/>
+                        
+                        <div class="form-column-right">
+                            <div class="sub-column-group">
+                                <div class="sub-column-left">
+                                    <ispinputfield 
+                                        rowclass="state-us-container" 
+                                        formfield="${pdict.CurrentForms.rubbertracks.states.stateCode}" 
+                                        type="select"/>
+                                    <ispinputfield 
+                                        rowclass="hidden state-non-us-container" 
+                                        formfield="${pdict.CurrentForms.rubbertracks.stateNonUS}" 
+                                        type="input"/>
+                                </div>
+                                <div class="sub-column-right">
+                                    <ispinputfield 
+                                        formfield="${pdict.CurrentForms.rubbertracks.countries.countryCode}" 
+                                        required_message="${Resource.msg('rubbertracks.country.missing-error','forms',null)}"
+                                        type="select"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="region-separator"></div>
+
+                <div class="region-header clearfix">
+                    <h2 class="region-title">${Resource.msg('registration.region2','rubbertracks',null)}</h2>
+                </div>
+                <div class="region-details">
+                    <div class="form-row">
+                        <div class="form-column-left">
+                            <ispinputfield 
+                                formfield="${pdict.CurrentForms.rubbertracks.bandname}" 
+                                required_message="${Resource.msg('rubbertracks.bandname.missing-error','forms',null)}"
+                                maxlength_message="${Resource.msg('rubbertracks.bandname.maxlength-error','forms',null)}"
+                                type="input"/>
+                            <ispinputfield
+                                rowclass="band-description" 
+                                formfield="${pdict.CurrentForms.rubbertracks.banddescription}" 
+                                required_message="${Resource.msg('rubbertracks.banddescription.missing-error','forms',null)}"
+                                maxlength_message="${Resource.msg('rubbertracks.banddescription.maxlength-error','forms',null)}"
+                                type="textarea"
+                                attribute1="maxlength"
+                                value1="3000"/>
+                        </div>
+                        <div class="form-column-right">
+                            <div class="band-urls">
+                                <label for="${pdict.CurrentForms.rubbertracks.bandurls.htmlName}">
+                                    <span>
+                                        ${Resource.msg('rubbertracks.bandurls','forms',null)}
+                                    </span>
+                                </label>
+                                <textarea 
+                                    class="input-textarea" 
+                                    id="${pdict.CurrentForms.rubbertracks.bandurls.htmlName}" 
+                                    name="${pdict.CurrentForms.rubbertracks.bandurls.htmlName}" 
+                                    maxlength="500" 
+                                    maxlength_message="${Resource.msg('rubbertracks.bandurls.maxlength-error','forms',null)}"
+                                    rows="6"
+                                    data-default="${Resource.msg('registration.bandurls.defaultvalue','rubbertracks',null)}"></textarea>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+
+                <div class="region-separator"></div>
+
+                <div class="region-header clearfix">
+                    <h2 class="region-title">${Resource.msg('registration.region3','rubbertracks',null)}</h2>
+                </div>
+                <div class="region-details">
+                    <div class="form-row">
+                        <ispinputfield 
+                            rowclass="form-column-left" 
+                            formfield="${pdict.CurrentForms.rubbertracks.songs}" 
+                            required_message="${Resource.msg('rubbertracks.songs.missing-error','forms',null)}"
+                            type="select"/>
+                        <ispinputfield 
+                            rowclass="form-column-right" 
+                            formfield="${pdict.CurrentForms.rubbertracks.goals}" 
+                            required_message="${Resource.msg('rubbertracks.goals.missing-error','forms',null)}"
+                            type="select"/>
+                    </div>    
+                    <div class="form-row">
+                        <ispinputfield 
+                            rowclass="form-column-left" 
+                            formfield="${pdict.CurrentForms.rubbertracks.stages}" 
+                            required_message="${Resource.msg('rubbertracks.stages.missing-error','forms',null)}"
+                            type="select"/>
+                        <ispinputfield 
+                            rowclass="form-column-right" 
+                            formfield="${pdict.CurrentForms.rubbertracks.genres}" 
+                            required_message="${Resource.msg('rubbertracks.genres.missing-error','forms',null)}"
+                            type="select"/>
+                    </div>
+                    <div id="otherGenreContainer" class="form-row hidden">
+                        <div class=" form-column-left">
+                            <label for="otherGenre">
+                                <span>${Resource.msg('rubbertracks.genres.other.label', 'forms', null)}</span>
+                            </label>
+                            <input 
+                                id="otherGenre" 
+                                class="input-text" 
+                                type="text" 
+                                maxlength="50" 
+                                value="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region-details hidden no-top-border single-signup-center-allowed">
+                    <div class="error">
+                        ${Resource.msg('registration.signup.centers.error', 'rubbertracks', null)}
+                    </div>
+                </div>
+
+                <iscontentasset aid="rt-signup-centers"/>
+
+                <div class="region-details no-top-border">
+                    <div class="form-row">
+                        <input 
+                            type="checkbox" 
+                            name="${pdict.CurrentForms.rubbertracks.acceptedtermsandconditions.htmlName}" />
+
+                        <iscontentasset aid="rt-terms-and-conditions" />
+                        
+                        <div class="terms-and-condition-error error">
+                            ${Resource.msg('registration.termsandconditions.error', 'rubbertracks', null)}
+                        </div>
+                    </div>    
+
+                    <div class="form-row button-row">
+                        <div class="button-column">
+                            <button type="submit" name="${pdict.CurrentForms.rubbertracks.register.htmlName}" value="Register">
+                                ${Resource.msg('global.submit','locale',null)}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <input 
+                    id="signupCenterValue" 
+                    type="hidden" 
+                    name="${pdict.CurrentForms.rubbertracks.signupcenter.htmlName}" 
+                    value="${pdict.CurrentForms.rubbertracks.signupcenter.htmlValue}"/>
+                
+                <input 
+                    id="guitarCenterValue" 
+                    type="hidden" 
+                    name="${pdict.CurrentForms.rubbertracks.guitarcenter.htmlName}" 
+                    value="${pdict.CurrentForms.rubbertracks.guitarcenter.htmlValue}"/>
+                
+                <input 
+                    type="hidden" 
+                    name="${pdict.CurrentForms.rubbertracks.secureKeyHtmlName}" 
+                    value="${pdict.CurrentForms.rubbertracks.secureKeyValue}"/>
+            </form>
+        </div>
+
+        <div id="secondary">
+            <iscontentasset aid="rt-faq"/>
+        </div>
+    </div>
+</isdecorate>

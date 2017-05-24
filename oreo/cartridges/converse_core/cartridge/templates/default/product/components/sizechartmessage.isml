@@ -1,0 +1,31 @@
+<isscript>
+    importScript("converse_core:product/ProductUtils.ds");
+
+    var product = pdict.VariantToDisplay;
+    var sizeChartEnabled = ProductUtils.isSizeChartEnabled(product);
+    var sizeChartMessageEnabled = ProductUtils.isSizeChartMessageEnabled(product);
+    
+    var sizeChartAsset = ProductUtils.getSizeChartAsset(product);
+</isscript>
+
+<div id="size-chart-message">
+    <isif condition="${sizeChartEnabled}">
+
+        <span class="size-chart-link clearfix">
+            <isif condition="${sizeChartMessageEnabled}">
+                ${Resource.msgf('product.size.chart.message','product',null,product.custom.sizeChartMessaging)}
+            </isif>
+            <span>
+                <a class="size-chart-popup" href="#pdp-size-chart-popup">
+                    ${Resource.msg('product.sizecharttitle','product',null)}
+                </a>
+            </span>
+        </span>
+    </isif>
+</div>
+
+<div id="pdp-size-chart-popup" class="size-chart-container mfp-hide">
+    <div class="size-chart-container">
+        <iscontentasset aid="${sizeChartAsset}"/>
+    </div>
+</div>

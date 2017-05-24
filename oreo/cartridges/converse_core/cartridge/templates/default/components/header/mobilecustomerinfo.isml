@@ -1,0 +1,65 @@
+<isscript>
+    importScript("account/Utils.ds");
+    importScript("util/ViewHelpers.ds");
+</isscript>
+
+<iscomment>
+Cross domain calls, used to login from http over https via ajax, do not work in IE9 and below.
+For all IE9 and lower users we are forcing them to https using the js code below.
+Removal of this will break ie9 and lower support for logging in and who knows what else.
+</iscomment>
+<isif condition="${!customer.isAuthenticated()}">
+<!--[if lt IE 10 ]>
+<script type="text/javascript">
+    if (window.location.protocol == "http:") {
+        var restOfUrl = window.location.href.substr(5);
+        window.location = "https:" + restOfUrl;
+    }
+</script>
+<![endif]-->
+</isif>
+
+<isif condition="${pdict.CurrentCustomer.isAuthenticated()}">
+
+		<li id="mobile-account-options" class="menu_header_general has-sub">
+			<a data-menu-id="hamburgernav" href="${'#'}" title="${Resource.msg('headercustomerinfo.myaccount','components',null)}">
+				<span>
+					<isif condition="${empty(pdict.CurrentCustomer.profile.firstName) && empty(pdict.CurrentCustomer.profile.lastName)}">
+						<isprint value="${pdict.CurrentCustomer.profile.email}"/>
+					<iselse>
+						<isprint value="${pdict.CurrentCustomer.profile.firstName}"/>
+						<isprint value="${pdict.CurrentCustomer.profile.lastName}"/>
+					</isif>
+				</span>
+			</a>
+			<ul>
+				<li class="subcategory_name">
+					<a href="${URLUtils.https('Profile-View')}" title="${Resource.msg('headercustomerinfo.myaccount','components',null)}">
+	                    ${Resource.msg('headercustomerinfo.myaccount','components',null)}
+					</a>
+					
+					<a href="${URLUtils.https('Order-History')}" title="${Resource.msg('headercustomerinfo.orderstatus','components',null)}" >
+	                    ${Resource.msg('headercustomerinfo.orderstatus','components',null)}
+					</a>
+					
+                    <a href="${URLUtils.https('MyDesigns-Show')}">
+   	                    ${Resource.msg('headercustomerinfo.saveddesigns','components',null)}
+   					</a>
+					
+					<isif condition="${isEmployee(customer)}">
+		                <a href="${URLUtils.https('MyFamily-Show')}" title="${Resource.msg('headercustomerinfo.myfamily','components',null)}" >
+	                    	${Resource.msg('headercustomerinfo.myfamily','components',null)}
+		                </a>
+					</isif>
+					
+					<a id="mobile-logout-link" href="${URLUtils.url('Login-Logout')}" title="${Resource.msg('global.logout','locale',null)}" class="user-account">
+	                    ${Resource.msg('global.logout','locale',null)}
+					</a>
+				</li>
+			</ul>				
+		</li>
+		
+	  
+<iselse/>
+		<li id="mobile-login-link" class="menu_header_general"><a href="${'#'}"><span>${Resource.msg('global.account.login.or.register','locale',null)}</span></a></li>
+</isif>

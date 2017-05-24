@@ -1,0 +1,7 @@
+<ismodule template="checkout/cart/quantity"
+    name="quantity"
+    attribute="selectedvalue"
+    attribute="id"
+    attribute="name"
+    attribute="iseditdisabled"
+/>

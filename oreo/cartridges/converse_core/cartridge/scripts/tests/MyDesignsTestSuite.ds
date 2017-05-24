@@ -1,0 +1,118 @@
+/**
+*	 @input Unit: Object
+*/
+importPackage(dw.system);
+importPackage(dw.object);
+importPackage(dw.util);
+
+
+importScript("module_test:Framework/Assert.ds"); 
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libLang.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:mydesigns/MyDesignsUtils.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+	var lockerItems = null;
+	
+	let CreateLockerItem = function(id, customerEmail) {
+		var item : CustomObject = CustomObjectMgr.createCustomObject('LockerItem', 'test_'+id);
+		item.custom.customerEmail = customerEmail;
+        return item;
+    };
+    
+    
+    
+    let setup = function() {
+    	
+    	var item100 = CreateLockerItem('100', "test100@test.com");
+    	var item300 = CreateLockerItem('300', "test300@test.com");
+    	var item301 = CreateLockerItem('301', "test300@test.com");
+    	var item302 = CreateLockerItem('302', "test300@test.com");
+    	var item400 = CreateLockerItem('400', "test400@test.com");
+    	
+    	var items : List = new ArrayList();
+    	
+    	items.add1(item100);
+    	items.add1(item300);
+    	items.add1(item301);
+    	items.add1(item302);
+    	items.add1(item400);
+    	
+    	return items;
+    	
+    };
+    
+    let tearDown = function(items : List) {
+    	for each(item in items) {
+    		CustomObjectMgr.remove(item);
+    	}
+    };
+    
+    var items = setup();
+    
+    args.Unit.describe("MyDesigns LockerItem tests")
+        .test("Get empty lockerItems", function () {
+        	lockerItems = converse.mydesigns.MyDesignsUtils.getLockerItems("notExisting@email.com");
+        	Assert.isEmpty(lockerItems);	
+        })
+        .test("Get one lockerItem", function () {
+        	lockerItems = converse.mydesigns.MyDesignsUtils.getLockerItems("test100@test.com");
+        	Assert.areEqual(1, lockerItems.length);
+        	Assert.areEqual('test_100', lockerItems[0].custom.ID);
+        	Assert.areEqual('test100@test.com', lockerItems[0].custom.customerEmail);
+        })
+        .test("Get multiple lockerItems", function () {       	
+        	
+        	lockerItems = converse.mydesigns.MyDesignsUtils.getLockerItems("test300@test.com");
+        	Assert.areEqual(3, lockerItems.length);
+        	
+        	Assert.areEqual('test_300', lockerItems[0].custom.ID);
+        	Assert.areEqual('test300@test.com', lockerItems[0].custom.customerEmail);
+        	
+        	Assert.areEqual('test_301', lockerItems[1].custom.ID);
+        	Assert.areEqual('test300@test.com', lockerItems[1].custom.customerEmail);
+        	
+        	Assert.areEqual('test_302', lockerItems[2].custom.ID);
+        	Assert.areEqual('test300@test.com', lockerItems[2].custom.customerEmail);
+        	
+        	
+        })
+        .test("Remove lockerItem successfully", function () {
+        	
+        	converse.mydesigns.MyDesignsUtils.removeLockerItem('test_400');
+        	lockerItems = converse.mydesigns.MyDesignsUtils.getLockerItems("test400@test.com");
+        	Assert.isEmpty(lockerItems);
+        	
+        })
+        .test("Add lockerItem successfully", function () {
+        	
+        	lockerItems = converse.mydesigns.MyDesignsUtils.getLockerItems('test200@test.com');
+        	Assert.isEmpty(lockerItems);
+        	
+        	var item200 : CustomObject = converse.mydesigns.MyDesignsUtils.addLockerItem('test_200', 'test200@test.com');
+        	
+        	lockerItems = converse.mydesigns.MyDesignsUtils.getLockerItems("test200@test.com");
+        	
+        	Assert.areEqual(1, lockerItems.length);
+        	Assert.areEqual('test_200', lockerItems[0].custom.ID);
+        	Assert.areEqual('test200@test.com', lockerItems[0].custom.customerEmail);
+        	
+        	CustomObjectMgr.remove(item200);
+        	
+        })
+        .test("Add duplicated lockerItem", function () {
+        	var original : CustomObject = converse.mydesigns.MyDesignsUtils.addLockerItem('test_duplicate_1', 'test_duplicate@test.com');
+        	
+          	Assert.exception(converse.mydesigns.MyDesignsUtils.addLockerItem, "An error occured while adding item", 'test_duplicate_1', 'test_duplicate@test.com');
+        
+        	CustomObjectMgr.remove(original);
+        });
+        
+        tearDown();
+
+   return PIPELET_NEXT;
+}

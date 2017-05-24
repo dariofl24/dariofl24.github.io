@@ -1,0 +1,32 @@
+<isscript>
+    importScript("converse_core:cart/CartUtils.ds");
+
+    var pageContext  = {title:'Converse Cart', type:'cart', ns:'cart'};
+
+    importScript("converse_core:util/ViewHelpers.ds");
+</isscript>
+
+<isdecorate template="pt_commonlayout">
+    <isinclude template="util/modules"/>
+    <section class="pt_cart">
+        <isbanners p_dyo=false />
+        <isset name="cartIsEmpty" value="${CartUtils.empty(pdict.Basket)}" scope="page" />
+        <div id="main" role="main">
+            <isbreadcrumbs bcurl1="${URLUtils.url('Cart-Show')}" bctext1="${Resource.msg('pt_cart.breadcrumb','checkout',null)}"/>
+            <isset name="cartemptystatusclass" value="${cartIsEmpty ? 'emptycart' : 'fullcart'}" scope="page" />
+            <article class="cart-content ${cartemptystatusclass}">
+                <isreplace/>
+            </article>
+
+            <isif condition="${cartIsEmpty}">
+                <div class="ruller cart-area"></div>
+                <isslot id="cart-featured-category" description="Cart featured category" context="global" />
+            <iselse>
+                <aside class="checkout-sidebar">
+                    <isinclude template="checkout/cart/rightcolumn"/>
+                </aside>
+            </isif>
+        </div>
+        
+    </section>
+</isdecorate>

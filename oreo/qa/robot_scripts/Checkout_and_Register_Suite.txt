@@ -1,0 +1,18 @@
+*** Settings ***
+Documentation   Verifies Register fields are preset after checkout completion
+Test Setup      Start Checkout
+Test Teardown   Close All Browsers
+Force Tags      Regression  Checkout  US
+Resource        checkout_definitions.txt
+Resource        site_declarations.txt
+Resource        order_definitions.txt
+
+*** Test Cases ***
+Guest User completes Checkout. Verifies a register form is available with guest data preset
+  Continue checkout with Credit Card
+  Run Keyword If  '@{ENV_TYPE}[${env_id}]'!='production'  Click at Submit Order and Verifies Retrieves Message
+  Run Keyword If  '@{ENV_TYPE}[${env_id}]'!='production'  Verify Preset Login  ${validSite_user}
+
+Remove Items from Cart
+  [Tags]  ShortReg  Production
+  Remove Item from Cart

@@ -1,0 +1,9 @@
+<html><body>
+  <h2> Build Page Info <h2><br/>
+  <h3>CARTRIDGES:</h3>
+  <ul><li>int_cardinal</li><li>int_seewhy</li><li>int_genesco</li><li>int_sigma</li><li>int_paymentech</li><li>int_device</li><li>converse_webservices</li><li>converse_featuretoggle</li><li>converse_richUI</li><li>converse_core</li><li>bc_integrationframework</li><li>app_test</li></ul><br/><h3>DEPLOY INFO</h3><br/>COMMIT:  "8374eeb77c6837e624c355fbde2f964e49b08593",
+ <br/> DATE:  "2013-03-04_11-26-35",
+ <br/> USER: "jcalabrese"
+<br/>
+  <a href= "http://ci.demandware.converse.tacitknowledge.com/job/confoo-master/340/",
+>details</a></body></html>

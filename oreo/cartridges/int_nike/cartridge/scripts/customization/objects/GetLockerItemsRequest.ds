@@ -1,0 +1,35 @@
+importPackage( dw.system );
+importPackage( dw.util );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("int_nike:NikeConstants.ds");
+
+(function() {
+    var CONST = integration.nike.constants;
+    
+    var GetLockerItemsRequest = Class.extend({
+        init: function(userId: String) {
+            this.userId = userId;
+        },
+        
+        getParameters: function() {
+            this.parameters = {
+                'channel' : CONST.Channel, //Always this value per requirements
+                'language' : CONST.LanguageCode,
+                'user_id' : this.userId
+            };
+            
+            return this.parameters;
+        }
+    });
+    
+    Namespace.extend(integration, {
+        nike: {
+            customization: {
+                GetLockerItemsRequest : GetLockerItemsRequest
+            }
+        }
+    });
+})();

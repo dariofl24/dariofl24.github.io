@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" form-error="mrtaylorstore.error">
+    <group formid="customer" form-error="mrtaylorstore.customer.error">
+        <field formid="email"
+               label="profile.email"
+               type="string"
+               mandatory="true"
+               regexp="^[\w\.%-]+@[\w\.-]+\.[\w]{2,6}$"
+               binding="email"
+               max-length="50"
+               missing-error="mrtaylorstore.email.missing-error"
+               parse-error="profile.emailparseerror"
+               value-error="profile.usernametaken"/>
+               
+        <field formid="emailconfirm"
+               label="Confirm Email"
+               type="string"
+               mandatory="true"
+               regexp="^[\w\.%-]+@[\w\.-]+\.[\w]{2,6}$"
+               parse-error="profile.emailparseerror"
+               value-error="profile.emailnomatch"
+               max-length="50"/>
+    
+        <field formid="firstname"
+               label="employee.firstname"
+               type="string"
+               mandatory="true"
+               binding="firstName"
+               max-length="50"
+               missing-error="mrtaylorstore.firstname.missing-error"/>
+    
+        <field formid="lastname"
+               label="employee.lastname"
+               type="string"
+               mandatory="true"
+               binding="lastName"
+               max-length="50"
+               missing-error="mrtaylorstore.lastname.missing-error"/>
+    
+        <field formid="birthday"
+               label="profile.birthday"
+               type="string"
+               mandatory="true"
+               binding="birthday"
+               regexp="^(0?[1-9]|1[012])[\.|\/|-](0?[1-9]|[12][0-9]|3[01])[\.|\/|-]\d{4}$"
+               max-length="10"
+               parse-error="profile.birthdayparseerror"
+               value-error="profile.birthday.invalid"/>
+    
+        <field formid="gender"
+               label="profile.gender"
+               type="string"
+               mandatory="false"
+               binding="gender"/>
+               
+        <include formid="regional" name="regionalprofilefields"/>
+        
+        <field formid="terms"
+               label="profile.terms"
+               type="boolean"
+               mandatory="true"
+               default-value="false"
+               missing-error="mrtaylorstore.terms.missing-error"/>
+    
+        <field formid="employeeid"
+               label="employee.employeeid"
+               type="string"
+               mandatory="true"
+               regexp="^\d+$"
+               parse-error="employee.idparseerror"
+               missing-error="employee.id.missing-error"
+               value-error="employee.duplicate.error"/>
+    
+        <field formid="ssn"
+               label="employee.ssn"
+               type="string"
+               mandatory="true"
+               regexp="^\d{4}$"
+               length="4"
+               parse-error="employee.ssnparseerror"/>
+    </group>
+    
+    <group formid="login" form-error="mrtaylorstore.login.error">
+        <field formid="password"
+               label="label.password"
+               type="string"
+               mandatory="true"
+               min-length="8"
+               max-length="255"
+               missing-error="login.password.missing-error"
+               range-error="forms.8_255characters"/>
+                   
+        <field formid="passwordconfirm"
+               label="profile.passwordconfirm"
+               type="string"
+               mandatory="true"
+               min-length="8"
+               max-length="255"
+               range-error="forms.8_255characters"
+               value-error="profile.passwordnomatch"/>
+               
+        <field formid="rememberme"
+               label="profile.remember"
+               type="boolean"
+               mandatory="false" />
+    </group>
+    
+    <group formid="international" form-error="mrtaylorstore.international.warning"/>
+
+    <action formid="cancel" valid-form="false"/>
+    <action formid="verify" valid-form="true"/>
+    <action formid="register" valid-form="true"/>
+</form>

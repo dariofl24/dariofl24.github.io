@@ -1,0 +1,84 @@
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* constants file for scss variable values */
+/* Contact Us Page
+--------------------------------------------------------------------------------------- */
+/* line 16, ../css/package/sass/contactus_emea.scss */
+.contactus-page {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+/* line 19, ../css/package/sass/contactus_emea.scss */
+.contactus-page .contactus-section {
+  margin-top: 3.33333em;
+}
+@media screen and (min-width: 33.3125em) {
+  /* line 23, ../css/package/sass/contactus_emea.scss */
+  .contactus-page .contactus-section .contactus-left {
+    width: 40%;
+    float: left;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 23, ../css/package/sass/contactus_emea.scss */
+  .contactus-page .contactus-section .contactus-left {
+    width: 100%;
+    float: left;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+/* line 34, ../css/package/sass/contactus_emea.scss */
+.contactus-page .contactus-section .contactus-center {
+  width: 20%;
+  float: left;
+  text-align: center;
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 34, ../css/package/sass/contactus_emea.scss */
+  .contactus-page .contactus-section .contactus-center {
+    display: none;
+  }
+}
+@media screen and (min-width: 33.3125em) {
+  /* line 42, ../css/package/sass/contactus_emea.scss */
+  .contactus-page .contactus-section .contactus-right {
+    width: 40%;
+    float: right;
+    margin-right: 0;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 42, ../css/package/sass/contactus_emea.scss */
+  .contactus-page .contactus-section .contactus-right {
+    width: 100%;
+    float: left;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+@media screen and (max-width: 33.3125em) {
+  /* line 52, ../css/package/sass/contactus_emea.scss */
+  .contactus-page .contactus-section h2 {
+    display: none;
+  }
+}
+/* line 56, ../css/package/sass/contactus_emea.scss */
+.contactus-page .contactus-section h2.product-header {
+  margin-top: 0;
+}
+/* line 62, ../css/package/sass/contactus_emea.scss */
+.contactus-page .contactus-section .contact-group .contact-block {
+  width: 100%;
+}
+/* line 65, ../css/package/sass/contactus_emea.scss */
+.contactus-page .contactus-section .contact-group .contact-block .contact-widget {
+  margin: 1.66667em 0;
+}

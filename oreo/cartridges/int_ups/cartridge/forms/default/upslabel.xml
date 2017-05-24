@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<form>
+    <field formid="firstname" label="profile.firstname" type="string" mandatory="true" max-length="50" missing-error="forms.address.firstname.missing"/>
+    <field formid="lastname" label="profile.lastname" type="string" mandatory="true" max-length="50" missing-error="forms.address.lastname.missing"/>
+    <field formid="address1" label="forms.address1" type="string" mandatory="true" max-length="50" missing-error="forms.address.address1.missing"/>
+    <field formid="address2" label="forms.address2" type="string" mandatory="false" max-length="50"/>
+    <field formid="city" label="forms.city" type="string" mandatory="true" max-length="50" missing-error="forms.address.city.missing"/>
+    <field formid="state" label="forms.state" type="string" mandatory="true" missing-error="forms.address.state.missing"/>
+    <field formid="zip" label="forms.zippostalcode" type="string" mandatory="true" min-length="5" max-length="5" regexp="[0-9]*" missing-error="forms.address.zip.invalid"/>
+        
+    <action formid="confirm" valid-form="true"/>
+</form>

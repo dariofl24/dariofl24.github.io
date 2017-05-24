@@ -1,0 +1,330 @@
+@import "_constants";
+@import "_media_query";
+@import "_conv_mixins";
+@import "compass/css3/box-sizing";
+@import "compass/css3/border-radius";
+@import "compass/utilities/general/clearfix";
+@import "pdp/cart_form";
+@import "pdp/share_buttons";
+
+$WHITE_HEX: FFFFFF;
+$BLACK_HEX: 000000;
+
+.pt_productdetails {
+    .product-detail {
+        margin-top: pxtoem(99.9844);
+        padding-top: pxtoem(25);
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: pxtoem(380);
+        background-color: $CONVERSE_COLOR_PDP_4;
+        border-right: 1px solid $CONVERSE_COLOR_PDP_3;
+        height: 100%;
+        font-family: $CONVERSE_FONT_FAMILY_PDP;
+
+        @include color-swatch();
+
+        .attribute.color-attr .product-properties {
+            text-align: center;
+        }
+
+        .tablet {
+            display: none;
+
+            @include mq-medium-pdp {
+                display: block;
+            }
+        }
+
+        .product-detail-wrapper {
+            padding-left: pxtoem(42);
+            padding-right: pxtoem(42);
+            margin-bottom: 50px;
+            @include mq-large-pdp {
+                position: absolute;
+            }
+
+            @include mq-medium-pdp {
+                padding-right: 3%;
+            }
+        }
+
+        .product-title {
+            text-align: left;
+            color: $CONVERSE_COLOR_1;
+
+            .product-name {
+                $font-size: 27;
+                font-size: pxtoem($font-size);
+                line-height: pxtoembase(38, $font-size);
+                padding-right: pxtoem(25);
+
+                &.multi-line {
+                    display: none;
+
+                    @include mq-large-pdp {
+                        display: block;
+                    }
+                }
+            }
+
+            .product-name + .product-name {
+                display: block;
+
+                @include mq-large-pdp {
+                    display: none;
+                }
+            }
+
+            .product-price {
+                $font-size: 29;
+                font-size: pxtoem($font-size);
+                font-weight: bold;
+                line-height: pxtoembase(42, $font-size);
+                padding-top: pxtoem(7);
+                padding-bottom: pxtoem(7);
+            }
+
+            &.mobile {
+                display: none;
+
+                @include mq-small-pdp {
+                    display: block;
+
+                    .product-name {
+                        padding-right: 0;
+                    }
+                }
+
+                @include mq-x-small-pdp {
+                    display: block;
+
+                    .product-name {
+                        padding-right: 0;
+                    }
+                }
+            }
+
+            @include mq-small-pdp {
+                display: none;
+            }
+
+            @include mq-x-small-pdp {
+                display: none;
+            }
+        }
+
+        .short-description {
+            $font-size: 12;
+            font-size: pxtoem($font-size);
+            line-height: pxtoembase(20, $font-size);
+            padding-bottom: pxtoem(10);
+            color: $CONVERSE_COLOR_PDP_5;
+
+            a {
+                font-weight: bold;
+                text-decoration: underline;
+                color: $CONVERSE_COLOR_PDP_5;
+
+                &:hover {
+                    color: $CONVERSE_COLOR_1;
+                }
+            }
+
+            @include mq-small-pdp {
+                display: none;
+            }
+
+            @include mq-x-small-pdp {
+                display: none;
+            }
+        }
+
+        .product-properties {
+            text-align: left;
+            padding-bottom: pxtoem(20);
+
+            .product-color {
+                color: $CONVERSE_COLOR_1;
+                font-size: pxtoem(14);
+                font-weight: bold;
+                text-transform: capitalize;
+            }
+
+            .product-manufacturer {
+                color: $CONVERSE_COLOR_PDP_5;
+                font-size: pxtoem(11);
+            }
+
+            @include mq-small-pdp {
+                display: none;
+            }
+
+            @include mq-x-small-pdp {
+                display: none;
+            }
+        }
+
+        .pdp-promo-message {
+            text-align: center; 
+            padding-top: 10px;
+            padding-bottom: 4px;
+
+            @include mq-large-pdp {
+                margin-bottom: pxtoem(12);
+            }
+
+            span {
+                font-weight: bold;
+                font-size: 1.2em;
+            }
+        }
+
+        .tablet-left {
+            .product-options {
+                display: none;
+            }
+        }
+
+        &.pdp {
+            display: block;
+        }
+
+        &.mobile {
+            display: none;
+        }
+
+        @include mq-medium-cascade() {
+            margin-top: 0;
+        }
+
+        @include mq-medium-pdp {
+            padding-top: pxtoem(25);
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding-bottom: pxtoem(30);
+            border-bottom: 1px solid $CONVERSE_COLOR_PDP_3;
+            z-index: 10;
+
+            .tablet-left {
+                width: 63%;
+                float: left;
+                padding-right: pxtoem(45);
+                border-right: 1px solid $CONVERSE_COLOR_PDP_3;
+
+                .product-name {
+                    float: left;
+                    padding-right: pxtoem(10);
+                }
+
+                .product-price {
+                    display: inline-block;
+                    padding-top: 0;
+                    padding-bottom: pxtoem(3);
+                }
+
+                .product-properties {
+                    clear: both;
+                    padding-bottom: pxtoem(15);
+                }
+
+                .short-description {
+                    padding-bottom: pxtoem(4);
+                }
+
+                .customize {
+                    width: pxtoem(156);
+                    font-size: pxtoem(12);
+                    float: left;
+                    margin-right: pxtoem(10);
+                }
+
+                .product-options {
+                    display: block;
+                    float: left;
+                    width: pxtoem(265);
+                }
+            }
+        }
+
+        @include mq-small-pdp {
+            padding-top: pxtoem(25);
+            position: static;
+            width: 100%;
+            overflow: hidden;
+            padding-bottom: pxtoem(25);
+            border-bottom: pxtoem(1) solid $CONVERSE_COLOR_PDP_3;
+            border-top: pxtoem(1) solid $CONVERSE_COLOR_PDP_3;
+
+            &.pdp {
+                .product-detail-section {
+                    display: none;
+                }
+            }
+
+            &.mobile {
+                display: block;
+
+                .product-options {
+                    max-width: pxtoem(450);
+                    float: none;
+                    margin: 0 auto;
+                }
+            }
+
+            .product-title {
+                .product-name {
+                    float: left;
+                    padding-right: 0;
+                }
+
+                .product-price {
+                    float: right;
+                    padding: 0;
+                }
+            }
+        }
+
+        @include mq-x-small-pdp {
+            padding-top: pxtoem(25);
+            margin-top: 0;
+            position: static;
+            width: 100%;
+            overflow: hidden;
+            padding-bottom: pxtoem(25);
+            border-bottom: pxtoem(1) solid $CONVERSE_COLOR_PDP_3;
+            border-top: pxtoem(1) solid $CONVERSE_COLOR_PDP_3;
+
+            &.pdp {
+                .product-detail-section {
+                    display: none;
+                }
+            }
+
+            &.mobile {
+                display: block;
+
+                .product-options {
+                    max-width: pxtoem(450);
+                    float: none;
+                    margin: 0 auto;
+                }
+            }
+
+            .product-title {
+                .product-name {
+                    float: left;
+                    margin-right: 0;
+                }
+
+                .product-price {
+                    float: right;
+                    padding: 0;
+                }
+            }
+        }
+    }
+}

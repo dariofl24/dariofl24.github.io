@@ -1,0 +1,72 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.value);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Mocks/BasketSummaryMocks.ds");
+
+importScript("constants.ds");
+importScript("common/libInheritance.ds");
+importScript("content/ContentUtils.ds");
+
+function execute(args: PipelineDictionary) {
+
+    function Folder(name){
+        this.name = name;
+    }
+
+    Folder.prototype.getDisplayName = function() {
+        return this.name;
+    };
+
+    Folder.prototype.getOnlineSubFolders = function() {
+        return [];
+    };
+
+    Folder.prototype.onlineContent = function(){
+        return 'onlinecontent';
+    }
+
+    let folder = new Folder("support");
+
+    let folders = [
+        new Folder("about"),
+        new Folder("careers")
+    ];
+
+    let ContentMgrMock = {
+        getFolder: function(id: String) {
+            return folder;
+        }
+    };
+
+    args.Unit.describe("ContentUtils")
+        .test("Should get tab links", function() {
+            let selectedContent = {};
+            let tabLinks = converse.content.ContentUtils.getTabLinks(selectedContent, ContentMgrMock);
+            Assert.isNotNull(tabLinks);
+            Assert.areEqual("support", tabLinks.title);
+        })
+
+        .test("Should get sub links", function() {
+
+            let selectedContent = {
+                getClassificationFolder : function() {
+                    return new Folder("selectedcontent");
+                }
+            };
+
+            folder.getOnlineSubFolders = function(){
+                return folders;
+            }
+
+            let tabLinks = converse.content.ContentUtils.getTabLinks(selectedContent, ContentMgrMock);
+            Assert.isNotNull(tabLinks);
+            Assert.areEqual("support", tabLinks.title);
+            Assert.isArray(tabLinks.links);
+            Assert.isTrue(tabLinks.links.length == folders.length);
+        });
+
+    return PIPELET_NEXT;
+};

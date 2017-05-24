@@ -1,0 +1,35 @@
+importPackage(dw.system);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("int_exacttarget:objects/AbstractRetrieveResponse.ds");
+
+(function() {
+
+    var OBJ_NS = integration.exacttarget.objects;
+    
+    var AbstractRetrieveResponse = OBJ_NS.AbstractRetrieveResponse;
+
+    var RetrieveSubscriptionsResponse = AbstractRetrieveResponse.extend({
+        getSubscribedListsWithStatus: function(status: Object) : Array {
+            var subscribedLists : Array = [];
+            var apiObjects : Collection = this.response.getResults();
+            for each(let apiObject in apiObjects) {
+                if(apiObject.getStatus() === status) {
+                    subscribedLists.push(apiObject.getListID());
+                }
+            }
+            return subscribedLists.filter(onlyUnique);
+        }
+    });
+    
+    function onlyUnique(value, index, self) { 
+        return self.indexOf(value) === index;
+    }
+
+    Namespace.extend(OBJ_NS, { RetrieveSubscriptionsResponse: RetrieveSubscriptionsResponse });
+
+})();

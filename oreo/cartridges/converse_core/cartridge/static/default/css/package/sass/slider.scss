@@ -1,0 +1,18 @@
+@import "_constants";
+@import "_media_query";
+
+#slider {
+    position: fixed;
+    width: 100%;
+    top: pxtoem($COMMON_HEADER_HEIGHT);
+    z-index: 10;
+
+    @include mq-medium-cascade {
+        top: 0;
+        position: relative;
+    }
+
+    [data-slider-area] {
+        display: none;
+    }
+}

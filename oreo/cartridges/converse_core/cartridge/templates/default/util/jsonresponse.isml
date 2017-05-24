@@ -1,0 +1,5 @@
+<isscript>
+    response.addHttpHeader("Access-Control-Allow-Origin", request.getHttpHeaders().get("origin"));
+    response.addHttpHeader("Access-Control-Allow-Credentials", "true");
+</isscript>
+<isreplace/>

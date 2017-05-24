@@ -1,0 +1,90 @@
+<div id="hero-slot1" class="fullwidth hero-slot">
+  <div class="hero-slideshow-large-container">
+    <ul class="hero-slideshow large">
+      <li class="image-li">
+        <div id="large-hero" class="large-slide">
+          <isslot id="clp-15-large-hero-1" description="Hero categoryLandingPage15 slideshow - slide 1 - large size" context="global" />
+        </div>
+        <div id="large-hero-hover" class="large-slide hover">
+          <isslot id="clp-15-large-hero-hover-1" description="Hero categoryLandingPage15 slideshow - Hover - slide 1 - large size" context="global" />
+        </div>
+      </li>
+      <li class="image-li">
+        <div id="large-hero" class="large-slide">
+          <isslot id="clp-15-large-hero-2" description="Hero categoryLandingPage15 slideshow - slide 2 - large size" context="global" />
+        </div>
+        <div id="large-hero-hover" class="large-slide hover">
+          <isslot id="clp-15-large-hero-hover-2" description="Hero categoryLandingPage15 slideshow - Hover - slide 2 - large size" context="global" />
+        </div>
+      </li>
+      <li class="image-li">
+        <div id="large-hero" class="large-slide">
+          <isslot id="clp-15-large-hero-3" description="Hero categoryLandingPage15 slideshow - slide 3 - large size" context="global" />
+        </div>
+        <div id="large-hero-hover" class="large-slide hover">
+          <isslot id="clp-15-large-hero-hover-3" description="Hero categoryLandingPage15 slideshow - Hover - slide 3 - large size" context="global" />
+        </div>
+      </li>
+      <li class="image-li">
+        <div id="large-hero" class="large-slide">
+          <isslot id="clp-15-large-hero-4" description="Hero categoryLandingPage15 slideshow - slide 4 - large size" context="global" />
+        </div>
+        <div id="large-hero-hover" class="large-slide hover">
+          <isslot id="clp-15-large-hero-hover-4" description="Hero categoryLandingPage15 slideshow - Hover - slide 4 - large size" context="global" />
+        </div>
+      </li>
+      <li class="image-li">
+        <div id="large-hero" class="large-slide">
+          <isslot id="clp-15-large-hero-5" description="Hero categoryLandingPage15 slideshow - slide 5 - large size" context="global" />
+        </div>
+        <div id="large-hero-hover" class="large-slide hover">
+          <isslot id="clp-15-large-hero-hover-5" description="Hero categoryLandingPage15 slideshow - Hover - slide 5 - large size" context="global" />
+        </div>
+      </li>
+      <li class="image-li">
+        <div id="large-hero" class="large-slide">
+          <isslot id="clp-15-large-hero-6" description="Hero categoryLandingPage15 slideshow - slide 6 - large size" context="global" />
+        </div>
+        <div id="large-hero-hover" class="large-slide hover">
+          <isslot id="clp-15-large-hero-hover-6" description="Hero categoryLandingPage15 slideshow - Hover - slide 6 - large size" context="global" />
+        </div>
+      </li>
+    </ul>
+    <div class="control-container"></div>
+  </div>
+  <div class="hero-slideshow-small-container">
+    <ul class="hero-slideshow small">
+      <li class="image-li">
+        <div id="small-hero" class="mobile-slide">
+          <isslot id="clp-15-small-hero-1" description="Hero categoryLandingPage15 slideshow - slide 1 - small size" context="global" />
+        </div>
+      </li>
+      <li class="image-li">
+        <div id="small-hero" class="mobile-slide">
+          <isslot id="clp-15-small-hero-2" description="Hero categoryLandingPage15 slideshow - slide 2 - small size" context="global" />
+        </div>
+      </li>
+      <li class="image-li">
+        <div id="small-hero" class="mobile-slide">
+          <isslot id="clp-15-small-hero-3" description="Hero categoryLandingPage15 slideshow - slide 3 - small size" context="global" />
+        </div>
+      </li>
+      <li class="image-li">
+        <div id="small-hero" class="mobile-slide">
+          <isslot id="clp-15-small-hero-4" description="Hero categoryLandingPage15 slideshow - slide 4 - small size" context="global" />
+        </div>
+      </li>
+      <li class="image-li">
+        <div id="small-hero" class="mobile-slide">
+          <isslot id="clp-15-small-hero-5" description="Hero categoryLandingPage15 slideshow - slide 5 - small size" context="global" />
+        </div>
+      </li>
+      <li class="image-li">
+        <div id="small-hero" class="mobile-slide">
+          <isslot id="clp-15-small-hero-6" description="Hero categoryLandingPage15 slideshow - slide 6 - small size" context="global" />
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+

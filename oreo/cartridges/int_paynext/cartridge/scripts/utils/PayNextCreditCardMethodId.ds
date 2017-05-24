@@ -1,0 +1,12 @@
+/**
+*   @output PaymentMethodId : String
+*/
+
+importScript("converse_core:constants.ds");
+
+function execute( args : PipelineDictionary ) : Number {
+    
+    args.PaymentMethodId = converse.constants.PaymentMethodId.CreditCard;
+    
+   return PIPELET_NEXT;
+}

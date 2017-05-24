@@ -1,0 +1,12 @@
+/**
+ * Collects all loaded suites.
+ *
+ * @input Unit: Object
+ * @output Result: Object 
+ */
+importPackage(dw.system);
+
+function execute(args : PipelineDictionary) : Number {
+    args.Result = args.Unit.getResult();
+    return PIPELET_NEXT;
+}

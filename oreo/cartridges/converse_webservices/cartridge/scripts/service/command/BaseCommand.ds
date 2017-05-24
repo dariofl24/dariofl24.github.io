@@ -1,0 +1,65 @@
+importPackage(dw.system);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+(function(){
+    
+    var BaseCommand = Class.extend({
+        
+        init: function() {
+            this.request = null;
+            this.response = null;
+            this.exception = null;
+        },
+        
+        initOptions: function(options) {
+            this.options = options;
+            
+            this.configuration = this.options.configuration;
+            this.serviceClient = this.options.serviceClient;
+        },
+        
+        createRequest: function() {
+            return null;
+        },    
+        
+        execute: function(request) {
+            return null;
+        },
+        
+        getUsername: function() {
+            return this.configuration.username;
+        },
+        
+        getPassword: function() {
+            return this.configuration.password;
+        },
+        
+        handleResponse: function(response) {
+            this.response = response;
+        },
+        
+        handleFailure: function(exception) {
+            this.exception = exception;
+        },
+        
+        hasError: function() : Boolean {
+            return !empty(this.exception);
+        },
+        
+        getErrorMessage: function() : String {
+            return empty(this.exception) ? null : this.exception.toString();
+        }
+    });
+    
+    Namespace.extend(converse, { 
+        webservices: {
+            command: {
+                BaseCommand: BaseCommand
+            }
+        }
+    });
+    
+})();

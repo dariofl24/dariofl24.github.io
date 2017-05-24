@@ -1,0 +1,95 @@
+*** Settings ***
+Resource          checkout_definitions.txt
+Resource          site_declarations.txt
+Resource          order_definitions.txt
+Resource          common.txt
+
+*** Variables ***
+${paypal_remember}    remember
+${paypal_site_top}    //div[@class='topnav']//div[@class='container']
+${paypal_site_login}    //a[contains(text(), 'Log In')]
+${paypal_converse}    //*[contains(text(), 'Converse')]
+${paypal_siteuser_input}    username
+${paypal_siteuser_password}    password
+${paypal_siteinput}    //button[text()='Log In']
+${paypal_continue}    continue
+${paypal_user}    //input[@id='login_email']
+${paypal_pass}    //input[@id='login_password']
+${paypal_user_old}    login_email
+${paypal_pass_old}    login_password
+${paypal_login}    submitLogin
+${paypalemailuser}    //div[@id='contactInfo']//div/span
+${paypaltelephone}    //div[@id='contactInfo']/div/div
+${paypalloginwindow}    Log In Using Your PayPal Account
+${paypalsitepage}    Home | PayPal Developer
+${paypal_review_info}    //*[@id="hdrContainer"]/h2
+${paypal_contact_info}    //*[@id="contInfo"]
+
+*** Keywords ***
+Set Paypal
+    Open Browser    ${paypal_site}    ${browser}
+    Set Selenium Timeout    ${sel_timeout}
+    Set Selenium Speed    ${sel_speed}
+    Maximize Browser Window
+    Wait Until Page Contains Element    ${paypal_site_login}
+    Click Element    ${paypal_site_login}
+    #Select Window    title=${paypalloginwindow}
+    Input Text    ${paypal_siteuser_input}    ${paypal_siteuser}
+    Input Text    ${paypal_siteuser_password}    ${paypal_password}
+    #Select Checkbox    ${paypal_remember}
+    Click Button    ${paypal_siteinput}
+    #Select Window    title=${paypalsitepage}
+    Wait Until Page Contains Element    ${paypal_converse}
+
+Go to Converse
+    Open Browser to Converse Site
+
+Verify Access to Paypal site from Billing Page
+    [Arguments]    ${Pname}    ${Plastname}    ${Paddress1}    ${Pcity}    ${Pstate}    ${Pzipcode}
+    ...    ${ptelephone}    ${paypal_billingUserName}    ${paypal_billingUserLastName}    ${paypal_billingStreetAddress}    ${paypal_billingCity}    ${paypal_billingState}
+    ...    ${paypal_billingZipCode}    ${paypal_billingCountry}    ${returnCheckoutPage}
+    Go to Converse
+    Start Paypal Checkout from Shipping
+    Fill Shipping Standard    ${Pname}    ${Plastname}    ${Paddress1}    ${Pcity}    ${Pstate}    ${Pzipcode}
+    Select Payment with Paypal
+    Click to Continue to Paypal Site
+    Proceed to PayPal Credentials
+    Verify User Data in Paypal Page    ${Pname}    ${Plastname}    ${Paddress1}    ${Pcity}    ${Pstate}    ${Pzipcode}
+    Return to Order Page    ${returnCheckoutPage}
+    Verify Order Message    Complete Your Purchase
+
+Proceed to Paypal Credentials
+    Input Text    ${paypal_user}    ${paypal_cred_email}
+    Input Text    ${paypal_pass}    ${paypal_cred_pass}
+    Click Button    ${paypal_login}
+
+Verify User Data in Paypal Page
+    [Arguments]    ${Pname}    ${Plastname}    ${Paddress1}    ${Pcity}    ${Pstate}    ${Pzipcode}
+    Wait Until Page Contains Element    ${paypal_review_info}
+    Page Should Contain    ${Pname}
+    Page Should Contain    ${Plastname}
+    Page Should Contain    ${Paddress1}
+    Page Should Contain    ${Pcity}
+    Page Should Contain    ${Pzipcode}
+
+Return to Order Page
+    [Arguments]    ${returnLocation}
+    Wait Until Page Contains Element    ${paypal_contact_info}
+    Click Button    ${paypal_continue}
+    Wait Until Page Contains Element    ${H_PRIMARYLOGO}
+    Location Should Contain    ${returnLocation}
+
+Verify Access to Paypal from Cart
+    [Arguments]    ${Pname}    ${Plastname}    ${Paddress1}    ${Pcity}    ${Pstate}    ${Pzipcode}
+    ...    ${paypal_billingUserName}    ${paypal_billingUserLastName}    ${paypal_billingStreetAddress}    ${paypal_billingCity}    ${paypal_billingState}    ${paypal_billingZipCode}
+    ...    ${paypal_billingCountry}    ${returnCheckoutPage}
+    Go to Converse
+    Start Paypal Checkout from Cart
+    Proceed to PayPal Credentials
+    Verify User Data in Paypal Page    ${Pname}    ${Plastname}    ${Paddress1}    ${Pcity}    ${Pstate}    ${Pzipcode}
+    Return to Order Page    ${returnCheckoutPage}
+    Verify Preset Shipping Information    ${Pname}    ${Plastname}    ${Paddress1}    ${Pcity}    ${Pstate}    ${Pzipcode}
+    Click Continue To Billing Info
+    Radio Button Should Be Set To    ${I_PAYPAL_NAME}    PAY_PAL
+    Send Billing Info
+    Verify Order Message    Complete Your Purchase

@@ -1,0 +1,185 @@
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage (dw.catalog );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libLang.ds");
+importScript("converse_core:common/libNamespace.ds");
+
+importScript("converse_core:util/AttrBuilder.ds");
+
+(function() {
+
+    var MAX_INT_VALUE = 2147483647; 
+
+    var AttrBuilder: Object = converse.ui.AttrBuilder;
+
+    var logger : Logger = Logger.getLogger('InputFieldUtils');
+
+    function addValidationAttribute(attrBuilder: Object, name: String, value: String, messageName: String, messageValue: String) {
+        if(!empty(value)) {
+            attrBuilder.add(name, value);
+            attrBuilder.add(messageName, messageValue);
+        }
+    }
+
+    function getMinLengthConstraint(pdict: Object) : String {
+        var minlength: String = pdict.minlength;
+        if(empty(minlength)) {
+            minlength = pdict.formfield.minLength === 0 ? "" : String(pdict.formfield.minLength);
+        }
+        return minlength;
+    }
+
+    function getMaxLengthConstraint(pdict: Object) : String {
+        var maxlength: String = pdict.maxlength;
+        if(empty(maxlength)) {
+            maxlength = pdict.formfield.maxLength === MAX_INT_VALUE ? "" : String(pdict.formfield.maxLength);
+        }
+        return maxlength;
+    }
+
+    function addValidationAttributes(pdict: Object, attrBuilder: Object) {
+        attrBuilder.add("data-group", pdict.group);
+        attrBuilder.add("data-trigger", pdict.trigger);
+        attrBuilder.add("data-error-message", pdict.error_message);
+
+        var required: Boolean = (pdict.required === "true") || pdict.formfield.mandatory;
+
+        if (required) {
+            addValidationAttribute(attrBuilder,
+                "data-required", required,
+                "data-required-message", pdict.required_message);
+        }
+
+        var regexp: String = pdict.regexp || pdict.formfield.regEx;
+        addValidationAttribute(attrBuilder,
+            "data-regexp", regexp,
+            "data-regexp-message", pdict.regexp_message);
+
+        addValidationAttribute(attrBuilder,
+            "data-equalto", pdict.equalto,
+            "data-equalto-message", pdict.equalto_message);
+
+        addValidationAttribute(attrBuilder,
+            "data-type", pdict.input_type,
+            "data-type-" + pdict.input_type + "-message", pdict.input_type_message);
+
+        var minlength: String = getMinLengthConstraint(pdict);
+        addValidationAttribute(attrBuilder,
+            "data-minlength", minlength,
+            "data-minlength-message",  pdict.minlength_message);
+
+        var maxlength: String = getMaxLengthConstraint(pdict);
+        addValidationAttribute(attrBuilder,
+            "data-maxlength", maxlength,
+            "data-maxlength-message",  pdict.maxlength_message);
+    }
+
+    function addAdditionalAttributes(pdict, attrBuilder) {
+        attrBuilder
+           .add(pdict.attribute1, pdict.value1)
+           .add(pdict.attribute2, pdict.value2)
+           .add(pdict.attribute3, pdict.value3);
+    }
+
+    function createFakeFormFieldIfNotProvided(pdict) {
+        if(empty(pdict.formfield)) {
+            pdict.formfield = {
+                mandatory: false,
+                minLength: "",
+                maxLength: "",
+                regEx: "",
+                checked: false,
+                options: [],
+                label: null,
+                description: "",
+                htmlName: "",
+                dynamicHtmlName: "",
+                valid: true,
+                error: ""
+            };
+        }
+    }
+
+    function getHtmlName(pdict) : String {
+        var formFieldName = empty(pdict.p_dynamic) ? pdict.formfield.htmlName : pdict.formfield.dynamicHtmlName;
+        return empty(pdict.name) ? formFieldName : pdict.name;
+    }
+
+    function getHtmlId(pdict) : String {
+        return empty(pdict.id) ? getHtmlName(pdict) : pdict.id;
+    }
+
+    function getHtmlValue(pdict) : String {
+    	
+    	if(!empty(pdict.valuestring)){
+    		return pdict.valuestring;
+    	}
+    	
+        return pdict.formfield.htmlValue;
+    }
+
+    function createHtmlOptions(pdict) : Object {
+        var attrBuilder: Object = new AttrBuilder();
+        addAdditionalAttributes(pdict, attrBuilder);
+        addValidationAttributes(pdict, attrBuilder);
+
+        return {
+            "name": getHtmlName(pdict),
+            "id": getHtmlId(pdict),
+            "value": getHtmlValue(pdict),
+            "class": (pdict.xhtmlclass || "") + " validated-by-parsley"+( empty(pdict.extraclass)?"":(" "+pdict.extraclass) ),
+            "attributes": attrBuilder.toString(),
+            "checkbox": {
+                "checked": pdict.checked || pdict.formfield.checked
+            },
+            "select": {
+                "options": pdict.options || pdict.formfield.options
+            }
+        };
+    }
+
+    function createLabelOptions(pdict) : Object {
+        return {
+            visible: empty(pdict.label) || pdict.label == 'true',
+            key: empty(pdict.labelkey) ? pdict.formfield.label : pdict.labelkey
+        };
+    }
+
+    function createValidationOptions(pdict) : Object {
+        if (!pdict.formfield.valid && empty(pdict.formfield.error)) {
+            logger.warn("No formfield.error set for field: {0}", empty(pdict.labelkey) ? pdict.formfield.label : pdict.labelkey);
+        }
+
+        return {
+            valid: pdict.formfield.valid,
+            error: pdict.formfield.error
+        };
+    }
+
+    function isEmptyOrNotFalse(value) : Boolean {
+        return empty(value) || value !== 'false';
+    }
+
+    function createFieldOptions(pdict) : Object {
+        createFakeFormFieldIfNotProvided(pdict);
+        return {
+           html: createHtmlOptions(pdict),
+           label: createLabelOptions(pdict),
+           validation: createValidationOptions(pdict),
+           showValue: isEmptyOrNotFalse(pdict.value),
+           description: pdict.formfield.description,
+           show_description: isEmptyOrNotFalse(pdict.show_description)
+        };
+    }
+
+    Namespace.extend(converse, {
+        ui: {
+            InputFieldUtils: {
+                createFieldOptions: createFieldOptions
+            }
+        } 
+    });
+
+})();

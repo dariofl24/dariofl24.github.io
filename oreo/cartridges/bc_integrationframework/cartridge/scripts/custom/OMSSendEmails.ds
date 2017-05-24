@@ -1,0 +1,33 @@
+/**
+*
+* @output OrderDetails : Array Order details for email dispatcher
+*/
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.order);
+
+importScript("converse_core:constants.ds");
+importScript("module_oms:processing/DyoSending.ds");
+
+function execute(args : PipelineDictionary) : Number {
+    let configuration = getConfiguration();
+    let orders = OrderMgr.queryOrders("custom.readyToSendEmail = true", null).asList();
+    
+    let DyoSending = new converse.oms.DyoSending(configuration, new Date());
+    let result = DyoSending.process(orders);
+    
+    args.OrderDetails = result;
+    
+    return PIPELET_NEXT;
+}
+
+function getConfiguration(preferences) {
+    let preferences = Site.current.preferences.custom;
+    
+    let configuration = {
+        ItemSendingThresholdInHours : preferences["OMS.EmailProcessing.ItemSendingThresholdInHours"],
+        EmailFilter : preferences["OMS.EmailProcessing.EmailFilter"]
+    };
+
+    return configuration;
+}

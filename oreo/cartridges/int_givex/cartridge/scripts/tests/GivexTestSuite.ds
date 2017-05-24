@@ -1,0 +1,211 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+importScript("converse_webservices:service/ServiceUtils.ds");
+
+importScript("int_givex:GivexService.ds");
+importScript("int_givex:command/GetBalance.ds");
+importScript("int_givex:objects/Giftcard.ds");
+
+function execute(args : PipelineDictionary) : Number {
+
+    var ServiceUtils = converse.webservices.ServiceUtils;
+
+    var getGiftcard = function(cardNumber, pin) {
+        return new integration.givex.objects.Giftcard(cardNumber, pin, converse.constants.CurrencyCode);
+    };
+
+    var getGivexServiceMock = function() {
+        var ServiceMock = integration.givex.GivexService.extend({
+            initConfiguration: function() {
+                return {};
+            }
+        });
+
+        return new ServiceMock();
+    };
+
+    var getGetBalanceCommandMock = function(giftcard, executeFunc) {
+        var CommandMock = integration.givex.command.GetBalance.extend({
+            execute: function(request) {
+                return executeFunc.call(this, request);
+            }
+        });
+
+        return new CommandMock(giftcard);
+    };
+
+    var assertSuccess = function(status : Status) {
+        Assert.isNotNull(status, "status");
+        Assert.areEqual(Status.OK, status.getStatus());
+    };
+
+    var assertFailure = function(status : Status, command : Object) {
+        Assert.isNotNull(status, "status");
+        Assert.areEqual(Status.ERROR, status.getStatus());
+        Assert.isNotNull(ServiceUtils.getStatusExceptionCause(status));
+        Assert.isNotNull(command.exception);
+        Assert.isTrue(command.hasError());
+    };
+
+    args.Unit.describe("Givex Test Suite")
+        .test("GetBalance_test_giftcard_with_empty_pin", function () {
+            var giftcard = getGiftcard("6050516351000000010", "");
+            var command = getGetBalanceCommandMock(giftcard, function(request) {
+                var balance = new this.webReference.Balance();
+                balance.certBalance = 23.80;
+                balance.securityCode = null;
+
+                return balance;
+            });
+
+            var service = getGivexServiceMock();
+            var status = service.call(command);
+
+            assertSuccess(status);
+            Assert.isTrue(giftcard.isBalanceSet());
+            Assert.areEqual(23.80, giftcard.balance.certBalance);
+            Assert.isFalse(giftcard.isPinValid());
+            Assert.isFalse(giftcard.isValid());
+        })
+        .test("GetBalance_test_giftcard_with_null_pin", function () {
+            var giftcard = getGiftcard("6050516351000000010", null);
+            var command = getGetBalanceCommandMock(giftcard, function(request) {
+                var balance = new this.webReference.Balance();
+                balance.certBalance = 75.00;
+                balance.securityCode = null;
+
+                return balance;
+            });
+
+            var service = getGivexServiceMock();
+            var status = service.call(command);
+
+            assertSuccess(status);
+            Assert.isTrue(giftcard.isBalanceSet());
+            Assert.areEqual(75.00, giftcard.balance.certBalance);
+            Assert.isFalse(giftcard.isPinValid());
+            Assert.isFalse(giftcard.isValid());
+        })
+        .test("GetBalance_test_giftcard_with_valid_pin", function () {
+            var giftcard = getGiftcard("6050516351000000010", "629070");
+            var command = getGetBalanceCommandMock(giftcard, function(request) {
+                var balance = new this.webReference.Balance();
+                balance.certBalance = 97.30;
+                balance.securityCode = "629070";
+
+                return balance;
+            });
+
+            var service = getGivexServiceMock();
+            var status = service.call(command);
+
+            assertSuccess(status);
+            Assert.isTrue(giftcard.isBalanceSet());
+            Assert.areEqual(97.30, giftcard.balance.certBalance);
+            Assert.areEqual(giftcard.pin, giftcard.balance.securityCode);
+            Assert.isTrue(giftcard.isPinValid());
+            Assert.isTrue(giftcard.isValid());
+        })
+        .test("GetBalance_test_giftcard_with_invalid_pin", function () {
+            var giftcard = getGiftcard("6050516351000000010", "123456");
+            var command = getGetBalanceCommandMock(giftcard, function(request) {
+                var balance = new this.webReference.Balance();
+                balance.certBalance = 50.00;
+                balance.securityCode = "629070";
+
+                return balance;
+            });
+
+            var service = getGivexServiceMock();
+            var status = service.call(command);
+
+            assertSuccess(status);
+            Assert.isTrue(giftcard.isBalanceSet());
+            Assert.areEqual(50.00, giftcard.balance.certBalance);
+            Assert.isFalse(giftcard.pin == giftcard.balance.securityCode);
+            Assert.isFalse(giftcard.isPinValid());
+            Assert.isFalse(giftcard.isValid());
+        })
+        .test("GetBalance_test_old_giftcard_with_empty_pin", function () {
+            var giftcard = getGiftcard("5928570858739052", "");
+            var command = getGetBalanceCommandMock(giftcard, function(request) {
+                var balance = new this.webReference.Balance();
+                balance.certBalance = 23.80;
+                balance.securityCode = null;
+
+                return balance;
+            });
+
+            var service = getGivexServiceMock();
+            var status = service.call(command);
+
+            assertSuccess(status);
+            Assert.isTrue(giftcard.isBalanceSet());
+            Assert.areEqual(23.80, giftcard.balance.certBalance);
+            Assert.isFalse(giftcard.isPinValid());
+            Assert.isTrue(giftcard.isValid());
+        })
+        .test("GetBalance_test_old_giftcard_with_null_pin", function () {
+            var giftcard = getGiftcard("5928570858739052", null);
+            var command = getGetBalanceCommandMock(giftcard, function(request) {
+                var balance = new this.webReference.Balance();
+                balance.certBalance = 75.00;
+                balance.securityCode = null;
+
+                return balance;
+            });
+
+            var service = getGivexServiceMock();
+            var status = service.call(command);
+
+            assertSuccess(status);
+            Assert.isTrue(giftcard.isBalanceSet());
+            Assert.areEqual(75.00, giftcard.balance.certBalance);
+            Assert.isFalse(giftcard.isPinValid());
+            Assert.isTrue(giftcard.isValid());
+        })
+        .test("GetBalance_test_old_giftcard_with_some_pin", function () {
+            var giftcard = getGiftcard("5928570858739052", "123456");
+            var command = getGetBalanceCommandMock(giftcard, function(request) {
+                var balance = new this.webReference.Balance();
+                balance.certBalance = 1.40;
+                balance.securityCode = null;
+
+                return balance;
+            });
+
+            var service = getGivexServiceMock();
+            var status = service.call(command);
+
+            assertSuccess(status);
+            Assert.isTrue(giftcard.isBalanceSet());
+            Assert.areEqual(1.40, giftcard.balance.certBalance);
+            Assert.isFalse(giftcard.isPinValid());
+            Assert.isTrue(giftcard.isValid());
+        })
+        .test("GetBalance_test_exception", function () {
+            var giftcard = getGiftcard("6050516000000010", "629070");
+            var command = getGetBalanceCommandMock(giftcard, function(request) {
+                throw new Error("Service error");
+            });
+
+            var service = getGivexServiceMock();
+            var status = service.call(command);
+
+            assertFailure(status, command);
+            Assert.areEqual(command.exception.message, "Service error");
+            Assert.isFalse(giftcard.isBalanceSet());
+            Assert.isFalse(giftcard.isPinValid());
+            Assert.isFalse(giftcard.isValid());
+        });
+
+    return PIPELET_NEXT;
+};

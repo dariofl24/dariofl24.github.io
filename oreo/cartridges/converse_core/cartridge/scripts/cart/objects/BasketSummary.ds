@@ -1,0 +1,623 @@
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("constants.ds");
+importScript("common/libInheritance.ds");
+importScript("common/libNamespace.ds");
+
+
+(function() {
+    let ProductType = converse.constants.ProductType;
+    let CURRENCY = converse.constants.CurrencyCode;
+    
+    var ItemContainerSummary =  Class.extend({
+        
+        init : function() {
+            this.priceAdjustments = new ArrayList();
+        },
+        
+        setUUID : function(uuid : String){
+            this.uuid = uuid;
+        },
+        
+        getUUID : function() : String {
+            return this.uuid;
+        },
+        
+        setAmount : function(amount : Money){
+            this.amount = amount;
+            this.currencyCode = amount.getCurrencyCode();
+        },
+        
+        getAmount : function() : Money {
+            return this.amount;
+        },
+        
+        setNetAmount : function(netAmount : Money){
+            this.netAmount = netAmount;
+            this.currencyCode = netAmount.getCurrencyCode();
+        },
+        
+        getNetAmount : function() : Money {
+            return this.netAmount;
+        },
+        
+        setShippingNetAmount : function(shippingAmount : Money){
+            this.shippingNetAmount = shippingAmount;
+        },
+        
+        getShippingNetAmount : function() : Money {
+            return this.shippingNetAmount;
+        },
+
+        setShippingGrossAmount : function(shippingAmount : Money){
+            this.shippingGrossAmount = shippingAmount;
+        },
+        
+        getShippingGrossAmount : function() : Money {
+            return this.shippingGrossAmount;
+        },
+        
+        setTaxAmount : function(taxAmount : Money){
+            this.taxAmount = taxAmount;
+        },
+        
+        getTaxAmount : function() : Money {
+            return this.taxAmount;
+        },
+        
+        getCurrencyCode : function() : String {
+            return this.currencyCode;
+        },
+
+        getShipmentSummaryList: function(): List {
+            return this.shipmentSummaryList;
+        },
+        
+        addShipmentSummary: function(shipmentSummary : ShipmentSummary) {
+            this.shipmentSummaryList.add(shipmentSummary);
+        },
+        
+        setBillingAddress: function(billingAddress : OrderAddressSummary){
+            this.billingAddress = billingAddress;
+        },
+        
+        getBillingAddress: function(){
+            return this.billingAddress;
+        },
+        
+        setPriceAdjustments: function(priceAdjustments) {
+            this.priceAdjustments = priceAdjustments;
+        },
+        
+        getPriceAdjustments: function() {
+            return this.priceAdjustments;
+        },
+        
+        hasDiscounts: function() {
+            return !empty(this.getPromoCode());
+        }
+    });
+
+    var CouponSummary = Class.extend({
+        getCode: function() {
+            return this.code;
+        },
+
+        setCode: function(code) {
+            this.code = code;
+        },
+        
+        getPromotionID: function() {
+            return this.promotionID;
+        },
+
+        setPromotionID: function(promotionID) {
+            this.promotionID = promotionID;
+        }
+    });
+
+    var OrderSummary = ItemContainerSummary.extend({
+
+    });
+    
+    var BasketSummary = ItemContainerSummary.extend({
+        
+        init: function(includeAddresses) {
+            this._super();
+            this.shipmentSummaryList = new ArrayList();
+            this.includeAddresses = includeAddresses;
+        },
+        
+        includesAddresses: function() {
+            return this.includeAddresses;
+        },
+
+        getPayPalPaymentInstruments: function() {
+            return this.payPalPaymentInstruments;
+        },
+
+        setPayPalPaymentInstruments: function(payPalPaymentInstruments) {
+            this.payPalPaymentInstruments = payPalPaymentInstruments;
+        },
+
+        getCreditCardPaymentInstruments: function() {
+            return this.creditCardPaymentInstruments;
+        },
+
+        setCreditCardPaymentInstruments: function(creditCardPaymentInstruments) {
+            this.creditCardPaymentInstruments = creditCardPaymentInstruments;
+        },
+
+        getCreditCardNumber: function() {
+            return this.creditCardNumber;
+        },
+
+        setCreditCardNumber: function(creditCardNumber) {
+            this.creditCardNumber = creditCardNumber;
+        },
+
+        getInvoicePaymentInstruments: function() {
+            return this.invoicePaymentInstruments;
+        },
+
+        setInvoicePaymentInstruments: function(invoicePaymentInstruments) {
+            this.invoicePaymentInstruments = invoicePaymentInstruments;
+        },
+
+        getGiftCardPaymentInstruments: function() {
+            return this.gftCardPaymentInstruments;
+        },
+
+        setGiftCardPaymentInstruments: function(gftCardPaymentInstruments) {
+            this.gftCardPaymentInstruments = gftCardPaymentInstruments;
+        },
+
+        getCustomerEmail: function() {
+            return this.customerEmail;
+        },
+
+        setCustomerEmail: function(customerEmail) {
+            this.customerEmail = customerEmail;
+        },
+        
+        isCombined: function() : Boolean {
+            return this.getShipmentSummaryList().length === 2;
+        }, 
+        
+        getC1ShipmentSummary: function() : ShipmentSummary {
+            return this.getShipmentSummaryByType(ProductType.C1);
+        },
+
+        getShipmentSummaryByType: function(kind: ProductType) : ShipmentSummary {
+            for each (let shipSum in this.shipmentSummaryList) {
+                if (kind === shipSum.getProductType()) {
+                    return shipSum;
+                }
+            }
+            return null;
+        }
+        
+    });
+    
+    
+   var OrderAddressSummary = Class.extend({
+        
+        init : function(){
+        },
+        
+        setFirstName : function(firstName : String) {
+            this.firstName = firstName;
+        },
+        
+        getFirstName : function() : String{
+            return this.firstName;
+        },
+        
+        setLastName : function(lastName : String) {
+            this.lastName = lastName;
+        },
+        
+        getLastName : function() : String{
+            return this.lastName;
+        },
+        
+        setAddress1 : function(address1 : String) {
+            this.address1 = address1;
+        },
+        
+        getAddress1 : function() : String{
+            return this.address1;
+        },
+        
+        setAddress2 : function(address2 : String) {
+            this.address2 = address2;
+        },
+        
+        getAddress2 : function() : String{
+            return this.address2;
+        },
+        
+        setCity : function(city : String) {
+            this.city = city;
+        },
+        
+        getCity : function() : String{
+            return this.city;
+        },
+        
+        setState : function(state : String) {
+            this.state = state;
+        },
+        
+        getState : function() : String{
+            return this.state;
+        },
+        
+        setCountry : function(country : String) {
+            this.country = country;
+        },
+        
+        getCountry : function() : String{
+            return this.country;
+        },
+        
+        setPostalCode : function(postalCode : String) {
+            this.postalCode = postalCode;
+        },
+        
+        getPostalCode : function() : String{
+            return this.postalCode;
+        },
+        
+        setPhone : function(phone : String) {
+            this.phone = phone;
+        },
+        
+        getPhone : function() : String{
+            return this.phone;
+        }
+     
+    });
+    
+    var ShipmentSummary = ItemContainerSummary.extend({
+        
+        init : function(){
+            this._super();
+            this.itemSummaryList = new ArrayList();
+            this.orderDiscountSavings = new Money(0, CURRENCY);
+        },
+
+        getAmount : function(dontIncludeOrderDiscount : Boolean) : Money {
+            if (dontIncludeOrderDiscount) {
+                return this.amount;
+            }
+            
+            return this.amount.add(this.getOrderDiscountSavings());
+        },
+        
+        getNetAmount : function(dontIncludeOrderDiscount : Boolean) : Money {
+            if (dontIncludeOrderDiscount) {
+                return this.netAmount;
+            }
+            
+            return this.netAmount.add(this.getOrderDiscountSavings());
+        },
+        
+        setProductType : function(productType : String) {
+            this.productType = productType;
+        },
+        
+        getProductType : function(): String {
+            return this.productType;
+        },
+
+        setGiftMessage : function(giftMessage : String) {
+            this.giftMessage = giftMessage;
+        },
+
+        getGiftMessage : function(): String {
+            return this.giftMessage;
+        },
+
+        getItemSummaryList : function(): List {
+            return this.itemSummaryList;
+        },
+        
+        addItemSummary : function(itemSummary : ItemSummary) {
+            this.itemSummaryList.add(itemSummary);
+        },
+        
+        setShippingAddress : function (shippingAddress : OrderAddressSummary) {
+            this.shippingAddress = shippingAddress;
+        },
+        
+        getShippingAddress : function():OrderAddressSummary {
+            return this.shippingAddress;
+        },
+
+        getShippingMethod: function() {
+            if (this.shippingMethod != null) {
+                return this.shippingMethod;
+            }
+
+            let method = this.getEGCShippingMethod();
+            if (method != null) {
+                return method;
+            }
+            
+            method = this.getPGCShippingMethod();
+            if (method != null) {
+                return method;
+            }
+            
+            throw new Error("No shipping method specified for shipping");
+        },
+
+        setShippingMethod: function(shippingMethod) {
+            this.shippingMethod = shippingMethod;
+        },
+
+        getPGCShippingMethod: function() {
+            return this.pgcShippingMethod;
+        },
+
+        setPGCShippingMethod: function(shippingMethod) {
+            this.pgcShippingMethod = shippingMethod;
+        },
+
+        getEGCShippingMethod: function() {
+            return this.egcShippingMethod;
+        },
+
+        setEGCShippingMethod: function(shippingMethod) {
+            this.egcShippingMethod = shippingMethod;
+        },
+
+        getJourneysOrderID: function() {
+            return this.journeysOrderID;
+        },
+
+        setJourneysOrderID: function(journeysOrderID) {
+            this.journeysOrderID = journeysOrderID;
+        },
+        
+        setPromoCode: function(promoCode) {
+            this.promoCode = promoCode;
+        },
+        
+        getPromoCode: function() {
+            return this.promoCode;
+        },
+
+        setOrderDiscountSavings: function(savings : Money) {
+            this.orderDiscountSavings = savings;
+        },
+        
+        getOrderDiscountSavings: function() : Money{
+            return this.orderDiscountSavings;
+        },
+
+        hasOrderLevelDiscounts: function() {
+            return this.getOrderDiscountSavings().getValue() != 0;
+        }
+    });
+
+    var ShippingMethodSummary = Class.extend({
+        
+        setID: function(id) {
+            this.id = id;
+        },
+
+        getID: function() {
+            return this.id;
+        },
+
+        setGenescoShippingMethodID: function(id) {
+            this.genescoShippingMethodID = id;
+        },
+
+        getGenescoShippingMethodID: function() {
+            return this.genescoShippingMethodID;
+        },
+
+        setSigmaShippingMethodID: function(id) {
+            this.sigmaShippingMethodID = id;
+        },
+
+        getSigmaShippingMethodID: function() {
+            return this.sigmaShippingMethodID;
+        }
+    });
+    
+
+    var ItemSummary = Class.extend({
+
+        init : function(){
+        },
+
+        setSku : function(sku : String){
+            this.sku = sku;
+        },
+        
+        getSku : function() : String {
+            return this.sku;
+        },
+        
+        setName : function(name : String){
+            this.name = name;         
+        },
+        
+        getName : function() : String {
+            return this.name;
+        },
+        
+        setDescription : function(description : String){
+            this.description = description;       
+        },
+        
+        getDescription : function() : String {
+            return this.description;
+        },
+        
+        setUnitPrice : function(unitPrice : Money){
+            this.unitPrice = unitPrice;
+        },
+        
+        getUnitPrice : function() : Money {
+            return this.unitPrice;
+        },
+
+        setGrossUnitPrice : function(unitPrice : Money){
+            this.grossUnitPrice = unitPrice;
+        },
+        
+        getGrossUnitPrice : function() : Money {
+            return this.grossUnitPrice;
+        },
+
+        setPrice : function(price : Money){
+            this.price = price;       
+        },
+        
+        getPrice : function() : Money {
+            return this.price;
+        },
+
+        setGrossPrice : function(price : Money){
+            this.grossPrice = price;       
+        },
+        
+        getGrossPrice : function() : Money {
+            return this.grossPrice;
+        },
+        
+        setQuantity : function(quantity : Number){
+            this.quantity = quantity;
+        },
+        
+        getQuantity : function() : Number {
+            return this.quantity;
+        },
+
+        setProductType: function(productType) {
+            this.productType = productType;
+        },
+
+        getProductType: function() {
+            return this.productType;
+        },
+        
+        setPillar: function(pillar) {
+            this.pillar = pillar;
+        },
+
+        getPillar: function() {
+            return this.pillar;
+        },
+
+        setManufacturerSKU: function(manufacturerSKU) {
+            this.manufacturerSKU = manufacturerSKU;
+        },
+
+        getManufacturerSKU: function() {
+            return this.manufacturerSKU;
+        },
+
+        setSize: function(size) {
+            this.size = size;
+        },
+
+        getSize: function() {
+            return this.size;
+        },
+        
+        setPriceBookID: function(priceBookID) {
+            this.priceBookID = priceBookID;
+        },
+        
+        getPriceBookID: function() {
+            return this.priceBookID;
+        },
+
+        setGiftCardName: function(name) {
+            this.giftCardName = name;
+        },
+
+        getGiftCardName: function() {
+            return this.giftCardName;
+        },
+
+        setGiftCardEmail: function(email) {
+            this.giftCardEmail = email;
+        },
+
+        getGiftCardEmail: function() {
+            return this.giftCardEmail;
+        },
+        
+        setMetricID: function(metricID) {
+            this.metricID = metricID;
+        },
+        
+        getMetricID: function() {
+            return this.metricID;
+        },
+        
+        setPersonalization: function(personalization) {
+            this.personalization = personalization;
+        },
+
+        getPersonalization: function() {
+            return this.personalization;
+        },
+        
+        setDYOImageUrl: function(dyoImageUrl) {
+            this.dyoImageUrl = dyoImageUrl;
+        },
+
+        getDYOImageUrl: function() {
+            return this.dyoImageUrl;
+        },
+        
+        isGiftCard: function() {
+            return this.productType === converse.constants.ProductType.ElectronicGiftCard ||
+                this.productType === converse.constants.ProductType.PhysicalGiftCard;
+        },
+
+        isOneSized: function() {
+            let pillar = this.getPillar().toLowerCase();
+            
+            if (pillar === converse.constants.Pillar.Sneakers || pillar === converse.constants.Pillar.Apparel) {
+                return false;
+            }
+            
+            if (pillar === converse.constants.Pillar.Accessories) {
+                return converse.constants.StretchFitHatSizes.indexOf(this.getSize()) === -1;
+            }
+            
+            return true;
+        },
+
+        isConverseOne: function() {
+            return this.productType === converse.constants.ProductType.C1;
+        },
+        
+        shouldNotParticipateInTaxCalculation: function() {
+            return this.getPrice().value === 0;
+        }
+     
+    });
+    
+    Namespace.extend(cart, {
+        objects: {
+            BasketSummary: BasketSummary,
+            ShipmentSummary: ShipmentSummary,
+            OrderAddressSummary : OrderAddressSummary,
+            ShippingMethodSummary: ShippingMethodSummary,
+            ItemSummary: ItemSummary,
+            CouponSummary: CouponSummary
+        }
+    });
+})();

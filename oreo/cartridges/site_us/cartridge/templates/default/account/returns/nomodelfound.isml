@@ -1,0 +1,10 @@
+<isif condition="${pdict.CurrentCustomer.authenticated}">
+    <div class="back">
+        <a href="${URLUtils.https('Order-History')}" title="${Resource.msg('orderdetails.returnorder','account',null)}">
+            ${Resource.msg('orderdetails.returnorder','account',null)}
+        </a>
+    </div>
+</isif>
+<div class="not-found">
+    ${Resource.msg('returns.notfound','account',null)}
+</div>

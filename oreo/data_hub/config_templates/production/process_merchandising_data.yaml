@@ -1,0 +1,9 @@
+merchplanner_input_file: '/home/converse/catalog/merchplanner_data.csv'
+genesco_inventory_input_file: '/home/genesco/inventory/sigmacoinvats_csv_v2.csv'
+genesco_inventory_minimum_number_of_skus: 9700
+genesco_inventory_process_upc_column: true
+output_directory: '/home/demandware/outgoing'
+notification_recipients: 'Cindy.Ascolillo@converse.com,Ashley.Doucette@converse.com,Benjamin.Ashe@converse.com,confoo-reports-jobs@tacitknowledge.com'
+notification_subject: 'Merchplanner Import Finished!'
+notification_message: 'Merchplanner Import Finished!'
+notification_from: 'cron@datahub.converse.com'

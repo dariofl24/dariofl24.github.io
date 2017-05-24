@@ -1,0 +1,138 @@
+importPackage(dw.system);
+importPackage(dw.object);
+importPackage(dw.util);
+importPackage(dw.value);
+
+importScript("constants.ds");
+importScript("common/libInheritance.ds");
+importScript("common/libNamespace.ds");
+importScript("common/libLang.ds");
+importScript("common/Selectable.ds");
+
+importScript("product/ProductUtils.ds");
+importScript("account/order/OrderUtils.ds");
+
+(function() {
+    
+    var Selectable = converse.common.Selectable,
+        OrderUtils = converse.account.order.OrderUtils;
+        
+    function findObjectByUUID(objects : Collection, UUID : String) : PersistentObject {
+        for each (let object : PersistentObject in objects) {
+            if (object.getUUID() === UUID) {
+                return object;
+            }
+        }
+        
+        return null;
+    }
+        
+    function findOrderShipment(order : Order, selectableShipment : Object) : Shipment {
+        return findObjectByUUID(order.getShipments(), selectableShipment.UUID);
+    }
+        
+    function findShipmentItem(shipment : Shipment, selectableItem : Object) : ProductLineItem {
+        return findObjectByUUID(shipment.getProductLineItems(), selectableItem.UUID);
+    }
+    
+    let SelectableOrder = Selectable.extend({
+        
+        init: function(order: Order) {
+            this._super(order);
+            this.orderNo = order.getOrderNo();
+            this.initShipments();
+        },
+        
+        getOrderNo: function() : String {
+            return this.orderNo;
+        },
+
+        initShipments: function() {
+            var shipments : Collection = this.getOriginal().getShipments();
+            if (!empty(shipments)) {
+                for each (let shipment : Shipment in shipments) {
+                    if (OrderUtils.canReturnShipment(shipment)) {
+                        let selectableShipment = new Selectable(shipment);
+                        selectableShipment.UUID = shipment.getUUID();
+                        
+                        this.initItems(selectableShipment);
+                        
+                        if (0 < selectableShipment.getChildren().size()) {
+                            this.getChildren().push(selectableShipment);
+                        }
+                    }
+                }
+            } 
+        },
+        
+        initItems: function(selectableShipment) {
+            var items : Collection = selectableShipment.getOriginal().getProductLineItems();
+            if (!empty(items)) {
+                for each (let item : ProductLineItem in items) { 
+                    if (OrderUtils.canReturnItem(item)) {
+                        let selectableItem = new Selectable(item);
+                        selectableItem.UUID = item.getUUID();
+                        
+                        selectableShipment.getChildren().push(selectableItem);
+                    }
+                }
+            }
+        },
+        
+        attach: function(order : Order) {
+            if (this.getOrderNo() != order.getOrderNo()) {
+                throw new Error(StringUtils.format("Was expecting order {0} but got order {1}", this.getOrderNo(), order.getOrderNo()));
+            }
+            
+            this.original = order;
+            
+            for each (let selectableShipment in this.getChildren()) {
+                let shipment : Shipment = findOrderShipment(order, selectableShipment);
+                selectableShipment.original = shipment;
+                
+                for each (let selectableItem in selectableShipment.getChildren()) {
+                    let item : ProductLineItem = findShipmentItem(shipment, selectableItem);
+                    selectableItem.original = item;
+                }
+            }
+        },
+        
+        isTooLateToReturn: function(maxDays : Number) : Boolean {
+            let daysDiff : Number = Lang.diffDays(new Date(), this.getOriginal().getCreationDate());
+            return daysDiff > maxDays;
+        },
+        
+        getSelectedInlineItems: function() : List {
+            var items : List = new ArrayList();
+            for each (let selectedItem : ProductLineItem in this.getSelectedItems()) {
+               if (ProductUtils.isRegular(selectedItem.product)) {
+                    items.add1(selectedItem);
+               }
+            }
+            return items;
+        },
+        
+        getSelectedDyoItems: function() : List {
+            var items : List = new ArrayList();
+            for each (let selectedItem : ProductLineItem in this.getSelectedItems()) {
+               if (ProductUtils.isConverseOne(selectedItem.product)) {
+                    items.add1(selectedItem);
+               }
+            }
+            return items;
+        },
+        
+        hasInlineItemsSelected: function() : Boolean {
+            return !this.getSelectedInlineItems().isEmpty();
+        },
+        
+        hasDyoItemsSelected: function() : Boolean {
+            return !this.getSelectedDyoItems().isEmpty();
+        }
+         
+    });
+    
+    var ns = Namespace.extendFromString(converse, "account.returns");
+    Namespace.extend(ns, { SelectableOrder: SelectableOrder });
+    
+})();

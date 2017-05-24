@@ -1,0 +1,71 @@
+<isscript>
+    importScript("converse_core:constants.ds");
+    importScript("converse_core:common/libInheritance.ds");
+    importScript("converse_core:common/libNamespace.ds");
+
+    importScript("converse_core:product/ProductUtils.ds");
+    importScript("converse_core:product/ProductImageResolver.ds");
+    importScript("converse_core:product/PriceResolver.ds");
+
+    importScript("converse_core:util/ViewHelpers.ds");
+
+    var PriceResolver = converse.product.PriceResolver;
+    var ProductImageResolver = converse.product.ProductImageResolver;
+</isscript>
+
+<isloop items="${pdict.Order.shipments}" var="Shipment">
+    <table class="orderitems" width="100%" cellpadding="0" cellspacing="0" style="padding-bottom: 15px;">
+        <tr>
+            <td class="caption" style="text-align: center;">
+                <isinclude template="components/mail/order/order_item_yourorder" />
+            </td>
+        </tr>
+        <isloop items="${Shipment.productLineItems}" var="productLineItem">
+            <tr>
+                <td style="text-align: center;">
+                    <isset name="productLineItemLink" value="${ProductUtils.getProductLineItemLink(productLineItem)}" scope="page"/>
+                    <p style="font-size: 20px; margin: 16px 0px;">
+                        <isset name="mediaFile" value="${ProductImageResolver.getProductLineItemImage(productLineItem, 'large', request.httpSecure)}" scope="page"/>
+                        <img src="${mediaFile.getURL()}" alt="${mediaFile.alt}" title="${mediaFile.title}" style="width: 300px; height: 300px; border-style: none;" />
+                    </p>
+                    <p class="details" style="font-size: 20px; margin: 0px;">
+                        <a href="${productLineItemLink}" title="${productLineItem.productName}" style="font-weight: bold; color: black !important; text-decoration: none;">
+                            <span style="color: black;"><isprint value="${productLineItem.lineItemText}"/></span>
+                        </a> <br/>
+                        <isinclude template="components/mail/order/order_item_sizing" />
+                        <isset name="pricing" value="${PriceResolver.getLineItemPricing(productLineItem)}" scope="page"/>
+                        <isif condition="${pricing.showStandardPrice}">
+                            <span style="font-weight: bold; text-decoration:line-through;" class="price-sales strike">
+                                <isif condition="${PriceResolver.isStandardPriceAvailable(pricing)}">
+                                    <isprint value="${pricing.standardPriceFormatted}"/>
+                                <iselse>
+                                    ${Resource.msg('pricing.noprice','product',null)}
+                                </isif>
+                            </span>
+                            <span style="font-weight: bold; color:#940000;" class="price-sales red">
+                                <isif condition="${PriceResolver.isSalesPriceAvailable(pricing)}">
+                                    <isprint value="${pricing.salesPriceFormatted}"/>
+                                <iselse>
+                                    ${Resource.msg('pricing.noprice','product',null)}
+                                </isif>
+                            </span>
+                        <iselse>
+                            <span style="font-weight: bold;" class="price-sales">
+                                <isif condition="${PriceResolver.isSalesPriceAvailable(pricing)}">
+                                    <isprint value="${pricing.salesPriceFormatted}"/>
+                                <iselse>
+                                    ${Resource.msg('pricing.noprice','product',null)}
+                                </isif>
+                            </span>
+                        </isif>
+                        <isif condition="${ ! isSite('US') }">
+                            <p style="font-size: 12px; margin: 1px;">
+                                ${Resource.msg('ordersummary.vat.inclVAT', 'components', '')}
+                            </p>
+                        </isif>
+                    </p>
+                </td>
+            </tr>
+        </isloop>
+    </table>
+</isloop>

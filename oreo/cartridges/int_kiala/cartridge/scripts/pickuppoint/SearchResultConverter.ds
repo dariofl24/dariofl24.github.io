@@ -1,0 +1,89 @@
+importPackage( dw.system );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("int_pickuppoint:objects/PickupPointSearchResult.ds");
+
+var PickupPointSearchResult = integration.pickuppoint.objects.PickupPointSearchResult;
+var PickupPoint = integration.pickuppoint.objects.PickupPoint;
+var Location = integration.pickuppoint.objects.Location;
+var Address = integration.pickuppoint.objects.Address;
+var BusinessDay = integration.pickuppoint.objects.BusinessDay;
+var BusinessHour = integration.pickuppoint.objects.BusinessHour;
+
+(function() {
+    var parseLocation = function(locationXML : XMLList) : Location {
+        var location : Location = new Location();
+        location.setLatitude(String(locationXML.latitude));
+        location.setLongitude(String(locationXML.longitude));
+        return location;
+    };
+    
+    var parseAddress = function(addressXML : XMLList) : Address {
+        var address : Address = new Address();
+        address.setStreet(String(addressXML.street));
+        address.setPostalCode(String(addressXML.zip));
+        address.setCity(String(addressXML.city));
+        return address;
+    };
+    
+    var parseBusinessDay = function(businessDayXML : XMLList) : BusinessDay {
+        var businessDay : BusinessDay = new BusinessDay();
+        businessDay.setDayOfWeek(String(businessDayXML.@name));
+        
+        for each (let businessHourXML in businessDayXML.timespan) {
+            var businessHour : BusinessHour = new BusinessHour();
+            businessHour.setOpenFrom(String(businessHourXML.start.text()));
+            businessHour.setOpenTill(String(businessHourXML.end.text()));
+            
+            businessDay.addBusinessHour(businessHour);
+        }
+        
+        return businessDay;
+    };
+
+    var parsePickupPoint = function(pickupPointXML : XMLList) : PickupPoint {
+        var pickupPoint : PickupPoint = new PickupPoint();
+        pickupPoint.setId(String(pickupPointXML.@shortId));
+        pickupPoint.setName(String(pickupPointXML.name));
+        pickupPoint.setLocation(parseLocation(pickupPointXML.coordinate));
+        pickupPoint.setAddress(parseAddress(pickupPointXML.address));
+        pickupPoint.setCarrier("Kiala");
+        
+        for each (let businessDayXML in pickupPointXML.openingHours.day) {
+            if (businessDayXML.timespan.length() == 0) {
+                continue;
+            }
+            
+            pickupPoint.addBusinessDay(parseBusinessDay(businessDayXML));
+        }
+        
+        return pickupPoint;
+    };
+    
+    var clearNamespace = function(text : String) : String {
+        return text.replace("xmlns=\"http://locateandselect.kiala.com/schema/kplist\"", "")
+            .replace("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", "")
+            .replace("xsi:schemaLocation=\"http://locateandselect.kiala.com/schema/kplist http://locateandselect.kiala.com/schema/kplist-1.1.xsd\"", "");
+    };
+    
+    var SearchResultConverter = {
+        from : function(responseText : String) : PickupPointSearchResult {
+            var responseXML : XML = new XML(clearNamespace(responseText));
+            
+            var searchResult : PickupPointSearchResult = new PickupPointSearchResult();
+            searchResult.setSuccess(true);
+            
+            for each (let pickupPointXML in responseXML.kp) {
+                searchResult.addPickupPoint(parsePickupPoint(pickupPointXML));
+            }
+            
+            return searchResult;
+        }
+    };
+    
+    var NS = Namespace.extendFromString(integration, "pickuppoint");
+    Namespace.extend(NS, {
+        SearchResultConverter: SearchResultConverter
+    });
+})();

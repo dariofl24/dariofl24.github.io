@@ -1,0 +1,128 @@
+/**
+* This pipelet tries to grab user email address and send it to ET and trigger send API call
+*
+* @input Form : dw.web.Form The customer form.
+*
+* @output Status : dw.system.Status The status of the request execution
+*/
+importPackage( dw.system );
+importPackage( dw.util );
+importPackage( dw.customer );
+importPackage( dw.web );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_core:common/libLang.ds");
+importScript("converse_core:util/ViewHelpers.ds");
+importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+
+importScript("int_exacttarget:SubscriptionService.ds");
+
+var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+var SubscriptionService = integration.exacttarget.SubscriptionService;
+
+var MIN_AGE : Number = 13;
+var AGE_COOKIE_NAME : String = "convage";
+var AGE_COOKIE_VALUE : String = "0";
+var AGE_COOKIE_MAX_AGE : Number = 60 * 60 * 24;
+
+function execute(pdict : PipelineDictionary) : Number
+{
+    if (!FeatureToggleService.isFeatureEnabled("exact-target-service")) {
+        pdict.Status = new Status(Status.OK);
+        return PIPELET_NEXT;
+    }
+
+    if (isSite('US') && !validateForm(request, pdict.Form)) {
+        return PIPELET_ERROR;
+    }
+
+    let email = pdict.Form.email.value;
+    let dateOfBirth = "";
+    //promotion is a mandatory form field
+    let promotion = (empty(pdict.Form.promotion.value)) ? "" : pdict.Form.promotion.value;
+    let referrer = (empty(pdict.Form.referrer) || empty(pdict.Form.referrer.value)) ? "" : pdict.Form.referrer.value;
+    
+    dateOfBirth = pdict.Form.birthday.value;
+    
+    let gender = (empty(pdict.Form.gender)) ? "" : pdict.Form.gender.value;
+    let subscriptionData = getSubscriptionData(email, dateOfBirth, promotion, gender, referrer);
+    let subscriptionService = new SubscriptionService();
+
+    subscriptionService.acquireNewEmailAddress(subscriptionData);
+
+    let status: Status = subscriptionService.getStatus();
+    pdict.Status = status;
+    
+    if (status.error) {
+        return PIPELET_ERROR;
+    }
+
+    return PIPELET_NEXT;
+}
+
+function validateForm(request, form) {
+    let birthdayValid = doValidateBirthday(form.birthday);
+    let ageValid = true;
+
+    if (birthdayValid) {
+        let ageCookie : Cookie = getAgeCookie(request);
+        
+        if (empty(ageCookie)) {
+            ageValid = doValidateAge(form.birthday);
+            
+            if (!ageValid) {
+                setAgeCookie();
+            }
+        } else {
+            ageValid = false;
+            form.invalidateFormElement(Resource.msgf("profile.age.verification.error", "forms", null, MIN_AGE));
+        }
+    }
+    
+    return birthdayValid && ageValid;
+}
+
+function doValidateBirthday(birthdayFormField) {
+    if (!Lang.isValidDate(birthdayFormField.value)) {
+        birthdayFormField.invalidateFormElement();
+    }
+    
+    return birthdayFormField.isValid();
+}
+
+function doValidateAge(birthdayFormField) {     
+    let age = Lang.getAgeFromDOB(new Date(birthdayFormField.value));
+    
+    if (age < MIN_AGE) {
+        birthdayFormField.invalidateFormElement(Resource.msgf("profile.birthday.minage.error", "forms", null, MIN_AGE));
+    }
+    
+    return birthdayFormField.isValid();
+}
+
+function getAgeCookie(request) {
+    return request.getHttpCookies()[AGE_COOKIE_NAME];
+}
+
+function setAgeCookie() {
+    let ageCookie = new Cookie(AGE_COOKIE_NAME, AGE_COOKIE_VALUE);
+    
+    ageCookie.setPath("/"); 
+    ageCookie.setMaxAge(AGE_COOKIE_MAX_AGE);
+    response.addHttpCookie(ageCookie);
+}
+
+function getSubscriptionData(email, dateOfBirth, promotion, gender, referrer) {
+    let subscriptionData = {};
+    
+    subscriptionData.email = email;
+    subscriptionData.dateOfBirth = dateOfBirth;
+    subscriptionData.promotion = promotion;
+    subscriptionData.gender = gender;
+    subscriptionData.referrer = referrer;
+    
+    return subscriptionData;
+}
+
+

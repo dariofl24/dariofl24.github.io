@@ -1,0 +1,21 @@
+*** Settings ***
+Documentation     Verifies Backorder Messaging in Cart and PDP Pages
+Suite Teardown    Close All Browsers
+Test Teardown     Close All Browsers
+Force Tags        Backorder    ShortReg    US
+Resource          backorder_definitions.txt
+
+*** Variables ***
+${allocation}     5
+${inStockDate}    12/30/2014
+${backOrderAllocation}    2
+
+*** Test Cases ***
+Run Backorder tests with a predefined Product in the PDP Page
+    Verify Backorder Messaging    Verify Backorder from PDP    Set a Product Number    ${id_Inlineproduct}    ${allocation}    ${backOrderAllocation}
+
+Run Backorder tests with a predefined Product in the Cart's Page
+    Verify Backorder Messaging    Verify Backorder from Cart    Set a Product Number in Cart    ${id_Inlineproduct}    ${allocation}    ${backOrderAllocation}
+
+Set inventory for inline test product
+    Setting Up Backorder Items in Demandware    ${id_Inlineproduct}    50    ${inStockDate}    10

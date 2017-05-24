@@ -1,0 +1,46 @@
+@import "_constants";
+@import "_conv_mixins";
+@import "_media_query";
+
+#termsAndConditionsPopup {
+    position: relative;
+    max-width: 680px;
+    margin: 0 auto;
+    background-color: $CONVERSE_COLOR_12;
+    font-family: $CONVERSE_FONT_FAMILY_PDP;
+
+    .container {
+        max-width: 535px;
+        margin: 0 auto;
+        padding: 70px 0px;
+        text-align: center;
+    }
+
+    h1, .section-title {
+        font-weight: bold;
+        font-size: 23px;
+        margin-bottom: 20px;
+    }
+    
+    h2 {
+        font-weight: bold;
+        font-size: 16px;
+        padding-top: 5px;
+        margin: 15px 0;
+    }
+    
+    h3 {
+        font-weight: normal;
+        font-size: 16px;
+        margin: 15px 0;
+    }
+
+    p {
+        line-height: 20px;
+        text-align: left;
+
+        a {
+            font-weight: bold;
+        }
+    }
+}

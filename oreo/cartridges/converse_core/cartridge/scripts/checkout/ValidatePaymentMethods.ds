@@ -1,0 +1,26 @@
+/**
+* Disable Invoice payment method for PUP
+*
+* @input Basket : dw.order.Basket
+* @input AllPaymentMethods : dw.util.Collection
+* @output ApplicablePaymentMethods : dw.util.Collection The collection of valid payment methods.
+*/
+importPackage( dw.order );
+importPackage( dw.util);
+
+importPackage( dw.system );
+
+function execute( args : PipelineDictionary ) : Number
+{
+    var basket : Bakset = args.Basket;
+    var paymentMethods : Collection = args.AllPaymentMethods;
+    var defaultShipment : Shipment = basket.getDefaultShipment();
+    if( !empty(defaultShipment) && 'shippingType' in defaultShipment.custom && defaultShipment.custom.shippingType === 'pup' ){
+        var invoicePaymentMethod : PaymentMethod = PaymentMgr.getPaymentMethod('INVOICE');
+        if(!empty(paymentMethods) && paymentMethods.contains(invoicePaymentMethod)){
+            paymentMethods.remove(invoicePaymentMethod);
+        }
+    }
+    args.ApplicablePaymentMethods = paymentMethods;
+    return PIPELET_NEXT;
+}

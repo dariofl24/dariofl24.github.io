@@ -1,0 +1,36 @@
+/**
+ * JavaScript namespace functions
+ *
+ * @see http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailnamespacing
+ */
+ 
+ importScript("converse_core:common/libLang.ds");
+
+// Hack, because vars cannot be imported in DW, only functions
+function Namespace(){};
+
+(function(){
+	
+  	Namespace.extendFromString = function(ns, ns_string) {
+    	var parts = ns_string.split("."),
+        	parent = ns,
+        	pl;
+
+    	pl = parts.length;
+
+    	for (var i = 0; i < pl; i++) {
+      		if (typeof parent[parts[i]] === "undefined") {
+        		parent[parts[i]] = {};
+      		}
+
+      		parent = parent[parts[i]];
+    	}
+
+    	return parent;
+	}
+	   
+  	Namespace.extend = function(destination, source) {
+  		return Lang.extend(destination, source);
+	}
+  
+})();

@@ -1,0 +1,5 @@
+<!--- TEMPLATENAME: desktopOnly.isml --->
+<isif condition="${empty(pdict.CurrentSession.custom.device)
+				|| pdict.CurrentSession.custom.device == 'desktop'}">
+<isreplace/>
+</isif>

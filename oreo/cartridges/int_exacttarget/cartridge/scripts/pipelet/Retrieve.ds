@@ -1,0 +1,46 @@
+/**
+* This pipelet executes retrieve request to the email subscription service
+*
+* @input Email: String The email of the user to retrive subscriptions for
+*
+* @output Subscriber : Object Exact Target Subscriber which conatins subscription data and subscribed list ids
+* @output Status : dw.system.Status The status of the request execution
+*/
+importPackage( dw.system );
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_featuretoggle:lib/FeatureToggleService.ds");
+
+importScript("int_exacttarget:objects/ExactTargetSubscriber.ds");
+importScript("int_exacttarget:SubscriptionService.ds");
+
+var ET_NS = integration.exacttarget;
+
+var FeatureToggleService = converse.featuretoggle.FeatureToggleService;
+var SubscriptionService = ET_NS.SubscriptionService;
+var ExactTargetSubscriber = ET_NS.objects.ExactTargetSubscriber;
+
+function execute(pdict : PipelineDictionary) : Number
+{
+    if (!FeatureToggleService.isFeatureEnabled("exact-target-service")) {
+        pdict.Subscriber = ExactTargetSubscriber.createNotFound();
+        pdict.Status = new Status(Status.OK);
+        return PIPELET_NEXT;
+    }
+
+    var email: String = pdict.Email;
+    var subscriptionService: Object = new SubscriptionService();
+
+    var exactTargetSubscriber: Object = subscriptionService.retrieve(email);
+    var status: Status = subscriptionService.getStatus();
+
+    pdict.Subscriber = exactTargetSubscriber;
+    pdict.Status = status;
+    
+    if (status.error) {
+        return PIPELET_ERROR;
+    }
+
+    return PIPELET_NEXT;
+}

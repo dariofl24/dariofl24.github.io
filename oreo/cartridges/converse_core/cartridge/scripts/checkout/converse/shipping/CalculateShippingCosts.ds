@@ -1,0 +1,29 @@
+/** 
+ *
+ * @input Basket: dw.order.Basket Basket object
+ * @input ApplicableShippingMethodsGroups: Object Shipping Method object
+ */
+ 
+importPackage(dw.order);
+importPackage(dw.util);
+
+importScript("converse_core:checkout/converse/shipping/classes/ShippingMethodsCalculator.ds");
+
+function execute(pdict: PipelineDictionary) : Number {
+	var basket: Basket = pdict.Basket;
+	var applicableShippingMethodsGroups = pdict.ApplicableShippingMethodsGroups;
+		
+	var calculator = new ShippingMethodsCalculator();
+	var shipments: Collection = basket.getShipments();
+	
+	for each(var shipment in shipments) {
+		var productType = shipment.custom.productType;
+		var methods = applicableShippingMethodsGroups.getShippingMethods(productType);
+		
+		for each(var method in methods) {
+			method.shippingCost = calculator.calculateShippingCost(shipment, method.shippingMethod, basket); 
+		}
+	}
+	
+    return PIPELET_NEXT;
+}

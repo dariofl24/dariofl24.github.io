@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+    <field formid="zip" 
+        label="forms.zippostalcode" 
+        type="string" 
+        mandatory="true" 
+        min-length="5" 
+        max-length="10" 
+        regexp="^(\d{5})(-\d{4})?$"
+        binding="postalCode" 
+        missing-error="forms.errorzip" 
+        range-error="forms.address.field.invalid" 
+        parse-error="forms.address.field.invalid" />
+
+    <field formid="phone"
+        label="profile.phone"
+        description="forms.address.phone.example"
+        type="string"
+        mandatory="true"
+        binding="phone"
+        max-length="20"
+        regexp="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"
+        missing-error="forms.address.phone.missing"
+        range-error="forms.address.field.invalid"/>
+
+    <field formid="country"
+        label="forms.country"
+        type="string"
+        default="US"
+        mandatory="true"
+        binding="countryCode"
+        missing-error="forms.address.country.missing"
+        value-error="forms.address.field.invalid">
+
+        <options>
+            <option optionid="US" label="country.unitedstates" value="US"/>
+        </options>  
+    </field>
+</form>

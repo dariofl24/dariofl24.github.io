@@ -1,0 +1,26 @@
+/**
+ * Aravato, the fullfiller for Converse EMEA cannot handle orders above a maximum
+ *
+ * @input Basket : dw.order.Basket
+ * @output CartIsFull : Boolean
+ */
+
+importPackage( dw.system );
+importPackage( dw.order );
+
+importScript("int_arvato:constants.ds");
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+    var basketMax : Number = arvato.constants.BasketMax;
+    if (pdict.Basket) { 
+        var basket : dw.order.Basket = pdict.Basket;
+        var basketQuantity : Number = basket.productQuantityTotal || 0;
+        if (basketMax <= basketQuantity) {
+            pdict.CartIsFull = true;
+        }
+    }
+    return PIPELET_NEXT;
+}
+
+

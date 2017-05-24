@@ -1,0 +1,43 @@
+/**
+ * @input Unit: Object
+ */
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.svc);
+importPackage(dw.net);
+
+importScript("module_test:Framework/Assert.ds");
+importScript("module_test:Framework/Unit.ds");
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libInheritance.ds");
+
+function execute( args : PipelineDictionary ) : Number
+{
+
+   args.Unit.describe("CreditCheck Test Suite")
+        .test("RiskCheck", function () {
+            var service : SOAPService = ServiceRegistry.get("CreditCheckService.riskCheck");
+            var result = service.setMock().call();
+
+            Assert.isTrue(result.isMockResult());
+
+            Assert.areEqual("OK", result.getStatus());
+
+            Assert.areEqual("0", result.getObject().code);
+            Assert.isTrue(result.getObject().creditAllowed);
+        })
+        .test("ConfirmOrders", function () {
+            var service : SOAPService = ServiceRegistry.get("CreditCheckService.confirmOrders");
+            var result = service.setMock().call();
+            
+            Assert.isTrue(result.isMockResult());
+            Assert.areEqual("OK", result.getStatus());
+            
+            Assert.areEqual("0", result.getObject().code);
+            Assert.areEqual("815", result.getObject().basketId);
+
+        });
+        
+   return PIPELET_NEXT;
+}

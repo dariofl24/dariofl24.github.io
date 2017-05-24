@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns="http://www.demandware.com/xml/impex/services/2014-09-26">
+    <service-credential service-credential-id="PayNext.test">
+        <url>https://test.arvato-payment.de/converse/Pmg.Site/V2/TransactionPaymentService</url>
+        <user-id>shop_CONVERSE</user-id>
+        <password masked="false">su4=$gSjF</password>
+    </service-credential>
+
+    <service-credential service-credential-id="creditcheck.integration">
+        <url>https://pi-int.arvato-systems.de/XISOAPAdapter/MessageServlet?senderParty=AZA&amp;senderService=EXTERN_AZA&amp;receiverParty=&amp;receiverService=&amp;interface=CreditCheckServiceSynchOut&amp;interfaceNamespace=http://arvato.com/Z_ARVATO_LS_ECOM/Shop/PaymentControl</url>
+        <user-id>CONV-INT</user-id>
+        <password masked="false">a3mUv%g!AJ</password>
+    </service-credential>
+
+    <service-credential service-credential-id="orderservice.test">
+        <url>https://esbtst.arvato-cp.com/ServiceProxyConverse/ConverseOrderService.svc</url>
+        <user-id>garbsen1\converse_test</user-id>
+        <password masked="false">$cnvtst2015%</password>
+    </service-credential>  
+
+    <service-credential service-credential-id="Hermes">
+        <url>http://psfinder.hermesworld.com/psfinder-rest-api-impl/rest/findParcelShopsByLocation?consumerName=EXT000921&amp;consumerPassword=a1cbfbdb33cb66840fb5f52dc46042fd</url>
+        <user-id></user-id>
+        <password masked="false"></password>
+    </service-credential>
+
+    <service-credential service-credential-id="Kiala">
+        <url>https://onlinetools.ups.com/rest/Locator</url>
+        <user-id/>
+        <password encrypted="true" encryption-type="common.export">3Kl7Kyql3uJHY/xgP9TTUNAwP6gwxkETC48tehjaGT4=</password>
+    </service-credential>
+
+    <service-credential service-credential-id="PostNL">
+        <url>https://testservice.postnl.com/CIF_SB/LocationWebService/1_1/LocationWebService.svc</url>
+        <user-id>C0nv3rse!!</user-id>
+        <password masked="false">k9XSf4a5WHq3c7</password>
+    </service-credential>
+
+    <service-profile service-profile-id="PayNext">
+        <timeout-millis>120000</timeout-millis>
+        <rate-limit-enabled>false</rate-limit-enabled>
+        <rate-limit-calls>0</rate-limit-calls>
+        <rate-limit-millis>0</rate-limit-millis>
+        <cb-enabled>false</cb-enabled>
+        <cb-calls>0</cb-calls>
+        <cb-millis>0</cb-millis>
+    </service-profile>
+
+    <service-profile service-profile-id="creditcheck.prof">
+        <timeout-millis>10000</timeout-millis>
+        <rate-limit-enabled>true</rate-limit-enabled>
+        <rate-limit-calls>10</rate-limit-calls>
+        <rate-limit-millis>10000</rate-limit-millis>
+        <cb-enabled>true</cb-enabled>
+        <cb-calls>10</cb-calls>
+        <cb-millis>10000</cb-millis>
+    </service-profile>
+
+    <service-profile service-profile-id="orderservice.prof">
+        <timeout-millis>300000</timeout-millis>
+        <rate-limit-enabled>true</rate-limit-enabled>
+        <rate-limit-calls>10</rate-limit-calls>
+        <rate-limit-millis>10000</rate-limit-millis>
+        <cb-enabled>true</cb-enabled>
+        <cb-calls>10</cb-calls>
+        <cb-millis>10000</cb-millis>
+    </service-profile>
+
+    <service-profile service-profile-id="Hermes">
+        <timeout-millis>10000</timeout-millis>
+        <rate-limit-enabled>true</rate-limit-enabled>
+        <rate-limit-calls>10</rate-limit-calls>
+        <rate-limit-millis>10000</rate-limit-millis>
+        <cb-enabled>true</cb-enabled>
+        <cb-calls>10</cb-calls>
+        <cb-millis>10000</cb-millis>
+    </service-profile>
+
+    <service-profile service-profile-id="Kiala">
+        <timeout-millis>10000</timeout-millis>
+        <rate-limit-enabled>true</rate-limit-enabled>
+        <rate-limit-calls>10</rate-limit-calls>
+        <rate-limit-millis>10000</rate-limit-millis>
+        <cb-enabled>true</cb-enabled>
+        <cb-calls>10</cb-calls>
+        <cb-millis>10000</cb-millis>
+    </service-profile>
+
+    <service-profile service-profile-id="PostNL">
+        <timeout-millis>10000</timeout-millis>
+        <rate-limit-enabled>true</rate-limit-enabled>
+        <rate-limit-calls>10</rate-limit-calls>
+        <rate-limit-millis>10000</rate-limit-millis>
+        <cb-enabled>true</cb-enabled>
+        <cb-calls>10</cb-calls>
+        <cb-millis>10000</cb-millis>
+    </service-profile>
+
+    <service service-id="PayNext.Authorize">
+        <service-type>SOAP</service-type>
+        <enabled>true</enabled>
+        <log-prefix>PAYNEXT-AUTHORIZE</log-prefix>
+        <comm-log-enabled>true</comm-log-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>PayNext</profile-id>
+        <credential-id>PayNext.test</credential-id>
+    </service>
+
+    <service service-id="PayNext.GetPaymentInfo">
+        <service-type>SOAP</service-type>
+        <enabled>true</enabled>
+        <log-prefix>PAYNEXT-GETPAYMENTINFO</log-prefix>
+        <comm-log-enabled>true</comm-log-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>PayNext</profile-id>
+        <credential-id>PayNext.test</credential-id>
+    </service>
+
+    <service service-id="PayNext.GetSecurityToken">
+        <service-type>SOAP</service-type>
+        <enabled>true</enabled>
+        <log-prefix>PAYNEXT-GETSECURITYTOKEN</log-prefix>
+        <comm-log-enabled>true</comm-log-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>PayNext</profile-id>
+        <credential-id>PayNext.test</credential-id>
+    </service>
+
+    <service service-id="PayNext.GetTransactionInfo">
+        <service-type>SOAP</service-type>
+        <enabled>true</enabled>
+        <log-prefix>PAYNEXT-TRANSACTIONINFO</log-prefix>
+        <comm-log-enabled>true</comm-log-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>PayNext</profile-id>
+        <credential-id>PayNext.test</credential-id>
+    </service>
+
+    <service service-id="PayNext.SavePayment">
+        <service-type>SOAP</service-type>
+        <enabled>true</enabled>
+        <log-prefix>PAYNEXT-SAVEPAYMENT</log-prefix>
+        <comm-log-enabled>true</comm-log-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>PayNext</profile-id>
+        <credential-id>PayNext.test</credential-id>
+    </service>
+
+    <service service-id="CreditCheckService.confirmOrders">
+        <service-type>SOAP</service-type>
+        <enabled>true</enabled>
+        <log-prefix>creditcheck</log-prefix>
+        <comm-log-enabled>true</comm-log-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>creditcheck.prof</profile-id>
+        <credential-id>creditcheck.integration</credential-id>
+    </service>
+
+    <service service-id="CreditCheckService.riskCheck">
+        <service-type>SOAP</service-type>
+        <enabled>true</enabled>
+        <log-prefix>creditcheck</log-prefix>
+        <comm-log-enabled>true</comm-log-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>creditcheck.prof</profile-id>
+        <credential-id>creditcheck.integration</credential-id>
+    </service>
+
+    <service service-id="OrderService.import">
+        <service-type>SOAP</service-type>
+        <enabled>true</enabled>
+        <log-prefix>orderservice</log-prefix>
+        <comm-log-enabled>true</comm-log-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>orderservice.prof</profile-id>
+        <credential-id>orderservice.test</credential-id>
+    </service>    
+
+    <service service-id="HermesService.findParcelShopsByLocation">
+        <service-type>HTTP</service-type>
+        <enabled>true</enabled>
+        <log-prefix></log-prefix>
+        <comm-log-enabled>true</comm-log-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>Hermes</profile-id>
+        <credential-id>Hermes</credential-id>
+    </service>
+
+    <service service-id="KialaService.kplist">
+        <service-type>HTTP</service-type>
+        <enabled>true</enabled>
+        <log-prefix></log-prefix>
+        <comm-log-enabled>true</comm-log-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>Kiala</profile-id>
+        <credential-id>Kiala</credential-id>
+    </service>
+
+    <service service-id="PostNLLocationService.GetNearestLocations">
+        <service-type>SOAP</service-type>
+        <enabled>true</enabled>
+        <log-prefix></log-prefix>
+        <comm-log-enabled>true</comm-log-enabled>
+        <mock-mode-enabled>false</mock-mode-enabled>
+        <profile-id>PostNL</profile-id>
+        <credential-id>PostNL</credential-id>
+    </service>
+</services>

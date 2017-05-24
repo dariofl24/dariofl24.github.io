@@ -1,0 +1,10 @@
+<isscript>
+       importScript("util/HTMLLinkInfoGenerator.ds");
+       var currentSiteId = Site.getCurrent().getID();
+       var currentLocale = pdict.CurrentRequest.getLocale();
+       var htmlLinkInfoGenerator = new converse.utils.HTMLLinkInfoGenerator( currentSiteId, currentLocale );
+       var alternateLinksList = htmlLinkInfoGenerator.getAlternateLinks( pdict );
+</isscript>
+<isloop iterator = "${alternateLinksList}" alias="alternateLink">
+    <link rel="${alternateLink.getRel()}" hreflang="${alternateLink.getHrefLang()}" href="${alternateLink.getHref()}"/>
+</isloop>

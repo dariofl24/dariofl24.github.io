@@ -1,0 +1,92 @@
+/**
+ * This script calculates the total amount of an order that will be paid 
+ * for by gift card payment instruments. The remaining open amount  
+ * (if there is any) will be applied to the non-gift card payment 
+ * instrument (such as a credit card).
+ * Note, that this script assumes that only one non-gift card payment
+ * instrument is used for the payment.
+ *
+ * @input Basket : dw.order.Basket The basket to calculate the payment transaction totals for. 
+ * @output PaymentStatus : dw.system.Status
+ */
+importPackage( dw.system );
+importPackage( dw.order );
+importPackage( dw.value );
+importPackage( dw.util );
+
+importScript("checkout/Utils.ds");
+importScript("converse_core:constants.ds");
+importScript("checkout/giftcard/GiftCardPayment.ds");
+
+var GiftCardPayment = converse.order.GiftCardPayment;
+
+function execute( pdict : PipelineDictionary ) : Number
+{
+    var basket : Basket = pdict.Basket;
+
+	// make sure, we have a basket at all
+    if( basket == null ) 
+    {
+    	pdict["PaymentStatus"] = new Status(Status.ERROR);
+    	return PIPELET_ERROR;
+    }
+
+    // get all payment instruments for the basket
+	var nonGCPaymentInstrument : OrderPaymentInstrument = getNonGiftCardPaymentInstrument(basket);
+	var giftCardTotal : Money = GiftCardPayment.calculateGiftCardAmount( basket );; 
+  
+    // get the order total
+	var orderTotal : Money = basket.totalGrossPrice;
+
+    // if we found gift certificate payment and non-gift card payment 
+    // instrument we are done
+    if( !nonGCPaymentInstrument )
+    {
+    	// if we have no other payment types and the gift card
+    	// doesn't cover the order we need to error out.
+    	if ( giftCardTotal < orderTotal )
+    	{
+    		pdict["PaymentStatus"] = new Status(Status.ERROR);
+    		return PIPELET_ERROR
+    	}
+    	else
+    	{  		
+    		return PIPELET_NEXT;
+    	}
+    }
+
+	// calculate the amount to be charged for the 
+	// non-gift certificate payment instrument
+	var amount : Money = GiftCardPayment.calculateNonGiftCardAmount( basket );
+		
+    // now set the non-gift card payment instrument total.
+    if( amount.value <= 0.0 )
+    {
+   		var zero : Money = new Money( 0, amount.getCurrencyCode() );
+	    nonGCPaymentInstrument.paymentTransaction.setAmount( zero );
+    }
+    else
+    {
+        nonGCPaymentInstrument.paymentTransaction.setAmount( amount );
+    }
+    	
+    return PIPELET_NEXT;
+}
+
+function getNonGiftCardPaymentInstrument(basket : Basket) 
+{
+    var paymentInstruments : Collection = basket.getPaymentInstruments();
+    var iter : Iterator = paymentInstruments.iterator();
+    var paymentInstrument : OrderPaymentInstrument = null;
+    
+    while( iter.hasNext() )
+    {
+    	paymentInstrument = iter.next();
+    	if( GiftCardPayment.METHOD_GIFT_CARD !== paymentInstrument.paymentMethod )
+    	{
+    		return paymentInstrument;
+    	}	
+    } 
+    
+    return null; 
+}

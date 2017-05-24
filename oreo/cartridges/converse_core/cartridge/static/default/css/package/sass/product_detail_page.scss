@@ -1,0 +1,537 @@
+@import "_constants";
+@import "_conv_mixins";
+@import "_sprites";
+@import "_base_selectbox";
+@import "_media_query";
+@import "compass/css3/box-sizing";
+@import "compass/css3/border-radius";
+@import "compass/utilities/general/clearfix";
+@import "compass/typography/text/replacement";
+@import "pdp/featured";
+@import "pdp/left_rail";
+@import "pdp/top_bar";
+@import "pdp/product_content";
+@import "pdp/detail_slider";
+
+$PRODUCT_DETAIL_WIDTH: 200;
+$PRODUCT_OPTIONS_WIDTH: 100;
+$PRODUCT_CONTENT_WIDTH: 520;
+$PRODUCT_CONTENT_LEFT_MARGIN: 140;
+$PRODUCT_CONTENT_RIGHT_MARGIN: 0;
+
+.builder-design-message {
+    width: 900px;
+    margin: 20px auto;
+    margin-top: 0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: $CONVERSE_COLOR_1;
+    color: $CONVERSE_COLOR_12;
+    font-family: $CONVERSE_FONT_FAMILY_PDP;
+    overflow: hidden;
+
+    @include mq-medium-cascade {
+        width: 90%;
+        margin: 0 5%;
+        padding: 10px 20px;
+        border-radius: 0;
+        box-sizing: border-box;
+    }
+
+    p {
+        text-align: left;
+
+        @include mq-medium-cascade {
+            text-align: center;
+        }
+    }
+
+    .left-container {
+        width: 300px;
+        float: left;
+        font-size: 24px;
+        line-height: 40px;
+        text-transform: uppercase;
+
+        @include mq-medium-cascade {
+            width: 100%;
+        }
+    }
+
+    .right-container {
+        width: 600px;
+        float: right;
+        font-size: 13px;
+        letter-spacing: 1px;
+        line-height: 20px;
+
+        @include mq-medium-cascade {
+            width: 100%;
+        }
+    }
+}
+
+.html-builder-white-overlay {
+    background: #FFFFFF;
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+}
+
+.htmlbuilder-popup {
+    position: relative;
+    margin: 0 auto;
+    background: $CONVERSE_COLOR_12;
+    padding: 50px;
+    border: 1px solid #C1C1C1;
+    border-radius: 5px;
+    font-family: $CONVERSE_FONT_FAMILY_PDP;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+
+    @include mq-small {
+        margin-top: 100px;
+        margin-bottom: 20px;
+    }
+
+    > div {
+        overflow: hidden;
+    }
+
+    h2 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        line-height: 30px;
+    }
+
+    h3 {
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 24px;
+        color: $CONVERSE_COLOR_5;
+    }
+
+    .button {
+        width: 100%;
+        height: 35px;
+        padding: 0;
+        border-radius: 5px;
+        font-family: $CONVERSE_FONT_FAMILY_PDP;
+        font-size: 15px;
+        font-weight: 200;
+        line-height: 35px;
+        text-transform: none;
+    }
+}
+
+#pdp-generic-popup {
+    width: 500px;
+    text-align: center;
+
+    h2 {
+        margin: 0;
+    }
+}
+
+#pdp-review-and-confirm-container {
+    max-width: 970px;
+
+    ul {
+        text-align: center;
+        padding: pxtoem(40) 0em;
+
+        li {
+            display: inline-block;
+            margin-right: pxtoem(20);
+            margin-bottom: pxtoem(10);
+
+            img {
+                padding-bottom: pxtoem(15);
+            }
+
+            p {
+                color: $CONVERSE_COLOR_5;
+            }
+        }
+    }
+
+    .button-row {
+        width: 325px;
+        margin: 0 auto;
+
+        @include mq-small {
+            width: 100%;
+        }
+
+        a {
+            &.edit-design {
+                width: 150px;
+                float: left;
+
+                @include mq-small {
+                    width: 100%;
+                    margin-bottom: 16px;
+                }
+            }
+
+            &.confirm-design {
+                width: 150px;
+                float: right;
+
+                @include mq-small {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+#pdp-save-design-container,
+#pdp-email-design-container {
+    max-width: 720px;
+
+    .form-container {
+        overflow: hidden;
+        text-align: left;
+
+        @include mq-small {
+            text-align: center;
+        }
+
+        .dyo-shoe-image {
+            float: left;
+
+            @include mq-small {
+                float: none;
+            }
+        }
+
+        form {
+            width: 250px;
+            float: right;
+            margin-top: 60px;
+
+            @include mq-small {
+                width: 100%;
+            }
+
+            label {
+                font-size: 16px;
+                font-weight: normal;
+                text-transform: none;
+            }
+
+            input,
+            textarea {
+                height: 35px;
+                border-radius: 5px;
+                font-family: $CONVERSE_FONT_FAMILY_PDP_2;
+            }
+
+            .field-caption {
+                margin-bottom: 16px;
+                color: #8B8B8B;
+                font-size: 10px;
+            }
+        }
+    }
+}
+
+.pt_productdetails {
+    -webkit-font-smoothing: antialiased;
+
+    .hc {
+        margin: 0 auto;
+        @include clearfix;
+    }
+
+    .product-price {
+        color: $CONVERSE_COLOR_1;
+    }
+
+    .pdp-main {
+        font-family: $CONVERSE_FONT_FAMILY_PDP;
+
+        .regular {
+
+            span.customSelectInner {
+                @extend %double-arrow-selectbox;
+            }
+        }
+
+        .no-gigya-integration{
+            margin: 0;
+        }
+
+        .product-logo {
+            margin: 0 auto;
+            margin-top: 1em;
+
+            @each $brand in jack-purcell, cons, all-star {
+                &.brand-#{$brand} {
+                    background: sprite($SPRITEGRAPHICS, converse-#{$brand}-logo);
+                    @include sprite-dimensions($SPRITEGRAPHICS, converse-#{$brand}-logo)
+                }
+            }
+        }
+
+        .product-options .container {
+            width: 100%;
+        }
+
+        .dyo {
+            #flash-builder-container{
+                margin: pxtoem(0) auto;
+                width: 100%;
+                text-align: center;
+            }
+
+            #no-flash-content {
+                width: pxtoem(1000);
+                height: pxtoem(420);
+                display: none;
+                background: $CONVERSE_COLOR_1;
+                margin: 0 auto;
+                padding-left: pxtoem(60);
+                text-align: left;
+                text-transform: uppercase;
+                @include box-sizing(border-box);
+                @include clearfix;
+
+                .reqiured-message {
+                    $font-size: $FONT_SIZE_2;
+                    font-size: pxtoem($font-size);
+                    color: $CONVERSE_COLOR_12;
+                    margin-top: pxtoembase(255, $font-size);
+                }
+
+                .download-link {
+                    margin-top: pxtoem(5);
+
+                    a {
+                        $font-size: $FONT_SIZE_2;
+                        font-size: pxtoem($font-size);
+                        color: $CONVERSE_COLOR_7;
+                    }
+                }
+            }
+
+            #html-builder-container{
+                @include media-query-gt(pxtoem($THRESHOLD_MEDIUM_A)) {
+                    min-height: pxtoem(550);
+                    padding-top: 105px;
+                }
+
+                @include media-query-lt(pxtoembase($THRESHOLD_MEDIUM_A, $THRESHOLD_BASE_PX)) {
+                    .product-title {
+                        .product-name.single-line {
+                            font-size: 1.3em;
+                        }
+
+                        .product-price {
+                            font-size: 1.2em;
+                        }
+                    }
+                }
+
+                position: relative;
+
+                .product-name.multi-line {
+                    display: none;
+                }
+
+                .product-name.single-line {
+                    @include media-query-lt(pxtoembase($THRESHOLD_MEDIUM_A, $THRESHOLD_BASE_PX)) {
+                        font-size: 1.3em;
+                    }
+                }
+
+                .product-name {
+                    $font-size: 18;
+                    font-size: pxtoem($font-size);
+                    line-height: pxtoembase(18, $font-size);
+                }
+
+                .product-price {
+                    $font-size: 16;
+                    font-size: pxtoem($font-size);
+                    margin-top: pxtoembase(10, $font-size);
+                    font-weight: bold;
+
+                    @include media-query-lt(pxtoembase($THRESHOLD_MEDIUM_A, $THRESHOLD_BASE_PX)) {
+                        font-size: 1.2em;
+                    }
+                }
+
+                .product-title {
+                    position: absolute;
+                    padding: 10px;
+                    left: 59px;
+                    top: pxtoem(20);
+                    text-align: left;
+                    box-sizing: border-box;
+                    z-index: 20;
+
+                    @include media-query-gt(pxtoem($THRESHOLD_LARGE)) {
+                        border: 1px solid #D1D1D1;
+                        border-radius: 5px;
+                        width: 250px;
+                    }
+
+                    @include media-query-lt(pxtoem($THRESHOLD_MEDIUM_A)) {
+                        position: relative;
+                        left: 0px;
+                        width: 85%;
+                        text-align: left;
+                        margin-left: 40px;
+                    }
+                }
+
+                iframe {
+                    z-index: 10;
+                    position: relative;
+                }
+
+                .estimated-delivery {
+                    position: absolute;
+                    width: 250px;
+                    bottom: 25px;
+                    z-index: 10;
+                    left: 59px;
+                    font-weight: bold;
+                    color: $CONVERSE_COLOR_1;
+                    font-size: 12px;
+
+                    @include mq-medium-cascade {
+                        display: none;
+                    }
+
+                    .content-asset {
+                        text-align: center;
+                    }
+                }
+
+                #size-chart-message {
+                    position: absolute;
+                    bottom: 40px;
+                    left: 152px;
+                    z-index: 30;
+
+                    @include mq-medium-cascade {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#size-chart-message {
+    padding: 0 0 pxtoem(16) 0;
+    clear: both;
+
+    &.collapsed {
+        padding: 0;
+    }
+
+    $font-size: 12;
+    font-size: pxtoem($font-size);
+    text-align: left;
+    line-height: pxtoembase(15, $font-size);
+
+    .size-chart-message-text {
+        font-weight: normal;
+    }
+
+    .size-chart-message-actions {
+        font-weight: bold;
+    }
+
+    .size-chart a, .size-chart-link a {
+        text-decoration: underline;
+        color: $CONVERSE_COLOR_PDP_5;
+        font-weight: bold;
+
+        &:hover {
+            color: $CONVERSE_COLOR_1;
+        }
+    }
+}
+
+#pdp-shipping-popup {
+    position: relative;
+    max-width: 680px;
+    margin: 0 auto;
+    background-color: $CONVERSE_COLOR_12;
+    font-family: $CONVERSE_FONT_FAMILY_PDP;
+
+    .container {
+        max-width: 380px;
+        margin: 0 auto;
+        padding: 85px 0px;
+        text-align: center;
+    }
+
+    h3 {
+        font-weight: bold;
+        font-size: 23px;
+        margin-bottom: 70px;
+    }
+
+    .line-br {
+        width: 50px;
+        height: 1px;
+        margin: 0 auto;
+        background-color: $CONVERSE_COLOR_PDP_2;
+    }
+
+    .pdp-shipping-section {
+        margin: 30px 0;
+
+        &:first-of-type {
+            margin-top: 0;
+        }
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .pdp-shipping-title {
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        p {
+            line-height: 24px;
+        }
+    }
+}
+
+.is-model-image {
+    margin-top: pxtoem(25) !important;
+
+    @include mq-medium-cascade() {
+        margin-top: pxtoem(30) !important;
+    }
+}
+
+
+.ie8 {
+    .pt_productdetails {
+        .product-thumbnails li img {
+            width: auto;
+        }
+    }
+}
+
+#pdp-size-chart-popup {
+    .size-chart-container {
+        @include mq-large {
+            max-width: pxtoem(920);
+            margin: pxtoem(180) auto;
+        }
+    }
+}
+
+
+@include select-size-quantity();

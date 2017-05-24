@@ -1,0 +1,46 @@
+/**
+*  @input CustomerAddressForm : dw.web.Form UPS Customer Address Form
+*  @output UPSResult : Object The result of the UPS service call
+*/
+
+importPackage(dw.util);
+importPackage(dw.system);
+importPackage(dw.web);
+
+importScript("converse_core:constants.ds");
+
+importScript("int_ups:objects/Address.ds");
+importScript("int_ups:objects/Dimensions.ds");
+importScript("int_ups:UPSService.ds");
+
+function execute(args : PipelineDictionary) : Number {
+
+    var shipFromAddress = getShipFromAddress(args.CustomerAddressForm),
+        packageInfo = getPackageInfo();
+    
+    var upsService = new integration.ups.UPSService();
+    
+    args.UPSResult = upsService.getReturnShippingLabel(shipFromAddress, packageInfo);
+    
+    return empty(args.UPSResult.errorCode) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function getShipFromAddress(addressForm : Form) {
+    var Address = integration.ups.objects.Address;
+    
+    return Address.create(addressForm.common.firstname.value + " " + addressForm.common.lastname.value,
+                          addressForm.common.address1.value,
+                          addressForm.common.address2.value,
+                          addressForm.common.city.value,
+                          addressForm.state.value,
+                          addressForm.regional.zip.value);
+}
+
+function getPackageInfo() {
+    var description = integration.ups.UPSService.DEFAULT_PACKAGE_DESCRIPTION,
+        packagingCode = integration.ups.UPSService.DEFAULT_PACKAGING_CODE,
+        dimensions = integration.ups.objects.Dimensions.create(10, 10, 10),
+        weight = 3;
+    
+    return integration.ups.objects.PackageInfo.create(description, packagingCode, dimensions, weight);
+}

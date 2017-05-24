@@ -1,0 +1,299 @@
+/**
+* Export Performics
+*
+* @input ExportFile : String The export file name
+*
+* @output ErrorMsg : String The error message if any
+*/
+
+importPackage(dw.io);
+importPackage(dw.order);
+importPackage(dw.system);
+importPackage(dw.util);
+importPackage(dw.catalog);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:product/ProductUtils.ds");
+importScript("converse_core:product/ProductImageResolver.ds");
+importScript("converse_core:product/PriceResolver.ds");
+
+var logger : Logger = Logger.getLogger('ExportPerformics');
+var ProductImageResolver = converse.product.ProductImageResolver;
+var PriceResolver = converse.product.PriceResolver;
+var options = {
+    "site_url": "http://www.converse.com",
+    "site_title": "Converse",
+    "site_email": "estore@converse.com",
+    "keywords": "converse\tconverse shoes\tchuck taylor\ticon loaded weapon\tjack purcell\tconverse sneakers\tconverse basketball shoes\tconverse hi tops\tbuy converse\tconverse inc.\tbuy converse shoes\tconverses\tclassic shoe\tChuck Taylor\tall star",
+    "logo_image_url": "http://www.converse.com/on/demandware.static/Sites-converse-gb-Site/-/default/images/headerLogo.png",
+    "payment_methods": "VISA\tMASTERCARD\tAMEX\tDISCOVER",
+    "states": "AL\tAK\tAS\tAZ\tAR\tCA\tCO\tCT\tDE\tDC\tFL\tGA\tHI\tID\tIL\tIN\tIA\tKS\tKY\tLA\tME\tMD\tMA\tMI\tMN\tMS\tMO\tMT\tNE\tNV\tNH\tNJ\tNM\tNY\tNC\tND\tOH\tOK\tOR\tPA\tRI\tSC\tSD\tTN\tTX\tUT\tVT\tVA\tWA\tWV\tWI\tWY"
+};
+
+function execute(args : PipelineDictionary) : Number
+{
+    try {
+        let products = ProductMgr.queryAllSiteProducts();
+        
+        writeProductsToPerformicsFile(args.ExportFile, products);
+    } catch(e) {
+        args.ErrorMsg = e.toString();
+        logger.error(args.ErrorMsg);
+    }
+
+    return empty(args.ErrorMsg) ? PIPELET_NEXT : PIPELET_ERROR;
+}
+
+function writeProductsToPerformicsFile(fileName : String, products : SeekableIterator) {
+    let writer : FileWriter = null;
+    let count = products.count;
+    let header = getHeader(count);
+    
+    try {
+        writer = new FileWriter(new File(fileName));
+        
+        writer.writeLine(header);
+        writer.writeLine("");
+
+        while (products.hasNext()) {
+            let product = products.next();
+
+            if (shouldBeExported(product)) {
+                let line = getProduct(product);
+
+                writer.writeLine(line);
+            }
+        }
+    } finally{
+        if (writer) {
+            writer.close();
+        }
+
+        if (products) {
+            products.close();
+        }
+    }
+}
+
+function shouldBeExported(product) {
+    return product.online && product.variant;
+}
+
+function getHeader(count) : String {
+    values = [
+        StringUtils.formatCalendar(System.calendar, "YYYYMMdd  HH:mm:ss"),
+        'K20263',
+        '2.0',
+        count,
+        options['keywords'],
+        options['site_email'],
+        options['site_url'],
+        options['site_title'],
+        options['logo_image_url'],
+        'ONLINESTORE',
+        options['payment_methods'],
+        'YES',
+        'NO',
+        'NO',
+        'NO',
+        'NO',
+        'US',
+        options['states'],
+        'N/A',
+        'COLOR',
+        'SIZE',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A',
+        'N/A'
+    ];
+
+    return values.join("\n");
+}
+
+function getProduct(product) {
+    let productUrl = ProductUtils.getProductLink(product.ID);
+    let productImageUrl = getProductImageUrl(product);
+    let pricing = PriceResolver.getProductPricing(product);
+    let price = PriceResolver.isStandardPriceAvailable(pricing) ? pricing.standardPriceFormatted : '';
+    let salePrice = PriceResolver.isSalesPriceAvailable(pricing) ? pricing.salesPriceFormatted : '';
+    let inStock = product.availabilityModel.orderable ? 'YES' : 'NO';
+    let description = stripWhitespace(removeTags(empty(product.shortDescription) ? '' : product.shortDescription.source));
+    let metaKeywords = stripWhitespace(product.custom.metaSearchText);
+
+    values = [
+        product.ID,    // product id
+        product.name,    // product name
+        productUrl,    // product url
+        productUrl,    // buy url
+        productImageUrl,    // image url
+        getCategory(product),    // category
+        '',    // category id
+        '',    // PFX_category
+        '',    // Prd_Map_1798
+        ellipse(description, 180),    // brief description
+        ellipse(description, 240),    // short description
+        ellipse(description, 480),    // medium description
+        description,    // full description
+        metaKeywords,    // product keywords
+        'CONVERSE',    // brand
+        'CONVERSE',    // manufacturer
+        '',    // manfid
+        '',    // manufacturer_model
+        product.UPC,    // UPC
+        '',    // platform
+        '',    // media_type_desc
+        '',    // merchandise type
+        price,    // price
+        salePrice,    // clearance price
+        '',    // Variable_Commission
+        '',    // SubFeedID
+        inStock,    // In_Stock
+        '',    // Inventory
+        '',    // Remove_Date
+        '',    // Rew_points
+        'NO',    // partner_specific
+        '',    // Ship_Avail
+        '',    // Ship_Cost
+        '',    // Shipping_is_absolute
+        '',    // Shipping weight
+        '',    // Ship Needs
+        '',    // Ship_Promo_text
+        '',    // Product_Promo_Text
+        '',    // Daily_specials_indicator
+        '',    // Gift_boxing
+        '',    // Gift_wrapping
+        '',    // Gift_messaging
+        '',    // Product_container_name
+        '',    // Cross_selling_reference
+        '',    // Alt_image_prompt
+        '',    // Alt_image_URL
+        '',    // Age_range_min
+        '',    // Age_range_max
+        '',    // ISBN
+        '',    // Title
+        '',    // Publisher
+        '',    // Author
+        '',    // Genre
+        '',    // Media
+        '',    // Material
+        '',    // Permutation_color
+        '',    // Permutation_size
+        '',    // Permutation_weight
+        '',    // Permutation_item_price
+        '',    // Permutation_sale_price
+        '',    // Permutation_inventory_status
+        '',    // Permutation
+        '',    // Permutation_SKU
+        '',    // Base_Product_ID
+        product.custom.color,    // Option1_Value
+        product.custom.size,    // Option2_Value
+        '',    // Option3_value
+        '',    // Option4_Value
+        '',    // Option5_value
+        '',    // Option6_Value
+        '',    // Option7_Value
+        '',    // Option8_Value
+        '',    // Option9_Value
+        '',    // Option10_Value
+        '',    // Option11_Value
+        '',    // Option12_Value
+        '',    // Option13_Value
+        '',    // Option14_Value
+        '',    // Option15_Value
+        '',    // Option16_Value
+        '',    // Option17_Value
+        '',    // Option18_Value
+        '',    // Option19_Value
+        '',    // Option20_Value
+        ''
+    ];
+
+    result = values.map(function(e) { return empty(e) ? '' : e.toString(); }).join("\t");
+    
+    return stripNewLines(result);
+}
+
+function getProductImageUrl(product) {
+    let imageUrl = ProductImageResolver.getProductImage(product, 'large', 0);
+
+    return empty(imageUrl) ? '' : imageUrl.getURL();
+}
+
+function removeTags(value) {
+    return empty(value) ? value : value.replace(/<\/?.*?>/g, '');
+}
+
+function stripNewLines(value) {
+    return empty(value) ? value : value.replace(/\r/g, ' ').replace(/\n/g, ' ');
+}
+
+function stripWhitespace(value) {
+    return empty(value) ? value : value.replace(/\s+/g, ' ');
+}
+
+function ellipse(text, length) {
+    let ellipsis = '...';
+    let result = text;
+
+    if (!empty(text) && text.length > length) {
+        max = length - ellipsis.length - 1;
+        result = text.substring(0, max) + ' ' + ellipsis;
+    }
+
+    return result;
+}
+
+function getCategory(product) {
+    let result = [];
+    let gender = getGender(product);
+    let pillar = product.masterProduct.custom.pillar 
+    let category = product.masterProduct.custom.merchPlannerCategory
+
+    addIfNotEmpty(gender, result);
+    addIfNotEmpty(pillar, result);
+    addIfNotEmpty(category, result);
+
+    return result.length === 0 ? 'Converse' : result.join(', ');
+}
+
+function getGender(product) {
+    let gender = product.masterProduct.custom.gender;
+    let result = '';
+
+    switch(gender) {
+        case 'men':
+            result = "Men's";
+            break;
+        case 'women':
+            result = "Women's";
+            break;
+        case 'kids':
+            result = "Kid's";
+            break;
+        case 'unisex':
+            result = 'Unisex';
+    }
+
+    return result;
+}
+
+function addIfNotEmpty(value, arr) {
+    if (!empty(value)) {
+        arr.push(value);
+    }
+}

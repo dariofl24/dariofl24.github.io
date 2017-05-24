@@ -1,0 +1,53 @@
+importPackage(dw.system);
+importPackage(dw.value);
+importPackage(dw.util);
+
+importScript("converse_core:constants.ds");
+importScript("converse_core:common/libNamespace.ds");
+importScript("converse_webservices:service/command/HttpClientCommand.ds");
+
+importScript("int_nike:profane/objects/RequestGenerator.ds");
+importScript("int_nike:profane/objects/ResponseParser.ds");
+
+(function(){
+    var RequestGenerator = integration.nike.profanecheck.RequestGenerator;
+    var ResponseParser = integration.nike.profanecheck.ResponseParser;
+
+    var IsProfane = converse.webservices.command.HttpClientCommand.extend({
+        init: function(words : Array) {
+            this.words = words;
+            this.logger = Logger.getLogger("PROFANE");
+        },
+        
+        createRequest: function () {
+            this.requestObject = new RequestGenerator(this.words);
+            return this.requestObject;
+        },
+        
+        execute: function(request) {
+            let url = this.configuration.nikeidDomain + this.configuration.isProfaneUri;
+            let data = request.getParameters(); 
+
+            this.logger.info("Requesting profane service with parameter: {0}", data.xml);
+
+            let response = this.doPost(url, this.encodeParameters(data));
+            
+            this.logger.info("Response {0} got from Nike", response);
+            
+            return response;
+        },
+        
+        handleResponse: function(response) {
+            this._super(response);
+            this.responseObject = new ResponseParser(response);
+            return response;
+        },
+        
+        hasError: function() {
+            return this._super() || this.responseObject.hasError();
+        }
+    });
+    
+    var ns = Namespace.extendFromString(integration, "nike.profanecheck");
+    Namespace.extend(ns, { IsProfane: IsProfane });
+})();

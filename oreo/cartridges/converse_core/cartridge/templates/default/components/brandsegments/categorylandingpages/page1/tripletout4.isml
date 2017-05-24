@@ -1,0 +1,13 @@
+<isdecorate template="components/brandsegments/pt_brandsegment1">
+    <isdecorate template="components/brandsegments/pt_bslarge">
+        <isdecorate template="components/brandsegments/pt_hover">
+            <isslot id="clp-1-large-tripletout-4-hover" description="large: right tout slot hover" context="global" />
+        </isdecorate>
+        <isdecorate template="components/brandsegments/pt_standard">
+            <isslot id="clp-1-large-tripletout-4" description="large: right tout slot" context="global" />
+        </isdecorate>
+    </isdecorate>
+    <isdecorate template="components/brandsegments/pt_bssmall">
+        <isslot id="clp-1-small-tripletout-4" description="small: right side tout slot" context="global" />
+    </isdecorate>
+</isdecorate>
