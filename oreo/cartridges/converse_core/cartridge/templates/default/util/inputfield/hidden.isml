@@ -1,7 +1,0 @@
-<input class="input-hidden ${html.class}"
-    type="hidden"
-    name="${html.name}"
-    id="${html.id}"
-    value="${html.value}"
-    <isprint value="${html.attributes}" encoding="off" />
-/>

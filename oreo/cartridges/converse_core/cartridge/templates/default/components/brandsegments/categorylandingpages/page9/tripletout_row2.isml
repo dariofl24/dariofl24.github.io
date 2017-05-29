@@ -1,5 +1,0 @@
-<isdecorate template="components/brandsegments/pt_triplebrandsegment">
-    <isinclude template="components/brandsegments/categorylandingpages/page9/tripletout4"/> 
-    <isinclude template="components/brandsegments/categorylandingpages/page9/tripletout5"/> 
-    <isinclude template="components/brandsegments/categorylandingpages/page9/tripletout6"/>
-</isdecorate>

@@ -1,6 +1,0 @@
-<iscomment>This will load a template for all content</iscomment>
-<ismodule
-    template="${Resource.msg('adaptiveImages.standard','decorators',null)}"
-    name="adaptiveimg"
-    attribute="src"
-    attribute="classname"/>

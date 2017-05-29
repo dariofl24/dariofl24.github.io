@@ -1,7 +1,0 @@
----
-:remote_host: 'ftp1.arvato-cp.com' 
-:user: 'TacitConverseUAT-sftp1'
-:password: '52FR7D5q'
-:remote_dir: 'to_Tacit/Inventory'
-:local_dir: '/home/arvato/drop_off/'
-

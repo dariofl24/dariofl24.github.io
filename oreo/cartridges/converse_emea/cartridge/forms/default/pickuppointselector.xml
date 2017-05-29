@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
-    <field formid="selectedShippingType" type="string" default-value="home" binding="custom.shippingType"/>
-    <field formid="pickupPointID" type="string"/>
-    <field formid="pickupPointName" type="string"/>
-    <field formid="pickupPointCarrier" type="string"/>
-</form>

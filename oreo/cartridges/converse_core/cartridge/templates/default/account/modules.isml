@@ -1,9 +1,0 @@
-<ismodule template="account/addressbook/addressdetail"
-    name="addressdetail"
-    attribute="p_address"
-/>
-
-<ismodule template="account/addressbook/addressedit"
-    name="addressedit"
-    attribute="p_action"
-/>

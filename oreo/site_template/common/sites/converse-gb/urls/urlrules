@@ -1,7 +1,0 @@
-/share/*/* p,,,Product-ShareLink,,pid,{0},metricId,{1}
-/share/* p,,,Product-ShareLink,,pid,{0}
-
-/* p,,,CountryLanguageSelector-Start
-
-/products/shoes/all/**?** p,,,Sampler-SkuRedirect,,sku,{0}
-/products/shoes/all/** p,,,Sampler-SkuRedirect,,sku,{0}

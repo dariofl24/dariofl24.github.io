@@ -1,5 +1,0 @@
-<div class="more-results">
-    <a id="moreresults" href="${pdict.p_viewmore.url}">
-        <span>${Resource.msg('search.productgridviewmore.viewmore','search',null)}</span>
-    </a>
-</div>

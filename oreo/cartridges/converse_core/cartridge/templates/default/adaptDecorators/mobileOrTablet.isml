@@ -1,5 +1,0 @@
-<!--- TEMPLATENAME: mobileOrTablet.isml --->
-<isif condition="${pdict.CurrentSession.custom.device == 'tablet'
-				||	pdict.CurrentSession.custom.device == 'mobile'}">
-<isreplace/>
-</isif>

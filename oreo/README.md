@@ -1,5 +1,0 @@
-confoo
-======
-
-Patience, little grasshopper.
-

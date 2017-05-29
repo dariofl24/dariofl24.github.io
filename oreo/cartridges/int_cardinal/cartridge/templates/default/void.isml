@@ -1,7 +1,0 @@
-<!--- TEMPLATENAME: order.isml --->
-<br/>
-Void Response:
-<pre>
-<div>stringify</div>
-<isprint value="${JSON.stringify(pdict.CentinelVoidResult)}"/>
-</pre>

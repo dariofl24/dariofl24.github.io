@@ -1,5 +1,0 @@
-<isif condition="${(pdict.CurrentHttpParameterMap.cgid.submitted && pdict.CurrentHttpParameterMap.cgid.value != '')}">
-    <link rel="canonical" href="${URLUtils.abs('Search-Show','cgid', pdict.CurrentHttpParameterMap.cgid)}" />
-<iselse>
-    <link rel="canonical" href="${URLUtils.abs('Search-Show')}" />
-</isif>

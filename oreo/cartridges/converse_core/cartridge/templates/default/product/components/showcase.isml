@@ -1,9 +1,0 @@
-<div class="showcase-product-attributes">
-	<div class="showcase-product-message">
-		<span class="showcase-product-hero-message">${Resource.msg('showcase.header', 'product', null)}</span><br/>
-		<span>${Resource.msg('showcase.message', 'product', null)}</span>
-	</div>
-	<div class="showcase-product-button">
-		<a href="${URLUtils.http('StoreLocator-Show')}" class="button">Store Locator</a>
-	</div>
-</div>

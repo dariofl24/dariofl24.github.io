@@ -1,5 +1,0 @@
-<isdecorate template="checkout/pt_giftcard">
-    <activetab data-active-tab="#checkgc-view"></activetab>
-    
-    <isinclude template="components/giftcardbalance"/>
-</isdecorate>

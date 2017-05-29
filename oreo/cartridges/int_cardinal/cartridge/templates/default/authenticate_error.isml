@@ -1,2 +1,0 @@
-<!--- TEMPLATENAME: authenticate_error.isml --->
-<isredirect location="${URLUtils.https('COShipping-Start', 'paypalerrors' , pdict.CentinelAuthenticateResult.errorDesc)}"/>

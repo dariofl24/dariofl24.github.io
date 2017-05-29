@@ -1,7 +1,0 @@
-<isif condition="${EnableSharing}">
-    <div class="product-options">
-        <div class="share">
-            <div id="share-links-${pdict.context}" class="share-links"></div>
-        </div>
-    </div>
-</isif>

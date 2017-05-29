@@ -1,7 +1,0 @@
-input_directory: '/home/converse/sales'
-output_directory: '/home/demandware/outgoing'
-processed_directory: '/home/converse/sales/processed'
-notification_recipients: 'Cindy.Ascolillo@converse.com,Ashley.Doucette@converse.com,Benjamin.Ashe@converse.com,confoo-reports-jobs@tacitknowledge.com'
-notification_subject: 'Sales PriceBook Process Finished!'
-notification_message: 'Sales PriceBook Process Finished!'
-notification_from: 'cron@datahub.converse.com'

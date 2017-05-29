@@ -1,7 +1,0 @@
-<iscache type="relative" hour="24" varyby="price_promotion"/>
-
-<isif condition="${!empty(pdict.Product)}">
-    
-<div class="blank-result" ></div>
-
-</isif>

@@ -1,6 +1,0 @@
-<isscript>
-    importScript("converse_core:constants.ds");
-
-    var ContentFolderID = converse.constants.ContentFolderID;
-    var pageContext = {title:'Customer Service', type:'customerservice',ns:'customerservice', contentFolderId: ContentFolderID.CUSTOMER_SERVICE};
-</isscript>

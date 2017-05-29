@@ -1,2 +1,0 @@
-<isset name="Content" value="${dw.content.ContentMgr.getContent(pdict.aid)}" scope="pdict" />
-<isinclude template="content/content/htmlcontentasset"/>

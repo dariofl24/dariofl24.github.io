@@ -1,4 +1,0 @@
-<iscontent type="application/xml" charset="UTF-8" compact="false"/><?xml version="1.0" encoding="UTF-8"?>
-<rootNode>
-    <serviceURL>${URLUtils.abs('Cart-AddProduct')}?format=xml</serviceURL>
-</rootNode>

@@ -1,8 +1,0 @@
-<!--- TEMPLATENAME: allDevices.isml --->
-<isif condition="${empty(pdict.CurrentSession.custom.device) 
-		|| pdict.CurrentSession.custom.device == 'mobile' 
-		|| pdict.CurrentSession.custom.device == 'tablet' 
-		|| pdict.CurrentSession.custom.device == 'desktop'}">
-<isreplace/>
-</isif>
-		

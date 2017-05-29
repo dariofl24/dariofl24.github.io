@@ -1,5 +1,0 @@
-<isinclude template="util/modules"/>
-
-<isif condition="${pdict.ProductPagingModel != null && !pdict.ProductPagingModel.empty}">
-    <isproductsortingoptions productsearchmodel="${pdict.ProductSearchResult}" pagingmodel="${pdict.ProductPagingModel}" uniqueid="grid-sort-header"/>
-</isif>

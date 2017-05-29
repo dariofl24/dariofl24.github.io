@@ -1,7 +1,0 @@
-<form role="search" action="${URLUtils.url('Search-Show')}" method="get" name="simpleSearch">
-    <input type="text" id="q" name="q" value="" placeholder="${Resource.msg('simplesearch.searchtext','search',null)}" />
-    <div class="actions">
-        <span class="submit-btn"><button class="action-search hide-text" type="submit">GO</button></span>
-        <span class="close-btn"><button class="action-close hide-text" type="button">X</button></span>
-    </div>
-</form>

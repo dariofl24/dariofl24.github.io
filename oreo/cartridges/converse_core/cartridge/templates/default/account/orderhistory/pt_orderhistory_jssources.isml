@@ -1,5 +1,0 @@
-<iscomment>
-This is a stub for any order history specific JS resources.
-It is empty for converse_core, however specific sites may need to include such resources individually, 
-in which case a template with the same name should be created inside a localized cartridge to load them 
-</iscomment>

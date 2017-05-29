@@ -1,4 +1,0 @@
-<!--- TEMPLATENAME: mobileOrTablet.isml --->
-<isdecorate template="${Resource.msg('decorator.mobileTablet','decorators',null)}">
-	<isinclude template="${pdict.template}">
-</isdecorate>

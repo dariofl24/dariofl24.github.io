@@ -1,1 +1,0 @@
-${Resource.msg('order.orderitems.size','mail',null)} <isprint value="${productLineItem.custom.displayCustomSize}"/> <br/>

@@ -1,8 +1,0 @@
-<isscript>
-    importScript("util/ViewHelpers.ds");
-</isscript>
-<isif condition="${isSite('US')}">
-    <div id="payment-logos">
-        <img src="${URLUtils.staticURL('/images/payment-logos.png')}"  alt="Payments Accepted">
-    </div>
-</isif>

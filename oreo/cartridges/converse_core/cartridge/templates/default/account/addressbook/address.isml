@@ -1,2 +1,0 @@
-<isinclude template="account/modules"/>
-<isaddressdetail p_address="${pdict.Address}"/>

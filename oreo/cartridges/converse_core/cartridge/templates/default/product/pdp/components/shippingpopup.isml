@@ -1,5 +1,0 @@
-<div id="pdp-shipping-popup" class="mfp-hide">
-    <div class="container">
-        <isslot id="PDP-Shipping-Popup-Content" description="The content for shipping information within the popup on the PDP" context="global" />
-    </div>
-</div>

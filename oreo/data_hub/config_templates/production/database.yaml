@@ -1,4 +1,0 @@
-adapter: "postgresql"
-port: 5432
-database: "converse_data_hub"
-  

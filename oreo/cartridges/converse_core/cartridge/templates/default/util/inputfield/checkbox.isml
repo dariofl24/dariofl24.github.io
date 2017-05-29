@@ -1,8 +1,0 @@
-<input class="input-checkbox ${html.class}"
-    type="checkbox"
-    name="${html.name}"
-    id="${html.id}"
-    value="${html.value}"
-    <isif condition="${html.checkbox.checked}">checked="checked"</isif>
-    <isprint value="${html.attributes}" encoding="off" />
-/>

@@ -1,7 +1,0 @@
-<!--- TEMPLATENAME: order.isml --->
-<br/>
-Order Response:
-<pre>
-<div>stringify</div>
-<isprint value="${JSON.stringify(pdict.CentinelOrderResult)}"/>
-</pre>

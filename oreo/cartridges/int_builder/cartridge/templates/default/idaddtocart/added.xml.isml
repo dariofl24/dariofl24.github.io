@@ -1,9 +1,0 @@
-<iscontent type="application/xml" charset="UTF-8" compact="false"/><?xml version="1.0" encoding="UTF-8"?>
-<isscript>
-    var xmlObj : XML = new XML(pdict.XmlRequest);
-    var metricId : String = xmlObj.configuration.metricId[0];
-    var quantity : String = xmlObj.configuration.quantity[0];
-</isscript>
-<cart itemsAdded="${quantity}" totalItems="${quantity}">
-    <item metricId="${metricId}" cartId="${pdict.CurrentSession.sessionID}" status="success"/>
-</cart>
