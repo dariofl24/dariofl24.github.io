@@ -9,12 +9,30 @@
       
       <style>
          #draggable { width: 150px; height: 150px; padding: 0.5em; background:#eee;}
+         div.ui-resizable-handle.ui-resizable-s, div.ui-resizable-handle.ui-resizable-e{
+            background-color:aliceblue;
+
+         }
+
+         div.ui-resizable-handle.ui-resizable-e{
+            width: 25px;
+            right: -25px;
+         }
+
+         div.ui-resizable-handle.ui-resizable-s{
+            height: 25px;
+            bottom: -25px;
+         }
       </style>
       
       <script>
          $(function() {
             $( "#draggable" ).draggable();
-            $( "#draggable" ).resizable();
+            $( "#draggable" ).resizable({
+               classes: {
+                  "ui-resizable": "highlight"
+               }
+            });
          });
       </script>
    </head>
