@@ -8,20 +8,20 @@
       <script src="jquery.ui.touch-punch.js"></script>
       
       <style>
-         #draggable { width: 150px; height: 150px; padding: 0.5em; background:#eee;}
+         #draggable { width: 150px; height: 110px; padding: 0.5em; background:#eee;}
          div.ui-resizable-handle.ui-resizable-s, div.ui-resizable-handle.ui-resizable-e{
             background-color:aliceblue;
 
          }
 
          div.ui-resizable-handle.ui-resizable-e{
-            width: 25px;
-            right: -25px;
+            width: 30px;
+            right: -30px;
          }
 
          div.ui-resizable-handle.ui-resizable-s{
-            height: 25px;
-            bottom: -25px;
+            height: 30px;
+            bottom: -30px;
          }
       </style>
       
@@ -29,8 +29,9 @@
          $(function() {
             $( "#draggable" ).draggable();
             $( "#draggable" ).resizable({
+               aspectRatio: true,
                classes: {
-                  "ui-resizable": "highlight"
+                  "ui-resizable": "highlight",
                }
             });
          });
@@ -39,7 +40,8 @@
    
    <body>
       <div id = "draggable" class = "ui-widget-content">
-         <p>Drag me !!!</p>
+         <img src="https://dariofl24.github.io/mysupercars/cars_images/Pagani-Huayra Roadster-2017/thumbs/Pagani-Huayra_Roadster-2017-1280-02.jpg"
+         style="width: 95%;">
       </div>
    </body>
 </html>
