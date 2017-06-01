@@ -10,6 +10,7 @@
       <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
       <script src="https://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
       <script src="jquery.ui.touch-punch.js"></script>
+      <script src="jquery.lettering.js"></script>
       
       <style>
          #draggable { 
@@ -59,19 +60,148 @@
             left: -28px;
          }
 
+         .badge:hover {
+            background-color: grey;
+            opacity: 0.6;
+            color: red;
+         }
+
+
+         .badge {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            transform: rotate(-33deg);
+}
+
+h1 span {
+  font: 18px Monaco, MonoSpace;
+  height: 192px;
+  position: absolute;
+  width: 20px;
+  left: 0;
+  top: 0;
+  transform-origin: bottom center;
+}
+
+.char1 {
+  transform: rotate(4deg);
+}
+
+.char2 {
+  transform: rotate(8deg);
+}
+
+.char3 {
+  transform: rotate(12deg);
+}
+
+.char4 {
+  transform: rotate(16deg);
+}
+
+.char5 {
+  transform: rotate(20deg);
+}
+
+.char6 {
+  transform: rotate(24deg);
+}
+
+.char7 {
+  transform: rotate(28deg);
+}
+
+.char8 {
+  transform: rotate(32deg);
+}
+
+.char9 {
+  transform: rotate(36deg);
+}
+
+.char10 {
+  transform: rotate(40deg);
+}
+
+.char11 {
+  transform: rotate(44deg);
+}
+
+.char12 {
+  transform: rotate(48deg);
+}
+
+.char13 {
+  transform: rotate(52deg);
+}
+
+.char14 {
+  transform: rotate(56deg);
+}
+
+.char15 {
+  transform: rotate(60deg);
+}
+
+.char16 {
+  transform: rotate(64deg);
+}
+
+.char17 {
+  transform: rotate(68deg);
+}
+
+.char18 {
+  transform: rotate(72deg);
+}
+
+.char19 {
+  transform: rotate(76deg);
+}
+
+.char20 {
+  transform: rotate(80deg);
+}
+
+.char21 {
+  transform: rotate(84deg);
+}
+
+.char22 {
+  transform: rotate(88deg);
+}
+
+.char23 {
+  transform: rotate(92deg);
+}
+
+.char24 {
+  transform: rotate(96deg);
+}
+
+
       </style>
       
       <script>
          $(function() {
+            $("h1").lettering();
+
             $( "#draggable" ).draggable({
-            containment : "#dragarea"
+            containment : "#dragarea",
+            zIndex: 100
             });
+
             $( "#draggable" ).resizable({
                aspectRatio: true,
                handles: "n, e, s, w",
                classes: {
                   "ui-resizable": "highlight",
                }
+            });
+
+            $( ".badge" ).draggable({
+               zIndex: 102
             });
          });
       </script>
@@ -85,6 +215,16 @@
             style="width: 95%;">
          </div>
 
+         <div id="page-wrap">
+      
+      <div class="badge">
+        <h1>Established 2012</h1>
       </div>
+   
+   </div>
+
+      </div>
+
+      
    </body>
 </html>
