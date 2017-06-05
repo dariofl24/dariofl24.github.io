@@ -22,10 +22,11 @@
          }
 
          #dragarea{
-            position: absolute;
-            padding: 4%;
-            width: 92%;
-            height: 75%;
+            position: relative;
+            padding: 12px;
+            /* width: 92%; */
+            /* min-height: 100%; */
+            height: 500px;
             background: url(white_t_shirt_front.jpg) no-repeat center; 
             background-size: contain;
          }
@@ -72,37 +73,37 @@
             width: 200px;
             height: 200px;
             transform: rotate(-33deg);
-}
+         }
 
-h1 span {
-  font: 18px Monaco, MonoSpace;
-  height: 192px;
-  position: absolute;
-  width: 20px;
-  left: 0;
-  top: 0;
-  transform-origin: bottom center;
-}
+         h1 span {
+            font: 18px Monaco, MonoSpace;
+            height: 192px;
+            position: absolute;
+            width: 20px;
+            left: 0;
+            top: 0;
+            transform-origin: bottom center;
+         }
 
-.char1 {
-  transform: rotate(4deg);
-}
+         .char1 {
+            transform: rotate(4deg);
+         }
 
-.char2 {
-  transform: rotate(8deg);
-}
+         .char2 {
+            transform: rotate(8deg);
+         }
 
-.char3 {
-  transform: rotate(12deg);
-}
+         .char3 {
+            transform: rotate(12deg);
+         }
 
-.char4 {
-  transform: rotate(16deg);
-}
+         .char4 {
+            transform: rotate(16deg);
+         }
 
-.char5 {
-  transform: rotate(20deg);
-}
+         .char5 {
+            transform: rotate(20deg);
+         }
 
 .char6 {
   transform: rotate(24deg);
@@ -208,6 +209,12 @@ h1 span {
    </head>
    
    <body>
+   <div class="pure-g">
+   <div class="pure-u-3-8">
+      
+   </div>
+
+   <div class="pure-u-5-8">
       <div id="dragarea">
 
          <div id = "draggable" class = "ui-widget-content">
@@ -216,15 +223,14 @@ h1 span {
          </div>
 
          <div id="page-wrap">
-      
-      <div class="badge">
-        <h1>Established 2012</h1>
+            <div class="badge">
+               <h1>Established 2012</h1>
+            </div>
+         </div>
+
       </div>
-   
    </div>
-
-      </div>
-
+   </div>
       
    </body>
 </html>
