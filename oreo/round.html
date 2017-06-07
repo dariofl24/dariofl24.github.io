@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-min.css">
+      <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" 
+         rel = "stylesheet">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+      <script src="https://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+      <script src="jquery.ui.touch-punch.js"></script>
+      <script src="jquery.lettering.js"></script>
+      
+      <style>
+         .badge:hover {
+            background-color: grey;
+            opacity: 0.6;
+            color: red;
+         }
+
+
+         .badge {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            transform: rotate(-33deg);
+         }
+
+         h1 span {
+            font: 18px Monaco, MonoSpace;
+            height: 192px;
+            position: absolute;
+            width: 20px;
+            left: 0;
+            top: 0;
+            transform-origin: bottom center;
+         }
+
+         .char1000 {
+            transform: rotate(4deg);
+         }
+
+         #area {
+          padding-left: 70px;
+          padding-top: 20px;
+         }
+
+         .section {
+            margin: 8px 8px 0px 8px;
+         }
+
+      </style>
+      
+      <script>
+      $( document ).ready(function() {
+        console.log( "ready!" );
+
+        $("h1").lettering();
+
+        $("#fontsize").val( $('h1 span').css("font-size") );
+
+        var values = $('.badge').css("-webkit-transform").split('(')[1].split(')')[0].split(',');
+        
+        var a = values[0];
+        var b = values[1];
+        var angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
+
+        $("#mainrotation").val( angle );
+
+        $("#radiusheight").val( $('h1 span').css("height") );
+
+        var rot = 4;
+
+        $('h1 span').each(function( index ) {
+          console.log( index + ": " + $( this ).text() );
+          $( this ).css("-webkit-transform", "rotate("+ (rot*(index+1)) + "deg)");
+        });
+
+      });
+      </script>
+   </head>
+   
+   <body>
+   <div class="pure-g">
+   <div class="pure-u-1-2">
+   <div style="border-right-style: solid;min-height: 250px;padding: 10px;" >
+
+    <div class="section" >
+      <span>Font size</span>
+      <input type="text" name="font-size" id="fontsize" >
+    </div>
+
+    <div class="section" >
+      <span>Main Rotation</span>
+      <input type="text" name="main-rotation" id="mainrotation" >
+    </div>
+
+    <div class="section" >
+      <span>Radius Height</span>
+      <input type="text" name="radius-height" id="radiusheight" >
+    </div>
+
+    <div class="section" >
+      <span>Second Rotation</span>
+      <input type="text" name="second-rotation" id="secondrotation" >
+    </div>
+
+     
+   </div>
+      
+   </div>
+
+   <div class="pure-u-1-2">
+      <div id="area">
+         <div id="page-wrap">
+    
+    <div class="badge">
+      <h1>Established 2012</h1>
+    </div>
+  
+  </div>
+      </div>
+   </div>
+   </div>
+      
+   </body>
+</html>
