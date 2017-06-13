@@ -1,196 +1,27 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-min.css">
-      <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" 
-         rel = "stylesheet">
+
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
-      <script src="https://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+      <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+
+      <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-min.css">
+      
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+      <link rel="stylesheet" type="text/css" href="styles/style.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
       <script src="jquery.ui.touch-punch.js"></script>
       <script src="jquery.lettering.js"></script>
       
-      <style>
-         #draggable { 
-            width: 150px; 
-            height: 110px; 
-            padding: 0em; 
-            background:transparent;
-            border: 0px;
-         }
-
-         #dragarea{
-            position: relative;
-            padding: 12px;
-            /* width: 92%; */
-            /* min-height: 100%; */
-            height: 500px;
-            background: url(white_t_shirt_front.jpg) no-repeat center; 
-            background-size: contain;
-         }
-
-         div.ui-resizable-handle.ui-resizable-s, div.ui-resizable-handle.ui-resizable-e,div.ui-resizable-handle.ui-resizable-n, div.ui-resizable-handle.ui-resizable-w {
-            background-color:transparent;
-
-         }
-
-         div.ui-resizable-handle.ui-resizable-s:hover, div.ui-resizable-handle.ui-resizable-e:hover, div.ui-resizable-handle.ui-resizable-n:hover, div.ui-resizable-handle.ui-resizable-w:hover {
-            background-color:grey;
-
-         }
-
-         div.ui-resizable-handle.ui-resizable-e {
-            width: 30px;
-            right: -28px;
-         }
-
-         div.ui-resizable-handle.ui-resizable-s {
-            height: 30px;
-            bottom: -28px;
-         }
-
-         div.ui-resizable-handle.ui-resizable-n {
-            height: 30px;
-            top: -28px;
-         }
-
-         div.ui-resizable-handle.ui-resizable-w {
-            width: 30px;
-            left: -28px;
-         }
-
-         .badge:hover {
-            background-color: grey;
-            opacity: 0.6;
-            color: red;
-         }
-
-
-         .badge {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            transform: rotate(-33deg);
-         }
-
-         h1 span {
-            font: 18px Monaco, MonoSpace;
-            height: 192px;
-            position: absolute;
-            width: 20px;
-            left: 0;
-            top: 0;
-            transform-origin: bottom center;
-         }
-
-         .char1 {
-            transform: rotate(4deg);
-         }
-
-         .char2 {
-            transform: rotate(8deg);
-         }
-
-         .char3 {
-            transform: rotate(12deg);
-         }
-
-         .char4 {
-            transform: rotate(16deg);
-         }
-
-         .char5 {
-            transform: rotate(20deg);
-         }
-
-         .char6 {
-            transform: rotate(24deg);
-         }
-
-         .char7 {
-            transform: rotate(28deg);
-         }
-
-         .char8 {
-            transform: rotate(32deg);
-         }
-
-         .char9 {
-            transform: rotate(36deg);
-         }
-
-.char10 {
-  transform: rotate(40deg);
-}
-
-.char11 {
-  transform: rotate(44deg);
-}
-
-.char12 {
-  transform: rotate(48deg);
-}
-
-.char13 {
-  transform: rotate(52deg);
-}
-
-.char14 {
-  transform: rotate(56deg);
-}
-
-.char15 {
-  transform: rotate(60deg);
-}
-
-.char16 {
-  transform: rotate(64deg);
-}
-
-.char17 {
-  transform: rotate(68deg);
-}
-
-.char18 {
-  transform: rotate(72deg);
-}
-
-.char19 {
-  transform: rotate(76deg);
-}
-
-.char20 {
-  transform: rotate(80deg);
-}
-
-.char21 {
-  transform: rotate(84deg);
-}
-
-.char22 {
-  transform: rotate(88deg);
-}
-
-.char23 {
-  transform: rotate(92deg);
-}
-
-.char24 {
-  transform: rotate(96deg);
-}
-
-.mycontainer .mysection{
-   position: relative;
-    width: 150px;
-    height: 150px;
-}
-
-      </style>
-      
       <script>
          $(function() {
+
             $("h1").lettering();
 
             $( "#draggable" ).draggable({
@@ -209,17 +40,120 @@
             $( ".badge" ).draggable({
                zIndex: 102
             });
+
+            $( "#accordion" ).accordion({
+              collapsible: true,
+              heightStyle: "content"
+            });
+
+
+
          });
       </script>
    </head>
    
    <body>
    <div class="pure-g">
-   <div class="pure-u-3-8">
+   <div class="pure-u-1-2">
+
+    <div class="build-container" >
+     
+     <div id="accordion">
+
+     <h3>Colores</h3>
+     <div>
+        <div class="chip-container" >
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip active" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        <div class="floating-box colorchip" >
+          <div class="fa fa-check-circle-o"></div>
+        </div>
+        </div>
+     </div>
+
+     <h3>Texto</h3>
+     <div>
+     <p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
+     </div>
+     
+     <h3>Imagenes</h3>
+     <div>
+     <p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>
+     <ul>
+      <li>List item one</li>
+      <li>List item two</li>
+      <li>List item three</li>
+    </ul>
+  </div>
+  
+  <h3>Tallas</h3>
+  <div>
+    <p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
+  </div>
+</div>
+
+    </div>
       
    </div>
-
-   <div class="pure-u-5-8">
+   <div class="pure-u-1-2">
       <div id="dragarea">
 
          <div class="mycontainer">
