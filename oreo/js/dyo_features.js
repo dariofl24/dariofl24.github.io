@@ -37,6 +37,7 @@ var dyo_colors_feature= (function() {
 
     var init = function(){
         initCache();
+        initColorChips();
         bindEvents();
 
         console.log("DYO - Feature LOADED !!!!");
@@ -45,14 +46,32 @@ var dyo_colors_feature= (function() {
     var initCache = function(){
 
         $cache.colorChips = $(".colorchip");
-        
+        $cache.tshirtArea = $("#dragarea");
+        $cache.frontlocation = "../oreo/tshirts/front/";
     };
 
-    var bindEvents = function(){
+    var initColorChips = function(){
+
+
+        $cache.colorChips.each(function( index ) {
+            var me= $( this );
+            console.log( index + ": " + me.data("red") );
+            console.log( index + ": " + me.data("green") );
+            console.log( index + ": " + me.data("blue") );
+            me.css( "background-color","rgb("+me.data("red")+","+me.data("green")+","+me.data("blue")+")" );
+        });
+
+
+
+    }
+
+    var bindEvents = function(){ 
 
         $cache.colorChips.click(function() {
+            var me= $( this );
             $cache.colorChips.removeClass("active");
-            $( this ).addClass("active");
+            me.addClass("active");
+            $cache.tshirtArea.css("background","url("+$cache.frontlocation+"R"+me.data("red")+"G"+me.data("green")+"B"+me.data("blue")+".png) no-repeat center");
         });
 
     };
