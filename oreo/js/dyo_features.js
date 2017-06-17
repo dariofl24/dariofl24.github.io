@@ -72,8 +72,9 @@ var dyo_colors_feature= (function() {
             $cache.colorChips.removeClass("active");
             me.addClass("active");
             $cache.tshirtArea.css("background","url("+$cache.frontlocation+"R"+me.data("red")+"G"+me.data("green")+"B"+me.data("blue")+".png) no-repeat center");
-            
             $cache.tshirtArea.css("background-size","contain");
+            
+            console.log("R"+me.data("red")+"G"+me.data("green")+"B"+me.data("blue"));
 
         });
 
