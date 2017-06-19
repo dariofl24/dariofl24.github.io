@@ -43,9 +43,12 @@ var getCanvas; // global variable
             var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
             var i;
+            var buff="";
             for (i = 0; i < imgData.data.length; i += 4) {
-                console.log(imgData.data[i]+";"+imgData.data[i+1]+";"+imgData.data[i+2]);
+                buff+=imgData.data[i]+";"+imgData.data[i+1]+";"+imgData.data[i+2];
             }
+
+            console.log(buff);
 
             $("#previewImage").append(canvas);
             getCanvas = canvas;
