@@ -45,12 +45,12 @@ var getCanvas; // global variable
 
             var i;
             var buff="";
-            for (i = 0; i < imgData.data.length; i += 4) {
-                buff+=imgData.data[i]+";"+imgData.data[i+1]+";"+imgData.data[i+2];
-            }
+            //for (i = 0; i < imgData.data.length; i += 4) {
+              //  buff+=imgData.data[i]+";"+imgData.data[i+1]+";"+imgData.data[i+2];
+            //}
 
-            console.log(buff);
-
+            //console.log(buff);
+            console.log(imgData);
             $("#previewImage").append(canvas);
             getCanvas = canvas;
 
