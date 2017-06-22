@@ -7,19 +7,27 @@
     border: 0px;
 }
 
+#draggable2 { 
+    width: 150px; 
+    height: 150px; 
+    padding: 0em; 
+    background:transparent;
+    border: 0px;
+}
+
 #dragarea {
     position: relative;
     margin-top: 10px;
     padding: 12px;
     height: 670px;
     max-height: 675px;
-    background: url(../white_t_shirt_front.jpg) no-repeat center; 
+    background: url(../tshirts/front/R255G255B255.png) no-repeat center; 
     background-size: contain;
 }
 
 .build-container {
     border-style: solid;
-    border-width: 0px 2px 0px 0px;
+    border-width: 0px 1px 0px 0px;
     min-height: 750px;
     margin-top: 10px;
 }
@@ -127,6 +135,27 @@ transform-origin: bottom center;
 
 .mycontainer {
     padding-left: 15px;
+}
+
+.infoContainer {
+  position: relative;
+  width: 100%;
+}
+
+.infoContainer p {
+  text-align: center;
+  margin: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.switchContainer {
+  width: 42px;
+  margin: 0 auto;
+}
+
+.switchContainer:hover {
+  background-color: darkgrey;
 }
 
 .char1 {

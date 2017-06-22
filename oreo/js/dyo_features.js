@@ -39,6 +39,7 @@ var dyo_colors_feature= (function() {
         initCache();
         initColorChips();
         bindEvents();
+        initImages();
 
         console.log("DYO - Feature LOADED !!!!");
     };
@@ -48,6 +49,13 @@ var dyo_colors_feature= (function() {
         $cache.colorChips = $(".colorchip");
         $cache.tshirtArea = $("#dragarea");
         $cache.frontlocation = "../oreo/tshirts/front/";
+        $cache.location = "../oreo/tshirts/";
+        $cache.currentColor = "R255G255B255";
+        $cache.front = "front";
+        $cache.back = "back";
+        $cache.currentSide = $cache.front;
+        $cache.colorName = $("#colorName");
+        $cache.switch = $(".switchContainer");
     };
 
     var initColorChips = function(){
@@ -60,25 +68,56 @@ var dyo_colors_feature= (function() {
             console.log( index + ": " + me.data("blue") );
             me.css( "background-color","rgb("+me.data("red")+","+me.data("green")+","+me.data("blue")+")" );
         });
-
-
-
     }
 
-    var bindEvents = function(){ 
+    var initImages = function(){
+
+        var notside = ( $cache.currentSide === $cache.front )? $cache.back : $cache.front;;
+
+        $(".mysection " + "."+$cache.currentSide).show();
+        //$(".mysection."+$cache.currentSide).show();
+
+        $(".mysection " + "."+notside).hide();
+        //$(".mysection."+notside).hide();        
+    }
+
+    var bindEvents = function(){
 
         $cache.colorChips.click(function() {
             var me= $( this );
             $cache.colorChips.removeClass("active");
             me.addClass("active");
-            $cache.tshirtArea.css("background","url("+$cache.frontlocation+"R"+me.data("red")+"G"+me.data("green")+"B"+me.data("blue")+".png) no-repeat center");
-            $cache.tshirtArea.css("background-size","contain");
-            
-            console.log("R"+me.data("red")+"G"+me.data("green")+"B"+me.data("blue"));
 
+            $cache.currentColor= "R"+me.data("red")+"G"+me.data("green")+"B"+me.data("blue");
+            changeColorSide();
+            //$cache.tshirtArea.css("background","url("+$cache.frontlocation+"R"+me.data("red")+"G"+me.data("green")+"B"+me.data("blue")+".png) no-repeat center");
+            //$cache.tshirtArea.css("background-size","contain");
+
+            console.log("R"+me.data("red")+"G"+me.data("green")+"B"+me.data("blue"));
+            $cache.colorName.text(me.data("name"));
+        });
+
+        $cache.switch.click(function(){
+
+            $(".mysection " + "."+$cache.currentSide).hide();
+            //$(".mysection."+$cache.currentSide).hide();
+
+            $cache.currentSide = ( $cache.currentSide === $cache.front )? $cache.back : $cache.front;
+
+            $(".mysection " + "."+$cache.currentSide).show();
+            //$(".mysection."+$cache.currentSide).show();
+
+            changeColorSide();
         });
 
     };
+
+    var changeColorSide = function() {
+
+        $cache.tshirtArea.css("background","url("+$cache.location+$cache.currentSide+"/"+ $cache.currentColor +".png) no-repeat center");
+        $cache.tshirtArea.css("background-size","contain");
+
+    }
 
     return {
         init: init

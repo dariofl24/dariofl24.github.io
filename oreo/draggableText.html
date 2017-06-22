@@ -39,6 +39,19 @@
                }
             });
 
+            $( "#draggable2" ).draggable({
+            containment : "#dragarea",
+            zIndex: 100
+            });
+
+            $( "#draggable2" ).resizable({
+               aspectRatio: true,
+               handles: "n, e, s, w",
+               classes: {
+                  "ui-resizable": "highlight",
+               }
+            });
+
             $( ".badge" ).draggable({
                zIndex: 102
             });
@@ -65,91 +78,91 @@
      <h3>Colores</h3>
      <div>
         <div class="chip-container" >
-        <div class="floating-box colorchip" data-red="0" data-green="0" data-blue="0" >
+        <div class="floating-box colorchip" data-red="0" data-green="0" data-blue="0" data-name="Black" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip active" data-red= "255" data-green="255" data-blue="255" >
+        <div class="floating-box colorchip active" data-red= "255" data-green="255" data-blue="255" data-name="White" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="0" data-green="0" data-blue= "255" >
+        <div class="floating-box colorchip" data-red="0" data-green="0" data-blue= "255" data-name="Bold Blue" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red= "255" data-green="127" data-blue="127" >
+        <div class="floating-box colorchip" data-red= "255" data-green="127" data-blue="127" data-name="Melon" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="0" data-green="127" data-blue="0" >
+        <div class="floating-box colorchip" data-red="0" data-green="127" data-blue="0" data-name="Grass Green" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="0" data-green="127" data-blue="191" >
+        <div class="floating-box colorchip" data-red="0" data-green="127" data-blue="191" data-name="Mild Blue" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="127" data-green="127" data-blue="127" >
+        <div class="floating-box colorchip" data-red="127" data-green="127" data-blue="127" data-name="Grey" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="0" data-green="191" data-blue="127" >
+        <div class="floating-box colorchip" data-red="0" data-green="191" data-blue="127" data-name="Mild Green" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="0" data-green="191" data-blue="191" >
+        <div class="floating-box colorchip" data-red="0" data-green="191" data-blue="191" data-name="Aqua" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="0" data-green= "255" data-blue= "255" >
+        <div class="floating-box colorchip" data-red="0" data-green= "255" data-blue= "255" data-name="Blue Lagoon" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="0" data-green="63" data-blue="63" >
+        <div class="floating-box colorchip" data-red="0" data-green="63" data-blue="63" data-name="Dark Green" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="127" data-green="0" data-blue="0" >
+        <div class="floating-box colorchip" data-red="127" data-green="0" data-blue="0" data-name="Wine Red" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="127" data-green="0" data-blue="127" >
+        <div class="floating-box colorchip" data-red="127" data-green="0" data-blue="127" data-name="Berry Purple" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="127" data-green="0" data-blue="63" >
+        <div class="floating-box colorchip" data-red="127" data-green="0" data-blue="63" data-name="Savignon Red" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="63" data-green="63" data-blue="191" >
+        <div class="floating-box colorchip" data-red="63" data-green="63" data-blue="191" data-name="Wild Blue" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="63" data-green="63" data-blue="127" >
+        <div class="floating-box colorchip" data-red="63" data-green="63" data-blue="127" data-name="Grape Purple" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="127" data-green="127" data-blue="0" >
+        <div class="floating-box colorchip" data-red="127" data-green="127" data-blue="0" data-name="Forest Green" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="191" data-green="0" data-blue= "255" >
+        <div class="floating-box colorchip" data-red="191" data-green="0" data-blue= "255" data-name="Pastel Pink" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red= "255" data-green= "255" data-blue="127" >
+        <div class="floating-box colorchip" data-red= "255" data-green= "255" data-blue="127" data-name="Sunshine Yellow" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="63" data-green="191" data-blue= "255" >
+        <div class="floating-box colorchip" data-red="63" data-green="191" data-blue= "255" data-name="Sky Blue" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="63" data-green="0" data-blue="191" >
+        <div class="floating-box colorchip" data-red="63" data-green="0" data-blue="191" data-name="Intese Blue" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red= "255" data-green="191" data-blue="63" >
+        <div class="floating-box colorchip" data-red= "255" data-green="191" data-blue="63" data-name="Active Yellow" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="63" data-green="127" data-blue="63" >
+        <div class="floating-box colorchip" data-red="63" data-green="127" data-blue="63" data-name="Olive Green" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red= "255" data-green="0" data-blue="0" >
+        <div class="floating-box colorchip" data-red= "255" data-green="0" data-blue="0" data-name="Active Red" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red= "255" data-green="0" data-blue="63" >
+        <div class="floating-box colorchip" data-red= "255" data-green="0" data-blue="63" data-name="Mild Red" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red= "255" data-green="63" data-blue="127" >
+        <div class="floating-box colorchip" data-red= "255" data-green="63" data-blue="127" data-name="Macarron Pink" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red= "255" data-green="127" data-blue= "255" >
+        <div class="floating-box colorchip" data-red= "255" data-green="127" data-blue= "255" data-name="Soft Pink" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red="63" data-green="127" data-blue= "255" >
+        <div class="floating-box colorchip" data-red="63" data-green="127" data-blue= "255" data-name="Pure Blue" >
           <div class="fa fa-check-circle-o"></div>
         </div>
-        <div class="floating-box colorchip" data-red= "255" data-green="63" data-blue= "0" >
+        <div class="floating-box colorchip" data-red= "255" data-green="63" data-blue= "0" data-name="Orange" >
           <div class="fa fa-check-circle-o"></div>
         </div>
         </div>
@@ -183,19 +196,30 @@
       <div id="dragarea">
 
          <div class="mycontainer">
-            <div class="mysection">
-               <div id = "draggable" class = "">
+            <div class="mysection front">
+               <div id = "draggable" class="front" >
                   <img src="goosei.png" style="width: 95%;">
                </div>
             </div>
-            <div class="mysection">
-               <div id="page-wrap">
+            <div class="mysection front">
+               <div id="page-wrap" class="front" >
                <div class="badge">
                <h1>Established 2012</h1>
                </div>
                </div>
             </div>
+            <div class="mysection back">
+               <div id = "draggable2" class="back" >
+                  <img src="GooseIslandLogoBlack.png" style="width: 95%;">
+               </div>
+            </div>
          </div>
+      </div>
+      <div class="infoContainer" >
+        <p id="colorName" > White </p>
+        <div class="switchContainer" >
+          <i class="fa fa-repeat fa-3x"></i>
+        </div>
       </div>
    </div>
    </div>
