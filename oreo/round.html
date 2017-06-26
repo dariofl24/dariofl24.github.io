@@ -11,6 +11,7 @@
       <script src="https://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
       <script src="jquery.ui.touch-punch.js"></script>
       <script src="jquery.lettering.js"></script>
+      <script src="circletype.min.js"></script>
       
       <style>
          .badge:hover {
@@ -56,25 +57,16 @@
       $( document ).ready(function() {
         console.log( "ready!" );
 
-        $("h1").lettering();
+        $("#demo11").circleType({radius: 120});
 
-        $("#fontsize").val( $('h1 span').css("font-size") );
-
-        var values = $('.badge').css("-webkit-transform").split('(')[1].split(')')[0].split(',');
-        
-        var a = values[0];
-        var b = values[1];
-        var angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
-
-        $("#mainrotation").val( angle );
-
-        $("#radiusheight").val( $('h1 span').css("height") );
-
-        var rot = 4;
-
-        $('h1 span').each(function( index ) {
-          console.log( index + ": " + $( this ).text() );
-          $( this ).css("-webkit-transform", "rotate("+ (rot*(index+1)) + "deg)");
+        $( "#slider-range-max" ).slider({
+          min: 30,
+          max: 200,
+          value: 120,
+          slide: function( event, ui ) {
+            console.log( ui.value );
+            $("#demo11").circleType({radius: (ui.value)});
+          }
         });
 
       });
@@ -87,23 +79,9 @@
    <div style="border-right-style: solid;min-height: 250px;padding: 10px;" >
 
     <div class="section" >
-      <span>Font size</span>
-      <input type="text" name="font-size" id="fontsize" >
-    </div>
 
-    <div class="section" >
-      <span>Main Rotation</span>
-      <input type="text" name="main-rotation" id="mainrotation" >
-    </div>
-
-    <div class="section" >
-      <span>Radius Height</span>
-      <input type="text" name="radius-height" id="radiusheight" >
-    </div>
-
-    <div class="section" >
-      <span>Second Rotation</span>
-      <input type="text" name="second-rotation" id="secondrotation" >
+    <div id="slider-range-max"></div>
+      
     </div>
 
      
@@ -115,8 +93,12 @@
       <div id="area">
          <div id="page-wrap">
     
-    <div class="badge">
+    <div class="badge" style="display: none;">
       <h1>Established 2012</h1>
+    </div>
+
+    <div style="padding: 15px" >
+      <span id="demo11" >Established 2012</span>
     </div>
   
   </div>
