@@ -194,7 +194,7 @@ var allFeatures = (function() {
 
         $("#fonts_size_select").select2({
             minimumResultsForSearch: Infinity,
-            allowClear: true
+            allowClear: false
         });
 
         $("#fonts_color_select").select2({

@@ -109,6 +109,20 @@ div.colorchip .fa.fa-check-circle-o {
   border-style: inset;
 }
 
+#add_remove {
+  position: relative;
+  margin-left: auto;
+  width: 110px;
+}
+
+#add_remove .fa-times {
+  color: red;
+}
+
+#add_remove .fa-check {
+  color: forestgreen;
+}
+
 div.ui-resizable-handle.ui-resizable-s, div.ui-resizable-handle.ui-resizable-e,div.ui-resizable-handle.ui-resizable-n, div.ui-resizable-handle.ui-resizable-w {
     background-color:transparent;
 }
@@ -191,6 +205,33 @@ transform-origin: bottom center;
 .switchContainer:hover {
   background-color: darkgrey;
 }
+
+#editor_container {
+  border-bottom-style: groove;
+}
+
+.button {
+    background-color: rgba(105, 105, 105, 0.53); /* Green */
+    border: none;
+    color: white;
+    padding: 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button1 {border-radius: 2px;}
+.button2 {border-radius: 4px;}
+.button3 {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+}
+.button4 {border-radius: 12px;}
+.button5 {border-radius: 50%;}
 
 .char1 {
 transform: rotate(4deg);

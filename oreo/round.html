@@ -44,7 +44,7 @@
 
          #area {
           padding-left: 70px;
-          padding-top: 20px;
+          padding-top: 70px;
          }
 
          .section {
@@ -60,14 +60,16 @@
         $("#demo11").circleType({radius: 120});
 
         $( "#slider-range-max" ).slider({
-          min: 30,
-          max: 200,
-          value: 120,
+          min: 35,
+          max: 180,
+          value: 110,
           slide: function( event, ui ) {
             console.log( ui.value );
             $("#demo11").circleType({radius: (ui.value)});
           }
         });
+
+        
 
       });
       </script>
@@ -92,12 +94,8 @@
    <div class="pure-u-1-2">
       <div id="area">
          <div id="page-wrap">
-    
-    <div class="badge" style="display: none;">
-      <h1>Established 2012</h1>
-    </div>
 
-    <div style="padding: 15px" >
+    <div id="logo" style="padding: 15px" >
       <span id="demo11" >Established 2012</span>
     </div>
   
