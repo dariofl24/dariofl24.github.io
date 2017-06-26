@@ -56,6 +56,13 @@ var dyo_colors_feature= (function() {
         $cache.currentSide = $cache.front;
         $cache.colorName = $("#colorName");
         $cache.switch = $(".switchContainer");
+        $cache.textinput = $("#text_line");
+        $cache.textpreview = $("#text_line_preview");
+        $cache.fontsSelect = $("#fonts_select");
+        $cache.prevFontSelect ="";
+        $cache.fontSizeSelect = $("#fonts_size_select");
+        $cache.textLinePreviewContainer = $("#text_line_preview_cont");
+        $cache.fontColorSelect = $("#fonts_color_select");
     };
 
     var initColorChips = function(){
@@ -63,9 +70,6 @@ var dyo_colors_feature= (function() {
 
         $cache.colorChips.each(function( index ) {
             var me= $( this );
-            console.log( index + ": " + me.data("red") );
-            console.log( index + ": " + me.data("green") );
-            console.log( index + ": " + me.data("blue") );
             me.css( "background-color","rgb("+me.data("red")+","+me.data("green")+","+me.data("blue")+")" );
         });
     }
@@ -90,11 +94,11 @@ var dyo_colors_feature= (function() {
 
             $cache.currentColor= "R"+me.data("red")+"G"+me.data("green")+"B"+me.data("blue");
             changeColorSide();
-            //$cache.tshirtArea.css("background","url("+$cache.frontlocation+"R"+me.data("red")+"G"+me.data("green")+"B"+me.data("blue")+".png) no-repeat center");
-            //$cache.tshirtArea.css("background-size","contain");
 
-            console.log("R"+me.data("red")+"G"+me.data("green")+"B"+me.data("blue"));
             $cache.colorName.text(me.data("name"));
+
+            $cache.textLinePreviewContainer.css( "background-color","rgb("+me.data("red")+","+me.data("green")+","+me.data("blue")+")" );
+
         });
 
         $cache.switch.click(function(){
@@ -108,6 +112,43 @@ var dyo_colors_feature= (function() {
             //$(".mysection."+$cache.currentSide).show();
 
             changeColorSide();
+        });
+
+        $cache.textinput.keyup( function(){
+
+            var str = $cache.textinput.val().trim();
+            console.log("keypress::: "+ str );
+
+            if( str ){
+                $cache.textpreview.text( str );
+            }else {
+                $cache.textpreview.text( "Add some text" );
+            }
+            
+        });
+        
+        $cache.fontsSelect.on('change', function (evt) {
+            var font = $cache.fontsSelect.val();
+            console.log( font );
+            $cache.textpreview.removeClass( $cache.prevFontSelect );
+            $cache.textpreview.addClass(font);
+
+            $cache.prevFontSelect = font;
+
+        });
+
+        $cache.fontSizeSelect.on('change', function (evt) {
+            var sz = $cache.fontSizeSelect.val();
+            $cache.textpreview.css("font-size",sz);
+
+        });
+
+        $cache.fontColorSelect.on('change', function (evt) {
+
+            var fcolor = $cache.fontColorSelect.val();
+            console.log(fcolor);
+            $cache.textLinePreviewContainer.css("color",fcolor);
+
         });
 
     };
@@ -133,6 +174,87 @@ var allFeatures = (function() {
         mySlickInit.init();
         dyo_colors_feature.init();
 
+        initDomEnhacements();
+    };
+
+    var initDomEnhacements = function() {
+
+        $( "#accordion" ).accordion({
+              collapsible: true,
+              heightStyle: "content"
+            });
+
+        $("#fonts_select").select2({
+            minimumResultsForSearch: Infinity,
+            placeholder: "Tipo de fuente",
+            allowClear: true,
+            templateResult: formatFontsSelector,
+            templateSelection: templateFontSelect
+        });
+
+        $("#fonts_size_select").select2({
+            minimumResultsForSearch: Infinity,
+            allowClear: true
+        });
+
+        $("#fonts_color_select").select2({
+            minimumResultsForSearch: Infinity,
+            allowClear: true,
+            templateResult: formatColorFontsSelector,
+            templateSelection: templateColorFontSelect
+        });
+
+    };
+
+    var formatColorFontsSelector = function( color ){
+
+        if (!color.id) { return color.text; }
+
+        var $color = getFontColorTemplate(color.element.value,color.text); 
+        //$('<div class="fontColorSelectChip" style="background-color: '+ color.element.value +';" ></div> <span>' + color.text + '</span>');
+
+        return $color;
+    };
+
+    var templateColorFontSelect = function(data,container){
+        if (!data.id) { return data.text; }
+
+        var $color = getFontColorTemplate(data.element.value,data.text); 
+        //$('<span class="'+ data.element.value +'" >' + data.text + '</span>');
+
+        return $color;
+    };
+
+    var getFontColorTemplate = function(value,text){
+
+        var $color = $('<div class="fontColorSelectChip" style="background-color: '+ value +';" ></div> <span>' + text + '</span>');
+
+        return $color;
+    };
+
+    var formatFontsSelector = function( font ){
+
+        if (!font.id) { return font.text; }
+
+        var $font = getFontSpanTemplate(font.element.value,font.text); // $('<span class="'+ font.element.value +'" >' + font.text + '</span>');
+
+        return $font;
+    };
+
+    var templateFontSelect = function(data, container) {
+
+        if (!data.id) { return data.text; }
+
+        var $font = getFontSpanTemplate(data.element.value,data.text); //$('<span class="'+ data.element.value +'" >' + data.text + '</span>');
+
+        return $font;
+    };
+
+    var getFontSpanTemplate = function (value,text){
+
+        var $font = $(' <div></div> <span class="'+ value +'" >' + text + '</span>');
+
+        return $font;
     };
     
     return {

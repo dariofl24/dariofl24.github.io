@@ -11,6 +11,7 @@
       <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
       <link rel="stylesheet" type="text/css" href="styles/style.css">
+      <link rel="stylesheet" type="text/css" href="styles/all_fonts.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       
       <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -20,6 +21,13 @@
       <script src="jquery.lettering.js"></script>
       <script src="slick_lib/slick/slick.js" type="text/javascript" charset="utf-8"></script>
       <script src="js/dyo_features.js" type="text/javascript" charset="utf-8"></script>
+
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+      <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One|Audiowide|Baloo+Bhaina|Bungee+Inline|Chewy|Cinzel+Decorative|Concert+One|Fredericka+the+Great|Frijole|Fugaz+One|Graduate|Happy+Monkey|Knewave|Mogra|Monoton|Poiret+One|Press+Start+2P|Shrikhand|Special+Elite|Yeseva+One" rel="stylesheet">
+
+      <link href="https://fonts.googleapis.com/css?family=Bad+Script|Calligraffitti|Cedarville+Cursive|Coming+Soon|Condiment|Cookie|Courgette|Damion|Dancing+Script|Delius|Delius+Swash+Caps|Delius+Unicase|Great+Vibes|Homemade+Apple|Italianno|Just+Me+Again+Down+Here|Kaushan+Script|Monsieur+La+Doulaise|Patrick+Hand|Permanent+Marker|Petit+Formal+Script|Reenie+Beanie|Rock+Salt|Rouge+Script|Sacramento|Shadows+Into+Light|Tangerine|Walter+Turncoat|Yellowtail" rel="stylesheet">
       
       <script>
          $(function() {
@@ -56,10 +64,7 @@
                zIndex: 102
             });
 
-            $( "#accordion" ).accordion({
-              collapsible: true,
-              heightStyle: "content"
-            });
+            
 
 
 
@@ -170,7 +175,124 @@
 
      <h3>Texto</h3>
      <div>
-     <p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
+     <div id="line_text_container" >
+       <div id="editor_container" >
+
+        <div id="text_line_preview_cont" >
+          <span id="text_line_preview" >Add some text</span>
+        </div>
+        <div style="padding: 20px 0px;position: relative;">
+         <div class="pure-g">
+          <div class="pure-u-1-2">
+
+            <p>Texto:</p> <input type="text" id="text_line" >
+
+          </div>
+          <div class="pure-u-1-2">
+           
+            <select id="fonts_select" style="width: 100%" >
+              <option></option>
+
+              <optgroup label="Display">
+
+                <option value="poiret_one"> <p class="poiret_one" >Poiret One</p> </option>
+                <option value="chewy"><span class="" >Chewy</span></option>
+                <option value="frijole"><span class="" >Frijole</span></option>
+                <option value="alfa_slab_one"><span class="" >Alfa Slab One</span></option>
+                <option value="baloo_bhaina"><span class="" >Baloo Bhaina</span></option>
+                <option value="shrikhand"><span class="" >Shrikhand</span></option>
+                <option value="audiowide"><span class="" >Audiowide</span></option>
+                <option value="concert_one"><span class="" >Concert One</span></option>
+                <option value="special_elite"><span class="" >Special Elite</span></option>
+                <option value="mogra"><span class="" >Mogra</span></option>
+                <option value="graduate"><span class="" >Graduate</span></option>
+                <option value="monoton"><span class="" >Monoton</span></option>
+                <option value="fugaz_one"><span class="" >Fugaz One</span></option>
+                <option value="fredericka_great"><span class="" >Fredericka the Great</span></option>
+                <option value="cinzel_decorative"><span class="" >Cinzel Decorative</span></option>
+                <option value="press_start_2p"><span class="" >Press Start 2P</span></option>
+                <option value="happy_monkey"><span class="" >Happy Monkey</span></option>
+                <option value="bungee_inline"><span class="" >Bungee Inline</span></option>
+                <option value="knewave"><span class="" >Knewave</span></option>
+                <option value="yeseva_one"><span class="" >Yeseva One</span></option>
+                <optgroup label="Handwriting">
+                <option value="courgette"><span class="" >Courgette</span></option>
+                <option value="yellowtail"><span class="" >Yellowtail</span></option>
+
+              </optgroup>
+            </select>
+
+          </div>
+         </div>
+         </div>
+
+         <div style="padding: 20px 0px;position: relative;">
+           <div class="pure-g">
+
+           <div class="pure-u-1-2" >
+             <p>Tamaño: </p>
+             <select id="fonts_size_select" style="width: 25%;" >
+              <option value="6px" > 6 </option>
+              <option value="8px" > 8 </option>
+              <option value="10px" > 10 </option>
+              <option value="12px" > 12 </option>
+              <option value="14px" > 14 </option>
+              <option value="16px" > 16 </option>
+              <option selected="selected" value="18px" > 18 </option>
+              <option value="20px" > 20 </option>
+              <option value="22px" > 22 </option>
+              <option value="24px" > 24 </option>
+              <option value="26px" > 26 </option>
+              <option value="28px" > 28 </option>
+              <option value="30px" > 30 </option>
+              <option value="32px" > 32 </option>
+              <option value="34px" > 34 </option>
+              <option value="36px" > 36 </option>
+              <option value="38px" > 38 </option>
+              <option value="40px" > 40 </option>
+              <option value="42px" > 42 </option>
+              <option value="44px" > 44 </option>
+              <option value="46px" > 46 </option>
+              <option value="48px" > 48 </option>
+              <option value="50px" > 50 </option>
+              <option value="54px" > 54 </option>
+              <option value="58px" > 58 </option>
+              <option value="60px" > 60 </option>
+              <option value="64px" > 64 </option>
+              <option value="68px" > 68 </option>
+              <option value="70px" > 70 </option>
+
+              </select>
+           </div>
+           <div class="pure-u-1-2" >
+           <p>Color:</p>
+           <select id="fonts_color_select" style="width: 75%;">
+
+           <option value="#000000" > Black </option>
+           <option value="#ffffff" > White </option>
+           <option value="#0000ff" > Bold Blue </option>
+           <option value="#ff7f7f" > Melon </option>
+           <option value="#007f00" > Grass Green </option>
+           <option value="#007fbf" > Mild Blue </option>
+           <option value="#7f7f7f" > Grey </option>
+           <option value="#00bf7f" > Mild Green </option>
+           <option value="#00bfbf" > Aqua </option>
+
+             
+           </select>
+             
+           </div>
+             
+           </div>
+         </div>
+
+       </div>
+
+       <div id="list_text_container" >
+         
+       </div>
+     </div>
+     
      </div>
      
      <h3>Imagenes</h3>

@@ -75,6 +75,40 @@ div.colorchip .fa.fa-check-circle-o {
     top: 20%;
 }
 
+#editor_container p {
+  margin: 4px;
+  display: inline;
+}
+
+#editor_container input {
+  display: inline-block;
+}
+
+#editor_container select {
+  
+}
+
+#text_line_preview_cont {
+  margin-bottom: 15px;
+  margin-top: 10px;
+  text-align: center;
+  background-color: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-style: ridge;
+}
+
+#text_line_preview {
+  font-size: 18px;
+}
+
+.fontColorSelectChip {
+  width: 30px;
+  height: 10px;
+  display: inline-block;
+  border-style: inset;
+}
+
 div.ui-resizable-handle.ui-resizable-s, div.ui-resizable-handle.ui-resizable-e,div.ui-resizable-handle.ui-resizable-n, div.ui-resizable-handle.ui-resizable-w {
     background-color:transparent;
 }
