@@ -311,12 +311,15 @@
           <div class="pure-g" >
             <div class="pure-u-1-1" >
               <div id="add_remove" >
-                <button class="button button3">
+
+                <button id="textline_cancel" class="button button3">
                   <i class="fa fa-times fa-3x" aria-hidden="true"></i>
                 </button>
-                <button class="button button3">
+
+                <button id="textline_ok" class="button button3">
                   <i class="fa fa-check fa-3x" aria-hidden="true"></i>
                 </button>
+
               </div>
             </div> 
           </div>
@@ -325,6 +328,10 @@
        </div>
 
        <div id="list_text_container" >
+
+       <ul id="linetext_list" >
+         
+       </ul>
          
        </div>
      </div>
@@ -378,7 +385,7 @@
         <div class="switchContainer" >
           <i class="fa fa-repeat fa-3x"></i>
         </div>
-        <div class="shootContainer">
+        <div class="shootContainer" style="display: none;" >
         <a class="shootLink" href="#" >
           <i class="fa fa-camera-retro fa-3x"></i>
         </a>

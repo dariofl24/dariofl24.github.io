@@ -64,6 +64,13 @@ var dyo_colors_feature= (function() {
         $cache.textLinePreviewContainer = $("#text_line_preview_cont");
         $cache.fontColorSelect = $("#fonts_color_select");
         $cache.camera = $(".shootLink");
+        $cache.textlineOKBtn = $("#textline_ok");
+        $cache.textlineSetings= {
+            text: "",
+            font: "",
+            size: $cache.fontSizeSelect.val(),
+            color: $cache.fontColorSelect.val()
+        };
     };
 
     var initColorChips = function(){
@@ -115,7 +122,8 @@ var dyo_colors_feature= (function() {
             changeColorSide();
         });
 
-        $cache.camera.click( function(){
+        $cache.camera.click( function(evt){
+
             console.log("Camera !!");
 
             html2canvas($cache.tshirtArea,{
@@ -136,7 +144,8 @@ var dyo_colors_feature= (function() {
         $cache.textinput.keyup( function(){
 
             var str = $cache.textinput.val().trim();
-            console.log("keypress::: "+ str );
+
+            $cache.textlineSetings.text = str;
 
             if( str ){
                 $cache.textpreview.text( str );
@@ -148,7 +157,9 @@ var dyo_colors_feature= (function() {
         
         $cache.fontsSelect.on('change', function (evt) {
             var font = $cache.fontsSelect.val();
-            console.log( font );
+
+            $cache.textlineSetings.font = font;
+            
             $cache.textpreview.removeClass( $cache.prevFontSelect );
             $cache.textpreview.addClass(font);
 
@@ -158,6 +169,9 @@ var dyo_colors_feature= (function() {
 
         $cache.fontSizeSelect.on('change', function (evt) {
             var sz = $cache.fontSizeSelect.val();
+
+            $cache.textlineSetings.size = sz;
+
             $cache.textpreview.css("font-size",sz);
 
         });
@@ -165,8 +179,21 @@ var dyo_colors_feature= (function() {
         $cache.fontColorSelect.on('change', function (evt) {
 
             var fcolor = $cache.fontColorSelect.val();
-            console.log(fcolor);
+
+            $cache.textlineSetings.color = fcolor;
+
             $cache.textLinePreviewContainer.css("color",fcolor);
+
+        });
+
+        $cache.textlineOKBtn.click( function(){
+            console.log("OK:: "+ $cache.textlineSetings.text);
+
+            var str = $cache.textlineSetings.text;
+
+            if(str){
+                console.log( $cache.textlineSetings );
+            }
 
         });
 
