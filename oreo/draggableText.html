@@ -66,7 +66,18 @@
                zIndex: 102
             });
 
-            
+            $( "#draggable3" ).draggable({
+            containment : "#dragarea",
+            zIndex: 100
+            });
+
+            $( "#draggable3" ).resizable({
+               aspectRatio: true,
+               handles: "n, e, s, w",
+               classes: {
+                  "ui-resizable": "highlight",
+               }
+            });
 
 
 
@@ -180,7 +191,7 @@
      <div id="line_text_container" >
        <div id="editor_container" >
 
-        <div id="text_line_preview_cont" >
+        <div class="text_line_preview_cont" >
           <span id="text_line_preview" >Add some text</span>
         </div>
         <div style="padding: 10px 0px;position: relative;">
@@ -329,7 +340,30 @@
 
        <div id="list_text_container" >
 
-       <ul id="linetext_list" >
+       <ul id="linetext_list" style="list-style-type:none">
+
+       <li>
+        <div class="text_line_preview_listItem" >
+          <span>Added Text</span>
+        </div>
+        <div class="line_li_buttons" >
+
+          <div class="li_button_trash shadowhover" data-fromline="">
+            <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+          </div>
+
+          <div class="lock_edit">
+            <div class="li_button_lock shadowhover" style="display: none;" data-fromline="" >
+              <i class="fa fa-lock fa-2x" aria-hidden="true"></i>
+            </div> 
+
+            <div class="li_button_unlock shadowhover" data-fromline="">
+              <i class="fa fa-unlock-alt fa-2x" aria-hidden="true"></i>
+            </div>
+          </div> 
+
+        </div>
+       </li>
          
        </ul>
          
@@ -366,6 +400,13 @@
                   <img src="goosei.png" style="width: 95%;">
                </div>
             </div>
+
+            <div class="mysection back">
+               <div id = "draggable3" class="back" >
+                  <img src="gooseisland.min.png" style="width: 95%;">
+               </div>
+            </div>
+
             <div class="mysection front">
                <div id="page-wrap" class="front" >
                <div class="badge">

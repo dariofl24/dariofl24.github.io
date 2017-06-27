@@ -61,7 +61,7 @@ var dyo_colors_feature= (function() {
         $cache.fontsSelect = $("#fonts_select");
         $cache.prevFontSelect ="";
         $cache.fontSizeSelect = $("#fonts_size_select");
-        $cache.textLinePreviewContainer = $("#text_line_preview_cont");
+        $cache.textLinePreviewContainer = $(".text_line_preview_cont");
         $cache.fontColorSelect = $("#fonts_color_select");
         $cache.camera = $(".shootLink");
         $cache.textlineOKBtn = $("#textline_ok");
@@ -87,11 +87,12 @@ var dyo_colors_feature= (function() {
         var notside = ( $cache.currentSide === $cache.front )? $cache.back : $cache.front;;
 
         $(".mysection " + "."+$cache.currentSide).show();
-        //$(".mysection."+$cache.currentSide).show();
+        $(".mysection."+$cache.currentSide).show();
 
         $(".mysection " + "."+notside).hide();
-        //$(".mysection."+notside).hide();        
-    }
+        $(".mysection."+notside).hide();        
+    };
+
 
     var bindEvents = function(){
 
@@ -112,12 +113,12 @@ var dyo_colors_feature= (function() {
         $cache.switch.click(function(){
 
             $(".mysection " + "."+$cache.currentSide).hide();
-            //$(".mysection."+$cache.currentSide).hide();
+            $(".mysection."+$cache.currentSide).hide();
 
             $cache.currentSide = ( $cache.currentSide === $cache.front )? $cache.back : $cache.front;
 
             $(".mysection " + "."+$cache.currentSide).show();
-            //$(".mysection."+$cache.currentSide).show();
+            $(".mysection."+$cache.currentSide).show();
 
             changeColorSide();
         });
@@ -204,7 +205,7 @@ var dyo_colors_feature= (function() {
         $cache.tshirtArea.css("background","url("+$cache.location+$cache.currentSide+"/"+ $cache.currentColor +".png) no-repeat center");
         $cache.tshirtArea.css("background-size","contain");
 
-    }
+    };
 
     return {
         init: init

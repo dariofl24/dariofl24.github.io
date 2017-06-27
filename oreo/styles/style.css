@@ -1,4 +1,9 @@
 
+ul {
+  list-style-type: none;
+  padding: 0px;
+}
+
 #draggable { 
     width: 150px; 
     height: 150px; 
@@ -88,9 +93,19 @@ div.colorchip .fa.fa-check-circle-o {
   
 }
 
-#text_line_preview_cont {
+.text_line_preview_cont {
   margin-bottom: 15px;
   margin-top: 10px;
+  text-align: center;
+  background-color: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-style: ridge;
+}
+
+.text_line_preview_listItem {
+  margin-bottom: 5px;
+  margin-top: 5px;
   text-align: center;
   background-color: white;
   padding-top: 15px;
@@ -121,6 +136,24 @@ div.colorchip .fa.fa-check-circle-o {
 
 #add_remove .fa-check {
   color: forestgreen;
+}
+
+.li_button_trash {
+  width: 26px;
+  display: inline-block;
+}
+
+.shadowhover:hover {
+  background-color:darkgrey;
+}
+
+.li_button_lock, .li_button_unlock {
+  width: 21px;
+  display: inline-block;
+}
+
+.lock_edit {
+ display: inline-block; 
 }
 
 div.ui-resizable-handle.ui-resizable-s, div.ui-resizable-handle.ui-resizable-e,div.ui-resizable-handle.ui-resizable-n, div.ui-resizable-handle.ui-resizable-w {
