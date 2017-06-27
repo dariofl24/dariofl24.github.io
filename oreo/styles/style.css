@@ -28,7 +28,7 @@
 .build-container {
     border-style: solid;
     border-width: 0px 1px 0px 0px;
-    min-height: 750px;
+    min-height: 850px;
     margin-top: 10px;
 }
 
@@ -202,12 +202,26 @@ transform-origin: bottom center;
   margin: 0 auto;
 }
 
+.shootContainer {
+  width: 48px;
+  padding-top: 5px;
+  margin: 0 auto;
+}
+
 .switchContainer:hover {
   background-color: darkgrey;
 }
 
 #editor_container {
   border-bottom-style: groove;
+}
+
+.shootContainer:hover {
+  background-color: darkgrey;
+}
+
+.shootContainer a {
+  color: black;
 }
 
 .button {

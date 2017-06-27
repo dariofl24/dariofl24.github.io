@@ -63,6 +63,7 @@ var dyo_colors_feature= (function() {
         $cache.fontSizeSelect = $("#fonts_size_select");
         $cache.textLinePreviewContainer = $("#text_line_preview_cont");
         $cache.fontColorSelect = $("#fonts_color_select");
+        $cache.camera = $(".shootLink");
     };
 
     var initColorChips = function(){
@@ -112,6 +113,24 @@ var dyo_colors_feature= (function() {
             //$(".mysection."+$cache.currentSide).show();
 
             changeColorSide();
+        });
+
+        $cache.camera.click( function(){
+            console.log("Camera !!");
+
+            html2canvas($cache.tshirtArea,{
+
+                onrendered: function (canvas) {
+
+                    var imgageData = canvas.toDataURL("image/png");
+
+                    var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
+                    $cache.camera.attr("download", "your_pic_name.png").attr("href", newData);
+
+                }
+            });
+
+
         });
 
         $cache.textinput.keyup( function(){
