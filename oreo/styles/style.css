@@ -147,12 +147,18 @@ div.colorchip .fa.fa-check-circle-o {
   background-color:darkgrey;
 }
 
+.line_li_buttons{
+  position: relative;
+}
+
 .li_button_lock, .li_button_unlock {
   width: 21px;
   display: inline-block;
 }
 
 .lock_edit {
+  position: absolute;
+  right: 0px;
  display: inline-block; 
 }
 
