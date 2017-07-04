@@ -69,7 +69,9 @@ var dyo_colors_feature= (function() {
             text: "",
             font: "",
             size: $cache.fontSizeSelect.val(),
-            color: $cache.fontColorSelect.val()
+            color: $cache.fontColorSelect.val(),
+            li_id: 0,
+            width: 0
         };
     };
 
@@ -191,9 +193,11 @@ var dyo_colors_feature= (function() {
             console.log("OK:: "+ $cache.textlineSetings.text);
 
             var str = $cache.textlineSetings.text;
+            var settings = $cache.textlineSetings;
 
             if(str){
-                console.log( $cache.textlineSetings );
+                console.log( settings );
+
             }
 
         });

@@ -21,6 +21,7 @@
 
       <script src="jquery.ui.touch-punch.js"></script>
       <script src="jquery.lettering.js"></script>
+      <script src="mustache.min.js"></script>
       <script src="slick_lib/slick/slick.js" type="text/javascript" charset="utf-8"></script>
       <script src="js/dyo_features.js" type="text/javascript" charset="utf-8"></script>
 
@@ -86,6 +87,40 @@
    </head>
    
    <body>
+
+   <script id="text_line_template" type="text/template">
+    <!-- -->
+
+    <li>
+       <div class="text_line_li_{{li_id}}" >
+        <div class="text_line_preview_listItem" style="color: {{color}}; width: {{width}};">
+          <span class=".{{font}}" style="font-size: {{size}};" >{{text}}</span>
+        </div>
+        <div class="line_li_buttons" >
+
+          <div class="li_button_trash shadowhover" data-fromline="text_line_li_{{li_id}}">
+            <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+          </div>
+
+          <div class="lock_edit">
+            <div class="li_button_lock shadowhover" style="display: none;" data-fromline="text_line_li_{{li_id}}" >
+              <i class="fa fa-lock fa-2x" aria-hidden="true"></i>
+            </div> 
+
+            <div class="li_button_unlock shadowhover" data-fromline="text_line_li_{{li_id}}">
+              <i class="fa fa-unlock-alt fa-2x" aria-hidden="true"></i>
+            </div>
+          </div> 
+
+        </div>
+        </div>
+       </li>
+
+    <!-- -->
+  </script>
+
+
+
    <div class="pure-g">
    <div class="pure-u-1-2">
 
@@ -343,6 +378,7 @@
        <ul id="linetext_list" style="list-style-type:none">
 
        <li>
+       <div class="text_line_li_xx" >
         <div class="text_line_preview_listItem" >
           <span>Added Text</span>
         </div>
@@ -362,6 +398,7 @@
             </div>
           </div> 
 
+        </div>
         </div>
        </li>
          

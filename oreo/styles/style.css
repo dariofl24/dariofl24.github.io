@@ -162,6 +162,10 @@ div.colorchip .fa.fa-check-circle-o {
  display: inline-block; 
 }
 
+#linetext_list li {
+  border-bottom-style: groove;
+}
+
 div.ui-resizable-handle.ui-resizable-s, div.ui-resizable-handle.ui-resizable-e,div.ui-resizable-handle.ui-resizable-n, div.ui-resizable-handle.ui-resizable-w {
     background-color:transparent;
 }
