@@ -14,12 +14,29 @@
       <script src="circletype.min.js"></script>
       
       <style>
+
+          body, html {
+            height: 100%;
+          }
+
+          #parentcont {
+            position: relative;
+            top: 0px;
+            left: 0px;
+            min-height: 100%;
+            min-width: 100%;
+          }
+
+
          .badge:hover {
             background-color: grey;
             opacity: 0.6;
             color: red;
          }
 
+         #logo:hover {
+          background: gainsboro;
+         }
 
          .badge {
             position: relative;
@@ -43,8 +60,7 @@
          }
 
          #area {
-          padding-left: 70px;
-          padding-top: 70px;
+          padding: 10px;
          }
 
          .section {
@@ -57,11 +73,11 @@
       $( document ).ready(function() {
         console.log( "ready!" );
 
-        $("#demo11").circleType({radius: 120});
+        $("#demo11").circleType({radius: 110});
 
         $( "#slider-range-max" ).slider({
           min: 35,
-          max: 180,
+          max: 170,
           value: 110,
           slide: function( event, ui ) {
             console.log( ui.value );
@@ -69,13 +85,18 @@
           }
         });
 
-        
+        $( "#logo" ).draggable({
+          containment : "#area",
+          zIndex: 100
+        });
+
 
       });
       </script>
    </head>
    
    <body>
+   <div id="parentcont">
    <div class="pure-g">
    <div class="pure-u-1-2">
    <div style="border-right-style: solid;min-height: 250px;padding: 10px;" >
@@ -92,17 +113,23 @@
    </div>
 
    <div class="pure-u-1-2">
-      <div id="area">
+      <div id="area" style="height: 1000px;" >
+
          <div id="page-wrap">
 
-    <div id="logo" style="padding: 15px" >
-      <span id="demo11" >Established 2012</span>
-    </div>
-  
-  </div>
+         <div id="logo0" style="padding: 20px" >
+            <span id="demo00" >Established in 2012</span>
+          </div>
+
+          <div id="logo" style="position: relative;padding: 15px;height: 70px;padding-left: 71px;width: 70px;" >
+            <span id="demo11" >Established in 2012</span>
+          </div>
+
+        </div>
+
       </div>
    </div>
    </div>
-      
+      </div>
    </body>
 </html>
