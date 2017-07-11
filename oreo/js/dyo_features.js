@@ -39,6 +39,7 @@ var dyo_colors_feature= (function() {
         initCache();
         initColorChips();
         bindEvents();
+        bindBodyEvents();
         initImages();
 
         console.log("DYO - Feature LOADED !!!!");
@@ -62,17 +63,25 @@ var dyo_colors_feature= (function() {
         $cache.prevFontSelect ="";
         $cache.fontSizeSelect = $("#fonts_size_select");
         $cache.textLinePreviewContainer = $(".text_line_preview_cont");
+        $cache.textLinePreview_LI = ".text_line_preview_listItem";
         $cache.fontColorSelect = $("#fonts_color_select");
         $cache.camera = $(".shootLink");
         $cache.textlineOKBtn = $("#textline_ok");
-        $cache.textlineSetings= {
+        $cache.textlineSetings = {
             text: "",
             font: "",
             size: $cache.fontSizeSelect.val(),
             color: $cache.fontColorSelect.val(),
             li_id: 0,
-            width: 0
+            width: 0,
+            height: 0,
+            heightouter: 0,
+            backgroundColor: "rgb(255,255,255);",
+            side: $cache.currentSide
         };
+        $cache.linetextList = $("#linetext_list");
+        $cache.lineTextNextID = 0;
+        $cache.dragareaContainer = $("#dragarea .mycontainer");
     };
 
     var initColorChips = function(){
@@ -95,6 +104,15 @@ var dyo_colors_feature= (function() {
         $(".mysection."+notside).hide();        
     };
 
+    var bindBodyEvents = function(){
+
+        $("body").on("click","#linetext_list .li_button_trash",function(){
+            console.log("Trash ... "+ $( this ).data("fromline") );
+            $( "li.line_li_"+$( this ).data("fromline") ).remove();
+        });
+
+    };
+
 
     var bindEvents = function(){
 
@@ -109,6 +127,9 @@ var dyo_colors_feature= (function() {
             $cache.colorName.text(me.data("name"));
 
             $cache.textLinePreviewContainer.css( "background-color","rgb("+me.data("red")+","+me.data("green")+","+me.data("blue")+")" );
+            $( $cache.textLinePreview_LI ).css( "background-color","rgb("+me.data("red")+","+me.data("green")+","+me.data("blue")+")" );
+            //background-color: rgb(63, 63, 191);
+            $cache.textlineSetings.backgroundColor = "rgb("+me.data("red")+","+me.data("green")+","+me.data("blue")+")";
 
         });
 
@@ -116,13 +137,17 @@ var dyo_colors_feature= (function() {
 
             $(".mysection " + "."+$cache.currentSide).hide();
             $(".mysection."+$cache.currentSide).hide();
+            $("li."+$cache.currentSide).hide();
 
             $cache.currentSide = ( $cache.currentSide === $cache.front )? $cache.back : $cache.front;
 
             $(".mysection " + "."+$cache.currentSide).show();
             $(".mysection."+$cache.currentSide).show();
+            $("li."+$cache.currentSide).show();
 
             changeColorSide();
+
+            $cache.textlineSetings.side = $cache.currentSide;
         });
 
         $cache.camera.click( function(evt){
@@ -193,10 +218,44 @@ var dyo_colors_feature= (function() {
             console.log("OK:: "+ $cache.textlineSetings.text);
 
             var str = $cache.textlineSetings.text;
-            var settings = $cache.textlineSetings;
 
             if(str){
-                console.log( settings );
+                $cache.textlineSetings.li_id = $cache.lineTextNextID;
+                $cache.lineTextNextID += 1;
+
+                $cache.textlineSetings.width = $cache.textLinePreviewContainer.width()+2;
+                $cache.textlineSetings.height = $cache.textLinePreviewContainer.height()+2;
+
+                var data = $cache.textlineSetings;
+
+                console.log( data );
+
+                var template = $('#text_line_template').html();
+                
+                var result = Mustache.to_html(template, data);
+                //console.log(result);
+
+                $cache.linetextList.prepend(result);
+                //
+
+                data.width = $cache.textpreview.width()+2;
+                data.heightouter = $cache.textLinePreviewContainer.outerHeight()+2;
+
+                template = $('#drag_text_line_template').html();
+                result = Mustache.to_html(template, data);
+                console.log(result);
+                $cache.dragareaContainer.append(result);
+
+                //
+                $cache.textinput.val("");
+                $cache.textlineSetings.text = "";
+                $cache.textpreview.text("Add some text");
+                //
+
+                $("#draggable_"+data.li_id).draggable({
+                    containment : "#dragarea",
+                    zIndex: 100
+                });
 
             }
 

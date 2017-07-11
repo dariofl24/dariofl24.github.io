@@ -89,10 +89,6 @@ div.colorchip .fa.fa-check-circle-o {
   display: inline-block;
 }
 
-#editor_container select {
-  
-}
-
 .text_line_preview_cont {
   margin-bottom: 15px;
   margin-top: 10px;
@@ -112,6 +108,15 @@ div.colorchip .fa.fa-check-circle-o {
   padding-bottom: 15px;
   border-style: ridge;
 }
+
+.text_line_dragitem {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+
 
 #text_line_preview {
   font-size: 18px;
@@ -149,6 +154,7 @@ div.colorchip .fa.fa-check-circle-o {
 
 .line_li_buttons{
   position: relative;
+  margin-bottom: 5px;
 }
 
 .li_button_lock, .li_button_unlock {
@@ -222,6 +228,11 @@ transform-origin: bottom center;
    position: relative;
     width: 150px;
     height: 150px;
+}
+
+.mycontainer .mysection .dragablefont:hover {
+  background-color: grey;
+  opacity: 0.4;
 }
 
 .mycontainer {

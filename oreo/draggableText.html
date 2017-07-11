@@ -91,14 +91,14 @@
    <script id="text_line_template" type="text/template">
     <!-- -->
 
-    <li>
+    <li class="line_li_{{li_id}} {{side}}" >
        <div class="text_line_li_{{li_id}}" >
-        <div class="text_line_preview_listItem" style="color: {{color}}; width: {{width}};">
-          <span class=".{{font}}" style="font-size: {{size}};" >{{text}}</span>
+        <div class="text_line_preview_listItem" style="background-color: {{backgroundColor}}; color: {{color}}; width: {{width}}px; height: {{height}}px">
+          <span class="{{font}}" style="font-size: {{size}};" >{{text}}</span>
         </div>
         <div class="line_li_buttons" >
 
-          <div class="li_button_trash shadowhover" data-fromline="text_line_li_{{li_id}}">
+          <div class="li_button_trash shadowhover" data-fromline="{{li_id}}">
             <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
           </div>
 
@@ -115,6 +115,22 @@
         </div>
         </div>
        </li>
+
+    <!-- -->
+  </script>
+
+  <script id="drag_text_line_template" type="text/template">
+    <!-- -->
+
+    <div class="mysection {{side}}" style="width: {{width}}px; height: {{heightouter}}px;">
+      <div id = "draggable_{{li_id}}" class="{{side}} dragablefont" >
+
+      <div class="text_line_dragitem" style="color: {{color}}; width: {{width}}px; height: {{height}}px">
+          <span class="{{font}}" style="font-size: {{size}};" >{{text}}</span>
+        </div>
+        
+      </div>
+    </div>
 
     <!-- -->
   </script>
@@ -384,16 +400,16 @@
         </div>
         <div class="line_li_buttons" >
 
-          <div class="li_button_trash shadowhover" data-fromline="">
+          <div class="li_button_trash shadowhover" data-fromline="-1">
             <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
           </div>
 
           <div class="lock_edit">
-            <div class="li_button_lock shadowhover" style="display: none;" data-fromline="" >
+            <div class="li_button_lock shadowhover" style="display: none;" data-fromline="-1" >
               <i class="fa fa-lock fa-2x" aria-hidden="true"></i>
             </div> 
 
-            <div class="li_button_unlock shadowhover" data-fromline="">
+            <div class="li_button_unlock shadowhover" data-fromline="-1">
               <i class="fa fa-unlock-alt fa-2x" aria-hidden="true"></i>
             </div>
           </div> 
@@ -432,6 +448,7 @@
       <div id="dragarea">
 
          <div class="mycontainer">
+
             <div class="mysection front">
                <div id = "draggable" class="front" >
                   <img src="goosei.png" style="width: 95%;">
@@ -444,19 +461,21 @@
                </div>
             </div>
 
-            <div class="mysection front">
+            <!-- div class="mysection front">
                <div id="page-wrap" class="front" >
                <div class="badge">
                <h1>Established 2012</h1>
                </div>
                </div>
-            </div>
+            </div -->
+
             <div class="mysection back">
                <div id = "draggable2" class="back" >
                   <img src="GooseIslandLogoBlack.png" style="width: 95%;">
                </div>
             </div>
          </div>
+
       </div>
       <div class="infoContainer" >
         <p id="colorName" > White </p>
