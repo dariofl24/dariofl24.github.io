@@ -82,6 +82,7 @@ var dyo_colors_feature= (function() {
         $cache.linetextList = $("#linetext_list");
         $cache.lineTextNextID = 0;
         $cache.dragareaContainer = $("#dragarea .mycontainer");
+        
     };
 
     var initColorChips = function(){
@@ -109,6 +110,29 @@ var dyo_colors_feature= (function() {
         $("body").on("click","#linetext_list .li_button_trash",function(){
             console.log("Trash ... "+ $( this ).data("fromline") );
             $( "li.line_li_"+$( this ).data("fromline") ).remove();
+            $( "#draggable_"+$( this ).data("fromline") ).remove();
+        });
+
+        $("body").on("click",".lock_edit .li_button_lock",function(){
+            console.log("Lock ... "+ $( this ).data("fromline") );
+
+            $( this ).hide();
+            $(".line_li_"+ $( this ).data("fromline") + " .lock_edit .li_button_unlock" ).show();
+
+            $( "#draggable_"+ $( this ).data("fromline") ).draggable( "option", "disabled", false );
+            $( "#draggable_"+ $( this ).data("fromline") ).toggleClass("active");
+
+        });
+
+        $("body").on("click",".lock_edit .li_button_unlock",function(){
+            console.log("Unlock ... "+ $( this ).data("fromline") );
+
+            $( this ).hide();
+            $(".line_li_" + $( this ).data("fromline") + " .lock_edit .li_button_lock" ).show();
+
+            $( "#draggable_"+ $( this ).data("fromline") ).draggable( "option", "disabled", true );
+            $( "#draggable_"+ $( this ).data("fromline") ).toggleClass("active");
+
         });
 
     };

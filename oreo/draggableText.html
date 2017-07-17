@@ -103,11 +103,11 @@
           </div>
 
           <div class="lock_edit">
-            <div class="li_button_lock shadowhover" style="display: none;" data-fromline="text_line_li_{{li_id}}" >
+            <div class="li_button_lock shadowhover" style="display: none;" data-fromline="{{li_id}}" >
               <i class="fa fa-lock fa-2x" aria-hidden="true"></i>
             </div> 
 
-            <div class="li_button_unlock shadowhover" data-fromline="text_line_li_{{li_id}}">
+            <div class="li_button_unlock shadowhover" data-fromline="{{li_id}}">
               <i class="fa fa-unlock-alt fa-2x" aria-hidden="true"></i>
             </div>
           </div> 
@@ -123,7 +123,7 @@
     <!-- -->
 
     <div class="mysection {{side}}" style="width: {{width}}px; height: {{heightouter}}px;">
-      <div id = "draggable_{{li_id}}" class="{{side}} dragablefont" >
+      <div id = "draggable_{{li_id}}" class="{{side}} dragablefont active" >
 
       <div class="text_line_dragitem" style="color: {{color}}; width: {{width}}px; height: {{height}}px">
           <span class="{{font}}" style="font-size: {{size}};" >{{text}}</span>

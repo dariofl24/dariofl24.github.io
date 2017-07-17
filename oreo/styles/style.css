@@ -230,9 +230,9 @@ transform-origin: bottom center;
     height: 150px;
 }
 
-.mycontainer .mysection .dragablefont:hover {
+.mycontainer .mysection .dragablefont.active:hover {
   background-color: grey;
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 .mycontainer {
