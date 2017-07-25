@@ -112,8 +112,8 @@ div.colorchip .fa.fa-check-circle-o {
 .text_line_dragitem {
   margin-bottom: 5px;
   margin-top: 5px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 
@@ -230,7 +230,7 @@ transform-origin: bottom center;
     height: 150px;
 }
 
-.mycontainer .mysection .dragablefont.active:hover {
+.mycontainer .mysection .dragablefont.active .text_line_dragitem span:hover {
   background-color: grey;
   opacity: 0.6;
 }

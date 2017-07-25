@@ -117,10 +117,12 @@ var dyo_colors_feature= (function() {
             console.log("Lock ... "+ $( this ).data("fromline") );
 
             $( this ).hide();
-            $(".line_li_"+ $( this ).data("fromline") + " .lock_edit .li_button_unlock" ).show();
+            var fromline = $( this ).data("fromline")
+            $(".line_li_"+ fromline + " .lock_edit .li_button_unlock" ).show();
 
-            $( "#draggable_"+ $( this ).data("fromline") ).draggable( "option", "disabled", false );
-            $( "#draggable_"+ $( this ).data("fromline") ).toggleClass("active");
+            $( "#draggable_"+ fromline ).draggable( "option", "disabled", false );
+            $( "#draggable_"+ fromline ).toggleClass("active");
+            $(".li_fonts_size_select_" + fromline).prop("disabled", false);
 
         });
 
@@ -128,10 +130,25 @@ var dyo_colors_feature= (function() {
             console.log("Unlock ... "+ $( this ).data("fromline") );
 
             $( this ).hide();
-            $(".line_li_" + $( this ).data("fromline") + " .lock_edit .li_button_lock" ).show();
+            var fromline = $( this ).data("fromline");
 
-            $( "#draggable_"+ $( this ).data("fromline") ).draggable( "option", "disabled", true );
-            $( "#draggable_"+ $( this ).data("fromline") ).toggleClass("active");
+            $(".line_li_" + fromline + " .lock_edit .li_button_lock" ).show();
+
+            $( "#draggable_"+ fromline ).draggable( "option", "disabled", true );
+            $( "#draggable_"+ fromline ).toggleClass("active");
+            $(".li_fonts_size_select_" + fromline).prop("disabled", true);
+
+        });
+
+        $("body").on("change","#list_text_container .li_fz_container select",function(){ 
+
+            console.log( $(this).val() );
+            console.log( $(this).data("fromline") );
+            var fromline = $(this).data("fromline");
+            var sz = $(this).val();
+
+            $("li.line_li_"+ fromline + " .text_line_preview_listItem span").css("font-size",sz);
+            $("#draggable_"+ fromline  + " .text_line_dragitem span").css("font-size",sz);
 
         });
 
@@ -279,6 +296,13 @@ var dyo_colors_feature= (function() {
                 $("#draggable_"+data.li_id).draggable({
                     containment : "#dragarea",
                     zIndex: 100
+                });
+
+                $(".li_fonts_size_select_"+data.li_id).val(data.size);
+
+                $(".li_fonts_size_select_"+data.li_id).select2({
+                    minimumResultsForSearch: Infinity,
+                    allowClear: false
                 });
 
             }

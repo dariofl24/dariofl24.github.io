@@ -93,14 +93,48 @@
 
     <li class="line_li_{{li_id}} {{side}}" >
        <div class="text_line_li_{{li_id}}" >
-        <div class="text_line_preview_listItem" style="background-color: {{backgroundColor}}; color: {{color}}; width: {{width}}px; height: {{height}}px">
+        <div class="text_line_preview_listItem" style="background-color: {{backgroundColor}}; color: {{color}}; width: {{width}}px">
           <span class="{{font}}" style="font-size: {{size}};" >{{text}}</span>
         </div>
         <div class="line_li_buttons" >
 
-          <div class="li_button_trash shadowhover" data-fromline="{{li_id}}">
+          <div class="li_button_trash shadowhover" data-fromline="{{li_id}}" >
             <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
           </div>
+
+          <div class="li_fz_container" style="display: inline;position: relative;top: -5px;left: 20px;" >
+          <select class="li_fonts_size_select_{{li_id}}" style="width: 10%;" data-fromline="{{li_id}}" >
+              <option value="6px" > 6 </option>
+              <option value="8px" > 8 </option>
+              <option value="10px" > 10 </option>
+              <option value="12px" > 12 </option>
+              <option value="14px" > 14 </option>
+              <option value="16px" > 16 </option>
+              <option value="18px" > 18 </option>
+              <option value="20px" > 20 </option>
+              <option value="22px" > 22 </option>
+              <option value="24px" > 24 </option>
+              <option value="26px" > 26 </option>
+              <option value="28px" > 28 </option>
+              <option value="30px" > 30 </option>
+              <option value="32px" > 32 </option>
+              <option value="34px" > 34 </option>
+              <option value="36px" > 36 </option>
+              <option value="38px" > 38 </option>
+              <option value="40px" > 40 </option>
+              <option value="42px" > 42 </option>
+              <option value="44px" > 44 </option>
+              <option value="46px" > 46 </option>
+              <option value="48px" > 48 </option>
+              <option value="50px" > 50 </option>
+              <option value="54px" > 54 </option>
+              <option value="58px" > 58 </option>
+              <option value="60px" > 60 </option>
+              <option value="64px" > 64 </option>
+              <option value="68px" > 68 </option>
+              <option value="70px" > 70 </option>
+              </select>
+              </div>
 
           <div class="lock_edit">
             <div class="li_button_lock shadowhover" style="display: none;" data-fromline="{{li_id}}" >
@@ -125,7 +159,8 @@
     <div class="mysection {{side}}" style="width: {{width}}px; height: {{heightouter}}px;">
       <div id = "draggable_{{li_id}}" class="{{side}} dragablefont active" >
 
-      <div class="text_line_dragitem" style="color: {{color}}; width: {{width}}px; height: {{height}}px">
+      <div class="text_line_dragitem" style="color: {{color}}; width: {{width}}px;">
+      <!-- div class="text_line_dragitem" style="color: {{color}}; width: {{width}}px; height: {{height}}px" -->
           <span class="{{font}}" style="font-size: {{size}};" >{{text}}</span>
         </div>
         
@@ -325,7 +360,6 @@
               <option value="64px" > 64 </option>
               <option value="68px" > 68 </option>
               <option value="70px" > 70 </option>
-
               </select>
            </div>
            <div class="pure-u-1-2" >
