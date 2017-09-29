@@ -36,9 +36,26 @@ CREATE TABLE Category (
 ALTER TABLE Category ADD FOREIGN KEY (Catalog_ID) REFERENCES Catalog(ID);
 ALTER TABLE Category ADD FOREIGN KEY (Parent_Category_ID) REFERENCES Category(ID);
 
-ALTER TABLE Product ADD column Category_ID VARCHAR(128) DEFAULT NULL;
 
-ALTER TABLE Product ADD FOREIGN KEY (Category_ID) REFERENCES Category(ID);
+CREATE TABLE Category_Product (
+	Category_ID VARCHAR(128) NOT NULL,
+	Product_ID VARCHAR(128) NOT NULL,
+	FOREIGN KEY (Category_ID) REFERENCES Category(ID),
+	FOREIGN KEY (Product_ID) REFERENCES Product(ID)
+);
+
+CREATE TABLE Category_MasterProduct (
+	Category_ID VARCHAR(128) NOT NULL,
+	MasterProduct_ID VARCHAR(128) NOT NULL,
+	FOREIGN KEY (Category_ID) REFERENCES Category(ID),
+	FOREIGN KEY (MasterProduct_ID) REFERENCES MasterProduct(ID)
+);
+
+alter table Category_Product add constraint Category_Product_Const unique index(Category_ID, Product_ID);
+alter table Category_MasterProduct add constraint Category_MasterProduct_Const unique index(Category_ID, MasterProduct_ID);
+
+#ALTER TABLE Product ADD column Catalog_ID VARCHAR(128) NOT NULL;
+#ALTER TABLE Product ADD FOREIGN KEY (Catalog) REFERENCES Catalog(ID);
 
 # ---------
 
