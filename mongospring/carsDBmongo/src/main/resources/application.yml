@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      database: super-cars
+      host: localhost
+      port: 27017
