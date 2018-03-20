@@ -32,5 +32,12 @@ public class OpenGraphData {
 		this.image = image;
 	}
 	
+	@Override
+	public String toString() {
+		return "OpenGraphData [url=" + url + ", title=" + title + ", description=" + description + ", image=" + image
+				+ "]";
+	}
+	
+	
 	
 }

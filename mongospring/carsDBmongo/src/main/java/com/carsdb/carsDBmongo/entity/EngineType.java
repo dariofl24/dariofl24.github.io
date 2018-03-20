@@ -14,4 +14,9 @@ public enum EngineType {
 		this.code= code;
 	}
 	
+	@Override 
+    public String toString(){ 
+        return code; 
+    }
+	
 }

@@ -40,13 +40,15 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
-	public Brand create(Brand brand) {
+	public Optional<Brand> create(Brand brand) {
 		
-		return brandRepository.save(brand);
+		Brand saved = brandRepository.save(brand);
+		
+		return Optional.ofNullable(saved); 
 	}
 
 	@Override
-	public Brand update(Brand brand) {
+	public Optional<Brand> update(Brand brand) {
 		
 		Optional<Brand> optBrand =brandRepository.getById(brand.getId());
 		
@@ -54,7 +56,9 @@ public class BrandServiceImpl implements BrandService {
 			throw new RuntimeException("");
 		}
 		
-		return brandRepository.save(brand);
+		Brand saved = brandRepository.save(brand);
+		
+		return Optional.ofNullable(saved);
 	}
 	
 	

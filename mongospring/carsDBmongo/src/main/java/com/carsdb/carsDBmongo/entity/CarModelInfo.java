@@ -15,22 +15,21 @@ public class CarModelInfo {
 	@Id
     private String id;
 	
+	private String name;
+	
 	private String manufacturer;
 	
 	private int year;
 	
 	private int generation;
 	
-	private String name;
-	
 	private ExteriorInfoDto exteriorInfo;
-	
 	
 	private OpenGraphData openGraphData;
 	
+	private TechDetails techDetails;
+	
 	private List<ImageParagraph> imageParagraphs;
-	private List<Paragraph> paragraphs;
-	private List<TechDetails> techDetails;
 	
 	private List<ComposedImageDto> composedImageDto;
 	
@@ -42,14 +41,15 @@ public class CarModelInfo {
 	private Date dateAdded;
 	private Date lastEdited;
 	
+	private DocumentState documentState;
+	
 
 	public CarModelInfo(){
 		
 		exteriorInfo = new ExteriorInfoDto();
 		openGraphData = new OpenGraphData();
 		imageParagraphs = Lists.newArrayList();
-		paragraphs = Lists.newArrayList();
-		techDetails = Lists.newArrayList();
+		techDetails = new TechDetails();
 		carrouselImages = Lists.newArrayList();
 		
 		coverImageSmall = new ImageDto();
@@ -152,13 +152,15 @@ public class CarModelInfo {
 	public void setImageParagraphs(List<ImageParagraph> imageParagraphs) {
 		this.imageParagraphs = imageParagraphs;
 	}
-
-	public List<Paragraph> getParagraphs() {
-		return paragraphs;
+	
+	
+	
+	public List<ComposedImageDto> getComposedImageDto() {
+		return composedImageDto;
 	}
 
-	public void setParagraphs(List<Paragraph> paragraphs) {
-		this.paragraphs = paragraphs;
+	public void setComposedImageDto(List<ComposedImageDto> composedImageDto) {
+		this.composedImageDto = composedImageDto;
 	}
 
 	public String getId() {
@@ -169,11 +171,11 @@ public class CarModelInfo {
 		this.id = id;
 	}
 
-	public List<TechDetails> getTechDetails() {
+	public TechDetails getTechDetails() {
 		return techDetails;
 	}
 
-	public void setTechDetails(List<TechDetails> techDetails) {
+	public void setTechDetails(TechDetails techDetails) {
 		this.techDetails = techDetails;
 	}
 	
@@ -192,11 +194,25 @@ public class CarModelInfo {
 	public void setLastEdited(Date lastEdited) {
 		this.lastEdited = lastEdited;
 	}
+	
+	public DocumentState getDocumentState() {
+		return documentState;
+	}
+
+	public void setDocumentState(DocumentState documentState) {
+		this.documentState = documentState;
+	}
 
 	@Override
 	public String toString() {
-		return "CarModelInfo [id=" + id + ", manufacturer=" + manufacturer + ", year=" + year + ", generation="
-				+ generation + ", name=" + name + "]";
+		return "CarModelInfo [id=" + id + ", name=" + name + ", manufacturer=" + manufacturer + ", year=" + year
+				+ ", generation=" + generation + ", exteriorInfo=" + exteriorInfo + ", openGraphData=" + openGraphData
+				+ ", techDetails=" + techDetails + ", imageParagraphs=" + imageParagraphs + ", composedImageDto="
+				+ composedImageDto + ", carrouselImages=" + carrouselImages + ", coverImageSmall=" + coverImageSmall
+				+ ", coverImageMedium=" + coverImageMedium + ", dateAdded=" + dateAdded + ", lastEdited=" + lastEdited
+				+ ", documentState=" + documentState + "]";
 	}
+
+	
 	
 }

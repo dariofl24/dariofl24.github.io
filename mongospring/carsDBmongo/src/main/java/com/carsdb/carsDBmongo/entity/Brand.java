@@ -7,12 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "brand")
 public class Brand {
 	
-	public Brand(String name, String code) {
-		super();
-		this.name = name;
-		this.code = code;
-	}
-
 	@Id
     private String id;
 	
@@ -20,7 +14,17 @@ public class Brand {
 	
 	@Indexed(unique = true)
 	private String code;
-
+	
+	public Brand id(String id){
+		this.id = id;
+		return this;
+	}
+	
+	public Brand name(String name){
+		this.name = name;
+		return this;
+	}
+	
 	public String getId() {
 		return id;
 	}

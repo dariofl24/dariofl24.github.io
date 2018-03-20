@@ -23,6 +23,6 @@ public interface CarModelInfoRepository extends MongoRepository<CarModelInfo,Str
 	
 	Optional<List<CarModelInfo>> findByYear(int year);
 	
-	Page<CarModelInfo> findAllOrderByDateAddedDesc(Pageable pageable);
+	Page<CarModelInfo> findAllByOrderByDateAddedDesc(Pageable pageable);
 	
 }

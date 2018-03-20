@@ -15,8 +15,8 @@ public interface BrandService {
 	
 	void deleteAll();
 	
-	Brand create(Brand brand);
+	Optional<Brand> create(Brand brand);
 	
-	Brand update(Brand brand);
+	Optional<Brand> update(Brand brand);
 
 }

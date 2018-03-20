@@ -12,4 +12,11 @@ public class ImageDto {
 		this.src = src;
 	}
 
+	@Override
+	public String toString() {
+		return "ImageDto [src=" + src + "]";
+	}
+	
+	
+
 }

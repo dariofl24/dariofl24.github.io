@@ -16,64 +16,112 @@ import com.carsdb.carsDBmongo.entity.CarModelInfo;
 import com.carsdb.carsDBmongo.repository.BrandRepository;
 import com.carsdb.carsDBmongo.repository.CarModelInfoRepository;
 import com.carsdb.carsDBmongo.service.CarModelInfoService;
+import com.carsdb.exception.CarModelInfoException;
 
 @Service
 public class CarModelInfoServiceImpl implements CarModelInfoService {
 
 	@Autowired
 	private CarModelInfoRepository carModelInfoRepository;
-	
+
 	@Autowired
 	private BrandRepository brandRepository;
 	
 	@Override
-	public void create(CarModelInfo model) {
+	public Optional<CarModelInfo> upsert(CarModelInfo model) {
 		
-		if(StringUtils.isEmpty(model.getId())){
-			throw new RuntimeException("");
+		if( isNewModel(model) ){
+			
+			model.setDateAdded(new Date());
+			setModelId(model);
+			
+		}else{
+			model.setLastEdited(new Date());
 		}
 		
-		Optional<CarModelInfo> carModelOpt =carModelInfoRepository.getById(model.getId());
-		
-		if(carModelOpt.isPresent()){
-			throw new RuntimeException("");
+		if (!validateManufacturer(model)) {
+			throw new CarModelInfoException("INVALID MANUFACTURER");
 		}
 		
-		if(!validateManufacturer(model)){
-			throw new RuntimeException("");
+		CarModelInfo saved = carModelInfoRepository.save(model);
+		return Optional.ofNullable(saved);
+	}
+	
+	private boolean isNewModel(CarModelInfo model){
+		
+		if(!StringUtils.isEmpty(model.getId()) ){
+			
+			Optional<CarModelInfo> carModelOpt = carModelInfoRepository.getById(model.getId());
+			
+			return !carModelOpt.isPresent();
+			
 		}
 		
+		return true;
+	}
+
+	@Override
+	public Optional<CarModelInfo> create(CarModelInfo model) {
+
+		if(!StringUtils.isEmpty(model.getId()) ){
+			
+			Optional<CarModelInfo> carModelOpt = carModelInfoRepository.getById(model.getId());
+
+			if (!carModelOpt.isPresent()) {
+				throw new CarModelInfoException("MODEL WITH ID NOT FOUND");
+			}
+			
+		}
+
+		if (!validateManufacturer(model)) {
+			throw new CarModelInfoException("INVALID MANUFACTURER");
+		}
+
 		model.setDateAdded(new Date());
+		this.setModelId(model);
+
+		CarModelInfo saved = carModelInfoRepository.save(model);
+		return Optional.ofNullable(saved);
+	}
+
+	private void setModelId(final CarModelInfo model) {
 		
-		carModelInfoRepository.save(model);
+		final StringBuilder sb = new StringBuilder();
+
+		sb.append(Optional.ofNullable(model.getManufacturer()).orElse("").replace(" ", "_").toLowerCase());
+		sb.append(Optional.ofNullable(model.getName()).orElse("").replace(" ", "_").toLowerCase());
+		sb.append(Optional.ofNullable(model.getYear() + "").orElse("").replace(" ", "_").toLowerCase());
+		sb.append(Optional.ofNullable(model.getGeneration() + "").orElse("").replace(" ", "_").toLowerCase());
+
+		model.setId(sb.toString());
 	}
 
 	@Override
 	public void update(CarModelInfo model) {
-		
-		if(StringUtils.isEmpty(model.getId())){
-			throw new RuntimeException("");
+
+		if (StringUtils.isEmpty(model.getId())) {
+			throw new CarModelInfoException("");
 		}
-		
-		Optional<CarModelInfo> carModelOpt =carModelInfoRepository.getById(model.getId());
-		
-		if(!carModelOpt.isPresent()){
-			throw new RuntimeException("");
+
+		Optional<CarModelInfo> carModelOpt = carModelInfoRepository.getById(model.getId());
+
+		if (!carModelOpt.isPresent()) {
+			throw new CarModelInfoException("");
 		}
-		
-		if(!validateManufacturer(model)){
-			throw new RuntimeException("");
+
+		if (!validateManufacturer(model)) {
+			throw new CarModelInfoException("");
 		}
-		
+
 		model.setLastEdited(new Date());
 		carModelInfoRepository.save(model);
-		
+
 	}
-	
-	private boolean validateManufacturer(CarModelInfo model){
-		
-		Optional<Brand> brand =brandRepository.getByCode(model.getManufacturer());
-		
+
+	private boolean validateManufacturer(CarModelInfo model) {
+
+		Optional<Brand> brand = brandRepository.getByCode(model.getManufacturer());
+
 		return brand.isPresent();
 	}
 
@@ -83,18 +131,18 @@ public class CarModelInfoServiceImpl implements CarModelInfoService {
 	}
 
 	@Override
-	public List<CarModelInfo> findAll(int page,int size) {
-		
-		Pageable pageableRequest = new PageRequest(page,size);
-		
-		Page<CarModelInfo> pageResult = carModelInfoRepository.findAllOrderByDateAddedDesc(pageableRequest);
-		
+	public List<CarModelInfo> findAll(int page, int size) {
+
+		Pageable pageableRequest = new PageRequest(page, size);
+
+		Page<CarModelInfo> pageResult = carModelInfoRepository.findAllByOrderByDateAddedDesc(pageableRequest);
+
 		return pageResult.getContent();
 	}
 
 	@Override
 	public Optional<CarModelInfo> getById(String id) {
-		
+
 		return carModelInfoRepository.getById(id);
 	}
 
@@ -106,13 +154,13 @@ public class CarModelInfoServiceImpl implements CarModelInfoService {
 
 	@Override
 	public Optional<List<CarModelInfo>> findByManufacturer(String manufacturer) {
-		
+
 		return carModelInfoRepository.findByManufacturer(manufacturer);
 	}
 
 	@Override
 	public Optional<List<CarModelInfo>> findByYear(int year) {
-		
+
 		return carModelInfoRepository.findByYear(year);
 	}
 
@@ -120,6 +168,5 @@ public class CarModelInfoServiceImpl implements CarModelInfoService {
 	public Optional<List<CarModelInfo>> getLatestAdded() {
 		return carModelInfoRepository.findFirst25ByOrderByDateAddedDesc();
 	}
-	
 
 }

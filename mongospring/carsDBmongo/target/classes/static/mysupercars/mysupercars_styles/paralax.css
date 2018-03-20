@@ -1,0 +1,82 @@
+.parallax1 {
+    /* The image used */
+    background-image: url('../backgrounds/racetrack.jpg');
+
+    /* Full height */
+    /* height: 865px; */
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* opacity: 0.75; */
+    position: relative;
+}
+
+.parallax1_text {
+    /* The image used */
+    background-image: url('../backgrounds/racetrack.jpg');
+
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.parallax2 {
+    /* The image used */
+    background-image: url('../backgrounds/nurburgring.jpg');
+
+    /* Full height */
+    height: 700px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* opacity: 0.75; */
+    position: relative;
+}
+
+.parallax2_thumbs {
+    /* The image used */
+    background-image: url('../backgrounds/nurburgring.jpg');
+ 
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.parallax3 {
+    /* The image used */
+    background-image: url('../backgrounds/2014Spa24_sh_3518.jpg');
+
+    /* Full height */
+    height: 700px;
+    padding: 20px 0px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.caption {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    color: #000;
+}

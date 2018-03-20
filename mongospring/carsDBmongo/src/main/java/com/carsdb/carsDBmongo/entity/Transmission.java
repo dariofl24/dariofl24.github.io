@@ -4,6 +4,7 @@ public class Transmission {
 	
 	private TransmissionType type;
 	private int speeds;
+	
 	public TransmissionType getType() {
 		return type;
 	}
@@ -16,5 +17,11 @@ public class Transmission {
 	public void setSpeeds(int speeds) {
 		this.speeds = speeds;
 	}
+	@Override
+	public String toString() {
+		return type + ", " + speeds + " Speeds";
+	}
+	
+	
 
 }

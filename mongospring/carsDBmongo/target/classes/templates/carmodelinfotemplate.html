@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+
+<link rel="stylesheet"
+	href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+	integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
+	crossorigin="anonymous" />
+
+<meta charset="UTF-8" />
+<!--  -->
+<meta property="fb:app_id" content="1812415742342004" />
+<meta property="og:url"
+	content="https://dariofl24.github.io/mysupercars/cars/pagani-huayra-roadster-2017.html" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Pagani Huayra Roadster" />
+<meta property="og:description"
+	content="The objective is always to outdo oneself. Pure beauty in all shapes and surfaces - this is the philosophy behind Horacio Pagani's latest creation. From this foundation is built a masterpiece with a perfect balance of attention to detail and technological advancement." />
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="960" />
+<meta property="og:image"
+	content="https://dariofl24.github.io/mysupercars/cars_images/Pagani-Huayra%20Roadster-2017/details/social.jpg" />
+<!-- -->
+<style>
+body, p, a {
+	font: 20px "Lato", sans-serif;
+}
+</style>
+<style>
+body, html {
+	height: 100%;
+}
+
+h3 {
+	letter-spacing: 5px;
+	text-transform: uppercase;
+	font: 20px "Lato", sans-serif;
+	color: #111;
+}
+
+p {
+	font: 20px "Lato", sans-serif;
+	text-align: center;
+}
+</style>
+<link rel="stylesheet" type="text/css"
+	href="/mysupercars/mysupercars_styles/paralax.css"
+	th:href="@{/mysupercars/mysupercars_styles/paralax.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="/mysupercars/mysupercars_styles/layout.css"
+	th:href="@{/mysupercars/mysupercars_styles/layout.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="/mysupercars/slick_lib/slick/slick.css"
+	th:href="@{/mysupercars/slick_lib/slick/slick.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="/mysupercars/slick_lib/slick/slick-theme.css"
+	th:href="@{/mysupercars/slick_lib/slick/slick-theme.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="/mysupercars/mysupercars_styles/slick.css"
+	th:href="@{/mysupercars/mysupercars_styles/slick.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="/mysupercars/mysupercars_styles/headerMenu.css"
+	th:href="@{/mysupercars/mysupercars_styles/headerMenu.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="/mysupercars/mysupercars_styles/transbox.css"
+	th:href="@{/mysupercars/mysupercars_styles/transbox.css}" />
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}" />
+
+<link rel="stylesheet" type="text/css"
+	href="/mysupercars/mysupercars_styles/social.css"
+	th:href="@{/mysupercars/mysupercars_styles/social.css}" />
+
+</head>
+<body style="margin: 0px;">
+
+	<div class="parent_container">
+
+		<div class="head_bar_cont">
+			<div class="bar_contents">
+				<div style="text-align: center; padding-top: 10px;">
+					<span style="font-style: italic; font-size: 31px;">Super
+						Cars DB</span>
+				</div>
+				<div class="menu_bar">
+					<!--p>MENU - BAR</p-->
+					<ul class="topnav" id="myTopnav">
+						<li><a class="active"
+							href="/mysupercars/mysupercars_landing.html"
+							style="padding-left: 31px; padding-right: 31px;">Home</a></li>
+						<li><a href="#news">News</a></li>
+						<li><a href="#contact">Contact</a></li>
+						<li><a href="#about">About</a></li>
+						<li class="icon"><a href="javascript:void(0);"
+							style="font-size: 15px;">☰</a></li>
+					</ul>
+					<!-- -->
+					<div id="accountCont" class="acoutLogin">
+						<a id="loginbuton" class="userlogin" href="javascript:void(0);"
+							style="display: none;">Login</a>
+						<div id="userCont" style="display: none;">
+							<div class="dropdown">
+								<a class="userlogin" href="javascript:void(0);"> <img src=""
+									style="float: left; margin-right: 2px; display: none;"
+									height="21" width="21" class="userpic" /> <img
+									src="/icons/user.png" class="nohover usericon"
+									style="float: left; margin-right: 0px;" /> <img
+									src="/icons/userhover.png" class="hover usericon"
+									style="float: left; margin-right: 0px;" /> <span id="userName"
+									style="padding-left: 5px;">User Name</span>
+								</a>
+								<div class="dropdown-content">
+									<a id="profile" href="javascript:void(0);">Profile</a> <a
+										id="garage" href="javascript:void(0);">My Garage</a> <a
+										id="logout" href="javascript:void(0);">Logout</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- -->
+				</div>
+			</div>
+		</div>
+		<!-- START MAIN CONTENT -->
+		<div class="main_content">
+			<div class="parallax1_text">
+				<div style="position: relative; top: 5%;">
+
+					<div class="transbox">
+						<div style="text-align: center">
+							<span
+								th:text="${ #strings.capitalizeWords( #strings.concat(modelData.manufacturer,' ',modelData.name,' ',modelData.year) )}"
+								style="font-size: xx-large;">Title</span>
+						</div>
+
+						<section th:each="paragraph : ${modelData.imageParagraphs}">
+
+							<a th:if="${!#strings.isEmpty(paragraph.textImgUrl)}"
+								th:href="${paragraph.largeImgUrlLink}"> <img
+								th:class="${paragraph.imageLeft}?'intext_left':'intext_right'"
+								th:src="${paragraph.textImgUrl}" style="width: 485px;" />
+							</a>
+							<p th:text="${paragraph.text}"></p>
+
+						</section>
+
+					</div>
+
+				</div>
+			</div>
+
+			<div
+				style="color: #777; background-color: #242b36; text-align: center; padding: 50px 80px; text-align: justify;">
+				<section class="featureshow slider" style="width: 100%;">
+
+					<div th:each="carrimg : ${modelData.carrouselImages}">
+						<img th:src="${carrimg.src}" />
+					</div>
+
+				</section>
+			</div>
+
+			<div class="parallax2_thumbs">
+
+				<div class="car_thumbs">
+
+					<div class="floating-box"
+						th:each="imgDto : ${modelData.composedImageDto}">
+						<a th:href="${imgDto.mainImagePath}"><img
+							th:src="${imgDto.thumbUrl}" /></a>
+					</div>
+
+
+				</div>
+
+			</div>
+
+			<div style="position: relative;">
+				<div
+					style="color: #ddd; background-color: #282E34; text-align: center; padding: 50px 80px; text-align: justify;">
+
+				</div>
+			</div>
+
+			<div class="parallax3">
+
+				<div class="transbox2">
+
+					<div class="techDetails pure-g">
+						<div class="pure-u-1-6"></div>
+						<div class="pure-u-2-3">
+
+							<div id="techDetailsHeader" class="pure-u-1-1">
+								<p>Technical Details</p>
+							</div>
+
+							<div class="tbody">
+
+								<div class="pure-u-11-24 td">
+									<p class="key">Cylinders</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.techDetails.numberCylinders}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Engine</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.techDetails.engineType}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Power Train</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.techDetails.powerTrain}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Displacement</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.techDetails.displacement_cc}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Torque</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.techDetails.torque_nm}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Aceleration (0-100 Km/h)</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.techDetails.aceleration_0_100}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Max Speed (Km/h)</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.techDetails.maxSpeed}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Transmission</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.techDetails.transmission}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Doors</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.exteriorInfo.doors}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Tracktion</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.exteriorInfo.tracktion}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Type</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.exteriorInfo.type}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Lenght (mm)</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.exteriorInfo.lenght_mm}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Wide (mm)</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.exteriorInfo.wide_mm}"></p>
+								</div>
+								
+								<div class="pure-u-11-24 td">
+									<p class="key">Tall (mm)</p>
+								</div>
+								<div class="pure-u-11-24 td">
+									<p class="val"
+										th:text="${modelData.exteriorInfo.tall_mm}"></p>
+								</div>
+								
+							</div>
+
+						</div>
+						<div class="pure-u-1-6"></div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<div class="socialIconsCont">
+			<div id="FB_share" class="fa fa-facebook"></div>
+			<br />
+			<div class="fa fa-twitter"></div>
+			<br />
+			<div class="fa fa-pinterest"></div>
+			<br />
+			<div id="add2garage" class="userOnlyhide fa fa-car"
+				aria-hidden="true" data-pageid="0001"></div>
+		</div>
+
+		<div id="snackbar">Added to garage</div>
+
+	</div>
+	<!-- JS Start -->
+	<script src="https://code.jquery.com/jquery-2.2.0.min.js"
+		type="text/javascript"></script>
+	<script src="/mysupercars/slick_lib/slick/slick.js"
+		type="text/javascript" charset="utf-8"></script>
+	<script src="/mysupercars/js/features.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</body>
+</html>

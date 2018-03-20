@@ -3,6 +3,8 @@ package com.carsdb.carsDBmongo.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.carsdb.carsDBmongo.entity.ComposedImageDto;
+import com.carsdb.carsDBmongo.entity.DocumentState;
 import com.carsdb.carsDBmongo.entity.ExteriorInfoDto;
 import com.carsdb.carsDBmongo.entity.ImageDto;
 import com.carsdb.carsDBmongo.entity.ImageParagraph;
@@ -27,8 +29,10 @@ public class CarModelInfoDto {
 	private OpenGraphData openGraphData;
 
 	private List<ImageParagraph> imageParagraphs;
-	private List<Paragraph> paragraphs;
-	private List<TechDetails> techDetails;
+	
+	private List<ComposedImageDto> composedImageDto;
+	
+	private TechDetails techDetails;
 
 	private List<ImageDto> carrouselImages;
 
@@ -38,6 +42,7 @@ public class CarModelInfoDto {
 	private Date dateAdded;
 	private Date lastEdited;
 	
+	private DocumentState documentState;
 	
 	public String getId() {
 		return id;
@@ -87,16 +92,11 @@ public class CarModelInfoDto {
 	public void setImageParagraphs(List<ImageParagraph> imageParagraphs) {
 		this.imageParagraphs = imageParagraphs;
 	}
-	public List<Paragraph> getParagraphs() {
-		return paragraphs;
-	}
-	public void setParagraphs(List<Paragraph> paragraphs) {
-		this.paragraphs = paragraphs;
-	}
-	public List<TechDetails> getTechDetails() {
+
+	public TechDetails getTechDetails() {
 		return techDetails;
 	}
-	public void setTechDetails(List<TechDetails> techDetails) {
+	public void setTechDetails(TechDetails techDetails) {
 		this.techDetails = techDetails;
 	}
 	public List<ImageDto> getCarrouselImages() {
@@ -111,23 +111,45 @@ public class CarModelInfoDto {
 	public void setCoverImageSmall(ImageDto coverImageSmall) {
 		this.coverImageSmall = coverImageSmall;
 	}
+	
 	public ImageDto getCoverImageMedium() {
 		return coverImageMedium;
 	}
+	
 	public void setCoverImageMedium(ImageDto coverImageMedium) {
 		this.coverImageMedium = coverImageMedium;
 	}
+	
 	public Date getDateAdded() {
 		return dateAdded;
 	}
+	
 	public void setDateAdded(Date dateAdded) {
 		this.dateAdded = dateAdded;
 	}
+	
 	public Date getLastEdited() {
 		return lastEdited;
 	}
+	
 	public void setLastEdited(Date lastEdited) {
 		this.lastEdited = lastEdited;
 	}
-
+	
+	public DocumentState getDocumentState() {
+		return documentState;
+	}
+	
+	public void setDocumentState(DocumentState documentState) {
+		this.documentState = documentState;
+	}
+	
+	public List<ComposedImageDto> getComposedImageDto() {
+		return composedImageDto;
+	}
+	
+	public void setComposedImageDto(List<ComposedImageDto> composedImageDto) {
+		this.composedImageDto = composedImageDto;
+	}
+	
 }

@@ -7,7 +7,9 @@ import com.carsdb.carsDBmongo.entity.CarModelInfo;
 
 public interface CarModelInfoService {
 	
-	void create(CarModelInfo model);
+	Optional<CarModelInfo> upsert(CarModelInfo model);
+	
+	Optional<CarModelInfo> create(CarModelInfo model);
 	
 	void update(CarModelInfo model);
 	

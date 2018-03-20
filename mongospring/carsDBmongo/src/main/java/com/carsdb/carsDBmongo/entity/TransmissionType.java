@@ -2,9 +2,9 @@ package com.carsdb.carsDBmongo.entity;
 
 public enum TransmissionType {
 	
-	Manual(""),
-	Automatic(""),
-	SemiAutomatic("");
+	Manual("Manual"),
+	Automatic("Automatic"),
+	SemiAutomatic("SemiAutomatic");
 
 	private String type;
 	

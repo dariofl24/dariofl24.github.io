@@ -2,27 +2,30 @@ package com.carsdb.carsDBmongo.entity;
 
 public class ComposedImageDto {
 
-	private String thumb;
-	private String main_URL;
-	private String main_path;
+	private String thumbUrl;
+	private String mainImagePath;
 	
-	public String getThumb() {
-		return thumb;
+	public String getThumbUrl() {
+		return thumbUrl;
 	}
-	public void setThumb(String thumb) {
-		this.thumb = thumb;
+	
+	public void setThumbUrl(String thumbUrl) {
+		this.thumbUrl = thumbUrl;
 	}
-	public String getMain_URL() {
-		return main_URL;
+	
+	public String getMainImagePath() {
+		return mainImagePath;
 	}
-	public void setMain_URL(String main_URL) {
-		this.main_URL = main_URL;
+	
+	public void setMainImagePath(String mainImagePath) {
+		this.mainImagePath = mainImagePath;
 	}
-	public String getPath() {
-		return main_path;
+
+	@Override
+	public String toString() {
+		return "ComposedImageDto [thumbUrl=" + thumbUrl + ", mainImagePath=" + mainImagePath + "]";
 	}
-	public void setPath(String main_path) {
-		this.main_path = main_path;
-	}
+	
+	
 	
 }

@@ -38,12 +38,8 @@ public class App implements CommandLineRunner {
 		
 		brandService.deleteAll();
 		
-		brandService.create( new Brand("Audi","audi") );
-		brandService.create( new Brand("BMW","bmw") );
-		brandService.create( new Brand("Mercedes Benz","mercedes benz") );
-		brandService.create( new Brand("Pagani","pagani") );
-		brandService.create( new Brand("Porsche","porsche") );
-		brandService.create( new Brand("Ferrari","ferrari") );
+		brandService.create( (new Brand()).id("Audi").name("audi") );
+		
 		
 		// --------
 		
