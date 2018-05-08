@@ -33,6 +33,8 @@ var allFeatures = (function() {
 		$cache.modelId = $("#id");
 		$cache.dateAdded = $("#dateAdded");
 		$cache.lastEdited = $("#lastEdited");
+		
+		$cache.featured = $("#featured");
 
 		// $cache.tshirtArea = $("#dragarea");
 
@@ -106,6 +108,8 @@ var allFeatures = (function() {
 				$("#floatLeft_"+(index+1)).prop( "checked", item.imageLeft );
 				
 			});
+			
+			$("#featured").prop( "checked", obj.featured );
 			
 			for (i = 0; i < (obj.composedImageDto.length - 1); i++) {
 				addPlusImgs();
@@ -273,6 +277,8 @@ var allFeatures = (function() {
 			openGraphData.image = data.get("og_image");
 
 			request.openGraphData = openGraphData;
+			
+			request.featured = data.get("featured") ==='on';
 
 			console.log(request);
 

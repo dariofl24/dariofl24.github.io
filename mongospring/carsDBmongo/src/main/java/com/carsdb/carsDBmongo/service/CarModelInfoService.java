@@ -25,6 +25,6 @@ public interface CarModelInfoService {
 	
 	Optional<List<CarModelInfo>> findByYear(int year);
 	
-	Optional<List<CarModelInfo>> getLatestAdded();
+	Optional<List<CarModelInfo>> getLatest10Added();
 
 }

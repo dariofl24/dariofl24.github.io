@@ -110,7 +110,7 @@ public class CarModelController {
 	@ResponseBody
 	public List<CarModelInfoDto> getLatest() {
 
-		List<CarModelInfoDto> list = carModelInfoService.getLatestAdded().orElseThrow(() -> new RuntimeException(""))
+		List<CarModelInfoDto> list = carModelInfoService.getLatest10Added().orElseThrow(() -> new RuntimeException(""))
 				.stream().map(c -> mapperFacade.map(c, CarModelInfoDto.class)).collect(Collectors.toList());
 
 		return list;

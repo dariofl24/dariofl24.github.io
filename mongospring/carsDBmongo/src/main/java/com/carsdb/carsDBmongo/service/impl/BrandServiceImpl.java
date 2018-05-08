@@ -17,13 +17,13 @@ public class BrandServiceImpl implements BrandService {
 	private BrandRepository brandRepository;
 
 	@Override
-	public Optional<Brand> getByName(String name) {
+	public Optional<Brand> getByName(final String name) {
 		
 		return brandRepository.getByName(name);
 	}
 
 	@Override
-	public Optional<Brand> getByCode(String code) {
+	public Optional<Brand> getByCode(final String code) {
 		
 		return brandRepository.getByCode(code);
 	}
@@ -40,7 +40,7 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
-	public Optional<Brand> create(Brand brand) {
+	public Optional<Brand> create(final Brand brand) {
 		
 		Brand saved = brandRepository.save(brand);
 		
@@ -48,19 +48,28 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
-	public Optional<Brand> update(Brand brand) {
+	public Optional<Brand> update(final Brand brand) {
 		
-		Optional<Brand> optBrand =brandRepository.getById(brand.getId());
+		Optional<Brand> optBrand =brandRepository.getByCode(brand.getCode());
 		
 		if(!optBrand.isPresent()){
 			throw new RuntimeException("");
 		}
+		
+		mapBrand(optBrand.get(),brand);
 		
 		Brand saved = brandRepository.save(brand);
 		
 		return Optional.ofNullable(saved);
 	}
 	
+	private void mapBrand(final Brand oldBrand,final Brand newBrand){
+		
+		oldBrand.setCode(newBrand.getCode());
+		oldBrand.setLogo_url(newBrand.getLogo_url());
+		oldBrand.setName(newBrand.getName());
+		
+	}
 	
 
 }

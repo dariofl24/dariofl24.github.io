@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 
 import com.carsdb.carsDBmongo.entity.Brand;
 import com.carsdb.carsDBmongo.entity.CarModelInfo;
+import com.carsdb.carsDBmongo.entity.DocumentState;
 import com.carsdb.carsDBmongo.repository.BrandRepository;
 import com.carsdb.carsDBmongo.repository.CarModelInfoRepository;
 import com.carsdb.carsDBmongo.service.CarModelInfoService;
@@ -165,8 +166,8 @@ public class CarModelInfoServiceImpl implements CarModelInfoService {
 	}
 
 	@Override
-	public Optional<List<CarModelInfo>> getLatestAdded() {
-		return carModelInfoRepository.findFirst25ByOrderByDateAddedDesc();
+	public Optional<List<CarModelInfo>> getLatest10Added() {
+		return carModelInfoRepository.findFirst10ByDocumentStateAndFeaturedOrderByDateAddedDesc(DocumentState.Publish, true);
 	}
 
 }

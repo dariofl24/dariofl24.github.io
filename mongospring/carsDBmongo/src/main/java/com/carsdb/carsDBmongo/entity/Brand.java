@@ -12,6 +12,8 @@ public class Brand {
 	
 	private String name;
 	
+	private String logo_url;
+	
 	@Indexed(unique = true)
 	private String code;
 	
@@ -49,9 +51,17 @@ public class Brand {
 		this.code = code;
 	}
 
+	public String getLogo_url() {
+		return logo_url;
+	}
+
+	public void setLogo_url(String logo_url) {
+		this.logo_url = logo_url;
+	}
+
 	@Override
 	public String toString() {
-		return "Brand [id=" + id + ", name=" + name + ", code=" + code + "]";
+		return "Brand [id=" + id + ", name=" + name + ", logo_url=" + logo_url + ", code=" + code + "]";
 	}
 	
 }

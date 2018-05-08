@@ -9,6 +9,8 @@ public class BrandDto {
 	
 	private String code;
 	
+	private String logo_url;
+	
 	public String getId() {
 		return id;
 	}
@@ -32,7 +34,13 @@ public class BrandDto {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
-	
+
+	public String getLogo_url() {
+		return logo_url;
+	}
+
+	public void setLogo_url(String logo_url) {
+		this.logo_url = logo_url;
+	}
 	
 }

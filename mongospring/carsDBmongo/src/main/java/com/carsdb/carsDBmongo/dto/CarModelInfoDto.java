@@ -44,6 +44,8 @@ public class CarModelInfoDto {
 	
 	private DocumentState documentState;
 	
+	private boolean featured;
+	
 	public String getId() {
 		return id;
 	}
@@ -151,5 +153,14 @@ public class CarModelInfoDto {
 	public void setComposedImageDto(List<ComposedImageDto> composedImageDto) {
 		this.composedImageDto = composedImageDto;
 	}
+	public boolean isFeatured() {
+		return featured;
+	}
+	
+	public void setFeatured(boolean featured) {
+		this.featured = featured;
+	}
+	
+	
 	
 }

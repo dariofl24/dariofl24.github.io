@@ -43,6 +43,8 @@ public class CarModelInfo {
 	
 	private DocumentState documentState;
 	
+	private boolean featured;
+	
 
 	public CarModelInfo(){
 		
@@ -202,6 +204,14 @@ public class CarModelInfo {
 	public void setDocumentState(DocumentState documentState) {
 		this.documentState = documentState;
 	}
+	
+	public boolean isFeatured() {
+		return featured;
+	}
+
+	public void setFeatured(boolean featured) {
+		this.featured = featured;
+	}
 
 	@Override
 	public String toString() {
@@ -210,7 +220,7 @@ public class CarModelInfo {
 				+ ", techDetails=" + techDetails + ", imageParagraphs=" + imageParagraphs + ", composedImageDto="
 				+ composedImageDto + ", carrouselImages=" + carrouselImages + ", coverImageSmall=" + coverImageSmall
 				+ ", coverImageMedium=" + coverImageMedium + ", dateAdded=" + dateAdded + ", lastEdited=" + lastEdited
-				+ ", documentState=" + documentState + "]";
+				+ ", documentState=" + documentState + ", featured=" + featured + "]";
 	}
 
 	
