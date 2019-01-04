@@ -15,6 +15,9 @@ var allFeatures = (function() {
 
     		if(status == 'success'){
     			console.log(data);
+
+    			$("#personName").text(data.name);
+
     		}else{
     			console.log("No data !");
     		}
