@@ -16,7 +16,10 @@ var allFeatures = (function() {
     		if(status == 'success'){
     			console.log(data);
 
+    			$("#personPhoto").attr("src",data.picture);
     			$("#personName").text(data.name);
+    			$("#personProfession").text(data.professionalHeadline);
+
 
     		}else{
     			console.log("No data !");
