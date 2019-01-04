@@ -20,7 +20,7 @@ var allFeatures = (function() {
     			$("#personName").text(data.name);
     			$("#personProfession").html("<i class=\"fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+data.professionalHeadline);
     			$("#personEmail").html("<i class=\"fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+data.email);
-    			$("#personLocation").html("<i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>"+data.location);
+    			$("#personLocation").html("<i class=\"fa fa-home fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+data.location);
     			
 
 
