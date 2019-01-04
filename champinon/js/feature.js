@@ -18,7 +18,7 @@ var allFeatures = (function() {
 
     			$("#personPhoto").attr("src",data.picture);
     			$("#personName").text(data.name);
-    			$("#personProfession").text("<i class=\"fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+" "+data.professionalHeadline);
+    			$("#personProfession").html("<i class=\"fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+" "+data.professionalHeadline);
 
 
     		}else{
