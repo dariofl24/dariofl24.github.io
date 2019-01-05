@@ -2,6 +2,7 @@
 var allFeatures = (function() { 
 
 	var person_info_url = "https://cors.io/?https://torre.bio/api/people/sergiomg77";
+    var person_jobs_url = "https://cors.io/?https://torre.bio/api/bios/sergiomg77/jobs";
 
     var init = function(){
 
@@ -10,6 +11,22 @@ var allFeatures = (function() {
     };
 
     var initPersonInfo = function(){
+
+        $.get(person_jobs_url, function(data, status){
+
+            if(status == 'success'){
+                console.log(data);
+
+                var obj = JSON.parse(data);
+                console.log(obj);
+
+                
+
+            }else{
+                console.log("No data !");
+            }
+
+        });
 
     	$.get(person_info_url, function(data, status){
 
