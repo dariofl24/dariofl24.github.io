@@ -20,6 +20,9 @@ var allFeatures = (function() {
                 var obj = JSON.parse(data);
                 console.log(obj);
 
+                $("#job1desc").text(obj[0].role);
+                $("#job2desc").text(obj[1].role);
+
                 
 
             }else{
