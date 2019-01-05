@@ -16,13 +16,15 @@ var allFeatures = (function() {
     		if(status == 'success'){
     			console.log(data);
 
-    			$("#personPhoto").attr("src",data.picture);
-    			$("#personName").text(data.name);
-                $("#personSummary").text(data.summaryOfBio);
-    			$("title").text(data.name);
-    			$("#personProfession").html("<i class=\"fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+data.professionalHeadline);
-    			$("#personEmail").html("<i class=\"fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+data.email);
-    			$("#personLocation").html("<i class=\"fa fa-home fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+data.location);
+                var obj = JSON.parse(data);
+
+    			$("#personPhoto").attr("src",obj.picture);
+    			$("#personName").text(obj.name);
+                $("#personSummary").text(obj.summaryOfBio);
+    			$("title").text(obj.name);
+    			$("#personProfession").html("<i class=\"fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+obj.professionalHeadline);
+    			$("#personEmail").html("<i class=\"fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+obj.email);
+    			$("#personLocation").html("<i class=\"fa fa-home fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+obj.location);
     			
 
 
