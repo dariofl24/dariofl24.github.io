@@ -1,7 +1,7 @@
 
 var allFeatures = (function() { 
 
-	var person_info_url = "https://crossorigin.me/https://torre.bio/api/people/sergiomg77";
+	var person_info_url = "https://cors.io/?https://torre.bio/api/people/sergiomg77";
 
     var init = function(){
 
