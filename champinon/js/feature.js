@@ -18,6 +18,7 @@ var allFeatures = (function() {
 
     			$("#personPhoto").attr("src",data.picture);
     			$("#personName").text(data.name);
+                $("#personSummary").text(data.summaryOfBio);
     			$("title").text(data.name);
     			$("#personProfession").html("<i class=\"fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+data.professionalHeadline);
     			$("#personEmail").html("<i class=\"fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal\"></i>"+data.email);
