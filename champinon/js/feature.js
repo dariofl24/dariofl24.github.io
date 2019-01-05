@@ -1,7 +1,7 @@
 
 var allFeatures = (function() { 
 
-	var person_info_url = "https://torre.bio/api/people/gjacintojacinto";
+	var person_info_url = "https://crossorigin.me/https://torre.bio/api/people/sergiomg77";
 
     var init = function(){
 
