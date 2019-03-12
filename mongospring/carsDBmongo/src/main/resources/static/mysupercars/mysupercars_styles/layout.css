@@ -150,3 +150,19 @@ p {
 	padding-bottom: 25px;
 }
 
+footer {
+	position: absolute;
+    bottom: 0px;
+    background-color: crimson;
+    min-width: 100%;
+    padding: 15px 25px;
+}
+
+#div_def_img {
+	width: 75%;
+    margin: auto;
+}
+
+#default_img {
+	width: 100%;
+}
