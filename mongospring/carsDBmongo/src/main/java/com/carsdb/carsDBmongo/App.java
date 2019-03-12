@@ -5,12 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.carsdb.carsDBmongo.entity.Brand;
 import com.carsdb.carsDBmongo.entity.CarModelInfo;
 import com.carsdb.carsDBmongo.entity.OpenGraphData;
-import com.carsdb.carsDBmongo.repository.BrandRepository;
 import com.carsdb.carsDBmongo.service.BrandService;
 import com.carsdb.carsDBmongo.service.CarModelInfoService;
 

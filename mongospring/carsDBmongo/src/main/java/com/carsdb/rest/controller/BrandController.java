@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.carsdb.carsDBmongo.dto.BrandDto;
-import com.carsdb.carsDBmongo.dto.CarModelInfoDto;
 import com.carsdb.carsDBmongo.entity.Brand;
 import com.carsdb.carsDBmongo.service.BrandService;
 

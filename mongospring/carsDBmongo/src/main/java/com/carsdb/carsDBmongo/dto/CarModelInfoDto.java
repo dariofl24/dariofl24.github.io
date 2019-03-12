@@ -9,7 +9,6 @@ import com.carsdb.carsDBmongo.entity.ExteriorInfoDto;
 import com.carsdb.carsDBmongo.entity.ImageDto;
 import com.carsdb.carsDBmongo.entity.ImageParagraph;
 import com.carsdb.carsDBmongo.entity.OpenGraphData;
-import com.carsdb.carsDBmongo.entity.Paragraph;
 import com.carsdb.carsDBmongo.entity.TechDetails;
 
 public class CarModelInfoDto {
