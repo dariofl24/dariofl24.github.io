@@ -301,9 +301,7 @@ var allFeatures = (function() {
 				console.log(msg);
 
 			});
-
-			// console.log(data.get("name"));
-			// console.log(data.get("doors"));
+			
 		});
 
 		$cache.plusImgs.click(addPlusImgs);
@@ -313,8 +311,6 @@ var allFeatures = (function() {
 	};
 
 	var addPlusImgs = function() {
-
-		console.log(">>>> click (2)!!!");
 
 		var data = $cache.imgsInSettings;
 
@@ -331,8 +327,6 @@ var allFeatures = (function() {
 	};
 
 	var addPlusText = function() {
-
-		console.log(">>>> click !!!");
 
 		var data = $cache.textInSettings;
 

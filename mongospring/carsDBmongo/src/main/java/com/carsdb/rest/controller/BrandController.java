@@ -20,49 +20,49 @@ import ma.glasnost.orika.MapperFacade;
 @RestController
 @RequestMapping(value = "/api/brand", produces = "application/json")
 public class BrandController {
-	
+
 	@Autowired
 	private MapperFacade mapperFacade;
-	
+
 	@Autowired
 	private BrandService brandService;
-	
-	@RequestMapping(method = RequestMethod.POST)
+
+	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
-	public ResponseEntity<BrandDto> create(@RequestBody BrandDto brandDto){
-		
-		brandDto.setId(null);
-		
-		Brand entity = mapperFacade.map(brandDto, Brand.class);
-		
-		Optional<Brand> saved =  brandService.create(entity);
-		
-		if(saved.isPresent()){
-			
-			return new ResponseEntity<BrandDto>(mapperFacade.map(saved.get(),BrandDto.class) ,HttpStatus.CREATED);
-			
-		}else{
+	public ResponseEntity<BrandDto> update(@RequestBody final BrandDto brandDto) {
+
+		final Brand entity = mapperFacade.map(brandDto, Brand.class);
+
+		final Optional<Brand> saved = brandService.update(entity);
+
+		if (saved.isPresent()) {
+
+			return new ResponseEntity<BrandDto>(mapperFacade.map(saved.get(), BrandDto.class), HttpStatus.ACCEPTED);
+
+		} else {
 			return new ResponseEntity<BrandDto>(new BrandDto(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@RequestMapping(method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<BrandDto> create(@RequestBody final BrandDto brandDto) {
+
+		brandDto.setId(null);
+
+		final Brand entity = mapperFacade.map(brandDto, Brand.class);
+
+		final Optional<Brand> saved = brandService.create(entity);
+
+		if (saved.isPresent()) {
+
+			return new ResponseEntity<BrandDto>(mapperFacade.map(saved.get(), BrandDto.class), HttpStatus.CREATED);
+
+		} else {
+			return new ResponseEntity<BrandDto>(new BrandDto(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
 
 }

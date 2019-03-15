@@ -53,12 +53,12 @@ public class BrandServiceImpl implements BrandService {
 		Optional<Brand> optBrand =brandRepository.getByCode(brand.getCode());
 		
 		if(!optBrand.isPresent()){
-			throw new RuntimeException("");
+			throw new RuntimeException(String.format("Cant update Brand entity. No Brand with Code [%s] found.",brand.getCode()));
 		}
 		
 		mapBrand(optBrand.get(),brand);
 		
-		Brand saved = brandRepository.save(brand);
+		final Brand saved = brandRepository.save(brand);
 		
 		return Optional.ofNullable(saved);
 	}

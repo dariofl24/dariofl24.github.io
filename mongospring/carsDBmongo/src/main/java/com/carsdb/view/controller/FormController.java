@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.apache.http.HttpStatus;
 
+import com.carsdb.carsDBmongo.entity.Brand;
 import com.carsdb.carsDBmongo.entity.CarModelInfo;
 import com.carsdb.carsDBmongo.service.BrandService;
 import com.carsdb.carsDBmongo.service.CarModelInfoService;
@@ -30,6 +31,28 @@ public class FormController {
 	
 	@Autowired
 	private BrandService brandService;
+	
+	@RequestMapping(value="/formmanufacturer", method = RequestMethod.GET)
+	public String getFormManufacturer(final Map<String, Object> model,@RequestParam(value="code",required=false) final String code,
+			final HttpServletResponse response) {
+		
+		if(StringUtils.isNotEmpty(code)){
+			
+			final Optional<Brand> foundManuf =brandService.getByCode(code);
+			
+			if(foundManuf.isPresent()){
+				
+				model.put("foundmanufacturer",parse2Json( foundManuf.get() ));
+				
+			}else{
+				response.setStatus(HttpStatus.SC_NOT_FOUND);
+				return "P404";
+			}
+			
+		}
+		
+		return "formmanufacturer";
+	}
 	
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String getForm(final Map<String, Object> model,@RequestParam(value="id",required=false) final String id,
@@ -61,9 +84,9 @@ public class FormController {
 		return "form";
 	}
 	
-	private String parse2Json(CarModelInfo entity){
+	private String parse2Json(Object entity){
 		
-		ObjectMapper mapper = new ObjectMapper();
+		final ObjectMapper mapper = new ObjectMapper();
 		
 		try {
 			return mapper.writeValueAsString(entity);

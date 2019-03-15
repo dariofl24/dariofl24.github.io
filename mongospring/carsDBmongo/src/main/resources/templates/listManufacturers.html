@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<title>Table V04</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet"
+	href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+	integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
+	crossorigin="anonymous" />
+
+<link rel="stylesheet"
+	href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css" />
+
+<!--===============================================================================================-->
+<link rel="icon" type="image/png" href="images/icons/favicon.ico"
+	th:href="@{/images/icons/favicon.ico}" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/bootstrap/css/bootstrap.min.css"
+	th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+	th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css"
+	th:href="@{/vendor/animate/animate.css}" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/select2/select2.min.css"
+	th:href="@{/vendor/select2/select2.min.css}" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/perfect-scrollbar/perfect-scrollbar.css"
+	th:href="@{/vendor/perfect-scrollbar/perfect-scrollbar.css}" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="css/list_util.css"
+	th:href="@{/css/list_util.css}" />
+<link rel="stylesheet" type="text/css" href="css/list_main.css"
+	th:href="@{/css/list_main.css}" />
+<!--===============================================================================================-->
+
+</head>
+<body>
+	<nav class="adminNav">
+		<p>Manufacturers</p>
+	</nav>
+
+	<div class="limiter">
+
+		<div class="container-table100">
+			<div class="wrap-table100">
+
+				<div class="pure-g" style="text-align: center; margin-bottom: 15px;">
+
+					<div class="pure-u-md-1-6 head h_first">Name</div>
+					<div class="pure-u-md-1-6 head h_mid">Code</div>
+					<div class="pure-u-md-1-5 head h_mid">Image</div>
+					<div class="pure-u-md-1-6 head h_last">Edit</div>
+
+				</div>
+
+				<div th:each="manuf : ${allManufacturer}" class="pure-g"
+					style="text-align: center; margin-bottom: 5px;">
+
+					<div class="pure-u-md-1-6 roww h_first">
+						<p th:text="${manuf.name}"></p>
+					</div>
+					<div class="pure-u-md-1-6 roww h_mid">
+						<p th:text="${manuf.code}"></p>
+					</div>
+					<div class="pure-u-md-1-5 roww h_mid">
+						<a th:if="${!#strings.isEmpty(manuf.logo_url)}" href="#"> 
+							<img th:src="${manuf.logo_url}" class="manufacturer_logo"></img>
+						</a>
+						<img th:if="${#strings.isEmpty(manuf.logo_url)}" 
+							src="/images/default/image_not_available_300.jpg"
+							class="manufacturer_logo"></img>
+					</div>
+					<div class="pure-u-md-1-6 roww h_last">
+						<a
+							th:href="${#strings.append('/admin/formmanufacturer?code=',manuf.code)}">Edit</a>
+					</div>
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="submenu">
+			<a id="newModel" class="pure-button pure-button-active"
+				href="/admin/formmanufacturer">Create new Manufacturer</a>
+		</div>
+
+	</div>
+
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/bootstrap/js/popper.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/select2/select2.min.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/perfect-scrollbar/perfect-scrollbar.min.js}"></script>
+
+	<!--===============================================================================================-->
+	<script th:src="@{/js/main.js}"></script>
+
+</body>
+</html>
