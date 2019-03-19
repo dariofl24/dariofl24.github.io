@@ -1,1 +1,2 @@
-mongospring/carsDBmongo/target
+*/carsDBmongo/target/*
+*.class
