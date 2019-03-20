@@ -40,7 +40,7 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
-	public Optional<Brand> create(final Brand brand) {
+	public Optional<Brand> save(final Brand brand) {
 		
 		Brand saved = brandRepository.save(brand);
 		

@@ -2,6 +2,10 @@ package com.carsdb.rest.controller;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +31,10 @@ public class BrandController {
 	@Autowired
 	private BrandService brandService;
 
-	@RequestMapping(method = RequestMethod.PUT)
-	@ResponseBody
-	public ResponseEntity<BrandDto> update(@RequestBody final BrandDto brandDto) {
+	//@RequestMapping(method = RequestMethod.PUT)
+	//@ResponseBody
+	public ResponseEntity<BrandDto> update(@RequestBody final BrandDto brandDto,final HttpServletRequest request,
+            final HttpServletResponse response) {
 
 		final Brand entity = mapperFacade.map(brandDto, Brand.class);
 
@@ -45,15 +50,41 @@ public class BrandController {
 		
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST,value="/upsert")
 	@ResponseBody
-	public ResponseEntity<BrandDto> create(@RequestBody final BrandDto brandDto) {
+	public ResponseEntity<BrandDto> upsert(@RequestBody final BrandDto brandDto,final HttpServletRequest request,
+            final HttpServletResponse response) {
+		
+		final Brand entity = mapperFacade.map(brandDto, Brand.class);
+
+		System.out.println("+++ ENT ID ::" + entity.getId());
+		
+		if(StringUtils.isEmpty(entity.getId())){
+			entity.setId(entity.getName().replace(" ","_").toLowerCase()  );
+		}
+		
+		final Optional<Brand> saved = brandService.save(entity);
+
+		if (saved.isPresent()) {
+
+			return new ResponseEntity<BrandDto>(mapperFacade.map(saved.get(), BrandDto.class), HttpStatus.CREATED);
+
+		} else {
+			return new ResponseEntity<BrandDto>(new BrandDto(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	//@RequestMapping(method = RequestMethod.POST)
+	//@ResponseBody
+	public ResponseEntity<BrandDto> create(@RequestBody final BrandDto brandDto,final HttpServletRequest request,
+            final HttpServletResponse response) {
 
 		brandDto.setId(null);
 
 		final Brand entity = mapperFacade.map(brandDto, Brand.class);
 
-		final Optional<Brand> saved = brandService.create(entity);
+		final Optional<Brand> saved = brandService.save(entity);
 
 		if (saved.isPresent()) {
 
@@ -64,5 +95,7 @@ public class BrandController {
 		}
 
 	}
+	
+	
 
 }

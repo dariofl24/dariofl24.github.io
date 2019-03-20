@@ -14,6 +14,7 @@ var allFeatures = (function() {
 		
 		$cache.logo_url = $("#logo_url");
 		$cache.logo_img = $("#logo_img");
+		$cache.brandId = $("#id");
 		
 		
 	};
@@ -32,6 +33,42 @@ var allFeatures = (function() {
 				$cache.logo_img.attr('src','/images/default/image_not_available_300.jpg');
 			}
 			
+		});
+		
+		$("#manufacturerInfoForm").on("submit", function(event) {
+			event.preventDefault();
+
+			var data = new FormData(this);
+			var request = {};
+			console.log(data);
+			request.id = data.get("id");
+			request.name = data.get("name");
+			request.code = data.get("code");
+			request.logo_url = data.get("logo_url");
+			
+			console.log(request);
+			
+			
+			$.ajax({
+				method : "POST",
+				url : "/api/brand/upsert",
+				data : JSON.stringify(request),
+				processData : false,
+				contentType : "application/json"
+			}).done(function(msg) {
+				
+				alert("Data Saved: " + msg);
+				console.log(msg);
+
+				$cache.brandId.val(msg.id);
+				
+				window.location.replace("/admin/formmanufacturer?code="+msg.code);
+
+			}).fail(function(msg) {
+				console.log("Failed");
+				console.log(msg);
+
+			});
 			
 			
 			

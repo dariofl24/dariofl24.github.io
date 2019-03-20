@@ -36,7 +36,7 @@ public class App implements CommandLineRunner {
 		
 		brandService.deleteAll();
 		
-		brandService.create( (new Brand()).id("Audi").name("audi") );
+		brandService.save( (new Brand()).id("Audi").name("audi") );
 		
 		
 		// --------
