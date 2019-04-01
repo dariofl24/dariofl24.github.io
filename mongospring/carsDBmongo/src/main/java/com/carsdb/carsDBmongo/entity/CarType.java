@@ -9,7 +9,9 @@ public enum CarType {
 	CABRIO("Cabrio"),
 	CROSSOVER("Crossover"),
 	SUV("SUV"),
-	PICKUP("Pickup");
+	PICKUP("Pickup"),
+	COUPE_SUV("Coupe SUV"),
+	COUPE_SEDAN("Coupe Sedan");
 	
 	private final String code;
 	
