@@ -56,14 +56,8 @@ public class BrandController {
             final HttpServletResponse response) {
 		
 		final Brand entity = mapperFacade.map(brandDto, Brand.class);
-
-		System.out.println("+++ ENT ID ::" + entity.getId());
 		
-		if(StringUtils.isEmpty(entity.getId())){
-			entity.setId(entity.getName().replace(" ","_").toLowerCase()  );
-		}
-		
-		final Optional<Brand> saved = brandService.save(entity);
+		final Optional<Brand> saved = brandService.upsert(entity);
 
 		if (saved.isPresent()) {
 

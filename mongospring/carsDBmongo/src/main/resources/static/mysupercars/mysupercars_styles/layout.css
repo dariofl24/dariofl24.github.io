@@ -151,11 +151,13 @@ p {
 }
 
 footer {
-	position: absolute;
-    bottom: 0px;
+    position: relative;
     background-color: crimson;
-    min-width: 100%;
-    padding: 15px 25px;
+    width: 90%;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 #div_def_img {

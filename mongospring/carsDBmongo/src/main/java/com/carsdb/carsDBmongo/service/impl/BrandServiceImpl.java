@@ -3,6 +3,7 @@ package com.carsdb.carsDBmongo.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class BrandServiceImpl implements BrandService {
 
 	@Override
 	public void deleteAll() {
-		brandRepository.deleteAll();
+		//brandRepository.deleteAll();
 	}
 
 	@Override
@@ -56,20 +57,21 @@ public class BrandServiceImpl implements BrandService {
 			throw new RuntimeException(String.format("Cant update Brand entity. No Brand with Code [%s] found.",brand.getCode()));
 		}
 		
-		mapBrand(optBrand.get(),brand);
+		final Brand saved = brandRepository.save(brand);
+		
+		return Optional.ofNullable(saved);
+	}
+	
+	@Override
+	public Optional<Brand> upsert(Brand brand) {
+		
+		if(StringUtils.isEmpty(brand.getId())){
+			brand.setId(brand.getName().replace(" ","_").toLowerCase()  );
+		}
 		
 		final Brand saved = brandRepository.save(brand);
 		
 		return Optional.ofNullable(saved);
 	}
 	
-	private void mapBrand(final Brand oldBrand,final Brand newBrand){
-		
-		oldBrand.setCode(newBrand.getCode());
-		oldBrand.setLogo_url(newBrand.getLogo_url());
-		oldBrand.setName(newBrand.getName());
-		
-	}
-	
-
 }

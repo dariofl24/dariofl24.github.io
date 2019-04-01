@@ -40,30 +40,13 @@ public class HomeController {
 		return HOME_TEMPLATE;
 	}
 
-	private void dispatch(final Map<String, Object> model) {
+	protected void dispatch(final Map<String, Object> model) {
 		
 		final List<CarModelInfo> featured =carModelInfoService.getLatest10Added().orElse(new ArrayList<CarModelInfo>());
 		
-		model.put("featured",featured);
+		System.out.println(featured.size());
 		
-
+		model.put("featured",featured);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

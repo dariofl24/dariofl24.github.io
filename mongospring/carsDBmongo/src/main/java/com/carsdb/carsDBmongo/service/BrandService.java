@@ -17,6 +17,8 @@ public interface BrandService {
 	
 	Optional<Brand> save(Brand brand);
 	
+	Optional<Brand> upsert(Brand brand);
+	
 	Optional<Brand> update(Brand brand);
 
 }

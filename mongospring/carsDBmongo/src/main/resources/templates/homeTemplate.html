@@ -108,7 +108,7 @@ p {
 							style="display: none;">Login</a>
 						<div id="userCont" style="display: none;">
 							<div class="dropdown">
-								<a class="userlogin" href="javascript:void(0);"> <img src=""
+								<!-- a class="userlogin" href="javascript:void(0);"> <img src=""
 									style="float: left; margin-right: 2px; display: none;"
 									height="21" width="21" class="userpic" /> <img
 									src="/icons/user.png" class="nohover usericon"
@@ -116,7 +116,7 @@ p {
 									src="/icons/userhover.png" class="hover usericon"
 									style="float: left; margin-right: 0px;" /> <span id="userName"
 									style="padding-left: 5px;">User Name</span>
-								</a>
+								</a -->
 								<div class="dropdown-content">
 									<a id="profile" href="javascript:void(0);">Profile</a> <a
 										id="garage" href="javascript:void(0);">My Garage</a> <a
@@ -137,22 +137,24 @@ p {
 				<div style="position: relative;">
 					<!-- CAROUSEL -->
 					<section th:if="${not #lists.isEmpty(featured)}"
-					th:each="feat : ${featured}" 
-					class="regular slider" style="width: 80%;">
-						<div>
-							<a th:href="'/model/' + ${feat.id}"> 
-								<img th:src="${feat.coverImageMedium.src}"></img>
+						class="regular slider"
+						style="width: 80%;">
+						
+						<div th:each="feat : ${featured}">
+							<a th:href="'/model/' + ${feat.id}"> <img
+								th:src="${feat.coverImageMedium.src}"></img>
 							</a>
 						</div>
-						
+
 					</section>
-					<section th:if="${#lists.isEmpty(featured)}" >
-					
-					<div id="div_def_img" > 
-						<img id="default_img" class="default_img" src="/images/default/default_silhouette.jpg" ></img> 
-					</div>
-					
-					
+					<section th:if="${#lists.isEmpty(featured)}">
+
+						<div id="div_def_img">
+							<img id="default_img" class="default_img"
+								src="/images/default/default_silhouette.jpg"></img>
+						</div>
+
+
 					</section>
 
 				</div>
@@ -198,17 +200,12 @@ p {
 		</div>
 
 		<footer>
-			<div class="pure-g">
-				<div class="pure-u-1-4">
-					<p>Posted by</p>
-					<p>
-						Contact information: <a href="mailto:jacinto@example.com">mail@example.com</a>.
-					</p>
-				</div>
-				<div class="pure-u-1-4"></div>
-				<div class="pure-u-1-4"></div>
-				<div class="pure-u-1-4"></div>
-			</div>
+
+			<p>Posted by</p>
+			<p>
+				Contact information: <a href="mailto:jacinto@example.com">mail@example.com</a>.
+			</p>
+
 		</footer>
 
 		<div class="socialIconsCont">

@@ -55,7 +55,6 @@ public class CarModelInfoServiceImpl implements CarModelInfoService {
 			Optional<CarModelInfo> carModelOpt = carModelInfoRepository.getById(model.getId());
 			
 			return !carModelOpt.isPresent();
-			
 		}
 		
 		return true;
@@ -101,17 +100,17 @@ public class CarModelInfoServiceImpl implements CarModelInfoService {
 	public void update(CarModelInfo model) {
 
 		if (StringUtils.isEmpty(model.getId())) {
-			throw new CarModelInfoException("");
+			throw new CarModelInfoException("The provided model doesn't have an ID");
 		}
 
 		Optional<CarModelInfo> carModelOpt = carModelInfoRepository.getById(model.getId());
 
 		if (!carModelOpt.isPresent()) {
-			throw new CarModelInfoException("");
+			throw new CarModelInfoException("No existing model was found for update");
 		}
 
 		if (!validateManufacturer(model)) {
-			throw new CarModelInfoException("");
+			throw new CarModelInfoException("Manufacturer not present or invalid");
 		}
 
 		model.setLastEdited(new Date());
