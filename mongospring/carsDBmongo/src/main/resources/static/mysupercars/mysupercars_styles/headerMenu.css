@@ -24,6 +24,32 @@ ul.topnav li a {
 
 }
 
+.search-container {
+  float: right;
+}
+
+.menu_bar input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+}
+
+.search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.menu_bar .search-container button:hover {
+  background: #ccc;
+}
+
 .dropbtn {
     background-color: #4CAF50;
     color: white;
