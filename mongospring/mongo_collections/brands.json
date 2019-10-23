@@ -1,0 +1,17 @@
+{"_id":{"$oid":"5a747eaa2041fc6395ae1f4f"},"_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Audi","logo_url":"https://dariofl24.github.io/mysupercars/brand_logos/audi.jpg","code":"audi"}
+{"_id":{"$oid":"5a747eaa2041fc6395ae1f50"},"_class":"com.carsdb.carsDBmongo.entity.Brand","name":"BMW","code":"bmw","logo_url":"https://dariofl24.github.io/mysupercars/brand_logos/bmw.png"}
+{"_id":{"$oid":"5a747eaa2041fc6395ae1f51"},"_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Mercedes Benz","code":"mercedes benz","logo_url":"https://dariofl24.github.io/mysupercars/brand_logos/mercedes_benz.jpg"}
+{"_id":{"$oid":"5a747eaa2041fc6395ae1f52"},"_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Pagani","code":"pagani","logo_url":"https://dariofl24.github.io/mysupercars/brand_logos/pagani.jpg"}
+{"_id":{"$oid":"5a747eaa2041fc6395ae1f53"},"_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Porsche","logo_url":"https://dariofl24.github.io/mysupercars/brand_logos/porsche.jpg","code":"porsche"}
+{"_id":{"$oid":"5a747eaa2041fc6395ae1f54"},"_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Ferrari","logo_url":"https://dariofl24.github.io/mysupercars/brand_logos/ferrari.png","code":"ferrari"}
+{"_id":{"$oid":"5a9ebec12041fcc596743cb8"},"_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Tesla","logo_url":"https://dariofl24.github.io/mysupercars/brand_logos/tesla.png","code":"tesla"}
+{"_id":"aston_martin","_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Aston Martin","logo_url":"https://dariofl24.github.io/mysupercars/brand_logos/Aston-Martin.png","code":"aston_martin"}
+{"_id":"bentley","_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Bentley","logo_url":"https://dariofl24.github.io/mysupercars/brand_logos/Bentley.png","code":"bentley"}
+{"_id":"alfa_romeo","_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Alfa Romeo","logo_url":"https://dariofl24.github.io/mysupercars/brand_logos/alfa-romeo.jpg","code":"alfa_romeo"}
+{"_id":"bugatti","_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Bugatti","logo_url":"","code":"bugatti"}
+{"_id":"pole_star","_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Pole Star","logo_url":"","code":"pole_star"}
+{"_id":"volvo","_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Volvo","logo_url":"","code":"volvo"}
+{"_id":"koenigsegg","_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Koenigsegg","logo_url":"","code":"koenigsegg"}
+{"_id":"lamborghini","_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Lamborghini","logo_url":"","code":"lamborghini"}
+{"_id":"maserati","_class":"com.carsdb.carsDBmongo.entity.Brand","name":"Maserati","logo_url":"","code":"maserati"}
+{"_id":"mclaren","_class":"com.carsdb.carsDBmongo.entity.Brand","name":"McLaren","logo_url":"","code":"mclaren"}
