@@ -32,12 +32,11 @@ public class CarModelController {
 	private MapperFacade mapperFacade;
 
 	@RequestMapping(value = "/upsert", method = RequestMethod.POST)
-	@ResponseBody
 	public ResponseEntity<CarModelInfoDto> upsert(@RequestBody final CarModelInfoDto carModelInfoDto) {
 		
 		final CarModelInfo entity = mapperFacade.map(carModelInfoDto, CarModelInfo.class);
 
-		Optional<CarModelInfo> saved = carModelInfoService.upsert(entity);
+		final Optional<CarModelInfo> saved = carModelInfoService.upsert(entity);
 		
 		System.out.println(">>> upsert:: " + saved.get());
 
@@ -51,14 +50,13 @@ public class CarModelController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	@ResponseBody
 	public ResponseEntity<CarModelInfoDto> create(@RequestBody final CarModelInfoDto carModelInfoDto) {
 
 		carModelInfoDto.setId(null);
 
 		final CarModelInfo entity = mapperFacade.map(carModelInfoDto, CarModelInfo.class);
 
-		Optional<CarModelInfo> saved = carModelInfoService.create(entity);
+		final Optional<CarModelInfo> saved = carModelInfoService.create(entity);
 
 		// final Optional<CarModelInfo> saved = Optional.of(entity);
 		System.out.println(">>> Saved:: " + saved.get());
@@ -73,7 +71,6 @@ public class CarModelController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	@ResponseBody
 	public ResponseEntity<String> update(@RequestBody CarModelInfoDto carModelInfoDto) {
 
 		CarModelInfo entity = mapperFacade.map(carModelInfoDto, CarModelInfo.class);
@@ -84,7 +81,6 @@ public class CarModelController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	@ResponseBody
 	public List<CarModelInfoDto> getAllCarModelInfoByPage(
 			@RequestParam(value = "p", required = false, defaultValue = "0") String page,
 			@RequestParam(value = "sz", required = false, defaultValue = "25") String size) {
@@ -107,7 +103,6 @@ public class CarModelController {
 	}
 
 	@RequestMapping(value = "/latest", method = RequestMethod.GET)
-	@ResponseBody
 	public List<CarModelInfoDto> getLatest() {
 
 		List<CarModelInfoDto> list = carModelInfoService.getLatest10Added().orElseThrow(() -> new RuntimeException(""))
@@ -117,7 +112,6 @@ public class CarModelController {
 	}
 
 	@RequestMapping(value = "/{id}/id", method = RequestMethod.GET)
-	@ResponseBody
 	public CarModelInfoDto getCarModelInfoById(@PathVariable String id) {
 
 		CarModelInfo carModelInfo = carModelInfoService.getById(id).orElseThrow(() -> new RuntimeException(""));
@@ -126,7 +120,6 @@ public class CarModelController {
 	}
 
 	@RequestMapping(value = "/{year}/year", method = RequestMethod.GET)
-	@ResponseBody
 	public List<CarModelInfoDto> getByYear(@PathVariable int year) {
 
 		List<CarModelInfoDto> list = carModelInfoService.findByYear(year).orElseThrow(() -> new RuntimeException(""))
@@ -136,7 +129,6 @@ public class CarModelController {
 	}
 
 	@RequestMapping(value = "/{name}/name", method = RequestMethod.GET)
-	@ResponseBody
 	public List<CarModelInfoDto> getByName(@PathVariable String name) {
 
 		List<CarModelInfoDto> list = carModelInfoService.findByName(name).orElseThrow(() -> new RuntimeException(""))
@@ -146,7 +138,6 @@ public class CarModelController {
 	}
 
 	@RequestMapping(value = "/{manufacturer}/manufacturer", method = RequestMethod.GET)
-	@ResponseBody
 	public List<CarModelInfoDto> getByManufacturer(@PathVariable String manufacturer) {
 
 		List<CarModelInfoDto> list = carModelInfoService.findByManufacturer(manufacturer)

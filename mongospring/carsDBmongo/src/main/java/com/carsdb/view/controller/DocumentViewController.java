@@ -40,7 +40,7 @@ public class DocumentViewController extends AbstractViewController {
 		return this.dispatch(model, id, response, false);
 	}
 
-	@RequestMapping(value = "/adminmodel/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/preview/{id}", method = RequestMethod.GET)
 	public String modelPageAdmin(final Map<String, Object> model, @PathVariable final String id,
 			final HttpServletRequest request, final HttpServletResponse response) {
 
