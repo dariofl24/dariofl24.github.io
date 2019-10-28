@@ -1,4 +1,4 @@
-package com.carsdb.view.controller;
+package com.carsdb.view.controller.site;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.carsdb.view.controller;
+package com.carsdb.view.controller.admin;
 
 import com.carsdb.view.abs.AbstractViewController;
 import org.springframework.stereotype.Controller;
