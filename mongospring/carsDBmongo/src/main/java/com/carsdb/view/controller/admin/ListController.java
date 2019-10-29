@@ -25,7 +25,7 @@ public class ListController extends AbstractViewController
     private BrandService brandService;
 
     @RequestMapping(value = "/listmanufacturer", method = RequestMethod.GET)
-    public String listManufacturers(Map<String, Object> model, final HttpServletResponse response)
+    public String listManufacturers(final Map<String, Object> model, final HttpServletResponse response)
     {
         setResponseCacheHeaders(response);
 
@@ -33,12 +33,13 @@ public class ListController extends AbstractViewController
 
         model.put("message", "All manufacturer !!!");
         model.put("allManufacturer", allManufacturer);
+        setUserInfo(model);
 
         return "listManufacturers";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Map<String, Object> model, final HttpServletResponse response)
+    public String list(final Map<String, Object> model, final HttpServletResponse response)
     {
         setResponseCacheHeaders(response);
 
@@ -46,6 +47,7 @@ public class ListController extends AbstractViewController
 
         model.put("message", "This is a message!!!!");
         model.put("allModels", allModels);
+        setUserInfo(model);
 
         return "list";
     }

@@ -46,9 +46,14 @@
 <body>
 	<nav class="adminNav">
 		<p>Models</p>
+		<div id="userInfo">
+            <div><i class="fa fa-fw fa-user"></i></div>
+            <div><p th:text="${userName}"></p></div>
+			<a id="logOut" class="pure-button pure-button-active" href="/logout">Logout</a>
+		</div>
 	</nav>
 	<div class="limiter">
-	
+
 		<div class="container-table100">
 			<div class="wrap-table100">
 
@@ -62,7 +67,7 @@
 					<div class="pure-u-md-1-6 head h_last">View</div>
 
 				</div>
-				
+
 				<div th:each="carModel : ${allModels}" class="pure-g"
 					style="text-align: center; margin-bottom: 5px;">
 
@@ -90,7 +95,7 @@
 			</div>
 
 		</div>
-		
+
 		<div class="submenu">
 			<a id="newModel" class="pure-button pure-button-active" href="/admin/form">Create new Model</a>
 		</div>

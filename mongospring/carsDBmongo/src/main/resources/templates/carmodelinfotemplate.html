@@ -145,8 +145,9 @@ p {
 						<section th:each="paragraph : ${modelData.imageParagraphs}">
 
 							<a th:if="${!#strings.isEmpty(paragraph.textImgUrl)}"
-								th:href="${paragraph.largeImgUrlLink}"> <img
-								th:class="${paragraph.imageLeft}?'intext_left':'intext_right'"
+								th:href="${paragraph.largeImgUrlLink}">
+								<!-- anchor image -->
+								<img th:class="${paragraph.imageLeft}?'intext_left':'intext_right'"
 								th:src="${paragraph.textImgUrl}" style="width: 485px;" />
 							</a>
 							<p th:text="${paragraph.text}"></p>

@@ -8,6 +8,9 @@ import com.carsdb.security.facade.UserFacade;
 import com.carsdb.security.service.UserService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,12 +24,16 @@ public class UserFacdeImpl implements UserFacade
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public void createUser(final UserDto userDto)
     {
         final User user = mapperFacade.map(userDto, User.class);
 
-        user.setPassword(String.format(PWD_FORMAT, userDto.getPassword()));
+        //user.setPassword(String.format(PWD_FORMAT, userDto.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
 
         userService.save(user);
     }
@@ -66,5 +73,11 @@ public class UserFacdeImpl implements UserFacade
         final User user = userService.getByUsername(name).orElseThrow(NoSuchElementException::new);
 
         return mapperFacade.map(user, UserDto.class);
+    }
+
+    @Override
+    public Authentication getAuthentication()
+    {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }

@@ -1,11 +1,16 @@
 package com.carsdb;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -18,6 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 
     private static final String[] PUBLIC_REST_ENDPOINTS = { "/api/useradmin/*" };
 
+    @Autowired
+    private UserDetailsService mongoUserDetailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
@@ -25,20 +33,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers(PUBLIC_RESOURCES).permitAll()
                 .antMatchers(PUBLIC_PAGES).permitAll()
                 .antMatchers(PUBLIC_REST_ENDPOINTS).permitAll()
-                .antMatchers("/admin/**").hasAnyAuthority(new String[]{"ADMIN"})
+                .antMatchers("/admin/**","/api/**").hasAnyAuthority(new String[] { "ADMIN" })
+                .antMatchers("/preview/**").hasAnyAuthority(new String[] { "ADMIN","CONTENT_CREATOR","CONTENT_EDITOR" })
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout().permitAll();
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/login").permitAll();
     }
 
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
-//    {
-//        auth.inMemoryAuthentication()
-//                .withUser("admin").password("{noop}nimda").roles("USER")
-//                .and()
-//                .withUser("mika").password("{noop}1234").roles("USER");
-//    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth)
+    {
+        auth.authenticationProvider(authProvider());
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authProvider()
+    {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(mongoUserDetailsService);
+        authProvider.setPasswordEncoder(bCryptPasswordEncoder());
+        return authProvider;
+    }
+
+    @Bean
+    public PasswordEncoder bCryptPasswordEncoder()
+    {
+        return new BCryptPasswordEncoder(11);
+    }
 }
