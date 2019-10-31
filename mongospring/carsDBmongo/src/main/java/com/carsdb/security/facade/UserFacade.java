@@ -11,8 +11,6 @@ public interface UserFacade
 
     void deleteUser(String name);
 
-    UserDto getById(String id);
-
     UserDto getByUsername(String name);
 
     Authentication getAuthentication();

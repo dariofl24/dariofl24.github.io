@@ -1,5 +1,6 @@
 package com.carsdb.security.facade.impl;
 
+import java.util.Date;
 import java.util.NoSuchElementException;
 
 import com.carsdb.security.dto.UserDto;
@@ -25,15 +26,15 @@ public class UserFacdeImpl implements UserFacade
     private UserService userService;
 
     @Autowired
-    private PasswordEncoder bCryptPasswordEncoder;
+    private PasswordEncoder rsaPasswordEncoder;
 
     @Override
     public void createUser(final UserDto userDto)
     {
         final User user = mapperFacade.map(userDto, User.class);
 
-        //user.setPassword(String.format(PWD_FORMAT, userDto.getPassword()));
-        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        user.setPassword(rsaPasswordEncoder.encode(userDto.getPassword()));
+        user.setDateAdded(new Date());
 
         userService.save(user);
     }
@@ -53,18 +54,11 @@ public class UserFacdeImpl implements UserFacade
                 .orElseThrow(NoSuchElementException::new);
 
         user.setId(found.getId());
+        user.setDateAdded(found.getDateAdded());
         mapperFacade.map(user, found);
-        found.setPassword(String.format(PWD_FORMAT, user.getPassword()));
+        found.setPassword(rsaPasswordEncoder.encode(user.getPassword()));
 
         userService.save(found);
-    }
-
-    @Override
-    public UserDto getById(final String id)
-    {
-        final User user = userService.getById(id).orElseThrow(NoSuchElementException::new);
-
-        return mapperFacade.map(user, UserDto.class);
     }
 
     @Override

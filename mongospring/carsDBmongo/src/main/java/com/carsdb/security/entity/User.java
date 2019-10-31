@@ -1,5 +1,6 @@
 package com.carsdb.security.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -17,9 +18,21 @@ public class User
 
     private String password;
 
+    private Date dateAdded;
+
     private List<String> authorities;
 
     private boolean enabled;
+
+    public Date getDateAdded()
+    {
+        return dateAdded;
+    }
+
+    public void setDateAdded(final Date dateAdded)
+    {
+        this.dateAdded = dateAdded;
+    }
 
     public boolean isEnabled()
     {

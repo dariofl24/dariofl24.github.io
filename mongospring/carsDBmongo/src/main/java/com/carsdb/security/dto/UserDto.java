@@ -1,5 +1,6 @@
 package com.carsdb.security.dto;
 
+import java.util.Date;
 import java.util.List;
 
 public class UserDto
@@ -9,6 +10,8 @@ public class UserDto
     private String password;
 
     private boolean enabled;
+
+    private Date dateAdded;
 
     public boolean isEnabled()
     {
@@ -50,5 +53,15 @@ public class UserDto
     public void setAuthorities(final List<String> authorities)
     {
         this.authorities = authorities;
+    }
+
+    public Date getDateAdded()
+    {
+        return dateAdded;
+    }
+
+    public void setDateAdded(final Date dateAdded)
+    {
+        this.dateAdded = dateAdded;
     }
 }

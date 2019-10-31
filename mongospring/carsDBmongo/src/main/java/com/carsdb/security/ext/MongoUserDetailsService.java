@@ -1,4 +1,4 @@
-package com.carsdb.security;
+package com.carsdb.security.ext;
 
 import java.util.List;
 import java.util.NoSuchElementException;

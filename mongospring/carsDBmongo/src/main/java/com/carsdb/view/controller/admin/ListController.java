@@ -11,8 +11,8 @@ import com.carsdb.carsDBmongo.service.CarModelInfoService;
 import com.carsdb.view.abs.AbstractViewController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -24,7 +24,7 @@ public class ListController extends AbstractViewController
     @Autowired
     private BrandService brandService;
 
-    @RequestMapping(value = "/listmanufacturer", method = RequestMethod.GET)
+    @GetMapping("/listmanufacturer")
     public String listManufacturers(final Map<String, Object> model, final HttpServletResponse response)
     {
         setResponseCacheHeaders(response);
@@ -38,7 +38,7 @@ public class ListController extends AbstractViewController
         return "listManufacturers";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @GetMapping("/list")
     public String list(final Map<String, Object> model, final HttpServletResponse response)
     {
         setResponseCacheHeaders(response);

@@ -139,7 +139,6 @@ var allFeatures = (function() {
 
 		$("body").on("click", ".delte_txt .fas", function() {
 			console.log("Trash txt ... " + $(this).data("fromline"));
-			text_input_1
 			$("#text_input_" + $(this).data("fromline")).remove();
 		});
 
