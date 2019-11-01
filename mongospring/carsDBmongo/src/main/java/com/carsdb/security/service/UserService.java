@@ -10,7 +10,7 @@ public interface UserService
 
     Optional<User> getByUsername(String name);
 
-    void save(User user);
+    Optional<User> save(User user);
 
     void delete(String name);
 }

@@ -1,6 +1,7 @@
 package com.carsdb.rest.controller;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import com.carsdb.security.dto.UserDto;
 import com.carsdb.security.facade.UserFacade;
@@ -29,14 +30,10 @@ public class UserController
     {
         try
         {
-            final UserDto byUsername = userFacade.getByUsername(username);
+            final Optional<UserDto> byUsername = userFacade.getByUsername(username);
 
-            return new ResponseEntity<>(byUsername, HttpStatus.OK);
-        }
-        catch (final NoSuchElementException ex)
-        {
-            LOG.error(String.format("No User with name [%s] was found.", username), ex);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return byUsername.map(userDto -> new ResponseEntity<>(userDto, HttpStatus.OK))
+                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         }
         catch (final Exception ex)
         {
@@ -46,18 +43,11 @@ public class UserController
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity createUser(@RequestBody final UserDto user)
+    public ResponseEntity<UserDto> createUser(@RequestBody final UserDto user)
     {
-        try
-        {
-            userFacade.createUser(user);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch (final Exception ex)
-        {
-            LOG.error("There was an error while creating the User.", ex);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return userFacade.createUser(user)
+                .map(created -> new ResponseEntity<>(created, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/update")
@@ -83,7 +73,6 @@ public class UserController
     @RequestMapping(value = "/delete/{username}", method = RequestMethod.GET)
     public ResponseEntity<UserDto> deleteUser(@PathVariable final String username)
     {
-
         return null;
     }
 }

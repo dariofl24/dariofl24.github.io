@@ -4,147 +4,155 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.carsdb.carsDBmongo.dto.CarModelInfoDto;
 import com.carsdb.carsDBmongo.entity.CarModelInfo;
 import com.carsdb.carsDBmongo.service.CarModelInfoService;
-
 import ma.glasnost.orika.MapperFacade;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/carmodel", produces = "application/json")
-public class CarModelController {
+public class CarModelController
+{
+    @Autowired
+    private CarModelInfoService carModelInfoService;
 
-	@Autowired
-	private CarModelInfoService carModelInfoService;
+    @Autowired
+    private MapperFacade mapperFacade;
 
-	@Autowired
-	private MapperFacade mapperFacade;
+    @PostMapping("/upsert")
+    public ResponseEntity<CarModelInfoDto> upsert(@RequestBody final CarModelInfoDto carModelInfoDto)
+    {
 
-	@RequestMapping(value = "/upsert", method = RequestMethod.POST)
-	public ResponseEntity<CarModelInfoDto> upsert(@RequestBody final CarModelInfoDto carModelInfoDto) {
-		
-		final CarModelInfo entity = mapperFacade.map(carModelInfoDto, CarModelInfo.class);
+        final CarModelInfo entity = mapperFacade.map(carModelInfoDto, CarModelInfo.class);
 
-		final Optional<CarModelInfo> saved = carModelInfoService.upsert(entity);
-		
-		System.out.println(">>> upsert:: " + saved.get());
+        final Optional<CarModelInfo> saved = carModelInfoService.upsert(entity);
 
-		if (saved.isPresent()) {
-			return new ResponseEntity<CarModelInfoDto>(mapperFacade.map(saved.get(), CarModelInfoDto.class),
-					HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<CarModelInfoDto>(new CarModelInfoDto(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+        System.out.println(">>> upsert:: " + saved.get());
 
-	}
+        if (saved.isPresent())
+        {
+            return new ResponseEntity<>(mapperFacade.map(saved.get(), CarModelInfoDto.class),
+                    HttpStatus.CREATED);
+        }
+        else
+        {
+            return new ResponseEntity<>(new CarModelInfoDto(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<CarModelInfoDto> create(@RequestBody final CarModelInfoDto carModelInfoDto) {
+    @PostMapping
+    public ResponseEntity<CarModelInfoDto> create(@RequestBody final CarModelInfoDto carModelInfoDto)
+    {
 
-		carModelInfoDto.setId(null);
+        carModelInfoDto.setId(null);
 
-		final CarModelInfo entity = mapperFacade.map(carModelInfoDto, CarModelInfo.class);
+        final CarModelInfo entity = mapperFacade.map(carModelInfoDto, CarModelInfo.class);
 
-		final Optional<CarModelInfo> saved = carModelInfoService.create(entity);
+        final Optional<CarModelInfo> saved = carModelInfoService.create(entity);
 
-		// final Optional<CarModelInfo> saved = Optional.of(entity);
-		System.out.println(">>> Saved:: " + saved.get());
+        if (saved.isPresent())
+        {
+            return new ResponseEntity<>(mapperFacade.map(saved.get(), CarModelInfoDto.class),
+                    HttpStatus.CREATED);
+        }
+        else
+        {
+            return new ResponseEntity<>(new CarModelInfoDto(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-		if (saved.isPresent()) {
-			return new ResponseEntity<CarModelInfoDto>(mapperFacade.map(saved.get(), CarModelInfoDto.class),
-					HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<CarModelInfoDto>(new CarModelInfoDto(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+    @PutMapping
+    public ResponseEntity<String> update(@RequestBody CarModelInfoDto carModelInfoDto)
+    {
 
-	}
+        CarModelInfo entity = mapperFacade.map(carModelInfoDto, CarModelInfo.class);
 
-	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<String> update(@RequestBody CarModelInfoDto carModelInfoDto) {
+        carModelInfoService.update(entity);
 
-		CarModelInfo entity = mapperFacade.map(carModelInfoDto, CarModelInfo.class);
+        return new ResponseEntity<>("Updated !", HttpStatus.OK);
+    }
 
-		carModelInfoService.update(entity);
+    @GetMapping
+    public List<CarModelInfoDto> getAllCarModelInfoByPage(
+            @RequestParam(value = "p", required = false, defaultValue = "0") String page,
+            @RequestParam(value = "sz", required = false, defaultValue = "25") String size)
+    {
 
-		return new ResponseEntity<>("Updated !", HttpStatus.OK);
-	}
+        int _page = 0;
+        int _size = 25;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public List<CarModelInfoDto> getAllCarModelInfoByPage(
-			@RequestParam(value = "p", required = false, defaultValue = "0") String page,
-			@RequestParam(value = "sz", required = false, defaultValue = "25") String size) {
+        if (page != null && size != null)
+        {
+            _page = Integer.parseInt(page);
+            _size = Integer.parseInt(size);
+        }
 
-		int _page = 0;
-		int _size = 25;
+        List<CarModelInfo> list = carModelInfoService.findAll(_page, _size);
 
-		if (page != null && size != null) {
-			_page = Integer.parseInt(page);
-			_size = Integer.parseInt(size);
-		}
+        List<CarModelInfoDto> listDto = list.stream().map(c -> mapperFacade.map(c, CarModelInfoDto.class))
+                .collect(Collectors.toList());
 
-		List<CarModelInfo> list = carModelInfoService.findAll(_page, _size);
+        return listDto;
+    }
 
-		List<CarModelInfoDto> listDto = list.stream().map(c -> mapperFacade.map(c, CarModelInfoDto.class))
-				.collect(Collectors.toList());
+    @GetMapping("/latest")
+    public List<CarModelInfoDto> getLatest()
+    {
 
-		return listDto;
+        List<CarModelInfoDto> list = carModelInfoService.getLatest10Added().orElseThrow(() -> new RuntimeException(""))
+                .stream().map(c -> mapperFacade.map(c, CarModelInfoDto.class)).collect(Collectors.toList());
 
-	}
+        return list;
+    }
 
-	@RequestMapping(value = "/latest", method = RequestMethod.GET)
-	public List<CarModelInfoDto> getLatest() {
+    @GetMapping("/{id}/id")
+    public CarModelInfoDto getCarModelInfoById(@PathVariable String id)
+    {
 
-		List<CarModelInfoDto> list = carModelInfoService.getLatest10Added().orElseThrow(() -> new RuntimeException(""))
-				.stream().map(c -> mapperFacade.map(c, CarModelInfoDto.class)).collect(Collectors.toList());
+        CarModelInfo carModelInfo = carModelInfoService.getById(id).orElseThrow(() -> new RuntimeException(""));
 
-		return list;
-	}
+        return mapperFacade.map(carModelInfo, CarModelInfoDto.class);
+    }
 
-	@RequestMapping(value = "/{id}/id", method = RequestMethod.GET)
-	public CarModelInfoDto getCarModelInfoById(@PathVariable String id) {
+    @GetMapping("/{year}/year")
+    public List<CarModelInfoDto> getByYear(@PathVariable int year)
+    {
 
-		CarModelInfo carModelInfo = carModelInfoService.getById(id).orElseThrow(() -> new RuntimeException(""));
+        List<CarModelInfoDto> list = carModelInfoService.findByYear(year).orElseThrow(() -> new RuntimeException(""))
+                .stream().map(c -> mapperFacade.map(c, CarModelInfoDto.class)).collect(Collectors.toList());
 
-		return mapperFacade.map(carModelInfo, CarModelInfoDto.class);
-	}
+        return list;
+    }
 
-	@RequestMapping(value = "/{year}/year", method = RequestMethod.GET)
-	public List<CarModelInfoDto> getByYear(@PathVariable int year) {
+    @GetMapping("/{name}/name")
+    public List<CarModelInfoDto> getByName(@PathVariable String name)
+    {
 
-		List<CarModelInfoDto> list = carModelInfoService.findByYear(year).orElseThrow(() -> new RuntimeException(""))
-				.stream().map(c -> mapperFacade.map(c, CarModelInfoDto.class)).collect(Collectors.toList());
+        List<CarModelInfoDto> list = carModelInfoService.findByName(name).orElseThrow(() -> new RuntimeException(""))
+                .stream().map(c -> mapperFacade.map(c, CarModelInfoDto.class)).collect(Collectors.toList());
 
-		return list;
-	}
+        return list;
+    }
 
-	@RequestMapping(value = "/{name}/name", method = RequestMethod.GET)
-	public List<CarModelInfoDto> getByName(@PathVariable String name) {
+    @GetMapping("/{manufacturer}/manufacturer")
+    public List<CarModelInfoDto> getByManufacturer(@PathVariable String manufacturer)
+    {
 
-		List<CarModelInfoDto> list = carModelInfoService.findByName(name).orElseThrow(() -> new RuntimeException(""))
-				.stream().map(c -> mapperFacade.map(c, CarModelInfoDto.class)).collect(Collectors.toList());
+        List<CarModelInfoDto> list = carModelInfoService.findByManufacturer(manufacturer)
+                .orElseThrow(() -> new RuntimeException("")).stream()
+                .map(c -> mapperFacade.map(c, CarModelInfoDto.class)).collect(Collectors.toList());
 
-		return list;
-	}
-
-	@RequestMapping(value = "/{manufacturer}/manufacturer", method = RequestMethod.GET)
-	public List<CarModelInfoDto> getByManufacturer(@PathVariable String manufacturer) {
-
-		List<CarModelInfoDto> list = carModelInfoService.findByManufacturer(manufacturer)
-				.orElseThrow(() -> new RuntimeException("")).stream()
-				.map(c -> mapperFacade.map(c, CarModelInfoDto.class)).collect(Collectors.toList());
-
-		return list;
-	}
-
+        return list;
+    }
 }

@@ -1,0 +1,15 @@
+
+#form_title {
+    text-align: center;
+}
+
+#userForm {
+    width: 425px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#userForm #submitFormBtn {
+    margin-left: 40%;
+    margin-top: 25px;
+}

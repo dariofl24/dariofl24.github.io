@@ -2,6 +2,7 @@ package com.carsdb.security.facade.impl;
 
 import java.util.Date;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import com.carsdb.security.dto.UserDto;
 import com.carsdb.security.entity.User;
@@ -17,8 +18,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserFacdeImpl implements UserFacade
 {
-    private static final String PWD_FORMAT = "{noop}%s";
-
     @Autowired
     private MapperFacade mapperFacade;
 
@@ -29,14 +28,14 @@ public class UserFacdeImpl implements UserFacade
     private PasswordEncoder rsaPasswordEncoder;
 
     @Override
-    public void createUser(final UserDto userDto)
+    public Optional<UserDto> createUser(final UserDto userDto)
     {
         final User user = mapperFacade.map(userDto, User.class);
 
         user.setPassword(rsaPasswordEncoder.encode(userDto.getPassword()));
         user.setDateAdded(new Date());
 
-        userService.save(user);
+        return userService.save(user).map(created -> mapperFacade.map(created, UserDto.class));
     }
 
     @Override
@@ -62,11 +61,10 @@ public class UserFacdeImpl implements UserFacade
     }
 
     @Override
-    public UserDto getByUsername(final String name)
+    public Optional<UserDto> getByUsername(final String name)
     {
-        final User user = userService.getByUsername(name).orElseThrow(NoSuchElementException::new);
-
-        return mapperFacade.map(user, UserDto.class);
+        return Optional.ofNullable(userService.getByUsername(name))
+                .map(user -> mapperFacade.map(user, UserDto.class));
     }
 
     @Override

@@ -1,17 +1,20 @@
 package com.carsdb.security.facade;
 
+import java.util.Optional;
+
 import com.carsdb.security.dto.UserDto;
+import com.carsdb.security.entity.User;
 import org.springframework.security.core.Authentication;
 
 public interface UserFacade
 {
-    void createUser(UserDto userDto);
-
     void updateUser(UserDto userDto);
 
     void deleteUser(String name);
 
-    UserDto getByUsername(String name);
+    Optional<UserDto> createUser(UserDto userDto);
+
+    Optional<UserDto> getByUsername(String name);
 
     Authentication getAuthentication();
 }

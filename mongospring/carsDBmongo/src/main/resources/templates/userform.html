@@ -17,6 +17,8 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
 
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user_from.css}"/>
+
     <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"
           rel="stylesheet"/>
 
@@ -25,7 +27,7 @@
     <script
             src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
 
-    <script th:src="@{/js/form_features.js}" type="text/javascript"
+    <script th:src="@{/js/form_features_user.js}" type="text/javascript"
             charset="utf-8"></script>
 
 </head>
@@ -39,17 +41,28 @@
 
     <div class="container">
 
-        <form id="userForm" class="pure-form pure-form-aligned" method="post">
+        <form id="userForm" class="pure-form pure-form-aligned centered_form" method="post" autocomplete="no">
+
             <fieldset>
+
                 <div class="pure-control-group">
                     <label for="name">Username</label>
-                    <input id="name" type="text" placeholder="Username">
+                    <input id="name" type="text" placeholder="Username" autocomplete="new-username">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="password">Password</label>
-                    <input id="password" type="password" placeholder="Password">
+                    <input id="password" type="password" placeholder="Password" autocomplete="new-password">
                 </div>
+
+                <div class="pure-control-group">
+                    <label for="active">Active</label>
+                    <input id="active" type="checkbox" placeholder="Active">
+                </div>
+
+                <button id="submitFormBtn" type="submit"
+                        class="pure-button pure-button-primary">Submit</button>
+
 
             </fieldset>
         </form>

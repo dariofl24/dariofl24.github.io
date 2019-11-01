@@ -1,7 +1,6 @@
 package com.carsdb.security.ext;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import com.carsdb.security.dto.UserDto;
@@ -26,20 +25,14 @@ public class MongoUserDetailsService implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(final String name) throws UsernameNotFoundException
     {
-        try
-        {
-            final UserDto byUsername = userFacade.getByUsername(name);
+        final UserDto byUsername = userFacade.getByUsername(name).orElseThrow(() ->
+                new UsernameNotFoundException(String.format("The User with name [%s] can not be found.", name)));
 
-            return new User(byUsername.getUsername(),
-                    byUsername.getPassword(),
-                    byUsername.isEnabled(),
-                    true, true, true,
-                    loadUserAuthorities(byUsername.getAuthorities()));
-        }
-        catch (final NoSuchElementException ex)
-        {
-            throw new UsernameNotFoundException(String.format("The User with name [%s] can not be found.", name), ex);
-        }
+        return new User(byUsername.getUsername(),
+                byUsername.getPassword(),
+                byUsername.isEnabled(),
+                true, true, true,
+                loadUserAuthorities(byUsername.getAuthorities()));
     }
 
     private List<GrantedAuthority> loadUserAuthorities(final List<String> authorities)

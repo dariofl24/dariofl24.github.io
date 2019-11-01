@@ -27,9 +27,10 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public void save(final User user)
+    public Optional<User> save(final User user)
     {
-        userRepository.save(user);
+        final User save = userRepository.save(user);
+        return Optional.ofNullable(save);
     }
 
     @Override
