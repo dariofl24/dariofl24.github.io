@@ -7,6 +7,7 @@ import com.carsdb.carsDBmongo.entity.Brand;
 import com.carsdb.carsDBmongo.service.BrandService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BrandController
 {
     @Autowired
+    @Qualifier("defaultMapper")
     private MapperFacade mapperFacade;
 
     @Autowired

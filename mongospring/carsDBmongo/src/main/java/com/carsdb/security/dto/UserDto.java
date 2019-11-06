@@ -13,6 +13,8 @@ public class UserDto
 
     private Date dateAdded;
 
+    private List<String> authorities;
+
     public boolean isEnabled()
     {
         return enabled;
@@ -22,8 +24,6 @@ public class UserDto
     {
         this.enabled = enabled;
     }
-
-    private List<String> authorities;
 
     public String getUsername()
     {

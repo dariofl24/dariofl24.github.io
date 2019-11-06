@@ -10,6 +10,7 @@ import com.carsdb.security.facade.UserFacade;
 import com.carsdb.security.service.UserService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class UserFacdeImpl implements UserFacade
 {
     @Autowired
+    @Qualifier("userMapper")
     private MapperFacade mapperFacade;
 
     @Autowired
@@ -35,7 +37,8 @@ public class UserFacdeImpl implements UserFacade
         user.setPassword(rsaPasswordEncoder.encode(userDto.getPassword()));
         user.setDateAdded(new Date());
 
-        return userService.save(user).map(created -> mapperFacade.map(created, UserDto.class));
+        return userService.save(user)
+                .map(created -> mapperFacade.map(created, UserDto.class));
     }
 
     @Override

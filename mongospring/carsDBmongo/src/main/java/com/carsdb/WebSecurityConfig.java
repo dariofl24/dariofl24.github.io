@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     private static final String[] PUBLIC_RESOURCES = { "/**/*.ico", "/mysupercars/**", "/vendor/**", "/css/**",
             "/fonts/**", "/images/**", "/js/**", "/latest/**", "/webjars/**" };
 
-    private static final String[] PUBLIC_PAGES = { "/", "/home", "/model/*" };
+    private static final String[] PUBLIC_PAGES = { "/", "/home", "/model/*","/ok" };
 
     private static final String[] PROTECTED_PAGES = { "/admin/**", "/preview/**" };
 
