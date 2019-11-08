@@ -9,7 +9,7 @@ public enum UserAuthorities
 
     private final String code;
 
-    private UserAuthorities(final String code)
+    UserAuthorities(final String code)
     {
         this.code = code;
     }

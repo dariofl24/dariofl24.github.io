@@ -32,8 +32,7 @@ public class AbstractDocumentController extends AbstractViewController
 
         final Optional<CarModelInfo> modelOpt = carModelInfoService.getById(id);
 
-        if (!modelOpt.isPresent()
-                || (!modelOpt.get().getDocumentState().equals(DocumentState.Publish) && !allowDraft))
+        if (!modelOpt.isPresent() || !modelOpt.get().getDocumentState().equals(DocumentState.Publish) && !allowDraft)
         {
             response.setStatus(HttpStatus.SC_NOT_FOUND);
             return NOT_FOUND;

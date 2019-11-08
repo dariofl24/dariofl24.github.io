@@ -42,13 +42,13 @@ public class MongoUserDetailsService implements UserDetailsService
 
     private List<GrantedAuthority> loadUserAuthorities(final List<String> authorities)
     {
-        if (CollectionUtils.isNotEmpty(authorities))
+        if (CollectionUtils.isEmpty(authorities))
         {
-            return authorities.stream()
-                    .map(SimpleGrantedAuthority::new)
-                    .collect(Collectors.toList());
+            return AuthorityUtils.NO_AUTHORITIES;
         }
 
-        return AuthorityUtils.NO_AUTHORITIES;
+        return authorities.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 }
