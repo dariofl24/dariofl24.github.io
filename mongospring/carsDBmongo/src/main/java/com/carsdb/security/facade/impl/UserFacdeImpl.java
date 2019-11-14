@@ -8,6 +8,7 @@ import com.carsdb.security.dto.UserDto;
 import com.carsdb.security.entity.User;
 import com.carsdb.security.facade.UserFacade;
 import com.carsdb.security.service.UserService;
+import com.carsdb.security.validator.UserValidator;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,9 +30,14 @@ public class UserFacdeImpl implements UserFacade
     @Autowired
     private PasswordEncoder rsaPasswordEncoder;
 
+    @Autowired
+    private UserValidator userValidator;
+
     @Override
     public Optional<UserDto> createUser(final UserDto userDto)
     {
+        userValidator.validateUser(userDto);
+
         final User user = mapperFacade.map(userDto, User.class);
 
         user.setPassword(rsaPasswordEncoder.encode(userDto.getPassword()));
@@ -50,6 +56,8 @@ public class UserFacdeImpl implements UserFacade
     @Override
     public void updateUser(final UserDto userDto)
     {
+        userValidator.validateUser(userDto);
+
         final User user = mapperFacade.map(userDto, User.class);
 
         final User found = userService.getByUsername(user.getUsername())

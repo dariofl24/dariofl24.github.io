@@ -1,81 +1,88 @@
-var allFeatures = (function() {
+var allFeatures = (function () {
 
     var $cache = {};
 
-    var init = function() {
+    var restApi_url = "/api/useradmin/";
+    var form_url = "/admin/formuser?code=";
 
+    var init = function () {
         initCache();
         bindEvents();
         fillForm();
     };
 
-    var initCache = function() {
+    var initCache = function () {
         console.log("initCache");
 
-        $cache.logo_url = $("#logo_url");
-        $cache.logo_img = $("#logo_img");
-        $cache.brandId = $("#id");
-
-
+        $cache.action = "create";
     };
 
-    var bindEvents = function() {
+    var bindEvents = function () {
 
-        $cache.logo_url.change(function() {
-
-            var url = $(this).val();
-
-            if(url){
-
-                $cache.logo_img.attr('src',url);
-
-            }else{
-                $cache.logo_img.attr('src','/images/default/image_not_available_300.jpg');
-            }
-
-        });
-
-        $("#userForm").on("submit", function(event) {
+        $("#userForm").on("submit", function (event) {
             event.preventDefault();
 
             var data = new FormData(this);
+
+            if (!validateForm(data)) {
+                return;
+            }
+
             var request = {};
+
             console.log(data);
-            request.name = data.get("name");
+
+            request.username = data.get("username");
             request.password = data.get("password");
-            request.active = data.get("active");
+            request.confirmPassword = data.get("confirmpassword");
+            request.enabled = ("on" === data.get("enabled"));
 
             console.log(request);
 
-
             $.ajax({
-                method : "POST",
-                url : "/api/useradmin/create",
-                data : JSON.stringify(request),
-                processData : false,
-                contentType : "application/json"
-            }).done(function(msg) {
+                method: "POST",
+                url: (restApi_url + $cache.action),
+                data: JSON.stringify(request),
+                processData: false,
+                contentType: "application/json"
+            }).done(function (msg) {
 
                 alert("Data Saved: " + msg);
                 console.log(msg);
 
-                $cache.brandId.val(msg.id);
+                window.location.replace(form_url + msg.username);
 
-                window.location.replace("/admin/formuser?code="+msg.code);
-
-            }).fail(function(msg) {
+            }).fail(function (msg) {
                 console.log("Failed");
                 console.log(msg);
-
             });
-
-
 
         });
 
     };
 
-    var fillForm = function() {
+    var validateForm = function (data) {
+
+        var username_vaid = data.get("username") != null;
+
+        if (username_vaid) {
+            $("input.uname").removeClass("validationError");
+        } else {
+            $("input.uname").addClass("validationError");
+        }
+
+        var pwd_valid = data.get("password") === data.get("confirmpassword");
+
+        if (pwd_valid) {
+            $("input.pwd").removeClass("validationError");
+        } else {
+            $("input.pwd").addClass("validationError");
+        }
+
+        return pwd_valid && username_vaid;
+    }
+
+    var fillForm = function () {
 
         var jsonString = $("#pjsonvalue").text();
 
@@ -84,21 +91,16 @@ var allFeatures = (function() {
             var obj = JSON.parse(jsonString);
             console.log(obj);
 
-            $("#id").val(obj.id);
-            $("#name").val(obj.name);
-            $("#code").val(obj.code);
-            $("#logo_url").val(obj.logo_url);
+            $("input#username").val(obj.username);
+            $("input#enabled").attr("checked", obj.enabled);
 
-            if(obj.logo_url){
-                $cache.logo_img.attr('src',obj.logo_url);
-            }
-
+            $cache.action = "update";
         }
 
     };
 
     return {
-        allinit : init
+        allinit: init
     };
 
 })();

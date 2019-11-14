@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
-import com.carsdb.security.entity.User;
-import com.carsdb.security.service.UserService;
+import com.carsdb.security.dto.UserDto;
+import com.carsdb.security.facade.UserFacade;
 import com.carsdb.view.abs.AbstractViewController;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserFormController extends AbstractViewController
 {
     @Autowired
-    private UserService userService;
+    private UserFacade userFacade;
 
     @GetMapping("/formuser")
     public String getUser(final Map<String, Object> model,
@@ -30,7 +30,7 @@ public class UserFormController extends AbstractViewController
 
         if (StringUtils.isNotEmpty(code))
         {
-            final Optional<User> byUsername = userService.getByUsername(code);
+            final Optional<UserDto> byUsername = userFacade.getByUsername(code);
 
             if (byUsername.isPresent())
             {

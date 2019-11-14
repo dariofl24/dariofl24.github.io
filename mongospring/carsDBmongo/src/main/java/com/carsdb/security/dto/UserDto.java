@@ -9,11 +9,23 @@ public class UserDto
 
     private String password;
 
+    private String confirmPassword;
+
     private boolean enabled;
 
     private Date dateAdded;
 
     private List<String> authorities;
+
+    public String getConfirmPassword()
+    {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(final String confirmPassword)
+    {
+        this.confirmPassword = confirmPassword;
+    }
 
     public boolean isEnabled()
     {

@@ -46,18 +46,23 @@
             <fieldset>
 
                 <div class="pure-control-group">
-                    <label for="name">Username</label>
-                    <input id="name" type="text" placeholder="Username" autocomplete="new-username">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" class="uname" type="text" placeholder="Username" autocomplete="new-username">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="password">Password</label>
-                    <input id="password" type="password" placeholder="Password" autocomplete="new-password">
+                    <input id="password" class="pwd" name="password" type="password" placeholder="Password" autocomplete="new-password">
                 </div>
 
                 <div class="pure-control-group">
-                    <label for="active">Active</label>
-                    <input id="active" type="checkbox" placeholder="Active">
+                    <label for="confirmpassword">Confirm Password</label>
+                    <input id="confirmpassword" class="pwd" name="confirmpassword" type="password" placeholder="Confirm Password" autocomplete="new-password">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="enabled">Enabled</label>
+                    <input id="enabled" name="enabled" type="checkbox" placeholder="Enabled">
                 </div>
 
                 <button id="submitFormBtn" type="submit"
