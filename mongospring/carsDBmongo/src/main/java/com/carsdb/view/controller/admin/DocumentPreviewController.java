@@ -23,6 +23,6 @@ public class DocumentPreviewController extends AbstractDocumentController
     public String modelPageAdmin(final Map<String, Object> model, @PathVariable final String id,
             final HttpServletResponse response)
     {
-        return this.dispatch(model, id, response, true);
+        return dispatch(model, id, response, true);
     }
 }

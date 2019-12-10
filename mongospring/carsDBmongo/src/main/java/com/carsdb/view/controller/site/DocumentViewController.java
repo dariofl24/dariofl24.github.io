@@ -23,6 +23,6 @@ public class DocumentViewController extends AbstractDocumentController
     public String modelPagePublish(final Map<String, Object> model, @PathVariable final String id,
             final HttpServletResponse response)
     {
-        return this.dispatch(model, id, response, false);
+        return dispatch(model, id, response, false);
     }
 }
