@@ -46,6 +46,8 @@ public class CarModelInfo
 
     private boolean featured;
 
+    private List<String> keyWords;
+
     public CarModelInfo()
     {
 
@@ -245,6 +247,16 @@ public class CarModelInfo
     public void setFeatured(boolean featured)
     {
         this.featured = featured;
+    }
+
+    public List<String> getKeyWords()
+    {
+        return keyWords;
+    }
+
+    public void setKeyWords(final List<String> keyWords)
+    {
+        this.keyWords = keyWords;
     }
 
     @Override

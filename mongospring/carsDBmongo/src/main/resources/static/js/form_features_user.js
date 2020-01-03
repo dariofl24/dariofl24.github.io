@@ -8,6 +8,7 @@ var allFeatures = (function () {
     var init = function () {
         initCache();
         bindEvents();
+        fillAuthorities();
         fillForm();
     };
 
@@ -55,6 +56,7 @@ var allFeatures = (function () {
             }).fail(function (msg) {
                 console.log("Failed");
                 console.log(msg);
+                alert(msg.responseJSON.message);
             });
 
         });
@@ -95,6 +97,23 @@ var allFeatures = (function () {
             $("input#enabled").attr("checked", obj.enabled);
 
             $cache.action = "update";
+        }
+
+    };
+
+    var fillAuthorities = function () {
+
+        var jsonString = $("#pjsonauthorities").text();
+
+        if (jsonString) {
+
+            var obj = JSON.parse(jsonString);
+
+            for (i = 0; i < obj.length; i++) {
+                console.log(obj[i]);
+                $("div#authorities").append("<label for=\"" + obj[i].code + "\">" + obj[i].name + "</label>")
+                $("div#authorities").append("<input id=\"" + obj[i].code + "\" name=\"" + obj[i].name + "\" type=\"checkbox\" placeholder=\"" + obj[i].name + "\">")
+            }
         }
 
     };

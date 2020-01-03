@@ -19,3 +19,7 @@ input.validationError {
     background-color: #F2DEDE;
     border: 1px solid #EED3D7;
 }
+
+fieldset legend#auth {
+    font-size: 15px;
+}

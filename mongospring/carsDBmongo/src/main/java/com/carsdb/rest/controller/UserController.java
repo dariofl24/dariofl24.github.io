@@ -51,12 +51,13 @@ public class UserController
     }
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/update")
-    public ResponseEntity updateUser(@RequestBody final UserDto user)
+    public ResponseEntity<UserDto> updateUser(@RequestBody final UserDto user)
     {
         try
         {
-            userFacade.updateUser(user);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return userFacade.updateUser(user)
+                    .map(updated -> new ResponseEntity<>(updated, HttpStatus.OK))
+                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
         }
         catch (final NoSuchElementException ex)
         {

@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import com.carsdb.security.dto.UserDto;
+import com.carsdb.security.facade.AuthorityFacade;
 import com.carsdb.security.facade.UserFacade;
 import com.carsdb.view.abs.AbstractViewController;
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +22,9 @@ public class UserFormController extends AbstractViewController
 {
     @Autowired
     private UserFacade userFacade;
+
+    @Autowired
+    private AuthorityFacade authorityFacade;
 
     @GetMapping("/formuser")
     public String getUser(final Map<String, Object> model,
@@ -44,6 +48,8 @@ public class UserFormController extends AbstractViewController
 
             model.put("usercode", code);
         }
+
+        model.put("authorities", parse2Json(authorityFacade.findAllEnabled()));
 
         return "userform";
     }

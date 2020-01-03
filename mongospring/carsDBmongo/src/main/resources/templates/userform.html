@@ -36,6 +36,9 @@
 <p id="pjsonvalue" style="display: none;"
    th:text="${founduser}"></p>
 
+<p id="pjsonauthorities" style="display: none;"
+   th:text="${authorities}"></p>
+
 <div class="main_content">
     <h3 id="form_title">User Information</h3>
 
@@ -47,17 +50,20 @@
 
                 <div class="pure-control-group">
                     <label for="username">Username</label>
-                    <input id="username" name="username" class="uname" type="text" placeholder="Username" autocomplete="new-username">
+                    <input id="username" name="username" class="uname" type="text" placeholder="Username"
+                           autocomplete="new-username">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="password">Password</label>
-                    <input id="password" class="pwd" name="password" type="password" placeholder="Password" autocomplete="new-password">
+                    <input id="password" class="pwd" name="password" type="password" placeholder="Password"
+                           autocomplete="new-password">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="confirmpassword">Confirm Password</label>
-                    <input id="confirmpassword" class="pwd" name="confirmpassword" type="password" placeholder="Confirm Password" autocomplete="new-password">
+                    <input id="confirmpassword" class="pwd" name="confirmpassword" type="password"
+                           placeholder="Confirm Password" autocomplete="new-password">
                 </div>
 
                 <div class="pure-control-group">
@@ -65,11 +71,19 @@
                     <input id="enabled" name="enabled" type="checkbox" placeholder="Enabled">
                 </div>
 
-                <button id="submitFormBtn" type="submit"
-                        class="pure-button pure-button-primary">Submit</button>
-
-
             </fieldset>
+
+            <fieldset>
+                <legend id="auth">Authorities</legend>
+                <div id="authorities" class="pure-control-group">
+
+                </div>
+            </fieldset>
+
+            <button id="submitFormBtn" type="submit"
+                    class="pure-button pure-button-primary">Submit
+            </button>
+
         </form>
 
     </div>

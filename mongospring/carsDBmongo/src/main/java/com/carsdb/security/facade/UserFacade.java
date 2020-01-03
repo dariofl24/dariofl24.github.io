@@ -7,11 +7,11 @@ import org.springframework.security.core.Authentication;
 
 public interface UserFacade
 {
-    void updateUser(UserDto userDto);
-
-    void deleteUser(String name);
+    Optional<UserDto> updateUser(UserDto userDto);
 
     Optional<UserDto> createUser(UserDto userDto);
+
+    void deleteUser(String name);
 
     Optional<UserDto> getByUsername(String name);
 

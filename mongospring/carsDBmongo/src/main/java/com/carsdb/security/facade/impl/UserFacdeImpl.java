@@ -48,13 +48,7 @@ public class UserFacdeImpl implements UserFacade
     }
 
     @Override
-    public void deleteUser(final String name)
-    {
-        userService.delete(name);
-    }
-
-    @Override
-    public void updateUser(final UserDto userDto)
+    public Optional<UserDto> updateUser(final UserDto userDto)
     {
         userValidator.validateUser(userDto);
 
@@ -68,7 +62,8 @@ public class UserFacdeImpl implements UserFacade
         mapperFacade.map(user, found);
         found.setPassword(rsaPasswordEncoder.encode(user.getPassword()));
 
-        userService.save(found);
+        return userService.save(found)
+                .map(updated -> mapperFacade.map(updated, UserDto.class));
     }
 
     @Override
@@ -82,5 +77,11 @@ public class UserFacdeImpl implements UserFacade
     public Authentication getAuthentication()
     {
         return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    @Override
+    public void deleteUser(final String name)
+    {
+        userService.delete(name);
     }
 }

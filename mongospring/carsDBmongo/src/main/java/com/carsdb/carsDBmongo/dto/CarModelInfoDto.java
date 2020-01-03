@@ -44,6 +44,8 @@ public class CarModelInfoDto {
 	private DocumentState documentState;
 	
 	private boolean featured;
+
+	private List<String> keyWords;
 	
 	public String getId() {
 		return id;
@@ -159,7 +161,14 @@ public class CarModelInfoDto {
 	public void setFeatured(boolean featured) {
 		this.featured = featured;
 	}
-	
-	
-	
+
+	public List<String> getKeyWords()
+	{
+		return keyWords;
+	}
+
+	public void setKeyWords(final List<String> keyWords)
+	{
+		this.keyWords = keyWords;
+	}
 }
