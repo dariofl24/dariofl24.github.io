@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+          integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
+          crossorigin="anonymous"/>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+          th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user_from.css}"/>
+
+    <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"
+          rel="stylesheet"/>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+
+    <script th:src="@{/js/form_features_user.js}" type="text/javascript"
+            charset="utf-8"></script>
+
+</head>
+<body>
+
+<p id="pjsonvalue" style="display: none;"
+   th:text="${founduser}"></p>
+
+<p id="pjsonauthorities" style="display: none;"
+   th:text="${authorities}"></p>
+
+<div class="main_content">
+    <h3 id="form_title">User Information</h3>
+
+    <div class="container">
+
+        <form id="userForm" class="pure-form pure-form-aligned centered_form" method="post" autocomplete="no">
+
+            <fieldset>
+
+                <div class="pure-control-group">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" class="uname" type="text" placeholder="Username"
+                           autocomplete="new-username">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="password">Password</label>
+                    <input id="password" class="pwd" name="password" type="password" placeholder="Password"
+                           autocomplete="new-password">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="confirmpassword">Confirm Password</label>
+                    <input id="confirmpassword" class="pwd" name="confirmpassword" type="password"
+                           placeholder="Confirm Password" autocomplete="new-password">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="enabled">Enabled</label>
+                    <input id="enabled" name="enabled" type="checkbox" placeholder="Enabled">
+                </div>
+
+            </fieldset>
+
+            <fieldset>
+                <legend id="auth">Authorities</legend>
+                <div id="authorities" class="pure-control-group">
+
+                </div>
+            </fieldset>
+
+            <button id="submitFormBtn" type="submit"
+                    class="pure-button pure-button-primary">Submit
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

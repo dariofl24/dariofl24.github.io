@@ -1,0 +1,25 @@
+
+#form_title {
+    text-align: center;
+}
+
+#userForm {
+    width: 425px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#userForm #submitFormBtn {
+    margin-left: 40%;
+    margin-top: 25px;
+}
+
+input.validationError {
+    color: #B94A48;
+    background-color: #F2DEDE;
+    border: 1px solid #EED3D7;
+}
+
+fieldset legend#auth {
+    font-size: 15px;
+}
