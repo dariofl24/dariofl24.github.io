@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.carsdb.carsDBmongo.entity.CarModelInfo;
 import com.carsdb.carsDBmongo.service.ModelIdentityGenerator;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,10 +15,10 @@ public class DefaultModelIdentityGeneratorImpl implements ModelIdentityGenerator
     {
         final StringBuilder sb = new StringBuilder();
 
-        sb.append(Optional.ofNullable(model.getManufacturer()).orElse("").replace(" ", "_").toLowerCase());
-        sb.append(Optional.ofNullable(model.getName()).orElse("").replace(" ", "_").toLowerCase());
-        sb.append(Optional.ofNullable(model.getYear() + "").orElse("").replace(" ", "_").toLowerCase());
-        sb.append(Optional.ofNullable(model.getGeneration() + "").orElse("").replace(" ", "_").toLowerCase());
+        sb.append(Optional.ofNullable(model.getManufacturer()).orElse(StringUtils.EMPTY).replace(StringUtils.SPACE, "_").toLowerCase());
+        sb.append(Optional.ofNullable(model.getName()).orElse(StringUtils.EMPTY).replace(StringUtils.SPACE, "_").toLowerCase());
+        sb.append(Optional.ofNullable(model.getYear() + StringUtils.EMPTY).orElse(StringUtils.EMPTY).replace(StringUtils.SPACE, "_").toLowerCase());
+        sb.append(Optional.ofNullable(model.getGeneration() + StringUtils.EMPTY).orElse(StringUtils.EMPTY).replace(StringUtils.SPACE, "_").toLowerCase());
 
         return sb.toString();
     }

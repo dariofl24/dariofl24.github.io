@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -71,10 +72,10 @@ public class CarModelInfo
 
         final StringBuilder sb = new StringBuilder();
 
-        sb.append(Optional.ofNullable(manufacturer).orElse("").replace(" ", "_").toLowerCase());
-        sb.append(Optional.ofNullable(name).orElse("").replace(" ", "_").toLowerCase());
-        sb.append(Optional.of(year + "").get().replace(" ", "_").toLowerCase());
-        sb.append(Optional.of(generation + "").get().replace(" ", "_").toLowerCase());
+        sb.append(Optional.ofNullable(manufacturer).orElse(StringUtils.EMPTY).replace(StringUtils.SPACE, "_").toLowerCase());
+        sb.append(Optional.ofNullable(name).orElse(StringUtils.EMPTY).replace(StringUtils.SPACE, "_").toLowerCase());
+        sb.append(Optional.of(year + StringUtils.EMPTY).get().replace(StringUtils.SPACE, "_").toLowerCase());
+        sb.append(Optional.of(generation + StringUtils.EMPTY).get().replace(StringUtils.SPACE, "_").toLowerCase());
 
         setId(sb.toString());
     }

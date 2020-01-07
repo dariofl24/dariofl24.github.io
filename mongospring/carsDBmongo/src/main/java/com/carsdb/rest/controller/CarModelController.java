@@ -40,17 +40,9 @@ public class CarModelController
 
         final Optional<CarModelInfo> saved = carModelInfoService.upsert(entity);
 
-        System.out.println(">>> upsert:: " + saved.get());
-
-        if (saved.isPresent())
-        {
-            return new ResponseEntity<>(mapperFacade.map(saved.get(), CarModelInfoDto.class),
-                    HttpStatus.CREATED);
-        }
-        else
-        {
-            return new ResponseEntity<>(new CarModelInfoDto(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return saved.map(model -> mapperFacade.map(model, CarModelInfoDto.class))
+                .map(dto -> new ResponseEntity<>(dto, HttpStatus.CREATED))
+                .orElseGet(() -> new ResponseEntity<>(new CarModelInfoDto(), HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @PostMapping
@@ -63,15 +55,9 @@ public class CarModelController
 
         final Optional<CarModelInfo> saved = carModelInfoService.create(entity);
 
-        if (saved.isPresent())
-        {
-            return new ResponseEntity<>(mapperFacade.map(saved.get(), CarModelInfoDto.class),
-                    HttpStatus.CREATED);
-        }
-        else
-        {
-            return new ResponseEntity<>(new CarModelInfoDto(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return saved.map(model -> mapperFacade.map(model, CarModelInfoDto.class))
+                .map(dto -> new ResponseEntity<>(dto, HttpStatus.CREATED))
+                .orElseGet(() -> new ResponseEntity<>(new CarModelInfoDto(), HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @PutMapping
@@ -82,7 +68,7 @@ public class CarModelController
 
         carModelInfoService.update(entity);
 
-        return new ResponseEntity<>("Updated !", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping

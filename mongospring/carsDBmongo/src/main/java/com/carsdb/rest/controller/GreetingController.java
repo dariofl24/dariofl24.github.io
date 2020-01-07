@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.carsdb.rest.dto.Greeting;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,6 @@ public class GreetingController
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name)
     {
         return new Greeting(counter.incrementAndGet(),
-                String.format(template, name + " " + date));
+                String.format(template, name + StringUtils.SPACE + date));
     }
 }
