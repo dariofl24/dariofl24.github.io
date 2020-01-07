@@ -87,8 +87,8 @@ public class CarModelController
 
     @GetMapping
     public List<CarModelInfoDto> getAllCarModelInfoByPage(
-            @RequestParam(value = "p", required = false, defaultValue = "0") String page,
-            @RequestParam(value = "sz", required = false, defaultValue = "25") String size)
+            @RequestParam(value = "p", required = false, defaultValue = "0") final String page,
+            @RequestParam(value = "sz", required = false, defaultValue = "25") final String size)
     {
 
         int _page = 0;

@@ -19,11 +19,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     private static final String[] PUBLIC_RESOURCES = { "/**/*.ico", "/mysupercars/**", "/vendor/**", "/css/**",
             "/fonts/**", "/images/**", "/js/**", "/latest/**", "/webjars/**" };
 
-    private static final String[] PUBLIC_PAGES = { "/", "/home", "/model", "/model/*", "/ok" };
+    private static final String[] PUBLIC_PAGES = { "/", "/home", "/model/**", "/ok" };
 
     private static final String[] PROTECTED_PAGES = { "/admin/**", "/preview/**" };
 
-    private static final String[] PUBLIC_REST_ENDPOINTS = { "/api/useradmin/*", "/api/authorityadmin/*" };
+    private static final String[] PUBLIC_REST_ENDPOINTS = { "/api/useradmin/*", "/api/authorityadmin/*", "/api/search/**" };
 
     private static final String[] PROTECTED_REST_ENDPOINTS = { "/api/**" };
 

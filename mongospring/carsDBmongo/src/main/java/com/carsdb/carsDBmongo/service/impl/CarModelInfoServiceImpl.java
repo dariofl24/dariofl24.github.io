@@ -11,6 +11,7 @@ import com.carsdb.carsDBmongo.repository.BrandRepository;
 import com.carsdb.carsDBmongo.repository.CarModelInfoRepository;
 import com.carsdb.carsDBmongo.service.CarModelInfoService;
 import com.carsdb.carsDBmongo.service.ModelIdentityGenerator;
+import com.carsdb.carsDBmongo.service.ModelKeyWordsGenerator;
 import com.carsdb.exception.CarModelInfoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,9 @@ public class CarModelInfoServiceImpl implements CarModelInfoService
 
     @Autowired
     private ModelIdentityGenerator modelIdentityGenerator;
+
+    @Autowired
+    private ModelKeyWordsGenerator modelKeyWordsGenerator;
 
     @Override
     public Optional<CarModelInfo> upsert(CarModelInfo model)
@@ -51,22 +55,10 @@ public class CarModelInfoServiceImpl implements CarModelInfoService
             throw new CarModelInfoException("INVALID MANUFACTURER");
         }
 
+        model.setKeyWords(modelKeyWordsGenerator.generateKeyWords(model));
+
         CarModelInfo saved = carModelInfoRepository.save(model);
         return Optional.ofNullable(saved);
-    }
-
-    private boolean isNewModel(CarModelInfo model)
-    {
-
-        if (!StringUtils.isEmpty(model.getId()))
-        {
-
-            Optional<CarModelInfo> carModelOpt = carModelInfoRepository.getById(model.getId());
-
-            return !carModelOpt.isPresent();
-        }
-
-        return true;
     }
 
     @Override
@@ -91,6 +83,8 @@ public class CarModelInfoServiceImpl implements CarModelInfoService
 
         model.setDateAdded(new Date());
         model.setId(modelIdentityGenerator.getModelId(model));
+
+        model.setKeyWords(modelKeyWordsGenerator.generateKeyWords(model));
 
         CarModelInfo saved = carModelInfoRepository.save(model);
         return Optional.ofNullable(saved);
@@ -117,8 +111,24 @@ public class CarModelInfoServiceImpl implements CarModelInfoService
             throw new CarModelInfoException("Manufacturer not present or invalid");
         }
 
+        model.setKeyWords(modelKeyWordsGenerator.generateKeyWords(model));
         model.setLastEdited(new Date());
+
         carModelInfoRepository.save(model);
+    }
+
+    private boolean isNewModel(CarModelInfo model)
+    {
+
+        if (!StringUtils.isEmpty(model.getId()))
+        {
+
+            Optional<CarModelInfo> carModelOpt = carModelInfoRepository.getById(model.getId());
+
+            return !carModelOpt.isPresent();
+        }
+
+        return true;
     }
 
     private boolean validateManufacturer(CarModelInfo model)
