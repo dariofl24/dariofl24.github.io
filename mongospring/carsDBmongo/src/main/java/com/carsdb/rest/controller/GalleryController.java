@@ -36,7 +36,7 @@ public class GalleryController
     }
 
     @GetMapping("/browse/{gallery}/{entry}/{kind}")
-    public ResponseEntity<String> getGalleryEnrtyImage(@PathVariable(value = "gallery") final String gallery,
+    public ResponseEntity<String> getGalleryEntryImage(@PathVariable(value = "gallery") final String gallery,
             @PathVariable(value = "entry") final String entry, @PathVariable(value = "kind") final String kind)
     {
         return galleryFacade.getImageUrl(gallery, entry, kind)
