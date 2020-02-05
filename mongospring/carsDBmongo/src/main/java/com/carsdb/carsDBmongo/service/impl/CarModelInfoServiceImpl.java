@@ -159,28 +159,24 @@ public class CarModelInfoServiceImpl implements CarModelInfoService
     @Override
     public Optional<CarModelInfo> getById(String id)
     {
-
         return carModelInfoRepository.getById(id);
     }
 
     @Override
     public Optional<List<CarModelInfo>> findByName(String name)
     {
-
         return carModelInfoRepository.findByName(name);
     }
 
     @Override
     public Optional<List<CarModelInfo>> findByManufacturer(String manufacturer)
     {
-
         return carModelInfoRepository.findByManufacturer(manufacturer);
     }
 
     @Override
     public Optional<List<CarModelInfo>> findByYear(int year)
     {
-
         return carModelInfoRepository.findByYear(year);
     }
 

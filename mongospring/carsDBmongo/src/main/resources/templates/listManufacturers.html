@@ -77,11 +77,10 @@
 						</a>
 						<img th:if="${#strings.isEmpty(manuf.logo_url)}" 
 							src="/images/default/image_not_available_300.jpg"
-							class="manufacturer_logo"></img>
+							class="manufacturer_logo"/>
 					</div>
 					<div class="pure-u-md-1-6 roww h_last">
-						<a
-							th:href="${#strings.append('/admin/formmanufacturer?code=',manuf.code)}">Edit</a>
+						<a th:href="${#strings.append('/admin/formmanufacturer?code=',manuf.code)}">Edit</a>
 					</div>
 
 

@@ -23,7 +23,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 
     private static final String[] PROTECTED_PAGES = { "/admin/**", "/preview/**" };
 
-    private static final String[] PUBLIC_REST_ENDPOINTS = { "/api/useradmin/*", "/api/authorityadmin/*", "/api/search/**" };
+    private static final String[] PUBLIC_REST_ENDPOINTS = { "/api/useradmin/*", "/api/authorityadmin/*",
+            "/api/search/**", "/api/gallery/**" };
 
     private static final String[] PROTECTED_REST_ENDPOINTS = { "/api/**" };
 

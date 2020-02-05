@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/admin/formmanufacturer")
 public class ManufacturerFormController extends AbstractViewController
 {
     @Autowired
     private BrandService brandService;
 
-    @GetMapping("/formmanufacturer")
+    @GetMapping
     public String getFormManufacturer(final Map<String, Object> model,
             @RequestParam(value = "code", required = false) final String code, final HttpServletResponse response)
     {
