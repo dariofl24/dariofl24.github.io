@@ -23,3 +23,26 @@ input.validationError {
 fieldset legend#auth {
     font-size: 15px;
 }
+
+.entry_img_box {
+    width: 33.33%;
+    float: left;
+}
+
+.entry_img_box .img_container img {
+    width: 75%;
+    margin-left: 12.5%;
+    margin-right: auto;
+}
+
+.entry_container {
+    border-style: groove;
+    border-width: 4px 0px 0px 0px;
+    clear: left;
+}
+
+.entry_path {
+    width: 80%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
