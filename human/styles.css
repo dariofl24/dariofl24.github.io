@@ -18,6 +18,14 @@ body {
     background-color: rgba(255, 49, 35, 0.79);
 }
 
+.flickr {
+    background-color: rgb(142, 154, 175);
+}
+
+.linkedin {
+    background-color: rgb(72, 149, 239);
+}
+
 .flex-container {
     display: flex;
     flex-direction: column;
