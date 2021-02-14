@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.fb {
+    background-color: rgb(168, 218, 220);
+}
+
+.twiter {
+    background-color: rgb(157, 241, 246);
+}
+
+.myspace {
+    background-color: rgb(69, 123, 157);
+}
+
+.youtube {
+    background-color: rgba(255, 49, 35, 0.79);
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+}
+
+.flex-container > div {
+    background-color: #f0f0f0;
+    min-width: 100px;
+    margin: 10px;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px;
+}
+
+/*table*/
+
+table {
+    font-size: 15px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #969696;
+    padding: 8px;
+    text-align: center;
+    vertical-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+/*table*/
+
+/*Age*/
+
+div.gender p {
+    margin: 0;
+}
+
+p.chart_title {
+    margin: 0;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+div.gender {
+    width: 80%;
+    margin: auto;
+}
+
+.gender_chart {
+    height: 350px;
+}
+
+.age_chart {
+    width: 100%;
+    height: 350px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.income_chart {
+    width: 100%;
+    height: 350px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.children_chart {
+    width: 100%;
+    height: 350px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.education_chart {
+    width: 100%;
+    height: 350px;
+    font-size: 12px;
+    font-weight: bold;
+}
