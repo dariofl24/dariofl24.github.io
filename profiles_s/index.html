@@ -1,0 +1,501 @@
+<html>
+<head>
+    <title>Social Networks</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="./styles.css"/>
+    <link rel="stylesheet" type="text/css" href="./summary/summary.css"/>
+</head>
+<body>
+
+<h1 style="text-align: center;">Most visited Social Networks statistics</h1>
+<h3 style="text-align: center;">Facebook - Myspace.com - Twiter - Youtube - Flickr - Linkedin</h3>
+
+
+<!--<div id="summary">-->
+<!--    <p class="summary_title">Monthly unique visitors</p>-->
+<!--    <div id="chartdiv"></div>-->
+<!--</div>-->
+
+<!--<div id="summary_gender">-->
+<!--    <p class="summary_title">Gender distribution</p>-->
+<!--    <div id="chartdiv_gender"></div>-->
+<!--</div>-->
+
+<!--<div id="summary_children">-->
+<!--    <p class="summary_title">Children in Household</p>-->
+<!--    <div id="chartdiv_children"></div>-->
+<!--</div>-->
+
+<div class="flex-container fb" style="float: left">
+    <div style="background-color: inherit">
+        <img src="https://www.briansolis.com/wp-content/uploads/2009/10/facebook-logo.jpg">
+    </div>
+    <div>
+        <table style="height: 100%; position: relative;">
+            <tr>
+                <th colspan="3">30-Day Traffic</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>U.S.A</th>
+                <th>Worldwide</th>
+            </tr>
+            <tr>
+                <td>Unique Visitors</td>
+                <td>110 M</td>
+                <td>370 M</td>
+            </tr>
+            <tr>
+                <td>Reach</td>
+                <td>45.6%</td>
+                <td>28.8%</td>
+            </tr>
+            <tr>
+                <td>Page views</td>
+                <td>52 B</td>
+                <td>160 B</td>
+            </tr>
+            <tr>
+                <td>Total visits</td>
+                <td>3.1 B</td>
+                <td>8.7 B</td>
+            </tr>
+            <tr>
+                <td>Avg visits per visitor</td>
+                <td>28</td>
+                <td>23</td>
+            </tr>
+            <tr>
+                <td>Avg time on site</td>
+                <td>20 min</td>
+                <td>23min, 20seg</td>
+            </tr>
+        </table>
+    </div>
+    <div class="gender">
+        <p>Gender</p>
+        <div id="gender_chartdiv" class="gender_chart"></div>
+    </div>
+    <div>
+        <p class="chart_title">Age distribution</p>
+        <div id="age_chartdiv" class="age_chart"></div>
+    </div>
+    <div>
+        <p class="chart_title">Income</p>
+        <div id="income_chartdiv" class="income_chart"></div>
+    </div>
+    <div>
+        <p class="chart_title">Education Level</p>
+        <div id="education_chartdiv" class="education_chart"></div>
+    </div>
+    <div>
+        <p class="chart_title">Children in Household</p>
+        <div id="children_chartdiv" class="children_chart"></div>
+    </div>
+</div>
+
+<div class="flex-container myspace" style="float: left">
+    <div style="background-color: inherit">
+        <img src="https://1000marcas.net/wp-content/uploads/2020/10/Myspace-Logo.jpg" style="height: 120px">
+    </div>
+    <div>
+        <table style="height: 100%; position: relative;">
+            <tr>
+                <th colspan="3">30-Day Traffic</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>U.S.A</th>
+                <th>Worldwide</th>
+            </tr>
+            <tr>
+                <td>Unique Visitors</td>
+                <td>61 M</td>
+                <td>120 M</td>
+            </tr>
+            <tr>
+                <td>Reach</td>
+                <td>26.1%</td>
+                <td>9.1%</td>
+            </tr>
+            <tr>
+                <td>Page views</td>
+                <td>32 B</td>
+                <td>39 B</td>
+            </tr>
+            <tr>
+                <td>Total visits</td>
+                <td>1.2 B</td>
+                <td>1.5 B</td>
+            </tr>
+            <tr>
+                <td>Avg visits per visitor</td>
+                <td>19</td>
+                <td>13</td>
+            </tr>
+            <tr>
+                <td>Avg time on site</td>
+                <td>23min 20seg</td>
+                <td>21min 40seg</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="gender">
+        <p>Gender</p>
+        <div id="gender_chartdiv_digg" class="gender_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Age distribution</p>
+        <div id="age_chartdiv_digg" class="age_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Income</p>
+        <div id="income_chartdiv_digg" class="income_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Education Level</p>
+        <div id="education_chartdiv_digg" class="education_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Children in Household</p>
+        <div id="children_chartdiv_digg" class="children_chart"></div>
+    </div>
+
+</div>
+
+<div style="width: 100%; height: 25px; clear: left"></div>
+
+<div class="flex-container twiter" style="float: left">
+
+    <div style="background-color: inherit">
+        <img src="https://www.seekpng.com/png/detail/213-2136685_instagram-pixel-twitter-logo-with-name.png"
+             style="height: 120px">
+    </div>
+    <div>
+        <table style="height: 100%; position: relative;">
+            <tr>
+                <th colspan="3">30-Day Traffic</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>U.S.A</th>
+                <th>Worldwide</th>
+            </tr>
+            <tr>
+                <td>Unique Visitors</td>
+                <td>24 M</td>
+                <td>66 M</td>
+            </tr>
+            <tr>
+                <td>Reach</td>
+                <td>10.1%</td>
+                <td>5.1%</td>
+            </tr>
+            <tr>
+                <td>Page views</td>
+                <td>2.1 B</td>
+                <td>4 B</td>
+            </tr>
+            <tr>
+                <td>Total visits</td>
+                <td>270 M</td>
+                <td>550 M</td>
+            </tr>
+            <tr>
+                <td>Avg visits per visitor</td>
+                <td>11</td>
+                <td>8.3</td>
+            </tr>
+            <tr>
+                <td>Avg time on site</td>
+                <td>12min 10seg</td>
+                <td>11min 40seg</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="gender">
+        <p>Gender</p>
+        <div id="gender_chartdiv_twiter" class="gender_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Age distribution</p>
+        <div id="age_chartdiv_twiter" class="age_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Income</p>
+        <div id="income_chartdiv_twiter" class="income_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Education Level</p>
+        <div id="education_chartdiv_twiter" class="education_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Children in Household</p>
+        <div id="children_chartdiv_twiter" class="children_chart"></div>
+    </div>
+
+</div>
+
+<div class="flex-container youtube" style="float: left">
+
+    <div style="background-color: inherit">
+        <img src="https://graffica.info/wp-content/uploads/2017/08/YTLogo_old_new_animation.gif"
+             style="height: 120px">
+    </div>
+    <div>
+        <table style="height: 100%; position: relative;">
+            <tr>
+                <th colspan="3">30-Day Traffic</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>U.S.A</th>
+                <th>Worldwide</th>
+            </tr>
+            <tr>
+                <td>Unique Visitors</td>
+                <td>-</td>
+                <td>78 M</td>
+            </tr>
+            <tr>
+                <td>Reach</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Page views</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Total visits</td>
+                <td>-</td>
+                <td>459 M</td>
+            </tr>
+            <tr>
+                <td>Avg visits per visitor</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Avg time on site</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="gender">
+        <p>Gender</p>
+        <div id="gender_chartdiv_youtube" class="gender_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Age distribution</p>
+        <div id="age_chartdiv_youtube" class="age_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Income</p>
+        <div id="income_chartdiv_youtube" class="income_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Education Level</p>
+        <div id="education_chartdiv_youtube" class="education_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Children in Household</p>
+        <div id="children_chartdiv_youtube" class="children_chart"></div>
+    </div>
+
+</div>
+
+<div style="width: 100%; height: 25px; clear: left"></div>
+
+<div class="flex-container flickr" style="float: left">
+
+    <div style="background-color: inherit">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Flickr_logo.png"
+             style="height: 120px">
+    </div>
+    <div>
+        <table style="height: 100%; position: relative;">
+            <tr>
+                <th colspan="3">30-Day Traffic</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>U.S.A</th>
+                <th>Worldwide</th>
+            </tr>
+            <tr>
+                <td>Unique Visitors</td>
+                <td>19 M</td>
+                <td>73 M</td>
+            </tr>
+            <tr>
+                <td>Reach</td>
+                <td>8.3%</td>
+                <td>5.7%</td>
+            </tr>
+            <tr>
+                <td>Page views</td>
+                <td>1 B</td>
+                <td>3 B</td>
+            </tr>
+            <tr>
+                <td>Total visits</td>
+                <td>94 M</td>
+                <td>280 M</td>
+            </tr>
+            <tr>
+                <td>Avg visits per visitor</td>
+                <td>4.9</td>
+                <td>3.8</td>
+            </tr>
+            <tr>
+                <td>Avg time on site</td>
+                <td>8min</td>
+                <td>9min 10seg</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="gender">
+        <p>Gender</p>
+        <div id="gender_chartdiv_flickr" class="gender_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Age distribution</p>
+        <div id="age_chartdiv_flickr" class="age_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Income</p>
+        <div id="income_chartdiv_flickr" class="income_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Education Level</p>
+        <div id="education_chartdiv_flickr" class="education_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Children in Household</p>
+        <div id="children_chartdiv_flickr" class="children_chart"></div>
+    </div>
+
+</div>
+
+<div class="flex-container linkedin" style="float: left">
+
+    <div style="background-color: inherit">
+        <img src="https://logos-marcas.com/wp-content/uploads/2020/04/Linkedin-Logotipo-2003%E2%80%932011.jpg"
+             style="height: 120px">
+    </div>
+    <div>
+        <table style="height: 100%; position: relative;">
+            <tr>
+                <th colspan="3">30-Day Traffic</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>U.S.A</th>
+                <th>Worldwide</th>
+            </tr>
+            <tr>
+                <td>Unique Visitors</td>
+                <td>19 M</td>
+                <td>73 M</td>
+            </tr>
+            <tr>
+                <td>Reach</td>
+                <td>8.3%</td>
+                <td>5.7%</td>
+            </tr>
+            <tr>
+                <td>Page views</td>
+                <td>1 B</td>
+                <td>3 B</td>
+            </tr>
+            <tr>
+                <td>Total visits</td>
+                <td>94 M</td>
+                <td>280 M</td>
+            </tr>
+            <tr>
+                <td>Avg visits per visitor</td>
+                <td>4.9</td>
+                <td>3.8</td>
+            </tr>
+            <tr>
+                <td>Avg time on site</td>
+                <td>8min</td>
+                <td>9min 10seg</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="gender">
+        <p>Gender</p>
+        <div id="gender_chartdiv_linkedin" class="gender_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Age distribution</p>
+        <div id="age_chartdiv_linkedin" class="age_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Income</p>
+        <div id="income_chartdiv_linkedin" class="income_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Education Level</p>
+        <div id="education_chartdiv_linkedin" class="education_chart"></div>
+    </div>
+
+    <div>
+        <p class="chart_title">Children in Household</p>
+        <div id="children_chartdiv_linkedin" class="children_chart"></div>
+    </div>
+
+</div>
+
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!--<script src="summary/summary.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="summary/summary_gender.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="summary/summary_children.js" type="text/javascript" charset="utf-8"></script>-->
+
+<!-- Chart code -->
+<!--<script src="./gender.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="./age.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="./income.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="./children.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<script src="./education.js" type="text/javascript" charset="utf-8"></script>-->
+
+<script src="js/fb.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/dig.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/twiter.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/youtube.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/flickr.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/linkedin.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

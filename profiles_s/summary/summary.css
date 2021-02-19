@@ -1,0 +1,34 @@
+.chart {
+    width: 100%;
+    height: 500px;
+}
+
+.summary_title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 48px;
+}
+
+#summary {
+    background-color: #f0f0f0;
+}
+
+#summary_gender {
+    background-color: #f0f0f0;
+}
+
+#summary_children {
+    background-color: #f0f0f0;
+}
+
+#summary_subject {
+    background-color: #f0f0f0;
+}
+
+#summary_presentation {
+    background-color: #f0f0f0;
+}
+
+#summary_education {
+    background-color: #f0f0f0;
+}
