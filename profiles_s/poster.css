@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#title {
+    text-align: center;
+    font-size: 2.5em;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
+
+.subTitle {
+    text-align: center;
+}
+
+#content_container {
+    position: relative;
+    width: 100%;
+}
+
+#introduction {
+    padding: 1.5%;
+}
+
+#flex_parent {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+.flex_colunm {
+    width: 48.5%;
+    padding-left: 1%;
+    padding-right: 0.5%;
+    padding-bottom: 2%;
+}
+
+li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+table {
+    margin: auto;
+}
+
+td, th {
+    border: 1px solid #858585;
+    text-align: center;
+    padding: 4px;
+}
+
+tr:nth-child(even) {
+    background-color: #f6fff3;
+}
+
+tr:nth-child(odd) {
+    background-color: rgb(168, 218, 220);
+}
+
+.t2 tr:nth-child(odd) {
+    background-color: rgb(147, 211, 229);
+}
+
+.procedure {
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+}
+
+.table_footer {
+    font-style: italic;
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    text-decoration: underline;
+}
+
+#references {
+    font-style: oblique;
+    text-align: justify;
+}
+
+#discussion {
+    background-color: rgb(174, 217, 224);
+    padding: 1em;
+    margin-top: 0.5em;
+}
