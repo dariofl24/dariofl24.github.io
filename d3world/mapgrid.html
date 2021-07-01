@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <title>World Happiness Report</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="styles/style.css" />
+        <link rel="stylesheet" type="text/css" href="styles/panel.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://d3js.org/d3.v4.js"></script>
+        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+        <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    </head>
+    <body>
+
+        <div id="container">
+
+            <div class="flex_parent">
+
+                <div id="sidebar">
+                    <h1 style="text-align: center;margin-bottom: 10;">World Happiness Report 2019</h1>
+                    <div id="countries_list_wrapper">
+                        <ol id="countries">
+                            
+                        </ol>
+                    </div>
+                    <div class="splitter"></div>
+                    <div id="data-wrapper">
+                        <table id="data-table">
+                            <th id="th-name" colspan="2">Name</th>
+                            <tr>
+                                <td><i class="fas fa-medal"></i> Overall rank</td>
+                                <td id="rank"></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-dollar-sign"></i> GDP per capita</td>
+                                <td id="gdp"></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-hands-helping"></i> Social support</td>
+                                <td id="social_supp"></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-heart"></i> Healthy life expectancy</td>
+                                <td id="life_exp"></td>
+                            </tr>
+                            <tr>
+                                <td><i class="far fa-compass"></i> Freedom to make life choices</td>
+                                <td id="freedom"></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-hand-holding-heart"></i> Generosity</td>
+                                <td id="generosity"></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-fire-alt"></i> Perceptions of corruption</td>
+                                <td id="corruption"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="separator"></div>
+
+                <div id="map_panel">
+                    <h1 id="country_label" style="text-align: center;margin-bottom: 0;"></h1>
+                    <div id="map_container">
+                        <svg id="map_svg" width="100%" height="100%"></svg>
+                    </div>
+                    <div id="scale-wrapper">
+                        <div class="face">
+                            <i class="far fa-frown"></i>
+                        </div>
+                        <div id="scale">
+                            <img src="https://raw.githubusercontent.com/d3/d3-scale-chromatic/master/img/GnBu.png" width="50%" height="40" alt="GnBu" style="width:100%;">
+                        </div>
+                        <div class="face">
+                            <i class="far fa-smile"></i>
+                        </div>
+                    </div>
+                    <div id="globe">
+                        <button onclick="javascript:worldMap('./data/data.geojson')">
+                            <i class="fas fa-globe fa-2x"></i>
+                        </button>
+                    </div>
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <script src="./js/map.js" type="text/javascript" charset="utf-8"></script>
+    </body>
+</html>
