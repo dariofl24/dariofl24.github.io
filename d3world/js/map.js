@@ -1,39 +1,20 @@
+
+var cachedDataCountry;
+
 const countryMap = function(dataFile, country) {
 
     d3.select("#data-table").style("visibility","visible");
     d3.select("#map_svg > g").remove();
-    var svg = d3.select("svg");
 
-    width = +svg.node().getBoundingClientRect().width;
-    height = +svg.node().getBoundingClientRect().height;
-    
-    d3.json(dataFile, function(data){
-
+    const drawCountry = function(data) 
+    {
         var reportValues = data.features.map(val => val.properties["v2019"]);
 
         const colorFunction = d3.scaleSequential()
         .domain(d3.extent(Array.from(reportValues)))
         .interpolator(d3.interpolateGnBu);
 
-        const fillFunction = function(d) {
-
-            if(d.properties["v2019"] && d.id == country){
-                return colorFunction(d.properties["v2019"]);
-            }else{
-
-                if(d.id == country){
-                    return "red";
-                }else{
-                    return "#ccc";
-                }
-            }
-        };
-
-        const countryData = data.features.filter(function(d){
-            return d.id == country;
-        })[0];
-
-        console.log(countryData);
+        const countryData = data.features.filter(d => d.id == country)[0];
 
         d3.select("#country_label").text(countryData.properties["name"]);
 
@@ -48,10 +29,33 @@ const countryMap = function(dataFile, country) {
 
         var zoom = countryData.properties.zoom || 2580;
 
+        const svg = d3.select("svg");
+        width = +svg.node().getBoundingClientRect().width;
+        height = +svg.node().getBoundingClientRect().height;
+
         var projection = d3.geoMercator()
         .center(countryData.properties.center)
         .scale(zoom)
         .translate([ width/2, height/2 ])
+
+        const fillFunction = function(d) {
+
+            if(d.properties["v2019"] && d.id == country)
+            {
+                return colorFunction(d.properties["v2019"]);
+            }
+            else
+            {
+                if(d.id == country)
+                {
+                    return "red";
+                }
+                else
+                {
+                    return "#ccc";
+                }
+            }
+        };
 
         svg.append("g")
         .selectAll("path")
@@ -62,26 +66,34 @@ const countryMap = function(dataFile, country) {
         .attr("d", d3.geoPath().projection(projection))
         .attr("onclick", d => "javascript:countryMap('"+ dataFile + "','" + d.id + "')")
         .style("stroke", "white");
-      });
+    };
 
+    const cacheAndDrawCountry = function(data) {
+        cachedDataCountry = data;
+        drawCountry(cachedDataCountry);
+    };
+
+    if(cachedDataCountry)
+    {
+        drawCountry(cachedDataCountry);
+        console.log("Cached-Country");
+    }
+    else
+    {
+        d3.json(dataFile, cacheAndDrawCountry);
+        console.log("NEW-Country");
+    }
 };
+
+var cachedDataWorld;
 
 const worldMap = function(dataFile){
 
     d3.select("#data-table").style("visibility","hidden");
     d3.select("#map_svg > g").remove();
-    var svg = d3.select("svg");
-
-    width = +svg.node().getBoundingClientRect().width;
-    height = +svg.node().getBoundingClientRect().height;
-
-    const projection = d3.geoNaturalEarth1()
-    .scale(width / 1.7 / Math.PI)
-    .translate([width / 2, height / 2]);
-
     d3.select("#country_label").text("World");
 
-    const processData = function(data) {
+    const drawWorldMap = function(data) {
 
         var reportValues = data.features.map(val => val.properties["v2019"]);
 
@@ -91,12 +103,23 @@ const worldMap = function(dataFile){
 
         const fillFunction = function(d) {
 
-            if(d.properties["v2019"]){
+            if(d.properties["v2019"])
+            {
                 return colorFunction(d.properties["v2019"]);
-            }else{
+            }
+            else
+            {
                 return "#ccc";
             }
         };
+
+        var svg = d3.select("svg");
+        width = +svg.node().getBoundingClientRect().width;
+        height = +svg.node().getBoundingClientRect().height;
+        
+        const projection = d3.geoNaturalEarth1()
+        .scale(width / 1.7 / Math.PI)
+        .translate([width / 2, height / 2]);
 
         svg.append("g").selectAll("path")
         .data(data.features)
@@ -106,29 +129,62 @@ const worldMap = function(dataFile){
         .attr("fill", fillFunction)
         .attr("onclick", d => "javascript:countryMap('"+ dataFile + "','" + d.id + "')")
         .style("stroke", "#7D7F7F");
-      };
+    };
 
-      d3.json(dataFile, processData);
+    const cacheAndDrawWorldMap = function(data){
+        
+        cachedDataWorld = data;
+        drawWorldMap(cachedDataWorld);
+    };
+
+    if(cachedDataWorld)
+    {
+        drawWorldMap(cachedDataWorld);
+        console.log("Cached-World");
+    }
+    else
+    {
+        d3.json(dataFile, cacheAndDrawWorldMap);
+        console.log("New-World");
+    }
 };
 
-const countriesList = function(datsource){
+var cachedDataList;
 
-    d3.json(datsource, function (data) {
-
+const countriesList = function(datsource) {
+    
+    const createList = function (data) 
+    {
         d3.select("#countries").selectAll("li")
-            .data(data.features)
-            .enter()
-            .append("li")
-            .attr("class", "country_li")
-            .sort( (a,b) => (b.properties["v2019"]||0) - (a.properties["v2019"]||0));
+        .data(data.features)
+        .enter()
+        .append("li")
+        .attr("class", "country_li")
+        .sort( (a,b) => (b.properties["v2019"]||0) - (a.properties["v2019"]||0));
 
-            d3.selectAll("#countries li")
-            .append("a")
-            .attr("onclick", d => "javascript:countryMap('"+ datsource + "','" + d.id + "')")
-            .text(function(d) {
-                return d.properties.name;
-            });
-    });
+        d3.selectAll("#countries li")
+        .append("a")
+        .attr("onclick", d => "javascript:countryMap('"+ datsource + "','" + d.id + "')")
+        .text(d => d.properties.name);
+    };
+    
+    const cacheAndCreateList = function(data)
+    {
+        cachedDataList = data;
+        createList(cachedDataList);
+    };
+
+    if(cachedDataList)
+    {
+        createList(cachedDataList);
+        console.log("Cached-List");
+    } 
+    else 
+    {
+        d3.json(datsource, cacheAndCreateList);
+        console.log("New-List");
+    }
+
 };
 
 const datsource = "./data/data.geojson";
