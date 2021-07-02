@@ -76,12 +76,10 @@ const countryMap = function(dataFile, country) {
     if(cachedDataCountry)
     {
         drawCountry(cachedDataCountry);
-        console.log("Cached-Country");
     }
     else
     {
         d3.json(dataFile, cacheAndDrawCountry);
-        console.log("NEW-Country");
     }
 };
 
@@ -140,12 +138,10 @@ const worldMap = function(dataFile){
     if(cachedDataWorld)
     {
         drawWorldMap(cachedDataWorld);
-        console.log("Cached-World");
     }
     else
     {
         d3.json(dataFile, cacheAndDrawWorldMap);
-        console.log("New-World");
     }
 };
 
@@ -177,12 +173,10 @@ const countriesList = function(datsource) {
     if(cachedDataList)
     {
         createList(cachedDataList);
-        console.log("Cached-List");
     } 
     else 
     {
         d3.json(datsource, cacheAndCreateList);
-        console.log("New-List");
     }
 
 };
