@@ -181,7 +181,7 @@ const countriesList = function(datsource) {
 
 };
 
-const datsource = "./data/data.geojson";
+const datsource = "https://raw.githubusercontent.com/dariofl24/dariofl24.github.io/master/d3world/data/data.geojson";
 
 countriesList(datsource);
 worldMap(datsource);
