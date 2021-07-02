@@ -6,8 +6,7 @@ const countryMap = function(dataFile, country) {
 
     width = +svg.node().getBoundingClientRect().width;
     height = +svg.node().getBoundingClientRect().height;
-
-
+    
     d3.json(dataFile, function(data){
 
         var reportValues = data.features.map(val => val.properties["v2019"]);
