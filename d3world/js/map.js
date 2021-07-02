@@ -61,9 +61,9 @@ const countryMap = function(dataFile, country) {
         .append("path")
         .attr("fill", fillFunction)
         .attr("d", d3.geoPath().projection(projection))
-        .attr("onclick", d => "javascript:countryMap('./data/data.geojson','"+d.id+"')")
+        .attr("onclick", d => "javascript:countryMap('"+ dataFile + "','" + d.id + "')")
         .style("stroke", "white");
-});
+      });
 
 };
 
@@ -99,20 +99,17 @@ const worldMap = function(dataFile){
             }
         };
 
-        const g = svg.append("g");
-
-        g.selectAll("path")
+        svg.append("g").selectAll("path")
         .data(data.features)
         .enter()
         .append("path")
         .attr("d", d3.geoPath().projection(projection))
         .attr("fill", fillFunction)
-        .attr("onclick", d => "javascript:countryMap('./data/data.geojson','"+d.id+"')")
+        .attr("onclick", d => "javascript:countryMap('"+ dataFile + "','" + d.id + "')")
         .style("stroke", "#7D7F7F");
-};
+      };
 
-d3.json(dataFile, processData);
-
+      d3.json(dataFile, processData);
 };
 
 const countriesList = function(datsource){
@@ -128,7 +125,7 @@ const countriesList = function(datsource){
 
             d3.selectAll("#countries li")
             .append("a")
-            .attr("onclick", d => "javascript:countryMap('./data/data.geojson','" + d.id + "')")
+            .attr("onclick", d => "javascript:countryMap('"+ datsource + "','" + d.id + "')")
             .text(function(d) {
                 return d.properties.name;
             });
