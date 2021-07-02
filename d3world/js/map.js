@@ -6,13 +6,12 @@ const countryMap = function(dataFile, country) {
 
     width = +svg.node().getBoundingClientRect().width;
     height = +svg.node().getBoundingClientRect().height;
-    
-    
+
+
     d3.json(dataFile, function(data){
 
-        // Color function
         var reportValues = data.features.map(val => val.properties["v2019"]);
-        
+
         const colorFunction = d3.scaleSequential()
         .domain(d3.extent(Array.from(reportValues)))
         .interpolator(d3.interpolateGnBu);
@@ -30,7 +29,7 @@ const countryMap = function(dataFile, country) {
                 }
             }
         };
-        
+
         const countryData = data.features.filter(function(d){
             return d.id == country;
         })[0];
@@ -47,9 +46,9 @@ const countryMap = function(dataFile, country) {
         d3.select("#freedom").text(countryData.properties["freedom"] || 'N/A');
         d3.select("#generosity").text(countryData.properties["generosity"] || 'N/A');
         d3.select("#corruption").text(countryData.properties["corruption"] || 'N/A');
-        
+
         var zoom = countryData.properties.zoom || 2580;
-    
+
         var projection = d3.geoMercator()
         .center(countryData.properties.center)
         .scale(zoom)
@@ -69,28 +68,28 @@ const countryMap = function(dataFile, country) {
 };
 
 const worldMap = function(dataFile){
-    
+
     d3.select("#data-table").style("visibility","hidden");
     d3.select("#map_svg > g").remove();
     var svg = d3.select("svg");
-    
+
     width = +svg.node().getBoundingClientRect().width;
     height = +svg.node().getBoundingClientRect().height;
-    
+
     const projection = d3.geoNaturalEarth1()
     .scale(width / 1.7 / Math.PI)
     .translate([width / 2, height / 2]);
-    
+
     d3.select("#country_label").text("World");
 
     const processData = function(data) {
-        
+
         var reportValues = data.features.map(val => val.properties["v2019"]);
-        
+
         const colorFunction = d3.scaleSequential()
         .domain(d3.extent(Array.from(reportValues)))
         .interpolator(d3.interpolateGnBu);
-        
+
         const fillFunction = function(d) {
 
             if(d.properties["v2019"]){
@@ -99,9 +98,9 @@ const worldMap = function(dataFile){
                 return "#ccc";
             }
         };
-        
+
         const g = svg.append("g");
-        
+
         g.selectAll("path")
         .data(data.features)
         .enter()
@@ -126,12 +125,12 @@ const countriesList = function(datsource){
             .append("li")
             .attr("class", "country_li")
             .sort( (a,b) => (b.properties["v2019"]||0) - (a.properties["v2019"]||0));
-            
+
             d3.selectAll("#countries li")
             .append("a")
-            .attr("onclick", d => "javascript:countryMap('./data/data.geojson','"+d.id+"')")
-            .text(function(d) { 
-                return d.properties.name; 
+            .attr("onclick", d => "javascript:countryMap('./data/data.geojson','" + d.id + "')")
+            .text(function(d) {
+                return d.properties.name;
             });
     });
 };

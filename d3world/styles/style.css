@@ -17,10 +17,6 @@ html, body {
     background-color: rgb(224, 251, 252);
 }
 
-.example {
-    background: blue;
-}
-
 #globe {
     font-size: 24px;
     color: grey;
@@ -54,11 +50,11 @@ tr:nth-child(even) {
 
 #data-wrapper {
     padding: 15px 0 15px 0;
-    
+
 }
 
 @media only screen and (min-width: 1100px) {
-    
+
     #map_container {
         width: 95%;
         height: 520px;
@@ -68,10 +64,10 @@ tr:nth-child(even) {
     #countries {
         font-size: 16px;
     }
-} 
+}
 
 @media only screen and (min-width: 1900px) {
-    
+
     #map_container {
         width: 98%;
         height: 780px;
