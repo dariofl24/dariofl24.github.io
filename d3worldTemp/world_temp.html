@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>World Temperature</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="styles/style_temp.css" />
+        <link rel="stylesheet" type="text/css" href="styles/panel_temp.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://d3js.org/d3.v4.js"></script>
+        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+        <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    </head>
+    <body>
+
+        <div id="container">
+
+            <div class="flex_parent">
+
+                <div id="sidebar">
+                    <h1 style="text-align: center;margin-bottom: 10;">World Average Temperature</h1>
+                    <div id="countries_list_wrapper-temp">
+                        <ol id="countries"></ol>
+                    </div>
+                </div>
+
+                <div id="separator"></div>
+
+                <div id="map_panel">
+                    <h1 id="country_label" style="text-align: center;margin-bottom: 0;"></h1>
+                    <div id="map_container">
+                        <svg id="map_svg" width="100%" height="100%"></svg>
+                    </div>
+                    <div id="scale-wrapper">
+                        <div class="face">
+                            <i class="fas fa-thermometer-empty"></i>
+                        </div>
+                        <div id="scale">
+                            <img src="https://raw.githubusercontent.com/d3/d3-scale-chromatic/master/img/OrRd.png" width="50%" height="40" alt="GnBu" style="width:100%;">
+                        </div>
+                        <div class="face">
+                            <i class="fas fa-thermometer-full"></i>
+                        </div>
+                    </div>
+                    <div id="globe">
+                        <button onclick="javascript:worldMap('../data/data.geojson')">
+                            <i class="fas fa-globe fa-2x"></i>
+                        </button>
+                    </div>
+
+                    <h2 id="word_temp_title">Average Temperature</h2>
+                    <div id="word_temp"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="./js/map_temperature.js" type="text/javascript" charset="utf-8"></script>
+        <!-- <script src="./js/chart.js" type="text/javascript" charset="utf-8"></script> -->
+    </body>
+</html>
