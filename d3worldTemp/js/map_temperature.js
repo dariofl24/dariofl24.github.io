@@ -250,7 +250,7 @@ const countriesList = function(datsource) {
 
 };
 
-const datsource = "../data/data.geojson";
+const datsource = "./data/data.geojson";
 
 countriesList(datsource);
 worldMap(datsource);
