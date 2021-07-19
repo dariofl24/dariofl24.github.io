@@ -12,20 +12,33 @@ const countryTempChart = function(country) {
 
     const drawChart = function(data) {
 
-        const margin = {top: 10, right: 30, bottom: 30, left: 60};
+        const margin = {top: 20, right: 30, bottom: 60, left: 60};
 
         const wordTemp =d3.select("#word_temp");
         const width = +wordTemp.node().getBoundingClientRect().width - margin.left - margin.right;
         const height = +wordTemp.node().getBoundingClientRect().height - margin.top - margin.bottom;
 
-        // const width = 1020 - margin.left - margin.right;
-        // const height = 400 - margin.top - margin.bottom;
-        
         var svg = wordTemp.append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+
+        svg.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2.0)
+        .attr("y", height + 40)
+        .text("Year");
+
+        svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -50)
+        .attr("x", -90)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("Average Temperature (Celsius)");
     
         var x_scale = d3.scaleLinear()
         .domain(d3.extent(data, function(d) { return d.date; }))
