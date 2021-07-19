@@ -126,9 +126,13 @@ a {
     width: 80%;
     height: 420px;
     margin: auto;
-    background-color: rgb(183, 183, 164);
+    background-color: rgb(130, 130, 122);
 }
 
 #word_temp_title {
     text-align: center;
+}
+
+#footer{
+    height: 30px;
 }
