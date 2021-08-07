@@ -13,15 +13,6 @@ const simulation = function (data) {
     var f1x, f2x, f3x, f1y, f2y, f3y;
     var x1, x2, x3, y1, y2, y3;
 
-    var dwx1 = data.b1.x;
-    var dwy1 = data.b1.y;
-
-    var dwx2 = data.b2.x;
-    var dwy2 = data.b2.y;
-
-    var dwx3 = data.b3.x;
-    var dwy3 = data.b3.y;
-
     var result = {
         b1:[],
         b2:[],
@@ -84,14 +75,6 @@ const simulation = function (data) {
             result.b2.push([scaleX(x2), scaleY(y2)]);
             result.b3.push([scaleX(x3), scaleY(y3)]);
 
-            dwx1 = x1;
-            dwy1 = y1;
-
-            dwx2 = x2;
-            dwy2 = y2;
-
-            dwx3 = x3;
-            dwy3 = y3;
         }
 
         data.b1.x = x1;
