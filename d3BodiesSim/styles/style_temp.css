@@ -1,0 +1,109 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: "Helvetica Neue";
+    background-color: rgb(75, 75, 75);
+}
+
+
+td, th {
+    padding: 8px;
+}
+
+#tb1 tr {
+    background-color: rgba(255, 184, 3, 0.5);
+}
+
+#tb2 tr {
+    background-color: rgb(217, 4, 41, 0.5);
+}
+
+#tb3 tr {
+    background-color: rgb(72, 191, 227, 0.5);
+}
+
+#data-table {
+    margin: auto;
+}
+
+#data-table td,th {
+    text-align: center;
+}
+
+#data-wrapper {
+    padding: 15px 0 15px 0;
+
+}
+
+#container {
+    height: 100%;
+}
+
+.flex_parent {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+#sidebar {
+    width: 22%;
+    height: 100%;
+    overflow-y: auto;
+    position: relative;
+    background-color:rgb(225, 225, 225);
+}
+
+#separator {
+    width: 1%;
+    height: 100%;
+    background-color: rgb(140, 150, 150);
+}
+
+#map_panel {
+    width: 77%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgb(225, 225, 225);
+}
+
+#svgcontainer{
+    width: 100%;
+}
+
+#svg_sim {
+    width: 100%;
+    height: 100%;
+}
+
+table {
+    width: 100%;
+    margin-top: 10px;
+}
+
+td {
+    text-align: center;
+    font-weight: bold;
+}
+
+#svg_sim{
+    background-color: rgb(75,75,75);
+}
+
+button.control{
+    width: 100%;
+    margin: 8px 0px 8px 0px;
+}
+
+#buttons-wraper > div{
+    width: 90%;
+    margin: auto;
+}
+
+#buttons-wraper{
+    margin-top: 25px;
+}
