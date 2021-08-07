@@ -78,9 +78,6 @@ const simulation = function (data) {
         data.b3.v.x = ((f3x / data.b3.m) * data.dt) + data.b3.v.x;
         data.b3.v.y = ((f3y / data.b3.m) * data.dt) + data.b3.v.y;
 
-        // if(( Math.abs(scaleX(x1) - scaleX(dwx1)) > 2 && Math.abs( scaleY(y1) - scaleY(dwy1) ) > 2) ||
-        // ( Math.abs(scaleX(x2) - scaleX(dwx2)) > 2 && Math.abs( scaleY(y2) - scaleY(dwy2) ) > 2)|| 
-        // ( Math.abs(scaleX(x3) - scaleX(dwx3)) > 2 && Math.abs( scaleY(y3) - scaleY(dwy3) ) > 2)){
         if(it % 20 == 0){
 
             result.b1.push([scaleX(x1), scaleY(y1)]);
@@ -135,38 +132,6 @@ function scaleY(y){
 
 function startSim(data){
     
-    // data ={
-    //     dt:0.01,
-    //     mtime:6500,
-    //     b1:{
-    //         x:2350,
-    //         y:2350,
-    //         m:.0022,
-    //         v: {
-    //             x:-0.8,
-    //             y:0
-    //         }
-    //     },
-    //     b2:{
-    //         x:1900,
-    //         y:0,
-    //         m:5500,
-    //         v: {
-    //             x:0,
-    //             y:-2.2
-    //         }
-    //     },
-    //     b3:{
-    //         x:-1900,
-    //         y:0,
-    //         m:5500,
-    //         v: {
-    //             x:0,
-    //             y:2.2
-    //         }
-    //     }
-    // }
-
     var svg = d3.select("#svg_sim g");
 
     const svg_node = d3.select("#svg_sim");
