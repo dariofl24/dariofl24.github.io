@@ -113,9 +113,44 @@ function scaleY(y){
     return (-1*y)/5.0;
 }
 
+function axis() {
+    console.log("axis");
+    var svg = d3.select("#svg_sim");
+
+    const svg_node = d3.select("#svg_sim");
+    var width = +svg_node.node().getBoundingClientRect().width / 2;
+    var height = +svg_node.node().getBoundingClientRect().height / 2;
+
+    // X
+
+    var scaleX = d3.scaleLinear()
+    .domain([-width*5, width*5])
+    .range([0, 2*width]);
+
+    var x_axis = d3.axisBottom().scale(scaleX);
+
+    svg.append("g")
+    .attr("id", "gaxis-x")
+    .attr("transform", "translate(0, " + height  +")")
+    .call(x_axis);
+
+    // Y
+    var scaleY = d3.scaleLinear()
+    .domain([height*5, -height*5])
+    .range([0, 2*height]);
+
+    var y_axis = d3.axisLeft().scale(scaleY);
+    svg.append("g")
+    .attr("id", "gaxis-y")
+    .attr("transform", "translate("+ width +", 0)")
+    .call(y_axis);
+
+
+}
+
 function startSim(data){
     
-    var svg = d3.select("#svg_sim g");
+    var svg = d3.select("#g_sim");
 
     const svg_node = d3.select("#svg_sim");
     width = +svg_node.node().getBoundingClientRect().width / 2;
@@ -262,8 +297,12 @@ function doClear(){
         doStop();
     }
 
-    d3.select("#svg_sim g").remove();
-    d3.select("#svg_sim").append("g");
+    d3.select("#g_sim").remove();
+
+    d3.select("#svg_sim")
+    .append("g")
+    .attr("id","g_sim");
+    
 }
 
 function loadData(){
@@ -271,12 +310,14 @@ function loadData(){
     stopFlag = false;
 
     pdata ={
-        dt:0.01,
+        dt:0.02,
         mtime:6500,
         b1:{v:{}},
         b2:{v:{}},
         b3:{v:{}}
     }
+
+    pdata.mtime = (+d3.select("#time").node().value); 
 
     // B1
     pdata.b1.x = (+d3.select("#B1_X").node().value);
@@ -308,3 +349,5 @@ function loadData(){
     }
     
 }
+
+axis();

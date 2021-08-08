@@ -23,6 +23,10 @@ td, th {
     background-color: rgb(72, 191, 227, 0.5);
 }
 
+#misc-table tr {
+    background-color: rgba(85, 227, 72, 0.5);
+}
+
 #data-table {
     margin: auto;
 }
@@ -92,6 +96,7 @@ td {
 
 #svg_sim{
     background-color: rgb(75,75,75);
+    /* background-color: rgb(250, 250, 250); */
 }
 
 button.control{
@@ -106,4 +111,28 @@ button.control{
 
 #buttons-wraper{
     margin-top: 25px;
+}
+
+#gaxis-y line{
+    stroke: rgb(67, 170, 139);
+}
+  
+#gaxis-y path{
+    stroke: rgb(67, 170, 139);;
+}
+
+#gaxis-y text{
+    fill: rgb(67, 170, 139);;
+}
+
+#gaxis-x line{
+    stroke: rgb(67, 170, 139);
+}
+  
+#gaxis-x path{
+    stroke: rgb(67, 170, 139);;
+}
+
+#gaxis-x text{
+    fill: rgb(67, 170, 139);;
 }
