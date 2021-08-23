@@ -11,7 +11,7 @@ const draw_month_sales = function () {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.csv("../data/month_sales.csv", function (data) {
+  d3.csv("./data/month_sales.csv", function (data) {
 
       var x = d3.scaleBand()
           .range([0, width])

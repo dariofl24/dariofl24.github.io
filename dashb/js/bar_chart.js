@@ -12,7 +12,7 @@ const draw_sales_country = function () {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.csv("../data/sales_country.csv", function (data) {
+  d3.csv("./data/sales_country.csv", function (data) {
 
       var x = d3.scaleLinear()
           .domain([0, 1014])

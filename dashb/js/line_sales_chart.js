@@ -73,5 +73,5 @@ const draw_pie = function (component, dataFile) {
 
 };
 
-draw_pie("#cel_3", "../data/line_sales.json");
-draw_pie("#cel_4", "../data/deals_data.json");
+draw_pie("#cel_3", "./data/line_sales.json");
+draw_pie("#cel_4", "./data/deals_data.json");
