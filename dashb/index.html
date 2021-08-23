@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+<link rel="stylesheet" type="text/css" href="styles/dashboard.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+<style>
+
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Sales Dashboard (2005)</h1>
+</div>
+
+<div class="row">
+  <div class="flex-container">
+    
+  <div class="flex-item">
+    <h3 class="g_title">Country Sales</h3>
+    <div id="cel_1"></div>
+  </div>
+
+  <div class="flex-item">
+    <h3 class="g_title">Monthly Sales</h3>
+    <div id="cel_2"></div>
+  </div>
+
+  <div class="flex-item">
+    <h3 class="g_title">Line Items Sales</h3>
+    <div id="cel_3"></div>
+  </div>
+  <div class="flex-item">
+    <h3 class="g_title">Deal Sizes</h3>
+    <div id="cel_4"></div>
+  </div>
+  
+</div>
+</div>
+
+<script src="./js/bar_chart.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/moth_sales_chart.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/line_sales_chart.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>
