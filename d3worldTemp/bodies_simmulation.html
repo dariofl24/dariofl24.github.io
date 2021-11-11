@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <title>3 Bodies Simmulation</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="styles/style_temp.css" />
+        <link rel="stylesheet" type="text/css" href="styles/panel_temp.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://d3js.org/d3.v4.js"></script>
+    </head>
+    <body>
+
+        <div id="container">
+
+            <div class="flex_parent">
+
+                <div id="sidebar">
+
+                    <h2 style="text-align: center;" >3 Bodies Gravitational </br> Simmulation</h2>
+
+                    <div id="input_wrapper">
+                        <!-- BODY 1 -->
+                        <table id="tb1">
+                            <caption><span style="font-weight: bold;">Body 1</span></caption>
+                            <tr>
+                                <td>X</td>
+                                <td><input type="text" id="B1_X" value="2350"></td>
+                            </tr>
+                            <tr>
+                                <td>Y</td>
+                                <td><input type="text" id="B1_Y" value="2350"></td>
+                            </tr>
+                            <tr>
+                                <td>Mass</td>
+                                <td><input type="text" id="B1_MASS" value="0.0022"></td>
+                            </tr>
+                            <tr>
+                                <td>VX</td>
+                                <td><input type="text" id="B1_VX" value="-0.8"></td>
+                            </tr>
+                            <tr>
+                                <td>VY</td>
+                                <td><input type="text" id="B1_VY" value="0"></td>
+                            </tr>
+                        </table>
+
+                        <!-- BODY 2 -->
+                        <table id="tb2">
+                            <caption><span style="font-weight: bold;">Body 2</span></caption>
+                            <tr>
+                                <td>X</td>
+                                <td><input type="text" id="B2_X" value="1900"></td>
+                            </tr>
+                            <tr>
+                                <td>Y</td>
+                                <td><input type="text" id="B2_Y" value="0"></td>
+                            </tr>
+                            <tr>
+                                <td>Mass</td>
+                                <td><input type="text" id="B2_MASS" value="5500"></td>
+                            </tr>
+                            <tr>
+                                <td>VX</td>
+                                <td><input type="text" id="B2_VX" value="0"></td>
+                            </tr>
+                            <tr>
+                                <td>VY</td>
+                                <td><input type="text" id="B2_VY" value="-2.2"></td>
+                            </tr>
+                        </table>
+
+                        <!-- BODY 3 -->
+                        <table id="tb3">
+                            <caption><span style="font-weight: bold;">Body 3</span></caption>
+                            <tr>
+                                <td>X</td>
+                                <td><input type="text" id="B3_X" value="-1900"></td>
+                            </tr>
+                            <tr>
+                                <td>Y</td>
+                                <td><input type="text" id="B3_Y" value="0"></td>
+                            </tr>
+                            <tr>
+                                <td>Mass</td>
+                                <td><input type="text" id="B3_MASS" value="5500"></td>
+                            </tr>
+                            <tr>
+                                <td>VX</td>
+                                <td><input type="text" id="B3_VX" value="0"></td>
+                            </tr>
+                            <tr>
+                                <td>VY</td>
+                                <td><input type="text" id="B3_VY" value="2.2"></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                <div id="buttons-wraper">
+                    <div>
+                        <button class="control" onclick="javascript:loadData()">START</button>
+                    </div>
+                    <div>
+                        <button class="control" onclick="javascript:doStop()">STOP</button>
+                    </div>
+                    <div>
+                        <button class="control" onclick="javascript:doClear()">CLEAR</button>
+                    </div>
+                </div>
+                </div>
+
+                <div id="separator"></div>
+
+                <div id="map_panel">
+                    <div id = "svgcontainer">
+
+                        <svg id="svg_sim">
+                            <g></g>
+                        </svg>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="./js/3bodySim.js" type="text/javascript" charset="utf-8"></script>
+    </body>
+</html>

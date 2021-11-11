@@ -1,0 +1,51 @@
+<div class="composed_img_input flex-container">
+    
+    <div class="img-url-wrapper">
+        <div class="img-url-wrapper-cont">
+            <img class="image-tag" [src]="galleryEntryModel['full']">
+            <mat-form-field class="example-form-field" appearance="fill">
+                <mat-label>Full</mat-label>
+                <input matInput type="text" [(ngModel)]="galleryEntryModel['full']">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="img-url-wrapper">
+        <div class="img-url-wrapper-cont">
+            <img class="image-tag" [src]="galleryEntryModel['half']">
+            <mat-form-field class="example-form-field" appearance="fill">
+                <mat-label>Half</mat-label>
+                <input matInput type="text" [(ngModel)]="galleryEntryModel['half']">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="img-url-wrapper">
+        <div class="img-url-wrapper-cont">
+            <img class="image-tag" [src]="galleryEntryModel['small']">
+            <mat-form-field class="example-form-field" appearance="fill">
+                <mat-label>Small</mat-label>
+                <input matInput type="text" [(ngModel)]="galleryEntryModel['small']">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="img-url-wrapper">
+        <div class="img-url-wrapper-cont">
+            <img class="image-tag" [src]="galleryEntryModel['thumb']">
+            <mat-form-field class="example-form-field" appearance="fill">
+                <mat-label>Thumb</mat-label>
+                <input matInput type="text" [(ngModel)]="galleryEntryModel['thumb']">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="id-wrapper flex-container">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Entry Code</mat-label>
+            <input matInput [(ngModel)]="galleryEntryModel.code">
+        </mat-form-field>
+
+        <button mat-raised-button (click)="doDelete()" color="warn">DELETE</button>
+    </div>
+</div>

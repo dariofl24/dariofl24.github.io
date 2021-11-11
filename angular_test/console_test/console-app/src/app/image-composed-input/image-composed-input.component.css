@@ -1,0 +1,81 @@
+.example-label {
+    display: table-cell;
+    font-size: 14px;
+    margin-left: 8px;
+    min-width: 120px;
+}
+
+.example-button-row {
+    display: table-cell;
+    width: 490px;
+}
+
+.example-button-row .mat-button-base {
+    margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 120px;
+}
+
+.example-full-width {
+    width: 35%;
+}
+
+.example-form-field {
+    width: 250px;
+}
+
+.id-wrapper {
+    width: 100%;
+    padding: 10px 0px 5px 0px;
+    border-style: solid;
+    border-width: 2px 0px 0px 0px;
+    border-color: rgba(170, 168, 168, 0.452);
+}
+
+.img-url-wrapper {
+    width: 25%;
+    padding: 0px 5px 0px 5px;
+}
+
+.img-url-wrapper-cont {
+    width: 100%;
+    margin: auto;
+}
+
+.image-tag {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    border-style: solid;
+    border-color: rgba(211, 208, 208, 0.35);
+}
+
+.mat-form-field.example-form-field {
+    display: block;
+    width: 100%;
+}
+
+.composed_img_input {
+    padding: 10px;
+    margin: 15px;
+    border-style: solid;
+    border-radius: 12px;
+    border-width: 2px;
+    border-color: rgba(221, 218, 218, 0.623);
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+}
