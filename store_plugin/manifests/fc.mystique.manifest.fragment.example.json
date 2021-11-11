@@ -1,0 +1,14 @@
+{
+    "manifestVersion": "2.0",
+    "routes": [
+        {
+            "type": "page",
+            "path": "example",
+            "component": "fc.page",
+            "nav": {
+                "label": "i18n:fc.sf.ui.example",
+                "icon": "flight_land"
+            }
+        }
+    ]
+}
